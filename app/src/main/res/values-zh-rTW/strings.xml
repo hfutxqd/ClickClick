@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">媒體控制器</string>
+
+    <string name="key_code">鍵值: %1$d</string>
+    <string name="key_name">鍵名: %1$s</string>
+    <string name="key_device_id">設備ID: %1$d</string>
+    <string name="key_device_name">設備名: %1$s</string>
+    <string name="key_ignore_device">忽略設備信息</string>
+    <string name="key_event_activity_tips">請按鍵…</string>
+    <string name="btn_add">添加</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_activity_navi">媒體控制器</string>
+    <string name="title_home">主頁</string>
+    <string name="title_dashboard">控制</string>
+</resources>

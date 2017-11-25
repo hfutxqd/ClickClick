@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MediaController</string>
+
+    <string name="key_code">Key Code : %1$d</string>
+    <string name="key_name">Key Name : %1$s</string>
+    <string name="key_device_id">Device Id : %1$d</string>
+    <string name="key_device_name">Device Name : %1$s</string>
+    <string name="key_ignore_device">Ignore device info</string>
+    <string name="key_event_activity_tips">Please press key…</string>
+    <string name="btn_add">Add</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_navi">MediaController</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_settings">Settings</string>
+</resources>
