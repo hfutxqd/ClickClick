@@ -13,7 +13,16 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="title_activity_navi">MediaController</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">Mapping</string>
+    <string name="title_dashboard">Functions</string>
     <string name="title_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_add_description">Click to add key map</string>
+    <string name="settings_version_summary">1.0.0</string>
+    <string name="settings_about_title">About</string>
+    <string name="settings_version_title">Version</string>
+    <string name="settings_author_title">Author</string>
+    <string name="settings_author_summary">IMXQD</string>
 </resources>

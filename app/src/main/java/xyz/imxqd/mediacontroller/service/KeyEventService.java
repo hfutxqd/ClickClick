@@ -1,7 +1,11 @@
 package xyz.imxqd.mediacontroller.service;
 
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.AccessibilityServiceInfo;
+import android.app.Notification;
+import android.content.Intent;
 import android.media.AudioManager;
+import android.os.Parcelable;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
@@ -14,8 +18,9 @@ import java.util.ArrayList;
 import xyz.imxqd.mediacontroller.App;
 import xyz.imxqd.mediacontroller.utils.KeyEventHandler;
 import xyz.imxqd.mediacontroller.utils.KeyEventUtil;
+import xyz.imxqd.mediacontroller.utils.SettingsUtil;
 
-public class MyService extends AccessibilityService implements  KeyEventHandler.Callback{
+public class KeyEventService extends AccessibilityService implements  KeyEventHandler.Callback{
 
     private AudioManager mAudioManager;
     private KeyEventHandler mKeyEventHandler;
@@ -34,9 +39,10 @@ public class MyService extends AccessibilityService implements  KeyEventHandler.
         mKeyEventHandler.setCallback(this);
     }
 
+
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-
+        
     }
 
     @Override
@@ -46,7 +52,7 @@ public class MyService extends AccessibilityService implements  KeyEventHandler.
 
     @Override
     protected boolean onKeyEvent(KeyEvent event) {
-        if (App.get().isServiceOn) {
+        if (App.get().isServiceOn && SettingsUtil.isServiceOn()) {
             return mKeyEventHandler.inputKeyEvent(event);
         } else {
             return false;
@@ -63,7 +69,9 @@ public class MyService extends AccessibilityService implements  KeyEventHandler.
     @Override
     public void onLongClick(KeyEvent event) {
         Logger.d(event);
-        showToast("onLongClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
+        if (SettingsUtil.displayDebug()) {
+            showToast("onLongClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
+        }
         if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN) {
             KeyEvent[] events = KeyEventUtil.makeKeyEventGroup(KeyEvent.KEYCODE_MEDIA_NEXT);
             mAudioManager.dispatchMediaKeyEvent(events[0]);
@@ -78,7 +86,9 @@ public class MyService extends AccessibilityService implements  KeyEventHandler.
     @Override
     public void onSingleClick(KeyEvent event) {
         Logger.d(event);
-        showToast("onSingleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
+        if (SettingsUtil.displayDebug()) {
+            showToast("onSingleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
+        }
         if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN) {
             mAudioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
         } else if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
@@ -90,13 +100,18 @@ public class MyService extends AccessibilityService implements  KeyEventHandler.
     @Override
     public void onDoubleClick(KeyEvent event) {
         Logger.d(event);
-        showToast("onDoubleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
+        if (SettingsUtil.displayDebug()) {
+            showToast("onDoubleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
+        }
     }
 
     @Override
     public void onTripleClick(KeyEvent event) {
         Logger.d(event);
-        showToast("onTripleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
+        if (SettingsUtil.displayDebug()) {
+            showToast("onTripleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
+        }
+
     }
 
     private void showToast(String str) {

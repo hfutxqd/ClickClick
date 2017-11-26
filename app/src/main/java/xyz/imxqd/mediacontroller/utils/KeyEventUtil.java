@@ -24,7 +24,8 @@ public class KeyEventUtil {
         try {
             for (Field field : fields) {
                 if (field.getName().startsWith("KEYCODE_")) {
-                    mKeyName.put(field.getInt(null), field.getName());
+                    mKeyName.put(field.getInt(null),
+                            field.getName().replaceFirst("KEYCODE_", ""));
                 }
             }
         } catch (IllegalAccessException e) {
@@ -37,7 +38,7 @@ public class KeyEventUtil {
         if (mKeyName.containsKey(keyCode)) {
             return mKeyName.get(keyCode);
         } else {
-            return "KEYCODE_UNKNOWN";
+            return "UNKNOWN(" + keyCode + ")";
         }
     }
 

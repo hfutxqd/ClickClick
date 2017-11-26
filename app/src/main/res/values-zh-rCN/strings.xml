@@ -11,6 +11,17 @@
     <string name="btn_add">添加</string>
     <string name="title_settings">设置</string>
     <string name="title_activity_navi">媒体控制器</string>
-    <string name="title_home">主页</string>
-    <string name="title_dashboard">控制</string>
+    <string name="title_home">映射</string>
+    <string name="title_dashboard">功能</string>
+    <string name="action_add_description">点击可以添加映射</string>
+    <string name="settings_about_title">关于</string>
+    <string name="settings_version_summary">1.0.0</string>
+    <string name="settings_version_title">版本</string>
+    <string name="settings_author_title">作者</string>
+    <string name="settings_author_summary">IMXQD</string>
+    <string name="settings_app_switch_title">功能开关</string>
+    <string name="settings_app_switch_on_summary">已开启按键映射服务</string>
+    <string name="settings_app_switch_off_summary">已关闭按键映射服务</string>
+    <string name="settings_key_app_debug_title">显示调试信息</string>
+    <string name="settings_key_debug_category_title">调试</string>
 </resources>

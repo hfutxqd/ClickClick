@@ -27,12 +27,13 @@
 
         <activity
             android:name=".ui.KeyEventActivity"
-            android:theme="@style/AppTheme.Dialog">
+            android:theme="@style/AppTheme.Dialog"
+            android:launchMode="singleTask">
 
         </activity>
 
         <service
-            android:name=".service.MyService"
+            android:name=".service.KeyEventService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
@@ -43,6 +44,19 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibilityservice" />
+        </service>
+
+        <service
+            android:enabled="true"
+            android:exported="true"
+            android:name=".service.NotificationCollectorService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="xyz.imxqd.mediacontroller.cloud_music_like" />
+            </intent-filter>
         </service>
 
 

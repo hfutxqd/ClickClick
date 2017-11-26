@@ -7,7 +7,7 @@ import android.text.TextUtils;
 
 import com.orhanobut.logger.Logger;
 
-import xyz.imxqd.mediacontroller.service.MyService;
+import xyz.imxqd.mediacontroller.service.KeyEventService;
 
 /**
  * Created by imxqd on 2017/11/25.
@@ -15,9 +15,9 @@ import xyz.imxqd.mediacontroller.service.MyService;
 
 public class BaseActivity extends AppCompatActivity {
 
-    protected boolean isAccessibilitySettingsOn() {
+    public boolean isAccessibilitySettingsOn() {
         int accessibilityEnabled = 0;
-        final String service = getPackageName() + "/" + MyService.class.getName();
+        final String service = getPackageName() + "/" + KeyEventService.class.getName();
         boolean accessibilityFound = false;
         try {
             accessibilityEnabled = Settings.Secure.getInt(
@@ -45,7 +45,7 @@ public class BaseActivity extends AppCompatActivity {
         return accessibilityFound;
     }
 
-    protected void startAccessibilitySettings() {
+    public void startAccessibilitySettings() {
         startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
     }
 }
