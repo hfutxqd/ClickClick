@@ -40,11 +40,6 @@ public class NotificationCollectorService extends NotificationListenerService {
         if (Constants.ACTION_CLOUD_MUSIC_LIKE.equals(intent.getAction())) {
             Notification n = getNotificationByPackage(getString(R.string.cloud_music_package));
             List<PendingIntent> intents = NotificationAccessUtil.getPendingIntents(n);
-            try {
-                intents.get(4).send();
-            } catch (PendingIntent.CanceledException e) {
-                e.printStackTrace();
-            }
         }
         return START_STICKY_COMPATIBILITY;
     }

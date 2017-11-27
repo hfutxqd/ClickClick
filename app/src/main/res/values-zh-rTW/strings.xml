@@ -17,4 +17,5 @@
     <string name="settings_version_summary">1.0.0</string>
     <string name="settings_author_title">作者</string>
     <string name="settings_author_summary">IMXQD</string>
+    <string name="accessibility_service_title">媒体控制器-按键服务</string>
 </resources>

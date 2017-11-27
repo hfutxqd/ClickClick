@@ -33,6 +33,7 @@
         </activity>
 
         <service
+            android:label="@string/accessibility_service_title"
             android:name=".service.KeyEventService"
             android:enabled="true"
             android:exported="true"

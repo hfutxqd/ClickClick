@@ -28,4 +28,5 @@
     <string name="open_notification_service_success">通知服务开启成功!</string>
     <string name="open_service_interrupt">按键服务被中断!</string>
     <string name="open_notification_service_disconnected">通知服务被中断!</string>
+    <string name="accessibility_service_title">媒体控制器-按键服务</string>
 </resources>
