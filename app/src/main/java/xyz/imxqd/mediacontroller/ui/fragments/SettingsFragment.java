@@ -68,13 +68,16 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public boolean onPreferenceTreeClick(Preference preference) {
 
         if (getString(R.string.pref_key_version).equals(preference.getKey())) {
+            if (mClickCount == 0) {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHandler.removeCallbacksAndMessages(null);
+                        mClickCount = 0;
+                    }
+                }, 1500);
+            }
             mClickCount++;
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mClickCount = 0;
-                }
-            }, 1500);
             if (mClickCount == 7) {
                 addDebugSettings();
             }

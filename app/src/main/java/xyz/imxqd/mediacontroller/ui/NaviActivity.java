@@ -3,8 +3,12 @@ package xyz.imxqd.mediacontroller.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,30 +48,53 @@ public class NaviActivity extends BaseActivity {
         vNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    private Fragment mCurrentFragment = null;
+
     private void switchPageTo(int id) {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments == null) {
+            fragments = new ArrayList<>();
+        }
+        Fragment fragmentTo = null;
         switch (id) {
             case R.id.navigation_home:
                 vTitle.setText(R.string.title_home);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.nav_container, KeyEventMapFragment.getInstance())
-                        .commit();
+                fragmentTo = KeyEventMapFragment.getInstance();
+
                 break;
             case R.id.navigation_dashboard:
                 vTitle.setText(R.string.title_dashboard);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.nav_container, FunctionFragment.getInstance())
-                        .commit();
+                fragmentTo = FunctionFragment.getInstance();
                 break;
             case R.id.navigation_settings:
                 vTitle.setText(R.string.title_settings);
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.nav_container, SettingsFragment.getInstance())
-                        .commit();
+                fragmentTo = SettingsFragment.getInstance();
                 break;
         }
+        if (fragmentTo == null) {
+            return;
+        }
+        if (fragments.contains(fragmentTo)) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .hide(mCurrentFragment)
+                    .show(fragmentTo)
+                    .commit();
+        } else {
+            if (mCurrentFragment != null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .hide(mCurrentFragment)
+                        .add(R.id.nav_container, fragmentTo)
+                        .commit();
+            } else {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.nav_container, fragmentTo)
+                        .commit();
+            }
+        }
+        mCurrentFragment = fragmentTo;
     }
 
 }
