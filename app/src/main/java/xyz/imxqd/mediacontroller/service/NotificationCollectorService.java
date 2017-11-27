@@ -24,8 +24,6 @@ public class NotificationCollectorService extends NotificationListenerService {
 
     private static final String TAG = "imxqd";
 
-    private HashMap<String, Notification> mLastNotifications = new HashMap<>();
-
     private HashSet<String> mPackageNames = new HashSet<>();
 
     private boolean isConnected = false;
@@ -36,8 +34,8 @@ public class NotificationCollectorService extends NotificationListenerService {
             return START_STICKY_COMPATIBILITY;
         }
         if (Constants.ACTION_CLOUD_MUSIC_LIKE.equals(intent.getAction())) {
-            StatusBarNotification[] ns = getActiveNotifications();
-            Logger.d(ns.length);
+            Notification n = getNotificationByPackage(getString(R.string.cloud_music_package));
+            Logger.d(n);
         }
         return START_STICKY_COMPATIBILITY;
     }
@@ -59,9 +57,19 @@ public class NotificationCollectorService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         Logger.d(sbn.getPackageName());
-        if (mPackageNames.contains(sbn.getPackageName())) {
-            mLastNotifications.put(sbn.getPackageName(), sbn.getNotification());
+    }
+
+    private Notification getNotificationByPackage(String packageName) {
+        StatusBarNotification[] ns = getActiveNotifications();
+        if (ns == null) {
+            return null;
         }
+        for (StatusBarNotification sn : ns) {
+            if (sn.getPackageName().equals(packageName)) {
+                return sn.getNotification();
+            }
+        }
+        return null;
     }
 
 
@@ -86,10 +94,6 @@ public class NotificationCollectorService extends NotificationListenerService {
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         Log.d(TAG, "onNotificationRemoved");
-        if (mLastNotifications.get(sbn.getPackageName()) != null
-                && mLastNotifications.get(sbn.getPackageName()) == sbn.getNotification()) {
-            mLastNotifications.put(sbn.getPackageName(), null);
-        }
     }
 
 }

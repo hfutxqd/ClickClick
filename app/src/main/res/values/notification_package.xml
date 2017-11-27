@@ -2,4 +2,5 @@
 <resources>
     <string name="cloud_music_package">com.netease.cloudmusic</string>
     <string name="qq_music_package">com.qq.music</string>
+    <string name="meizu_music_package">com.meizu.media.music</string>
 </resources>
