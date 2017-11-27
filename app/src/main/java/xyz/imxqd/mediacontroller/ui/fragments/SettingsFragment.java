@@ -32,6 +32,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         return mInstance;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initPrefs();
+    }
+
 
     @Override
     public void onCreatePreferencesFix(@Nullable Bundle savedInstanceState, String rootKey) {
@@ -41,11 +47,13 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     private void initPrefs() {
         SwitchPreference appSwitch = (SwitchPreference) findPreference(getString(R.string.pref_key_app_switch));
+        BaseActivity activity = (BaseActivity)getActivity();
         if (appSwitch.isChecked()) {
-            BaseActivity activity = (BaseActivity)getActivity();
             if (!activity.isAccessibilitySettingsOn()) {
                 appSwitch.setChecked(false);
             }
+        } else if (mPendingSwitchOn && activity.isAccessibilitySettingsOn()) {
+            appSwitch.setChecked(true);
         }
 
         boolean debug = getPreferenceManager()
@@ -63,6 +71,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     }
 
     private int mClickCount = 0;
+    private boolean mPendingSwitchOn = false;
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
@@ -86,9 +95,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             if (p.isChecked()) {
                 BaseActivity activity = (BaseActivity)getActivity();
                 if (!activity.isAccessibilitySettingsOn()) {
+                    mPendingSwitchOn = true;
                     activity.startAccessibilitySettings();
                     p.setChecked(false);
                 }
+            } else {
+                mPendingSwitchOn = false;
             }
             return true;
         }
