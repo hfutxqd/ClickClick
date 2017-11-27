@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
@@ -15,6 +16,7 @@ import java.util.HashSet;
 import xyz.imxqd.mediacontroller.R;
 import xyz.imxqd.mediacontroller.utils.Constants;
 import xyz.imxqd.mediacontroller.utils.ResUtil;
+import xyz.imxqd.mediacontroller.utils.SettingsUtil;
 
 /**
  * Created by imxqd on 2016/12/11.
@@ -23,7 +25,7 @@ import xyz.imxqd.mediacontroller.utils.ResUtil;
 public class NotificationCollectorService extends NotificationListenerService {
 
     private static final String TAG = "imxqd";
-
+    private Toast mToast;
     private HashSet<String> mPackageNames = new HashSet<>();
 
     private boolean isConnected = false;
@@ -43,6 +45,9 @@ public class NotificationCollectorService extends NotificationListenerService {
     @Override
     public void onListenerConnected() {
         Log.d(TAG, "onListenerConnected");
+        if (SettingsUtil.displayDebug()) {
+            showToast(getString(R.string.open_notification_service_success));
+        }
         isConnected = true;
         mPackageNames.add(ResUtil.getString(R.string.cloud_music_package));
         mPackageNames.add(ResUtil.getString(R.string.qq_music_package));
@@ -51,6 +56,9 @@ public class NotificationCollectorService extends NotificationListenerService {
     @Override
     public void onListenerDisconnected() {
         Log.d(TAG, "onListenerDisconnected");
+        if (SettingsUtil.displayDebug()) {
+            showToast(getString(R.string.open_notification_service_disconnected));
+        }
         isConnected = false;
     }
 
@@ -94,6 +102,14 @@ public class NotificationCollectorService extends NotificationListenerService {
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
         Log.d(TAG, "onNotificationRemoved");
+    }
+
+    private void showToast(String str) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+        mToast = Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG);
+        mToast.show();
     }
 
 }

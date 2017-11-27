@@ -30,7 +30,9 @@ public class KeyEventService extends AccessibilityService implements  KeyEventHa
     @Override
     protected void onServiceConnected() {
 
-        showToast(getString(R.string.open_service_success));
+        if (SettingsUtil.displayDebug()) {
+            showToast(getString(R.string.open_service_success));
+        }
 
         mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         mKeyEventHandler = new KeyEventHandler();
@@ -52,6 +54,9 @@ public class KeyEventService extends AccessibilityService implements  KeyEventHa
     @Override
     public void onInterrupt() {
         Logger.d("onInterrupt");
+        if (SettingsUtil.displayDebug()) {
+            showToast(getString(R.string.open_service_interrupt));
+        }
     }
 
     @Override

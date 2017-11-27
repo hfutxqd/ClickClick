@@ -24,5 +24,8 @@
     <string name="settings_app_switch_off_summary">已关闭按键映射服务</string>
     <string name="settings_key_app_debug_title">显示调试信息</string>
     <string name="settings_key_debug_category_title">调试</string>
-    <string name="open_service_success">开启服务成功!</string>
+    <string name="open_service_success">开启按键服务成功!</string>
+    <string name="open_notification_service_success">通知服务开启成功!</string>
+    <string name="open_service_interrupt">按键服务被中断!</string>
+    <string name="open_notification_service_disconnected">通知服务被中断!</string>
 </resources>
