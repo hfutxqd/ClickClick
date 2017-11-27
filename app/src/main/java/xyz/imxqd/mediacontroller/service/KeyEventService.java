@@ -16,6 +16,7 @@ import java.security.Key;
 import java.util.ArrayList;
 
 import xyz.imxqd.mediacontroller.App;
+import xyz.imxqd.mediacontroller.R;
 import xyz.imxqd.mediacontroller.utils.KeyEventHandler;
 import xyz.imxqd.mediacontroller.utils.KeyEventUtil;
 import xyz.imxqd.mediacontroller.utils.SettingsUtil;
@@ -28,6 +29,9 @@ public class KeyEventService extends AccessibilityService implements  KeyEventHa
 
     @Override
     protected void onServiceConnected() {
+
+        showToast(getString(R.string.open_service_success));
+
         mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         mKeyEventHandler = new KeyEventHandler();
         mKeyEventHandler.mLongClickKeyCodes = new ArrayList<>();
