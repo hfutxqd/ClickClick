@@ -71,7 +71,7 @@ public class NaviActivity extends BaseActivity {
                 fragmentTo = SettingsFragment.getInstance();
                 break;
         }
-        if (fragmentTo == null) {
+        if (fragmentTo == null || mCurrentFragment == fragmentTo) {
             return;
         }
         if (fragments.contains(fragmentTo)) {
