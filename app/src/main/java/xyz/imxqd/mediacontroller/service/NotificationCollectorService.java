@@ -12,9 +12,11 @@ import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import xyz.imxqd.mediacontroller.R;
 import xyz.imxqd.mediacontroller.utils.Constants;
+import xyz.imxqd.mediacontroller.utils.NotificationAccessUtil;
 import xyz.imxqd.mediacontroller.utils.ResUtil;
 import xyz.imxqd.mediacontroller.utils.SettingsUtil;
 
@@ -37,7 +39,12 @@ public class NotificationCollectorService extends NotificationListenerService {
         }
         if (Constants.ACTION_CLOUD_MUSIC_LIKE.equals(intent.getAction())) {
             Notification n = getNotificationByPackage(getString(R.string.cloud_music_package));
-            Logger.d(n);
+            List<PendingIntent> intents = NotificationAccessUtil.getPendingIntents(n);
+            try {
+                intents.get(4).send();
+            } catch (PendingIntent.CanceledException e) {
+                e.printStackTrace();
+            }
         }
         return START_STICKY_COMPATIBILITY;
     }
@@ -62,9 +69,22 @@ public class NotificationCollectorService extends NotificationListenerService {
         isConnected = false;
     }
 
+
+    // 0 暂停
+    // 1 下一曲
+    // 2 关闭
+    // 3 歌词
+    // 4 喜爱
+
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
         Logger.d(sbn.getPackageName());
+        List<PendingIntent> intents = NotificationAccessUtil.getPendingIntents(sbn.getNotification());
+        int index = 4;
+        for (PendingIntent intent : intents) {
+            Logger.d(intent);
+            Logger.d(intent.getCreatorUserHandle());
+        }
     }
 
     private Notification getNotificationByPackage(String packageName) {
@@ -77,7 +97,7 @@ public class NotificationCollectorService extends NotificationListenerService {
                 return sn.getNotification();
             }
         }
-        return null;
+        return new Notification();
     }
 
 
@@ -90,13 +110,15 @@ public class NotificationCollectorService extends NotificationListenerService {
         }
         return false;
     }
-    // 网易云音乐
+    // 网易云音乐 7.0 // allPendingIntents
     // 0 喜爱
     // 2 下一曲
     // 3 暂停
     // 4 词
     // 6 暂停
     // 7 关闭
+
+
 
 
     @Override

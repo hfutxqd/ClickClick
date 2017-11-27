@@ -4,6 +4,7 @@ package xyz.imxqd.mediacontroller.ui.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -94,7 +95,9 @@ public class KeyEventMapFragment extends Fragment {
     @OnClick(R.id.action_add)
     public void onAddClick() {
         Intent intent = new Intent(getActivity(), KeyEventActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
         startActivityForResult(intent, REQUEST_CODE_ADD_KEY_EVENT);
     }
 

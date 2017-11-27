@@ -12,7 +12,11 @@ import android.text.TextUtils;
 import android.util.ArraySet;
 import android.widget.RemoteViews;
 
+import com.orhanobut.logger.Logger;
+
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +54,7 @@ public class NotificationAccessUtil {
     }
 
 
+    // API 24以上可用
     public static ArraySet<PendingIntent> getAllPendingIntents(Notification n) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             try {
@@ -66,24 +71,69 @@ public class NotificationAccessUtil {
         return null;
     }
 
-    public static List<Notification.Action> getAllActions(Notification n) {
-        try {
-            if (n.actions != null) {
-                return Arrays.asList(n.actions);
+    // API 19以上可用
+    public static List<PendingIntent> getPendingIntents(Notification n) {
+        List<PendingIntent> intents = new ArrayList<>();
+        RemoteViews rvs;
+        if (n.bigContentView != null) {
+            rvs = n.bigContentView;
+        } else if (n.contentView != null){
+            rvs = n.contentView;
+        } else {
+            return intents;
+        }
+        ArrayList actions = getRemoteViewsActions(rvs);
+        for (Object action : actions) {
+            PendingIntent intent = null;
+            try {
+                intent = (PendingIntent) sFieldActionPendingIntent.get(action);
+            } catch (Throwable e) {
+                continue;
             }
-            Field field = RemoteViews.class
-                    .getDeclaredField("mActions");
-            field.setAccessible(true);
-            ArrayList<Object> actions =
-                    (ArrayList<Object>) field.get(n.contentView);
+            intents.add(intent);
+        }
+        return intents;
+    }
 
-            //todo 解析RemoteViews里的Action
-            actions.size();
-            return null;
-        } catch (IllegalAccessException | NoSuchFieldException e) {
+    private static ArrayList getRemoteViewsActions(RemoteViews rvs) {
+        try {
+            return (ArrayList) sFieldmActions.get(rvs);
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return new ArrayList();
     }
+
+    static {
+        try {
+
+            sMethodGetIntent = PendingIntent.class.getMethod("getIntent");
+
+            Field field = RemoteViews.class.getDeclaredField("mActions");
+            field.setAccessible(true);
+            sFieldmActions = field;
+            Class[] classes = RemoteViews.class.getDeclaredClasses();
+            Class SetOnClickPendingIntent = null;
+            for (Class c : classes) {
+                if (c.getName().contains("SetOnClickPendingIntent")) {
+                    SetOnClickPendingIntent = c;
+                }
+            }
+            sClassSetOnClickPendingIntent = SetOnClickPendingIntent;
+            Field field2 = SetOnClickPendingIntent.getDeclaredField("pendingIntent");
+            field2.setAccessible(true);
+            sFieldActionPendingIntent = field2;
+        } catch (NoSuchFieldException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Class  sClassSetOnClickPendingIntent;
+    private static Field sFieldmActions;
+
+    private static Field sFieldActionPendingIntent;
+
+    private static Method sMethodGetIntent;
+
 
 }
