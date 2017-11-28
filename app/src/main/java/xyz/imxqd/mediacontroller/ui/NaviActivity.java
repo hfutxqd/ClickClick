@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import xyz.imxqd.mediacontroller.R;
 import xyz.imxqd.mediacontroller.ui.fragments.FunctionFragment;
 import xyz.imxqd.mediacontroller.ui.fragments.KeyEventMapFragment;
+import xyz.imxqd.mediacontroller.ui.fragments.ProfileFragment;
 import xyz.imxqd.mediacontroller.ui.fragments.SettingsFragment;
 
 public class NaviActivity extends BaseActivity {
@@ -59,8 +60,7 @@ public class NaviActivity extends BaseActivity {
         switch (id) {
             case R.id.navigation_home:
                 vTitle.setText(R.string.title_home);
-                fragmentTo = KeyEventMapFragment.getInstance();
-
+                fragmentTo = ProfileFragment.getInstance();
                 break;
             case R.id.navigation_dashboard:
                 vTitle.setText(R.string.title_dashboard);

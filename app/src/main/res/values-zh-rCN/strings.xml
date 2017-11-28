@@ -11,9 +11,9 @@
     <string name="btn_add">添加</string>
     <string name="title_settings">设置</string>
     <string name="title_activity_navi">媒体控制器</string>
-    <string name="title_home">映射</string>
+    <string name="title_home">场景</string>
     <string name="title_dashboard">功能</string>
-    <string name="action_add_description">点击可以添加映射</string>
+    <string name="action_add_description">点击可以添加场景</string>
     <string name="settings_about_title">关于</string>
     <string name="settings_version_summary">1.0.0</string>
     <string name="settings_version_title">版本</string>
