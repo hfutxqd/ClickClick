@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.ArraySet;
@@ -55,6 +56,7 @@ public class NotificationAccessUtil {
 
 
     // API 24以上可用
+    @RequiresApi(Build.VERSION_CODES.N)
     public static ArraySet<PendingIntent> getAllPendingIntents(Notification n) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             try {
@@ -72,6 +74,7 @@ public class NotificationAccessUtil {
     }
 
     // API 19以上可用
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     public static List<PendingIntent> getPendingIntents(Notification n) {
         List<PendingIntent> intents = new ArrayList<>();
         RemoteViews rvs;
@@ -95,6 +98,7 @@ public class NotificationAccessUtil {
         return intents;
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     private static ArrayList getRemoteViewsActions(RemoteViews rvs) {
         try {
             return (ArrayList) sFieldmActions.get(rvs);
@@ -107,7 +111,7 @@ public class NotificationAccessUtil {
     static {
         try {
 
-            sMethodGetIntent = PendingIntent.class.getMethod("getIntent");
+            sMethodGetIntent = PendingIntent.class.getDeclaredMethod("getIntent");
 
             Field field = RemoteViews.class.getDeclaredField("mActions");
             field.setAccessible(true);
@@ -133,6 +137,7 @@ public class NotificationAccessUtil {
 
     private static Field sFieldActionPendingIntent;
 
+     // 通过反射调用隐藏接口，可能不支持所有设备，高版本不支持
     private static Method sMethodGetIntent;
 
 
