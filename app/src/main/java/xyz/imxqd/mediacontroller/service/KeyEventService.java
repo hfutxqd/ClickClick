@@ -48,7 +48,7 @@ public class KeyEventService extends AccessibilityService implements  KeyEventHa
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        
+
     }
 
     @Override

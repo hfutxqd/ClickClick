@@ -12,7 +12,7 @@ import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 import xyz.imxqd.mediacontroller.R;
 import xyz.imxqd.mediacontroller.ui.BaseActivity;
 
-public class SettingsFragment extends PreferenceFragmentCompat {
+public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
 
     private static volatile SettingsFragment mInstance;
 
@@ -42,7 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferencesFix(@Nullable Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settgings_screen);
-        initPrefs();
+        findPreference(getString(R.string.pref_key_app_switch)).setOnPreferenceChangeListener(this);
     }
 
     private void initPrefs() {
@@ -75,7 +75,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-
         if (getString(R.string.pref_key_version).equals(preference.getKey())) {
             if (mClickCount == 0) {
                 mHandler.postDelayed(new Runnable() {
@@ -111,5 +110,14 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onDestroy() {
         super.onDestroy();
         mInstance = null;
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (getString(R.string.pref_key_app_switch).equals(preference.getKey())) {
+            findPreference(getString(R.string.pref_key_notification_switch)).setEnabled((Boolean) newValue);
+            findPreference(getString(R.string.pref_key_root_mode_switch)).setEnabled((Boolean) newValue);
+        }
+        return true;
     }
 }

@@ -29,4 +29,10 @@
     <string name="open_service_interrupt">按键服务被中断!</string>
     <string name="open_notification_service_disconnected">通知服务被中断!</string>
     <string name="accessibility_service_title">媒体控制器-按键服务</string>
+    <string name="settings_root_mode_title">ROOT模式</string>
+    <string name="settings_root_mode_on_summary">已开启，屏幕关闭后可继续工作</string>
+    <string name="settings_root_mode_off_summary">已关闭，屏幕关闭后功能可能不可用</string>
+    <string name="settings_notification_title">通知服务</string>
+    <string name="settings_notification_on_summary">已开启，可以支持喜爱功能</string>
+    <string name="settings_notification_off_summary">已关闭，喜爱功能不可用</string>
 </resources>
