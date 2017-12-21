@@ -26,6 +26,18 @@
             </intent-filter>
         </activity>
 
+        <!--<activity-->
+            <!--android:name=".eventinjector.utils.MainActivity"-->
+            <!--android:label="Event Injector"-->
+            <!--android:theme="@android:style/Theme.DeviceDefault"-->
+            <!--android:screenOrientation="portrait">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
         <activity
             android:name=".ui.KeyEventActivity"
             android:theme="@style/AppTheme.Dialog"

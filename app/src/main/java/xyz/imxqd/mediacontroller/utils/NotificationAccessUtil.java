@@ -8,18 +8,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.widget.RemoteViews;
 
-import com.orhanobut.logger.Logger;
-
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

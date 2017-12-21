@@ -16,6 +16,7 @@
 
     <SwitchPreference
         android:key="@string/pref_key_root_mode_switch"
+        android:enabled="false"
         android:defaultValue="false"
         android:title="@string/settings_root_mode_title"
         android:summaryOn="@string/settings_root_mode_on_summary"
