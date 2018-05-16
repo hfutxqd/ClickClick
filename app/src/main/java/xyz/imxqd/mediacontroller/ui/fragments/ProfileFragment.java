@@ -10,16 +10,15 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.SpannedString;
 import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +28,6 @@ import xyz.imxqd.mediacontroller.model.AppKeyEvent;
 import xyz.imxqd.mediacontroller.service.NotificationCollectorService;
 import xyz.imxqd.mediacontroller.ui.KeyEventActivity;
 import xyz.imxqd.mediacontroller.ui.adapters.ProfileAdapter;
-import xyz.imxqd.mediacontroller.utils.Constants;
 import xyz.imxqd.mediacontroller.utils.NotificationAccessUtil;
 import xyz.imxqd.mediacontroller.utils.ScreenUtl;
 
@@ -84,14 +82,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        assert getActivity() != null;
+        assert getContext() != null;
+
         if (!NotificationAccessUtil.isEnabled(getContext())) {
-            NotificationAccessUtil.openNotificationAccess(getContext());
+            Logger.d("NotificationAccess is disabled.");
         } else {
             getActivity().startService(new Intent(getActivity(), NotificationCollectorService.class));
         }
-        Intent intent = new Intent(getContext(), NotificationCollectorService.class);
-        intent.setAction(Constants.ACTION_CLOUD_MUSIC_LIKE);
-        getActivity().startService(intent);
 
         vState.setText(getStateText());
     }

@@ -24,7 +24,6 @@ import xyz.imxqd.mediacontroller.model.AppKeyEvent;
 import xyz.imxqd.mediacontroller.service.NotificationCollectorService;
 import xyz.imxqd.mediacontroller.ui.KeyEventActivity;
 import xyz.imxqd.mediacontroller.ui.adapters.KeyEventMapAdapter;
-import xyz.imxqd.mediacontroller.utils.Constants;
 import xyz.imxqd.mediacontroller.utils.NotificationAccessUtil;
 import xyz.imxqd.mediacontroller.utils.ScreenUtl;
 
@@ -76,14 +75,14 @@ public class KeyEventMapFragment extends Fragment {
             }
         });
 
+        assert getActivity() != null;
+        assert getContext() != null;
+
         if (!NotificationAccessUtil.isEnabled(getContext())) {
-            NotificationAccessUtil.openNotificationAccess(getContext());
+            Logger.d("NotificationAccess is disabled.");
         } else {
             getActivity().startService(new Intent(getActivity(), NotificationCollectorService.class));
         }
-        Intent intent = new Intent(getContext(), NotificationCollectorService.class);
-        intent.setAction(Constants.ACTION_CLOUD_MUSIC_LIKE);
-        getActivity().startService(intent);
     }
 
     @Override
