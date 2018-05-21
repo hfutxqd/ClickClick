@@ -1,13 +1,11 @@
 package xyz.imxqd.mediacontroller.ui.fragments;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,15 +18,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.mediacontroller.R;
-import xyz.imxqd.mediacontroller.model.AppKeyEvent;
 import xyz.imxqd.mediacontroller.service.NotificationCollectorService;
-import xyz.imxqd.mediacontroller.ui.KeyEventActivity;
+import xyz.imxqd.mediacontroller.ui.AddKeyEventActivity;
 import xyz.imxqd.mediacontroller.ui.adapters.KeyEventMapAdapter;
 import xyz.imxqd.mediacontroller.utils.NotificationAccessUtil;
 import xyz.imxqd.mediacontroller.utils.ScreenUtl;
 
 
-public class KeyEventMapFragment extends Fragment {
+public class KeyEventMapFragment extends BaseFragment {
 
     private static final int REQUEST_CODE_ADD_KEY_EVENT = 1;
     private volatile static KeyEventMapFragment mInstance;
@@ -93,7 +90,7 @@ public class KeyEventMapFragment extends Fragment {
 
     @OnClick(R.id.action_add)
     public void onAddClick() {
-        Intent intent = new Intent(getActivity(), KeyEventActivity.class);
+        Intent intent = new Intent(getActivity(), AddKeyEventActivity.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
@@ -102,9 +99,6 @@ public class KeyEventMapFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        AppKeyEvent event;
-        if (resultCode == Activity.RESULT_OK) {
-            event = data.getParcelableExtra(KeyEventActivity.ARG_KEY_EVENT);
-        }
+
     }
 }

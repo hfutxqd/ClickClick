@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="event_type">
+        <item>Single Click</item>
+        <item>Long Click</item>
+        <item>Double Click</item>
+        <item>Triple Click</item>
+    </string-array>
+
+    <string-array name="event_type_value">
+        <item>SingleClick</item>
+        <item>LongClick</item>
+        <item>DoubleClick</item>
+        <item>TripleClick</item>
+    </string-array>
+</resources>

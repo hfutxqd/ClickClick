@@ -1,4 +1,4 @@
-package xyz.imxqd.mediacontroller.model;
+package xyz.imxqd.mediacontroller.dao;
 
 import com.raizlabs.android.dbflow.annotation.Database;
 

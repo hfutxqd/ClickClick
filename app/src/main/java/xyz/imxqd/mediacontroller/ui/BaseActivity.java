@@ -2,11 +2,19 @@ package xyz.imxqd.mediacontroller.ui;
 
 import android.content.Intent;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.RelativeSizeSpan;
 
 import com.orhanobut.logger.Logger;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import xyz.imxqd.mediacontroller.R;
 import xyz.imxqd.mediacontroller.service.KeyEventService;
 
 /**

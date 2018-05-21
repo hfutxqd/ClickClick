@@ -4,23 +4,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.mediacontroller.App;
 import xyz.imxqd.mediacontroller.R;
-import xyz.imxqd.mediacontroller.model.AppKeyEvent;
+import xyz.imxqd.mediacontroller.dao.KeyMappingEvent;
+import xyz.imxqd.mediacontroller.model.AppKeyEventType;
 import xyz.imxqd.mediacontroller.utils.KeyEventUtil;
 
-public class KeyEventActivity extends BaseActivity {
+public class AddKeyEventActivity extends BaseActivity {
 
     public static final String ARG_KEY_EVENT = "key_event";
 
-    private AppKeyEvent mKeyEvent = new AppKeyEvent();
+    private KeyMappingEvent mKeyEvent = new KeyMappingEvent();
 
     @BindView(R.id.key_tips)
     TextView mTvTips;
@@ -38,6 +46,12 @@ public class KeyEventActivity extends BaseActivity {
     LinearLayout mInfoLayout;
     @BindView(R.id.key_ignore_device)
     CheckBox mCkIgnoreDevice;
+    @BindView(R.id.key_event_type)
+    Spinner mSpEventType;
+    @BindView(R.id.key_function)
+    Spinner mSpFunction;
+
+    List<String> mEventTypeValues;
 
 
     @Override
@@ -48,6 +62,14 @@ public class KeyEventActivity extends BaseActivity {
         ButterKnife.bind(this);
         App.get().isServiceOn = false;
         mBtnAdd.setEnabled(false);
+        List<String> spinnerArray =  new ArrayList<>();
+        Collections.addAll(spinnerArray, getResources().getStringArray(R.array.event_type));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, spinnerArray);
+        mSpEventType.setAdapter(adapter);
+
+        mEventTypeValues = new ArrayList<>();
+        Collections.addAll(mEventTypeValues, getResources().getStringArray(R.array.event_type_value));
+
     }
 
     @Override
@@ -64,10 +86,17 @@ public class KeyEventActivity extends BaseActivity {
 
     @OnClick(R.id.key_btn_add)
     public void onAddBtnClick() {
-        Intent intent = new Intent();
-        intent.putExtra(ARG_KEY_EVENT, mKeyEvent);
-        setResult(RESULT_OK, intent);
-        finish();
+        try {
+            mKeyEvent.eventType = AppKeyEventType.valueOf(mEventTypeValues.get(mSpEventType.getSelectedItemPosition()));
+            mKeyEvent.save();
+
+            Intent intent = new Intent();
+            intent.putExtra(ARG_KEY_EVENT, mKeyEvent);
+            setResult(RESULT_OK, intent);
+            finish();
+        } catch (Exception e) {
+            Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -75,9 +104,10 @@ public class KeyEventActivity extends BaseActivity {
         mBtnAdd.setEnabled(true);
         mTvTips.setVisibility(View.GONE);
         mInfoLayout.setVisibility(View.VISIBLE);
-        mKeyEvent.mDeviceId = event.getDeviceId();
-        mKeyEvent.mKeyCode = event.getKeyCode();
-        mKeyEvent.mDeviceName = event.getDevice().getName();
+        mKeyEvent.deviceId = event.getDeviceId();
+        mKeyEvent.keyCode = event.getKeyCode();
+        mKeyEvent.keyName = KeyEventUtil.getKeyName(mKeyEvent.keyCode);
+        mKeyEvent.deviceName = event.getDevice().getName();
         mKeyEvent.ignoreDevice = mCkIgnoreDevice.isChecked();
 
         mTvKeyCode.setText(getString(R.string.key_code, event.getKeyCode()));

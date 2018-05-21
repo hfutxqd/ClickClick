@@ -17,7 +17,6 @@
     <string name="title_dashboard">Functions</string>
     <string name="title_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_add_description">Click to add a profile</string>
     <string name="settings_version_summary">1.0.0</string>
@@ -27,4 +26,21 @@
     <string name="settings_author_summary">IMXQD</string>
     <string name="accessibility_service_title">媒体控制器-按键服务</string>
     <string name="accessibility_description">媒体控制器需要此权限用来拦截按键事件。媒体控制器承诺不会收集任何用户隐私相关的数据。</string>
+    <string name="settings_app_switch_title">功能开关</string>
+    <string name="settings_app_switch_on_summary">已开启按键映射服务</string>
+    <string name="settings_app_switch_off_summary">已关闭按键映射服务</string>
+    <string name="settings_key_app_debug_title">显示调试信息</string>
+    <string name="settings_key_debug_category_title">调试</string>
+    <string name="open_service_success">开启按键服务成功!</string>
+    <string name="open_notification_service_success">通知服务开启成功!</string>
+    <string name="open_service_interrupt">按键服务被中断!</string>
+    <string name="open_notification_service_disconnected">通知服务被中断!</string>
+    <string name="settings_root_mode_title">ROOT模式</string>
+    <string name="settings_root_mode_on_summary">已开启，屏幕关闭后可继续工作</string>
+    <string name="settings_root_mode_off_summary">已关闭，屏幕关闭后功能可能不可用</string>
+    <string name="settings_notification_title">通知服务</string>
+    <string name="settings_notification_on_summary">已开启，可以支持喜爱功能</string>
+    <string name="settings_notification_off_summary">已关闭，喜爱功能不可用</string>
+    <string name="profile_current_state">当前开启 %1$d 个场景</string>
+    <string name="function_current_state">当前共有 %1$d 项定义功能</string>
 </resources>

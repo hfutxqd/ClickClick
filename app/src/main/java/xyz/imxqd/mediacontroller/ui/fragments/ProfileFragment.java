@@ -7,12 +7,8 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,15 +20,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.mediacontroller.R;
-import xyz.imxqd.mediacontroller.model.AppKeyEvent;
 import xyz.imxqd.mediacontroller.service.NotificationCollectorService;
-import xyz.imxqd.mediacontroller.ui.KeyEventActivity;
+import xyz.imxqd.mediacontroller.ui.AddKeyEventActivity;
 import xyz.imxqd.mediacontroller.ui.adapters.ProfileAdapter;
 import xyz.imxqd.mediacontroller.utils.NotificationAccessUtil;
 import xyz.imxqd.mediacontroller.utils.ScreenUtl;
 
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BaseFragment implements ProfileAdapter.CheckChangeCallback {
 
     private static final int REQUEST_CODE_ADD_KEY_EVENT = 1;
     private volatile static ProfileFragment mInstance;
@@ -69,6 +64,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mAdapter = new ProfileAdapter();
+        mAdapter.setCheckChangeCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
         vList.setAdapter(mAdapter);
         vList.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -90,8 +86,7 @@ public class ProfileFragment extends Fragment {
         } else {
             getActivity().startService(new Intent(getActivity(), NotificationCollectorService.class));
         }
-
-        vState.setText(getStateText());
+        initStateText();
     }
 
     @Override
@@ -100,15 +95,15 @@ public class ProfileFragment extends Fragment {
         mInstance = null;
     }
 
-    private CharSequence getStateText() {
-        Spannable spannable = new SpannableString("当前开启 5 个场景");
-        spannable.setSpan(new RelativeSizeSpan(2f), 5, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return spannable;
+    private void initStateText() {
+        int count = mAdapter.getEnableCount();
+        String state = getString(R.string.profile_current_state, count);
+        vState.setText(getBigNumberText(state));
     }
 
     @OnClick(R.id.action_add)
     public void onAddClick() {
-        Intent intent = new Intent(getActivity(), KeyEventActivity.class);
+        Intent intent = new Intent(getActivity(), AddKeyEventActivity.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
@@ -117,9 +112,14 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        AppKeyEvent event;
         if (resultCode == Activity.RESULT_OK) {
-            event = data.getParcelableExtra(KeyEventActivity.ARG_KEY_EVENT);
+            mAdapter.refreshData();
+            mAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onCheckedChanged(boolean isChecked) {
+        initStateText();
     }
 }

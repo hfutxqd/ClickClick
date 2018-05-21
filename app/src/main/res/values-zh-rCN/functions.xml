@@ -25,30 +25,4 @@
         <item>喜爱（QQ音乐）</item>
     </string-array>
 
-
-    <integer-array name="key_values" >
-        <item>-1</item>
-        <item>-2</item>
-        <item>-3</item> // 91
-        <item>88</item>
-        <item>87</item>
-        <item>86</item>
-        <item>85</item>
-        <item>126</item>
-        <item>127</item>
-        <item>79</item>
-        <item>272</item>
-        <item>273</item>
-        <item>92</item>
-        <item>93</item>
-        <item>221</item>
-        <item>220</item>
-        <item>27</item>
-        <item>4</item>
-        <item>3</item>
-        <item>6</item>
-        <item>-1000</item>
-        <item>-1001</item>
-    </integer-array>
-
 </resources>

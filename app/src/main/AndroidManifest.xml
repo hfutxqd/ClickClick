@@ -39,7 +39,7 @@
         <!--</activity>-->
 
         <activity
-            android:name=".ui.KeyEventActivity"
+            android:name=".ui.AddKeyEventActivity"
             android:theme="@style/AppTheme.Dialog"
             android:launchMode="singleTask">
 

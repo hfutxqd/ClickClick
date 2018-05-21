@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="event_type">
+        <item>单击</item>
+        <item>长按</item>
+        <item>双击</item>
+        <item>三击</item>
+    </string-array>
+</resources>

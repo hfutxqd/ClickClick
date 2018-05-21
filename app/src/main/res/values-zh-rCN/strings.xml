@@ -36,4 +36,6 @@
     <string name="settings_notification_on_summary">已开启，可以支持喜爱功能</string>
     <string name="settings_notification_off_summary">已关闭，喜爱功能不可用</string>
     <string name="accessibility_description">媒体控制器需要此权限用来拦截按键事件。媒体控制器承诺不会收集任何用户隐私相关的数据。</string>
+    <string name="profile_current_state">当前开启 %1$d 个场景</string>
+    <string name="function_current_state">当前共有 %1$d 项定义功能</string>
 </resources>
