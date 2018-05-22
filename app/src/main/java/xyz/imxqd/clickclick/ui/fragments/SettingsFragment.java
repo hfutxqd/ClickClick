@@ -63,6 +63,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             if (mPendingSwitchOn && activity.isAccessibilitySettingsOn()) {
                 appSwitch.setChecked(true);
             }
+            SwitchPreference notificationSwitch = (SwitchPreference) findPreference(getString(R.string.pref_key_notification_switch));
+            if (mPendingNotificationOn && NotificationAccessUtil.isEnabled(getContext())) {
+                notificationSwitch.setChecked(true);
+            }
         }
         if (!NotificationAccessUtil.isEnabled(getContext())) {
             ((SwitchPreference)findPreference(getString(R.string.pref_key_notification_switch))).setChecked(false);
@@ -84,6 +88,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private int mClickCount = 0;
     private boolean mPendingSwitchOn = false;
+    private boolean mPendingNotificationOn = false;
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
@@ -121,6 +126,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             if (!NotificationAccessUtil.isEnabled(getContext())) {
                 p.setChecked(false);
                 NotificationAccessUtil.openNotificationAccess(getContext());
+                mPendingNotificationOn = true;
+            } else {
+                mPendingNotificationOn = false;
             }
             return true;
         }
