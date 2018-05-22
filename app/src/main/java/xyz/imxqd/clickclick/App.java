@@ -6,6 +6,8 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import xyz.imxqd.clickclick.model.AppEventManager;
+
 /**
  * Created by imxqd on 2017/11/24.
  */
@@ -21,6 +23,7 @@ public class App extends Application {
         super.onCreate();
         mApp = this;
         FlowManager.init(this);
+        AppEventManager.getInstance().init(this);
         Logger.addLogAdapter(new AndroidLogAdapter());
 
     }

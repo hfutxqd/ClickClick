@@ -3,6 +3,7 @@ package xyz.imxqd.clickclick.utils;
 import android.os.Handler;
 import android.view.KeyEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -17,10 +18,10 @@ public class KeyEventHandler {
 
     private Callback mCallback;
     private Stack<KeyEvent> mLastEvent;
-    public List<Integer> mLongClickKeyCodes;
-    public List<Integer> mSingleClickKeyCodes;
-    public List<Integer> mDoubleClickKeyCodes;
-    public List<Integer> mTripleClickKeyCodes;
+    public List<Integer> mLongClickKeyCodes = new ArrayList<>();
+    public List<Integer> mSingleClickKeyCodes = new ArrayList<>();
+    public List<Integer> mDoubleClickKeyCodes = new ArrayList<>();
+    public List<Integer> mTripleClickKeyCodes = new ArrayList<>();
 
     private Handler mHandler;
 
@@ -108,6 +109,8 @@ public class KeyEventHandler {
             mLastEvent.clear();
             mKeyClickCount = 1;
             mHandler.removeCallbacksAndMessages(null);
+        } else {
+            mCallback.onNormalKeyEvent(event);
         }
     }
 

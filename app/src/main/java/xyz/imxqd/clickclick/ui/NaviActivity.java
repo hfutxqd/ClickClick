@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.ui.fragments.FunctionFragment;
 import xyz.imxqd.clickclick.ui.fragments.KeyEventMapFragment;
