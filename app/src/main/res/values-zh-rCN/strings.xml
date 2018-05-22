@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">媒体控制器</string>
+    <string name="app_name">快按键</string>
 
     <string name="key_code">键值: %1$d</string>
     <string name="key_name">键名: %1$s</string>
@@ -10,7 +10,7 @@
     <string name="key_ignore_device">忽略设备信息</string>
     <string name="btn_add">添加</string>
     <string name="title_settings">设置</string>
-    <string name="title_activity_navi">媒体控制器</string>
+    <string name="title_activity_navi">快按键</string>
     <string name="title_home">场景</string>
     <string name="title_dashboard">功能</string>
     <string name="action_add_description">点击可以添加场景</string>

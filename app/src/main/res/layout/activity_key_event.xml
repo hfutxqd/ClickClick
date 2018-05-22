@@ -7,7 +7,7 @@
     android:minWidth="240dp"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context="xyz.imxqd.mediacontroller.ui.AddKeyEventActivity">
+    tools:context="xyz.imxqd.clickclick.ui.AddKeyEventActivity">
     <ImageView
         android:id="@+id/key_btn_close"
         android:src="@drawable/ic_close_black_36dp"

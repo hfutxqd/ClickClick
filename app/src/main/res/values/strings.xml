@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MediaController</string>
+    <string name="app_name">ClickClick</string>
 
     <string name="key_code">Key Code : %1$d</string>
     <string name="key_name">Key Name : %1$s</string>
@@ -12,7 +12,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="title_activity_navi">MediaController</string>
+    <string name="title_activity_navi">ClickClick</string>
     <string name="title_home">Profile</string>
     <string name="title_dashboard">Functions</string>
     <string name="title_settings">Settings</string>

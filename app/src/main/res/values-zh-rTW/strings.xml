@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">媒體控制器</string>
+    <string name="app_name">快按鍵</string>
 
     <string name="key_code">鍵值: %1$d</string>
     <string name="key_name">鍵名: %1$s</string>
@@ -10,7 +10,7 @@
     <string name="key_event_activity_tips">請按鍵…</string>
     <string name="btn_add">添加</string>
     <string name="title_settings">Settings</string>
-    <string name="title_activity_navi">媒體控制器</string>
+    <string name="title_activity_navi">快按鍵</string>
     <string name="title_home">場景</string>
     <string name="title_dashboard">功能</string>
     <string name="action_add_description">點擊可以添加場景</string>
