@@ -114,6 +114,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Chec
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             mAdapter.refreshData();
+            initStateText();
             mAdapter.notifyDataSetChanged();
         }
     }
