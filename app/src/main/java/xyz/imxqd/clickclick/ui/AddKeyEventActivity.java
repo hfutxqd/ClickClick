@@ -11,6 +11,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,8 +22,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.model.AppKeyEventType;
+import xyz.imxqd.clickclick.ui.adapters.FunctionSpinnerAdapter;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
 
 public class AddKeyEventActivity extends BaseActivity {
@@ -53,6 +57,7 @@ public class AddKeyEventActivity extends BaseActivity {
 
     List<String> mEventTypeValues;
 
+    FunctionSpinnerAdapter mFuncAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +74,9 @@ public class AddKeyEventActivity extends BaseActivity {
 
         mEventTypeValues = new ArrayList<>();
         Collections.addAll(mEventTypeValues, getResources().getStringArray(R.array.event_type_value));
+
+        mFuncAdapter = new FunctionSpinnerAdapter();
+        mSpFunction.setAdapter(mFuncAdapter);
 
     }
 
@@ -87,6 +95,10 @@ public class AddKeyEventActivity extends BaseActivity {
     @OnClick(R.id.key_btn_add)
     public void onAddBtnClick() {
         try {
+
+            DefinedFunction function = (DefinedFunction) mSpFunction.getSelectedItem();
+            mKeyEvent.funcName = function.name;
+            mKeyEvent.funcId = function.id;
             mKeyEvent.eventType = AppKeyEventType.valueOf(mEventTypeValues.get(mSpEventType.getSelectedItemPosition()));
             mKeyEvent.save();
 
@@ -95,7 +107,7 @@ public class AddKeyEventActivity extends BaseActivity {
             setResult(RESULT_OK, intent);
             finish();
         } catch (Exception e) {
-            Toast.makeText(this, "error", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.add_key_event_failed, Toast.LENGTH_LONG).show();
         }
     }
 

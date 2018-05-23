@@ -25,4 +25,12 @@ public class InternalFunction extends AbstractFunction {
         Intent intent = new Intent("android.media.action.VIDEO_CAMERA");
         App.get().startActivity(intent);
     }
+    
+    public void cloudMusicLike() {
+        // TODO: 2018/5/23  
+    }
+
+    public void qqMusicLike() {
+        // TODO: 2018/5/23
+    }
 }

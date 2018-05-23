@@ -38,4 +38,5 @@
     <string name="accessibility_description">快按键需要此权限用来拦截按键事件。快按键承诺不会收集任何用户隐私相关的数据。</string>
     <string name="profile_current_state">当前开启 %1$d 个场景</string>
     <string name="function_current_state">当前共有 %1$d 项定义功能</string>
+    <string name="add_key_event_failed">添加失败，与现有条目冲突</string>
 </resources>

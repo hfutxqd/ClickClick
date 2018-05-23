@@ -19,4 +19,5 @@
     <string name="settings_author_summary">IMXQD</string>
     <string name="accessibility_service_title">快按鍵-按鍵服務</string>
     <string name="accessibility_description">媒快按鍵需要此權限用來攔截按鍵事件。快按鍵承諾不會收集任何用戶隱私相關的數據。</string>
+    <string name="add_key_event_failed">添加失敗，與現有條目衝突</string>
 </resources>

@@ -43,4 +43,5 @@
     <string name="settings_notification_off_summary">已关闭，喜爱功能不可用</string>
     <string name="profile_current_state">当前开启 %1$d 个场景</string>
     <string name="function_current_state">当前共有 %1$d 项定义功能</string>
+    <string name="add_key_event_failed">Error : Conflict with existing items</string>
 </resources>

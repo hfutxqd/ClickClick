@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
@@ -19,10 +20,12 @@ public class KeyMappingEvent extends BaseModel implements Parcelable {
     @PrimaryKey(autoincrement = true)
     public long id;
 
+    @NotNull
     @Unique(unique = false, uniqueGroups = 1)
     @Column(name = "key_code")
     public int keyCode;
 
+    @NotNull
     @Column(name = "key_name")
     public String keyName;
 
@@ -35,17 +38,21 @@ public class KeyMappingEvent extends BaseModel implements Parcelable {
     @Column(name = "ignore_device")
     public boolean ignoreDevice;
 
+    @NotNull
     @Unique(unique = false, uniqueGroups = 1)
     @Column(name = "event_type")
     public AppKeyEventType eventType;
 
+    @NotNull
     @Unique(unique = false, uniqueGroups = 1)
     @Column(name = "func_id")
     public long funcId;
 
+    @NotNull
     @Column(name = "func_name")
     public String funcName;
 
+    @NotNull
     @Column(name = "enable")
     public boolean enable = true;
 
