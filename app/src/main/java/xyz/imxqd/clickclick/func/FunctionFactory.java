@@ -21,13 +21,13 @@ public class FunctionFactory {
     public static IFunction getFunc(String data) {
         switch (getPrefix(data)) {
             case InternalFunction.PREFIX:
-                break;
+                return new InternalFunction(data);
             case MediaFunction.PREFIX:
-                break;
+                return new MediaFunction(data);
             case UrlFunction.PREFIX:
                 return new UrlFunction(data);
             case KeyEventFunction.PREFIX:
-                break;
+                return new KeyEventFunction(data);
             case ActionFunction.PREFIX:
                 return new ActionFunction(data);
             default:
