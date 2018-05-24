@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="key_functions" >
+        <item>音量+</item>
+        <item>音量-</item>
+        <item>静音</item>
+        <item>上一曲</item>
+        <item>下一曲</item>
+        <item>停止</item>
+        <item>播放/暂停</item>
+        <item>开始</item>
+        <item>暂停</item>
+        <item>通话键</item>
+        <item>快进</item>
+        <item>快退</item>
+        <item>上一页</item>
+        <item>下一页</item>
+        <item>亮度+</item>
+        <item>亮度-</item>
+        <item>拍照</item>
+        <item>返回</item>
+        <item>桌面</item>
+        <item>挂断</item>
+        <item>喜爱（网易云音乐）</item>
+        <item>喜爱（QQ音乐）</item>
+    </string-array>
+
+</resources>

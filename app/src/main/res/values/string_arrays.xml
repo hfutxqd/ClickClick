@@ -13,4 +13,12 @@
         <item>DoubleClick</item>
         <item>TripleClick</item>
     </string-array>
+
+    <string-array name="click_speed">
+        <item>Slow</item>
+        <item>Normal</item>
+        <item>Fast</item>
+    </string-array>
+
+
 </resources>

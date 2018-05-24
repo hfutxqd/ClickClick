@@ -1,7 +1,7 @@
-INSERT INTO defined_function (name, body, description) values ('test1', 'url:http://www.baidu.com/0', '打开百度');
-INSERT INTO defined_function (name, body, description) values ('test2', 'url:http://www.baidu.com/1', '打开百度');
-INSERT INTO defined_function (name, body, description) values ('test3', 'url:http://www.baidu.com/2', '打开百度');
-INSERT INTO defined_function (name, body, description) values ('test4', 'url:http://www.baidu.com/3', '打开百度');
-INSERT INTO defined_function (name, body, description) values ('test5', 'url:http://www.baidu.com/4', '打开百度');
-INSERT INTO defined_function (name, body, description) values ('test6', 'url:http://www.baidu.com/5', '打开百度');
-INSERT INTO defined_function (name, body, description) values ('test7', 'url:http://www.baidu.com/6', '打开百度');
+INSERT INTO defined_function (name, body, description) values ('打开百度', 'url:http://www.baidu.com/', '打开百度');
+INSERT INTO defined_function (name, body, description) values ('打开QQ', 'url:mqq://', '打开QQ');
+INSERT INTO defined_function (name, body, description) values ('打开微信', 'url:weixin://', '打开微信');
+INSERT INTO defined_function (name, body, description) values ('打开支付宝', 'url:alipay:// ', '一键打开支付宝');
+INSERT INTO defined_function (name, body, description) values ('支付宝付款', 'url:alipays://platformapi/startapp?appId=20000056', '打开支付宝付款界面');
+INSERT INTO defined_function (name, body, description) values ('打开相机', 'action:android.media.action.STILL_IMAGE_CAMERA', '打开相机');
+INSERT INTO defined_function (name, body, description) values ('打开录像', 'url:android.media.action.VIDEO_CAMERA', '打开录像');

@@ -47,6 +47,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         return count;
     }
 
+    public KeyMappingEvent getItem(int pos) {
+        return mEvents.get(pos);
+    }
+
     public void refreshData() {
         List<KeyMappingEvent> events = new Select().from(KeyMappingEvent.class)
                 .orderBy(KeyMappingEvent_Table.id, false)

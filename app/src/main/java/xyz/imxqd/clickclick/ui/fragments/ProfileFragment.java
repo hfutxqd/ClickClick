@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.dao.KeyMappingEvent;
+import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.ui.AddKeyEventActivity;
 import xyz.imxqd.clickclick.ui.adapters.ProfileAdapter;
@@ -53,6 +56,23 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Chec
         return mInstance;
     }
 
+    ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            long id = mAdapter.getItem(viewHolder.getAdapterPosition()).id;
+            KeyMappingEvent.deleteById(id);
+            mAdapter.refreshData();
+            mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            initStateText();
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,6 +87,8 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Chec
         mAdapter.setCheckChangeCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
         vList.setAdapter(mAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mCallback);
+        itemTouchHelper.attachToRecyclerView(vList);
         vList.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -96,6 +118,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Chec
     }
 
     private void initStateText() {
+        AppEventManager.getInstance().updateKeyEventData();
         int count = mAdapter.getEnableCount();
         String state = getString(R.string.profile_current_state, count);
         vState.setText(getBigNumberText(state));

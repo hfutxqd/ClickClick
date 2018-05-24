@@ -1,5 +1,7 @@
 package xyz.imxqd.clickclick.func;
 
+import com.orhanobut.logger.Logger;
+
 public abstract class AbstractFunction implements IFunction {
     private String funcData;
 
@@ -17,7 +19,13 @@ public abstract class AbstractFunction implements IFunction {
         return funcData.substring(pos + 1);
     }
 
+    @Override
     public void exec() {
-        doFunction(getArgs());
+        try {
+            doFunction(getArgs());
+        } catch (Exception e) {
+            Logger.e("exec error " + e.getMessage());
+        }
+
     }
 }

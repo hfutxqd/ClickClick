@@ -6,15 +6,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 
 import com.orhanobut.logger.Logger;
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
+import java.lang.reflect.Array;
+
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.ui.BaseActivity;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
+import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
 
@@ -47,6 +52,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public void onCreatePreferencesFix(@Nullable Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settgings_screen);
         findPreference(getString(R.string.pref_key_app_switch)).setOnPreferenceChangeListener(this);
+        findPreference(getString(R.string.pref_key_quick_click_time)).setOnPreferenceChangeListener(this);
+        findPreference(getString(R.string.pref_key_long_click_time)).setOnPreferenceChangeListener(this);
     }
 
     private void initPrefs() {
@@ -73,6 +80,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (!NotificationAccessUtil.isEnabled(getContext())) {
             ((SwitchPreference)findPreference(getString(R.string.pref_key_notification_switch))).setChecked(false);
         }
+        initClickTimes();
 
         boolean debug = getPreferenceManager()
                 .getSharedPreferences()
@@ -80,6 +88,29 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (debug) {
             addDebugSettings();
         }
+    }
+
+    private void initClickTimes() {
+        String[] summaries = getResources().getStringArray(R.array.click_speed);
+        String[] quickTimes = getResources().getStringArray(R.array.quick_click_speed_time);
+        String[] longTimes = getResources().getStringArray(R.array.long_click_speed_time);
+        String quickTime = SettingsUtil.getStringVal(getString(R.string.pref_key_quick_click_time), getString(R.string.quick_click_speed_time_default));
+        String longTime = SettingsUtil.getStringVal(getString(R.string.pref_key_long_click_time), getString(R.string.long_click_speed_time_default));
+
+        int quickPos = 1;
+        for (int i = 0; i < quickTimes.length; i++) {
+            if (quickTime.equals(quickTimes[i])) {
+                quickPos = i;
+            }
+        }
+        int longPos = 1;
+        for (int i = 0; i < longTimes.length; i++) {
+            if (longTime.equals(longTimes[i])) {
+                longPos = i;
+            }
+        }
+        findPreference(getString(R.string.pref_key_quick_click_time)).setSummary(summaries[quickPos]);
+        findPreference(getString(R.string.pref_key_long_click_time)).setSummary(summaries[longPos]);
     }
 
     private void addDebugSettings() {
@@ -158,7 +189,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 ((SwitchPreference)preference).setChecked(true);
                 getContext().startService(new Intent(getActivity(), NotificationCollectorService.class));
             }
+        } else if (getString(R.string.pref_key_long_click_time).equals(preference.getKey())) {
+            ((ListPreference)preference).setValue((String) newValue);
+            AppEventManager.getInstance().updateClickTime();
+        }  else if (getString(R.string.pref_key_quick_click_time).equals(preference.getKey())) {
+            ((ListPreference)preference).setValue((String) newValue);
+            AppEventManager.getInstance().updateClickTime();
         }
+        initPrefs();
         return true;
     }
 }

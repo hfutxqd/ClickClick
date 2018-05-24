@@ -21,6 +21,23 @@
         android:title="@string/settings_root_mode_title"
         android:summaryOn="@string/settings_root_mode_on_summary"
         android:summaryOff="@string/settings_root_mode_off_summary" />
+
+    <PreferenceCategory>
+        <ListPreference
+            android:key="@string/pref_key_quick_click_time"
+            android:entries="@array/click_speed"
+            android:entryValues="@array/quick_click_speed_time"
+            android:defaultValue="1000"
+            android:title="@string/settings_quick_click_time_title" />
+
+        <ListPreference
+            android:key="@string/pref_key_long_click_time"
+            android:entries="@array/click_speed"
+            android:entryValues="@array/long_click_speed_time"
+            android:defaultValue="1000"
+            android:title="@string/settings_long_click_time_title" />
+    </PreferenceCategory>
+
     <PreferenceCategory>
 
         <Preference

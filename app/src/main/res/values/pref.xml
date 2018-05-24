@@ -4,5 +4,22 @@
     <string name="pref_key_app_debug">settings_app_debug</string>
     <string name="pref_key_version">settings_app_version</string>
     <string name="pref_key_root_mode_switch">settings_root_mode</string>
-    <string name="pref_key_notification_switch">setting_notification_service</string>
+    <string name="pref_key_notification_switch">settings_notification_service</string>
+    <string name="pref_key_quick_click_time">settings_quick_click_time</string>
+    <string name="pref_key_long_click_time">settings_long_click_time</string>
+
+    <string-array name="long_click_speed_time">
+        <item>1500</item>
+        <item>1000</item>
+        <item>600</item>
+    </string-array>
+    <string name="long_click_speed_time_default">1000</string>
+
+    <string-array name="quick_click_speed_time">
+        <item>1500</item>
+        <item>1000</item>
+        <item>600</item>
+    </string-array>
+    <string name="quick_click_speed_time_default">1000</string>
+
 </resources>

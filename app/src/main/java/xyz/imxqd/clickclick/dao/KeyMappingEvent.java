@@ -9,8 +9,11 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.annotation.UniqueGroup;
+import com.raizlabs.android.dbflow.sql.language.Delete;
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
-import com.raizlabs.android.dbflow.structure.Model;
+
+import java.util.List;
 
 import xyz.imxqd.clickclick.model.AppKeyEventType;
 
@@ -44,7 +47,6 @@ public class KeyMappingEvent extends BaseModel implements Parcelable {
     public AppKeyEventType eventType;
 
     @NotNull
-    @Unique(unique = false, uniqueGroups = 1)
     @Column(name = "func_id")
     public long funcId;
 
@@ -55,6 +57,18 @@ public class KeyMappingEvent extends BaseModel implements Parcelable {
     @NotNull
     @Column(name = "enable")
     public boolean enable = true;
+
+    public static List<KeyMappingEvent> getEnabledItems() {
+        return new Select().from(KeyMappingEvent.class)
+                .where(KeyMappingEvent_Table.enable.eq(true))
+                .queryList();
+    }
+
+    public static void deleteById(long id) {
+        new Delete().from(KeyMappingEvent.class)
+                .where(KeyMappingEvent_Table.id.eq(id))
+                .execute();
+    }
 
     public KeyMappingEvent() {
     }

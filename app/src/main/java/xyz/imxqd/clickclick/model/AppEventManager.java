@@ -8,9 +8,16 @@ import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.dao.KeyMappingEvent;
+import xyz.imxqd.clickclick.func.FunctionFactory;
+import xyz.imxqd.clickclick.func.IFunction;
 import xyz.imxqd.clickclick.utils.KeyEventHandler;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
@@ -26,6 +33,8 @@ public class AppEventManager implements KeyEventHandler.Callback {
     private KeyEventHandler mKeyEventHandler;
     private AccessibilityService mService;
     private Toast mToast;
+
+    private Map<String, Long> mKeyEventData = new HashMap<>();
 
     private AppEventManager() {
     }
@@ -50,21 +59,38 @@ public class AppEventManager implements KeyEventHandler.Callback {
             }
             mAudioManager = (AudioManager) application.getSystemService(AUDIO_SERVICE);
             mKeyEventHandler = new KeyEventHandler();
-            mKeyEventHandler.mLongClickKeyCodes.add(KeyEvent.KEYCODE_VOLUME_DOWN);
-            mKeyEventHandler.mLongClickKeyCodes.add(KeyEvent.KEYCODE_VOLUME_UP);
-//            mKeyEventHandler.mSingleClickKeyCodes.add(KeyEvent.KEYCODE_VOLUME_DOWN);
-//            mKeyEventHandler.mSingleClickKeyCodes.add(KeyEvent.KEYCODE_VOLUME_UP);
-            mKeyEventHandler.mDoubleClickKeyCodes.add(KeyEvent.KEYCODE_VOLUME_DOWN);
-            mKeyEventHandler.mDoubleClickKeyCodes.add(KeyEvent.KEYCODE_VOLUME_UP);
-            mKeyEventHandler.mTripleClickKeyCodes.add(KeyEvent.KEYCODE_VOLUME_DOWN);
-            mKeyEventHandler.mTripleClickKeyCodes.add(KeyEvent.KEYCODE_VOLUME_UP);
+            updateKeyEventData();
             mKeyEventHandler.setCallback(this);
+            updateClickTime();
             init = true;
         }
     }
 
-    public void updateKeyEventData() {
+    public void updateClickTime() {
+        KeyEventHandler.initClickTimes(SettingsUtil.getQuickClickTime(), SettingsUtil.getLongClickTime());
+    }
 
+    public void updateKeyEventData() {
+        mKeyEventHandler.mLongClickKeyCodes.clear();
+        mKeyEventHandler.mSingleClickKeyCodes.clear();
+        mKeyEventHandler.mDoubleClickKeyCodes.clear();
+        mKeyEventHandler.mTripleClickKeyCodes.clear();
+        mKeyEventData.clear();
+
+        List<KeyMappingEvent> keyMappingEvents = KeyMappingEvent.getEnabledItems();
+        for (KeyMappingEvent event : keyMappingEvents) {
+            if (event.eventType == AppKeyEventType.SingleClick) {
+                mKeyEventHandler.mSingleClickKeyCodes.add(event.keyCode);
+            } else if (event.eventType == AppKeyEventType.LongClick) {
+                mKeyEventHandler.mLongClickKeyCodes.add(event.keyCode);
+            } else if (event.eventType == AppKeyEventType.DoubleClick) {
+                mKeyEventHandler.mDoubleClickKeyCodes.add(event.keyCode);
+            } else if (event.eventType == AppKeyEventType.TripleClick) {
+                mKeyEventHandler.mTripleClickKeyCodes.add(event.keyCode);
+            }
+            String key =makeAppKeyEventData(event.keyCode, event.deviceId, event.eventType);
+            mKeyEventData.put(key, event.funcId);
+        }
     }
 
     public boolean shouldInterrupt(KeyEvent event) {
@@ -82,6 +108,15 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     public void onEvent(int keyCode, int deviceId, AppKeyEventType type) {
         String eventData = makeAppKeyEventData(keyCode, deviceId, type);
+        if (mKeyEventData.containsKey(eventData)) {
+            long funcId = mKeyEventData.get(eventData);
+            IFunction function = FunctionFactory.getFuncById(funcId);
+            if (function != null) {
+                function.exec();
+            }
+        } else {
+            Logger.e("function id not found.");
+        }
     }
 
     public void attachToAccessibilityService(AccessibilityService service) {

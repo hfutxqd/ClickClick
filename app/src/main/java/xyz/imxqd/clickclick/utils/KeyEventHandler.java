@@ -13,8 +13,8 @@ import java.util.Stack;
 
 public class KeyEventHandler {
 
-    private static final int LONG_CLICK_TIME = 1000;
-    private static final int QUICK_CLICK_TIME = 1000;
+    private static int LONG_CLICK_TIME = 1000;
+    private static int QUICK_CLICK_TIME = 1000;
 
     private Callback mCallback;
     private Stack<KeyEvent> mLastEvent;
@@ -32,6 +32,11 @@ public class KeyEventHandler {
     public KeyEventHandler() {
         mLastEvent = new Stack<>();
         mHandler = new Handler();
+    }
+
+    public static void initClickTimes(int quickClick, int longClick) {
+        LONG_CLICK_TIME = longClick;
+        QUICK_CLICK_TIME = quickClick;
     }
 
     public void setCallback(Callback callback) {
