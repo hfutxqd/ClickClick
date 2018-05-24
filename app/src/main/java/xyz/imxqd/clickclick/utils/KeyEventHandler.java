@@ -91,6 +91,10 @@ public class KeyEventHandler {
             mLastEvent.clear();
             mKeyClickCount = 1;
             mHandler.removeCallbacksAndMessages(null);
+        } else if (!supportDoubleClick(event.getKeyCode()) && !supportTripleClick(event.getKeyCode())){
+            mCallback.onNormalKeyEvent(event);
+            mLastEvent.clear();
+            mKeyClickCount = 1;
         }
     }
 
@@ -111,6 +115,9 @@ public class KeyEventHandler {
             mHandler.removeCallbacksAndMessages(null);
         } else {
             mCallback.onNormalKeyEvent(event);
+            mLastEvent.clear();
+            mKeyClickCount = 1;
+            mHandler.removeCallbacksAndMessages(null);
         }
     }
 
