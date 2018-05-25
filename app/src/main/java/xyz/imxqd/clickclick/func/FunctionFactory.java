@@ -22,14 +22,14 @@ public class FunctionFactory {
         switch (getPrefix(data)) {
             case InternalFunction.PREFIX:
                 return new InternalFunction(data);
-            case MediaFunction.PREFIX:
-                return new MediaFunction(data);
             case UrlFunction.PREFIX:
                 return new UrlFunction(data);
             case KeyEventFunction.PREFIX:
                 return new KeyEventFunction(data);
             case ActionFunction.PREFIX:
                 return new ActionFunction(data);
+            case GroupFunction.PREFIX:
+                return new GroupFunction(data);
             default:
 
         }
