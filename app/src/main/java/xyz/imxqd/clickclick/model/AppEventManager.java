@@ -66,6 +66,14 @@ public class AppEventManager implements KeyEventHandler.Callback {
         }
     }
 
+    public AccessibilityService getService() {
+        return mService;
+    }
+
+    public AudioManager getAudioManager() {
+        return mAudioManager;
+    }
+
     public void updateClickTime() {
         KeyEventHandler.initClickTimes(SettingsUtil.getQuickClickTime(), SettingsUtil.getLongClickTime());
     }
@@ -123,7 +131,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         mService = service;
     }
 
-    public void dettachFromAccessibilityService() {
+    public void detachFromAccessibilityService() {
         mService = null;
     }
 

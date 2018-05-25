@@ -35,7 +35,7 @@ public class KeyEventService extends AccessibilityService {
         if (SettingsUtil.displayDebug()) {
             showToast(getString(R.string.open_service_interrupt));
         }
-        AppEventManager.getInstance().dettachFromAccessibilityService();
+        AppEventManager.getInstance().detachFromAccessibilityService();
     }
 
     @Override
