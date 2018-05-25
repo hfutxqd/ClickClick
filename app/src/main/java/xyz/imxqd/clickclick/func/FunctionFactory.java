@@ -28,6 +28,8 @@ public class FunctionFactory {
                 return new KeyEventFunction(data);
             case ActionFunction.PREFIX:
                 return new ActionFunction(data);
+            case NotificationFunction.PREFIX:
+                return new NotificationFunction(data);
             case GroupFunction.PREFIX:
                 return new GroupFunction(data);
             default:

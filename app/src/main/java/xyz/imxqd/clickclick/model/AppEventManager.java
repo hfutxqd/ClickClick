@@ -18,6 +18,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.func.FunctionFactory;
 import xyz.imxqd.clickclick.func.IFunction;
+import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.KeyEventHandler;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
@@ -32,6 +33,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
     private AudioManager mAudioManager;
     private KeyEventHandler mKeyEventHandler;
     private AccessibilityService mService;
+    private NotificationCollectorService mNotification;
     private Toast mToast;
 
     private Map<String, Long> mKeyEventData = new HashMap<>();
@@ -72,6 +74,10 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     public AudioManager getAudioManager() {
         return mAudioManager;
+    }
+
+    public NotificationCollectorService getNotificationService() {
+        return mNotification;
     }
 
     public void updateClickTime() {
@@ -133,6 +139,14 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     public void detachFromAccessibilityService() {
         mService = null;
+    }
+
+    public void attachToNotificationService(NotificationCollectorService service) {
+        mNotification = service;
+    }
+
+    public void detachFromNotificationService() {
+        mNotification = null;
     }
 
     @Override

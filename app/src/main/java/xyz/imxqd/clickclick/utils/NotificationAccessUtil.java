@@ -12,7 +12,10 @@ import android.text.TextUtils;
 import android.util.ArraySet;
 import android.widget.RemoteViews;
 
+import com.orhanobut.logger.Logger;
+
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +52,15 @@ public class NotificationAccessUtil {
         context.startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
     }
 
+    public static Intent getIntent(PendingIntent pendingIntent) {
+        try {
+            Method getIntent = PendingIntent.class.getDeclaredMethod("getIntent");
+            return (Intent) getIntent.invoke(pendingIntent);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+            Logger.e("error " + e);
+            return null;
+        }
+    }
 
     // API 24以上可用
     @RequiresApi(Build.VERSION_CODES.N)
@@ -67,6 +79,7 @@ public class NotificationAccessUtil {
         }
         return null;
     }
+
 
     // API 19以上可用
     @RequiresApi(Build.VERSION_CODES.KITKAT)

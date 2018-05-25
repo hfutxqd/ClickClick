@@ -1,14 +1,20 @@
 package xyz.imxqd.clickclick.service;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
+import java.util.List;
+
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class KeyEventService extends AccessibilityService {
@@ -27,6 +33,10 @@ public class KeyEventService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+        if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+
+
+        }
     }
 
     @Override

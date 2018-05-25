@@ -15,3 +15,5 @@ INSERT INTO defined_function (name, body, description) values ('亮度增加', '
 INSERT INTO defined_function (name, body, description) values ('亮度减少', 'keyevent:220', '亮度减少');
 INSERT INTO defined_function (name, body, description) values ('按键A', 'keyevent:29', '按键A');
 INSERT INTO defined_function (name, body, description) values ('组合功能', 'group:["0|keyevent:88|1000","0|keyevent:87|0"]', '上一曲下一曲');
+INSERT INTO defined_function (name, body, description) values ('网易云喜爱', 'notification:com.netease.cloudmusic:4', '网易云喜爱功能（实验性功能）');
+INSERT INTO defined_function (name, body, description) values ('震动', 'internal:vibrate([500,200,500,200,500,200])', '胡乱震动');
