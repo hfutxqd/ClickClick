@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:clipToPadding="false"
+    android:background="@color/white"
     tools:context="xyz.imxqd.clickclick.ui.fragments.KeyEventMapFragment">
     <TextView
         android:id="@+id/function_state"

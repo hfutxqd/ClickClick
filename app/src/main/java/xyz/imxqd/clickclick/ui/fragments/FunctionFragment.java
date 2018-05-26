@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +23,7 @@ import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 
-public class FunctionFragment extends BaseFragment {
+public class FunctionFragment extends BaseFragment implements FunctionAdapter.EventCallback {
 
     private volatile static FunctionFragment mInstance;
 
@@ -31,6 +34,7 @@ public class FunctionFragment extends BaseFragment {
     TextView vState;
 
     FunctionAdapter mAdapter;
+    ItemTouchHelper mItemTouchHelper;
 
     public FunctionFragment() {
         // Required empty public constructor
@@ -45,6 +49,68 @@ public class FunctionFragment extends BaseFragment {
         return mInstance;
     }
 
+    ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN|ItemTouchHelper.UP, 0) {
+
+        @Override
+        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+            mAdapter.swap(fromPosition, toPosition);
+            mAdapter.notifyItemMoved(fromPosition, toPosition);
+            return true;
+        }
+
+        @Override
+        public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+            super.onSelectedChanged(viewHolder, actionState);
+            if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+                ViewCompat.animate(viewHolder.itemView)
+                        .setDuration(100)
+                        .translationZ(15f)
+                        .start();
+            }
+
+        }
+
+        @Override
+        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            super.clearView(recyclerView, viewHolder);
+            ViewCompat.animate(viewHolder.itemView)
+                    .translationZ(0f)
+                    .setDuration(150)
+                    .setListener(new ViewPropertyAnimatorListener() {
+                        @Override
+                        public void onAnimationStart(View view) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(View view) {
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onAnimationCancel(View view) {
+
+                        }
+                    })
+                    .start();
+
+        }
+
+        @Override
+        public boolean isLongPressDragEnabled() {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+
+
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,6 +122,7 @@ public class FunctionFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mAdapter = new FunctionAdapter();
+        mAdapter.setOnStartDragCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
         vList.setAdapter(mAdapter);
         vList.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -68,7 +135,9 @@ public class FunctionFragment extends BaseFragment {
                 }
             }
         });
-        vState.setText(getStateText());
+        mItemTouchHelper = new ItemTouchHelper(mCallback);
+        mItemTouchHelper.attachToRecyclerView(vList);
+        initStateText();
     }
 
     @Override
@@ -77,10 +146,11 @@ public class FunctionFragment extends BaseFragment {
         mInstance = null;
     }
 
-    private CharSequence getStateText() {
+    private void initStateText() {
         int count = mAdapter.getItemCount();
         String state = getString(R.string.function_current_state, count);
-        return getBigNumberText(state);
+        CharSequence text = getBigNumberText(state);
+        vState.setText(text);
     }
 
     @OnClick(R.id.action_add)
@@ -91,5 +161,15 @@ public class FunctionFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+    }
+
+    @Override
+    public void onStartDrag(FunctionAdapter.FunctionHolder holder) {
+        mItemTouchHelper.startDrag(holder);
+    }
+
+    @Override
+    public void onDataChanged() {
+        initStateText();
     }
 }

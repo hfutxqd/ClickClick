@@ -41,4 +41,10 @@
     <string name="add_key_event_failed">添加失败，与现有条目冲突</string>
     <string name="settings_quick_click_time_title">双击/三击速度</string>
     <string name="settings_long_click_time_title">长按速度</string>
+    <string name="cancel">取消</string>
+    <string name="dialog_what_intent_message">你想要做什么?</string>
+    <string name="run_it">执行它</string>
+    <string name="delete">删除</string>
+    <string name="notification_service_error">通知服务异常</string>
+    <string name="accessibility_error">按键服务异常</string>
 </resources>

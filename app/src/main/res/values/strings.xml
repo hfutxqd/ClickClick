@@ -46,4 +46,10 @@
     <string name="add_key_event_failed">Error : Conflict with existing items</string>
     <string name="settings_quick_click_time_title">双击/三击速度</string>
     <string name="settings_long_click_time_title">长按速度</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_what_intent_message">What is your intent ?</string>
+    <string name="run_it">Run It</string>
+    <string name="delete">Delete</string>
+    <string name="notification_service_error">Notification Service Error !</string>
+    <string name="accessibility_error">Accessibility Service Error !</string>
 </resources>

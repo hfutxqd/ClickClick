@@ -3,10 +3,13 @@ package xyz.imxqd.clickclick.ui.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -30,7 +33,7 @@ import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 
-public class ProfileFragment extends BaseFragment implements ProfileAdapter.CheckChangeCallback {
+public class ProfileFragment extends BaseFragment implements ProfileAdapter.ProfileChangeCallback {
 
     private static final int REQUEST_CODE_ADD_KEY_EVENT = 1;
     private volatile static ProfileFragment mInstance;
@@ -42,6 +45,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Chec
     TextView vState;
 
     ProfileAdapter mAdapter;
+    ItemTouchHelper itemTouchHelper;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -56,20 +60,96 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Chec
         return mInstance;
     }
 
-    ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN|ItemTouchHelper.UP, ItemTouchHelper.RIGHT) {
 
         @Override
         public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+            mAdapter.swap(fromPosition, toPosition);
+            mAdapter.notifyItemMoved(fromPosition, toPosition);
+            return true;
+        }
+
+        @Override
+        public boolean isLongPressDragEnabled() {
             return false;
         }
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+            if (isDragMode) {
+                return;
+            }
             long id = mAdapter.getItem(viewHolder.getAdapterPosition()).id;
             KeyMappingEvent.deleteById(id);
             mAdapter.refreshData();
             mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             initStateText();
+        }
+
+        @Override
+        public boolean isItemViewSwipeEnabled() {
+            return !isDragMode;
+        }
+
+        @Override
+        public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            if (isDragMode) {
+                return;
+            }
+            ProfileAdapter.KeyMapHolder holder = (ProfileAdapter.KeyMapHolder) viewHolder;
+            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                if (dX > 200f) {
+                    dX = 200f;
+                }
+                holder.deleteAlpha(dX / 200f);
+            } else {
+                holder.deleteAlpha(0f);
+            }
+        }
+
+        @Override
+        public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+            super.onSelectedChanged(viewHolder, actionState);
+            if (isDragMode && actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+                ViewCompat.animate(viewHolder.itemView)
+                        .setDuration(100)
+                        .translationZ(15f)
+                        .start();
+            }
+
+        }
+
+        @Override
+        public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+            super.clearView(recyclerView, viewHolder);
+            if (!isDragMode) {
+                return;
+            }
+            isDragMode = false;
+            ViewCompat.animate(viewHolder.itemView)
+                    .translationZ(0f)
+                    .setDuration(150)
+                    .setListener(new ViewPropertyAnimatorListener() {
+                        @Override
+                        public void onAnimationStart(View view) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(View view) {
+                            mAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onAnimationCancel(View view) {
+
+                        }
+                    })
+                    .start();
+
         }
     };
 
@@ -87,7 +167,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Chec
         mAdapter.setCheckChangeCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
         vList.setAdapter(mAdapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mCallback);
+        itemTouchHelper = new ItemTouchHelper(mCallback);
         itemTouchHelper.attachToRecyclerView(vList);
         vList.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -145,5 +225,12 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Chec
     @Override
     public void onCheckedChanged(boolean isChecked) {
         initStateText();
+    }
+
+    boolean isDragMode = false;
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder holder) {
+        itemTouchHelper.startDrag(holder);
+        isDragMode = true;
     }
 }

@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick.dao;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.LinearLayout;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.NotNull;
@@ -58,10 +59,21 @@ public class KeyMappingEvent extends BaseModel implements Parcelable {
     @Column(name = "enable")
     public boolean enable = true;
 
+    @Column(name = "order", defaultValue = "0")
+    public int order = 0;
+
     public static List<KeyMappingEvent> getEnabledItems() {
         return new Select().from(KeyMappingEvent.class)
                 .where(KeyMappingEvent_Table.enable.eq(true))
                 .queryList();
+    }
+
+    public static List<KeyMappingEvent> getOrderedAll() {
+        return new Select().from(KeyMappingEvent.class)
+                .orderBy(KeyMappingEvent_Table.order, true)
+                .orderBy(KeyMappingEvent_Table.id, false)
+                .queryList();
+
     }
 
     public static void deleteById(long id) {

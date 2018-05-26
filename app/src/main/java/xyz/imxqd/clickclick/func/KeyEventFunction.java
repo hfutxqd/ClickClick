@@ -3,7 +3,10 @@ package xyz.imxqd.clickclick.func;
 import android.accessibilityservice.AccessibilityService;
 import android.media.AudioManager;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
+import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
 
@@ -22,6 +25,11 @@ public class KeyEventFunction extends AbstractFunction {
         }
     }
 
+    private void toastAccessibilityError() {
+        Toast.makeText(App.get(), R.string.accessibility_error, Toast.LENGTH_LONG).show();
+    }
+
+
     @Override
     public void doFunction(String args) {
         int keyCode = getKeyCode(args);
@@ -31,16 +39,22 @@ public class KeyEventFunction extends AbstractFunction {
             case KeyEvent.KEYCODE_BACK:
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
+                } else {
+                    toastAccessibilityError();
                 }
                 break;
             case KeyEvent.KEYCODE_HOME:
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
+                } else {
+                    toastAccessibilityError();
                 }
                 break;
             case KeyEvent.KEYCODE_APP_SWITCH:
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
+                } else {
+                    toastAccessibilityError();
                 }
                 break;
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:

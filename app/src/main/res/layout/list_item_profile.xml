@@ -1,39 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
+    android:background="@drawable/item_bg_selector"
+    android:clickable="true"
+    android:focusable="true"
     android:padding="16dp">
-    <ImageView
-        android:id="@+id/profile_drag_handle"
-        android:src="@drawable/ic_drag_handle_black_24dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingEnd="16dp"/>
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
+        android:id="@+id/profile_item_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/profile_title"
-            android:text="小米耳机"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
+        android:orientation="horizontal"
+        android:alpha="1">
+        <ImageView
+            android:id="@+id/profile_drag_handle"
+            android:src="@drawable/ic_drag_handle_black_24dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/profile_sub_title"
-            android:text="小米耳机音量键上下曲"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingEnd="16dp"/>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/profile_title"
+                android:text="小米耳机"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/profile_sub_title"
+                android:text="小米耳机音量键上下曲"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/profile_switch"
+            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/profile_switch"
-        android:checked="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+    <TextView
+        android:id="@+id/profile_delete_hint"
+        android:text="@string/delete"
+        android:textColor="@color/color_delete"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"/>
+
+</FrameLayout>

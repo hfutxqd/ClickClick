@@ -3,6 +3,7 @@ package xyz.imxqd.clickclick.func;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
@@ -10,6 +11,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
@@ -77,6 +80,8 @@ public class NotificationFunction extends AbstractFunction {
             } catch (Exception e) {
                 Logger.e("error " + e);
             }
+        } else {
+            Toast.makeText(App.get(), R.string.notification_service_error, Toast.LENGTH_LONG).show();
         }
     }
 }

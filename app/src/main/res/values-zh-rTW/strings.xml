@@ -22,4 +22,10 @@
     <string name="add_key_event_failed">添加失敗，與現有條目衝突</string>
     <string name="settings_quick_click_time_title">双击/三击速度</string>
     <string name="settings_long_click_time_title">长按速度</string>
+    <string name="cancel">取消</string>
+    <string name="dialog_what_intent_message">你想要做什麼?</string>
+    <string name="run_it">執行它</string>
+    <string name="delete">删除</string>
+    <string name="notification_service_error">通知服務異常</string>
+    <string name="accessibility_error">按鍵服務異常</string>
 </resources>

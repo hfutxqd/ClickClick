@@ -3,13 +3,16 @@ package xyz.imxqd.clickclick.ui.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,15 +28,13 @@ import xyz.imxqd.clickclick.dao.KeyMappingEvent_Table;
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHolder> {
 
     List<KeyMappingEvent> mEvents;
-    CheckChangeCallback mCallback;
+    ProfileChangeCallback mCallback;
 
     public ProfileAdapter() {
-        mEvents = new Select().from(KeyMappingEvent.class)
-                .orderBy(KeyMappingEvent_Table.id, false)
-                .queryList();
+        mEvents = KeyMappingEvent.getOrderedAll();
     }
 
-    public void setCheckChangeCallback(CheckChangeCallback callback) {
+    public void setCheckChangeCallback(ProfileChangeCallback callback) {
         mCallback = callback;
     }
 
@@ -52,11 +53,13 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
     }
 
     public void refreshData() {
-        List<KeyMappingEvent> events = new Select().from(KeyMappingEvent.class)
-                .orderBy(KeyMappingEvent_Table.id, false)
-                .queryList();
+        List<KeyMappingEvent> events = KeyMappingEvent.getOrderedAll();
         mEvents.clear();
         mEvents.addAll(events);
+    }
+
+    public void swap(int index1, int index2) {
+        Collections.swap(mEvents, index1, index2);
     }
 
     @Override
@@ -72,6 +75,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         holder.title.setText(event.funcName);
         holder.subTitle.setText(event.keyName + "  " + event.eventType.getName());
         holder.enable.setChecked(event.enable);
+        holder.deleteAlpha(0f);
+        event.order = position;
+        event.async().save();
     }
 
     @Override
@@ -79,14 +85,20 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         return mEvents.size();
     }
 
-    class KeyMapHolder extends RecyclerView.ViewHolder {
+    public class KeyMapHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.profile_drag_handle)
+        ImageView handle;
         @BindView(R.id.profile_title)
         TextView title;
         @BindView(R.id.profile_sub_title)
         TextView subTitle;
         @BindView(R.id.profile_switch)
         SwitchCompat enable;
+        @BindView(R.id.profile_delete_hint)
+        TextView deleteHint;
+        @BindView(R.id.profile_item_content)
+        View content;
         public KeyMapHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -101,10 +113,28 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
                     }
                 }
             });
+            handle.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        if (mCallback != null) {
+                            mCallback.onStartDrag(KeyMapHolder.this);
+                        }
+                    }
+                    return true;
+                }
+
+            });
+        }
+
+        public void deleteAlpha(float alpha) {
+            deleteHint.setAlpha(alpha);
+            content.setAlpha(1 - alpha);
         }
     }
 
-    public interface CheckChangeCallback {
+    public interface ProfileChangeCallback {
         void onCheckedChanged(boolean isChecked);
+        void onStartDrag(RecyclerView.ViewHolder holder);
     }
 }

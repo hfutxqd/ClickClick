@@ -18,10 +18,7 @@ public class FunctionSpinnerAdapter extends BaseAdapter {
     List<DefinedFunction> mFuncList;
 
     public FunctionSpinnerAdapter() {
-        mFuncList = new Select()
-                .from(DefinedFunction.class)
-                .orderBy(DefinedFunction_Table.id, false)
-                .queryList();
+        mFuncList = DefinedFunction.getOrderedAll();
     }
 
     @Override
