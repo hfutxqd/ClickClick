@@ -67,6 +67,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
             int toPosition = target.getAdapterPosition();
             mAdapter.swap(fromPosition, toPosition);
             mAdapter.notifyItemMoved(fromPosition, toPosition);
+            mAdapter.savePosition();
             return true;
         }
 

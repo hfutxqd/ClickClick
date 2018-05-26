@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
@@ -10,16 +11,18 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
-import xyz.imxqd.clickclick.dao.KeyMappingEvent_Table;
 
 /**
  * Created by imxqd on 2017/11/26.
@@ -29,9 +32,26 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
 
     List<KeyMappingEvent> mEvents;
     ProfileChangeCallback mCallback;
+    ObservableEmitter<Object> savePositionEmitter;
 
+    @SuppressLint("CheckResult")
     public ProfileAdapter() {
         mEvents = KeyMappingEvent.getOrderedAll();
+        Observable.create(new ObservableOnSubscribe<Object>() {
+            @Override
+            public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
+                savePositionEmitter = emitter;
+            }
+        }).debounce(800, TimeUnit.MILLISECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        for (int i = 0; i < mEvents.size(); i++) {
+                            mEvents.get(i).order = i;
+                            mEvents.get(i).save();
+                        }
+                    }
+                });
     }
 
     public void setCheckChangeCallback(ProfileChangeCallback callback) {
@@ -60,6 +80,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
 
     public void swap(int index1, int index2) {
         Collections.swap(mEvents, index1, index2);
+    }
+
+    public void savePosition() {
+        if (savePositionEmitter != null) {
+            savePositionEmitter.onNext(new Object());
+        }
     }
 
     @Override

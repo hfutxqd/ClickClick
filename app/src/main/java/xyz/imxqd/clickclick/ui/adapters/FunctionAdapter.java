@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,14 @@ import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.func.FunctionFactory;
@@ -29,8 +35,27 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
     List<DefinedFunction> mFuncList;
     EventCallback callback;
 
+    ObservableEmitter<Object> savePositionEmitter;
+
+
+    @SuppressLint("CheckResult")
     public FunctionAdapter() {
         mFuncList = DefinedFunction.getOrderedAll();
+        Observable.create(new ObservableOnSubscribe<Object>() {
+            @Override
+            public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
+                savePositionEmitter = emitter;
+            }
+        }).debounce(800, TimeUnit.MILLISECONDS)
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        for (int i = 0; i < mFuncList.size(); i++) {
+                            mFuncList.get(i).order = i;
+                            mFuncList.get(i).save();
+                        }
+                    }
+                });
     }
 
     public void refreshData() {
@@ -56,13 +81,19 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
         this.callback = callback;
     }
 
+    public void savePosition() {
+        if (savePositionEmitter != null) {
+            savePositionEmitter.onNext(new Object());
+        }
+
+    }
+
     @Override
     public void onBindViewHolder(FunctionHolder holder, int position) {
         DefinedFunction function = mFuncList.get(position);
         holder.title.setText(function.name);
         holder.subTitle.setText(function.description);
         function.order = position;
-        function.async().save();
     }
 
     @Override
