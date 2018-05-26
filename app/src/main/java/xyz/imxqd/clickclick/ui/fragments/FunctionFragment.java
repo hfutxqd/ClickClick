@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +35,6 @@ import xyz.imxqd.clickclick.utils.ScreenUtl;
 public class FunctionFragment extends BaseFragment implements FunctionAdapter.EventCallback {
 
     private static final int REQUEST_ADD_FUNC = 60001;
-    private volatile static FunctionFragment mInstance;
 
     @BindView(android.R.id.list)
     RecyclerView vList;
@@ -47,16 +48,11 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     ArrayAdapter<String> mMenuAdapter;
 
     public FunctionFragment() {
-        // Required empty public constructor
+        Logger.d("FunctionFragment new instance");
     }
 
-    public static FunctionFragment getInstance() {
-        if (mInstance == null ) {
-            synchronized (FunctionFragment.class) {
-                mInstance = new FunctionFragment();
-            }
-        }
-        return mInstance;
+    public static FunctionFragment newInstance() {
+        return new FunctionFragment();
     }
 
     ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN|ItemTouchHelper.UP, 0) {
@@ -138,12 +134,6 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         mItemTouchHelper = new ItemTouchHelper(mCallback);
         mItemTouchHelper.attachToRecyclerView(vList);
         initStateText();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mInstance = null;
     }
 
     private void initStateText() {

@@ -23,22 +23,16 @@ import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
 
-    private static volatile SettingsFragment mInstance;
 
     private Handler mHandler = new Handler();
 
     public SettingsFragment() {
-        // Required empty public constructor
+        Logger.d("SettingsFragment new instance");
     }
 
 
-    public static SettingsFragment getInstance() {
-        if (mInstance == null ) {
-            synchronized (SettingsFragment.class) {
-                mInstance = new SettingsFragment();
-            }
-        }
-        return mInstance;
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override
@@ -168,11 +162,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         return super.onPreferenceTreeClick(preference);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mInstance = null;
-    }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {

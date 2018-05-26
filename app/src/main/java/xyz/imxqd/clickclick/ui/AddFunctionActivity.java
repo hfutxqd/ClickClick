@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

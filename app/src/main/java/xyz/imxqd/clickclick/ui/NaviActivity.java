@@ -1,22 +1,20 @@
 package xyz.imxqd.clickclick.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.ArrayMap;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.ui.fragments.FunctionFragment;
-import xyz.imxqd.clickclick.ui.fragments.KeyEventMapFragment;
 import xyz.imxqd.clickclick.ui.fragments.ProfileFragment;
 import xyz.imxqd.clickclick.ui.fragments.SettingsFragment;
 
@@ -42,61 +40,95 @@ public class NaviActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navi);
+        if (savedInstanceState != null) {
+            currentTabId = savedInstanceState.getInt("currentTabId");
+        }
         ButterKnife.bind(this);
         initViews();
-        switchPageTo(R.id.navigation_home);
+        if (currentTabId == 0) {
+            switchPageTo(R.id.navigation_home);
+        } else {
+            clearFragments();
+            switchPageTo(currentTabId);
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("currentTabId", currentTabId);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFragments.clear();
+        currentTabId = 0;
     }
 
     private void initViews() {
         vNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mFragments.put(R.id.navigation_home, ProfileFragment.newInstance());
+        mFragments.put(R.id.navigation_dashboard, FunctionFragment.newInstance());
+        mFragments.put(R.id.navigation_settings, SettingsFragment.newInstance());
     }
 
-    private Fragment mCurrentFragment = null;
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if(fragment instanceof ProfileFragment) {
+            mFragments.put(R.id.navigation_home, fragment);
+        } else if (fragment instanceof  FunctionFragment) {
+            mFragments.put(R.id.navigation_dashboard, fragment);
+        } else if (fragment instanceof  SettingsFragment) {
+            mFragments.put(R.id.navigation_settings, fragment);
+        }
+    }
+
+    private int currentTabId = 0;
+    private ArrayMap<Integer, Fragment> mFragments = new ArrayMap<>();
+
+    public void clearFragments() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        for (Fragment f : fragments) {
+            transaction.remove(f);
+        }
+        transaction.commitNowAllowingStateLoss();
+    }
 
     private void switchPageTo(int id) {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments == null) {
-            fragments = new ArrayList<>();
+        Fragment fragmentTo = mFragments.get(id);
+        if (fragmentTo == null) {
+            return;
         }
-        Fragment fragmentTo = null;
         switch (id) {
             case R.id.navigation_home:
                 vTitle.setText(R.string.title_home);
-                fragmentTo = ProfileFragment.getInstance();
                 break;
             case R.id.navigation_dashboard:
                 vTitle.setText(R.string.title_dashboard);
-                fragmentTo = FunctionFragment.getInstance();
                 break;
             case R.id.navigation_settings:
                 vTitle.setText(R.string.title_settings);
-                fragmentTo = SettingsFragment.getInstance();
                 break;
         }
-        if (fragmentTo == null || mCurrentFragment == fragmentTo) {
-            return;
+
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        Fragment current = mFragments.get(currentTabId);
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        if (fragments.contains(current)){
+            transaction.hide(current);
         }
         if (fragments.contains(fragmentTo)) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .hide(mCurrentFragment)
-                    .show(fragmentTo)
-                    .commit();
+            transaction.show(fragmentTo);
         } else {
-            if (mCurrentFragment != null) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .hide(mCurrentFragment)
-                        .add(R.id.nav_container, fragmentTo)
-                        .commit();
-            } else {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.nav_container, fragmentTo)
-                        .commit();
-            }
+            transaction.add(R.id.nav_container, fragmentTo);
         }
-        mCurrentFragment = fragmentTo;
+        transaction.commit();
+        currentTabId = id;
     }
 
 }

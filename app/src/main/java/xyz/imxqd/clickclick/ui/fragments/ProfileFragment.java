@@ -35,7 +35,6 @@ import xyz.imxqd.clickclick.utils.ScreenUtl;
 public class ProfileFragment extends BaseFragment implements ProfileAdapter.ProfileChangeCallback {
 
     private static final int REQUEST_CODE_ADD_KEY_EVENT = 1;
-    private volatile static ProfileFragment mInstance;
 
     @BindView(android.R.id.list)
     RecyclerView vList;
@@ -47,16 +46,11 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     ItemTouchHelper itemTouchHelper;
 
     public ProfileFragment() {
-        // Required empty public constructor
+        Logger.d("ProfileFragment new instance");
     }
 
-    public static ProfileFragment getInstance() {
-        if (mInstance == null ) {
-            synchronized (ProfileFragment.class) {
-                mInstance = new ProfileFragment();
-            }
-        }
-        return mInstance;
+    public static ProfileFragment newInstance() {
+        return new ProfileFragment();
     }
 
     ItemTouchHelper.Callback mCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN|ItemTouchHelper.UP, ItemTouchHelper.RIGHT) {
@@ -158,12 +152,6 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
             getActivity().startService(new Intent(getActivity(), NotificationCollectorService.class));
         }
         initStateText();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mInstance = null;
     }
 
     private void initStateText() {
