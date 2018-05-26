@@ -37,4 +37,7 @@
     <string name="can_not_be_empty">不能为空</string>
     <string name="run_failed">执行失败</string>
     <string name="run_successed">执行成功</string>
+    <string name="save_successed">保存成功</string>
+    <string name="save_failed">保存失败，可能已经存在</string>
+    <string name="open_error">数据格式有误</string>
 </resources>

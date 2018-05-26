@@ -36,9 +36,26 @@
             android:launchMode="singleTask">
 
         </activity>
-        <activity android:name=".ui.AddFunctionActivity"
+        <activity
+            android:name=".ui.AddFunctionActivity"
             android:theme="@style/AppTheme.Dialog"
-            android:launchMode="singleTask" />
+            android:exported="true"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="add"
+                    android:scheme="clickclick" />
+                <data
+                    android:host="save"
+                    android:scheme="clickclick" />
+                <data
+                    android:host="run"
+                    android:scheme="clickclick" />
+            </intent-filter>
+        </activity>
 
         <service
             android:label="@string/accessibility_service_title"
