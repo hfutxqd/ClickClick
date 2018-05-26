@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:background="@drawable/item_bg_selector"
-    android:padding="16dp">
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
     <ImageView
         android:id="@+id/func_drag_handle"
         android:src="@drawable/ic_drag_handle_black_24dp"
@@ -13,8 +14,10 @@
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:paddingStart="16dp"
         android:paddingEnd="16dp"/>
     <LinearLayout
+        android:paddingEnd="16dp"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

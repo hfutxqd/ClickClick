@@ -5,7 +5,8 @@
     android:background="@drawable/item_bg_selector"
     android:clickable="true"
     android:focusable="true"
-    android:padding="16dp">
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
     <LinearLayout
         android:id="@+id/profile_item_content"
         android:layout_width="match_parent"
@@ -19,7 +20,8 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:paddingEnd="16dp"/>
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"/>
         <LinearLayout
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -43,6 +45,7 @@
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/profile_switch"
             android:checked="true"
+            android:layout_marginEnd="16dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

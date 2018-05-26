@@ -78,22 +78,6 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
             ViewCompat.animate(viewHolder.itemView)
                     .translationZ(0f)
                     .setDuration(150)
-                    .setListener(new ViewPropertyAnimatorListener() {
-                        @Override
-                        public void onAnimationStart(View view) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(View view) {
-                            mAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(View view) {
-
-                        }
-                    })
                     .start();
 
         }

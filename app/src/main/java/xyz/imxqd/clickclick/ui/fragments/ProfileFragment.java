@@ -78,9 +78,6 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            if (isDragMode) {
-                return;
-            }
             long id = mAdapter.getItem(viewHolder.getAdapterPosition()).id;
             KeyMappingEvent.deleteById(id);
             mAdapter.refreshData();
@@ -89,16 +86,8 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         }
 
         @Override
-        public boolean isItemViewSwipeEnabled() {
-            return !isDragMode;
-        }
-
-        @Override
         public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            if (isDragMode) {
-                return;
-            }
             ProfileAdapter.KeyMapHolder holder = (ProfileAdapter.KeyMapHolder) viewHolder;
             if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
                 if (dX > 200f) {
@@ -113,7 +102,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         @Override
         public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
             super.onSelectedChanged(viewHolder, actionState);
-            if (isDragMode && actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
+            if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                 ViewCompat.animate(viewHolder.itemView)
                         .setDuration(100)
                         .translationZ(15f)
@@ -125,29 +114,9 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         @Override
         public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             super.clearView(recyclerView, viewHolder);
-            if (!isDragMode) {
-                return;
-            }
-            isDragMode = false;
             ViewCompat.animate(viewHolder.itemView)
                     .translationZ(0f)
                     .setDuration(150)
-                    .setListener(new ViewPropertyAnimatorListener() {
-                        @Override
-                        public void onAnimationStart(View view) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(View view) {
-                            mAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onAnimationCancel(View view) {
-
-                        }
-                    })
                     .start();
 
         }
@@ -227,10 +196,8 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         initStateText();
     }
 
-    boolean isDragMode = false;
     @Override
     public void onStartDrag(RecyclerView.ViewHolder holder) {
         itemTouchHelper.startDrag(holder);
-        isDragMode = true;
     }
 }
