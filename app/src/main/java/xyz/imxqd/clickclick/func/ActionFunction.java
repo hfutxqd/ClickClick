@@ -35,7 +35,7 @@ public class ActionFunction extends AbstractFunction {
         try {
             return Intent.parseUri(args.substring(9), 0);
         } catch (URISyntaxException e) {
-            return new Intent();
+            throw new RuntimeException("intent uri: Syntax Error");
         }
     }
 
@@ -51,7 +51,7 @@ public class ActionFunction extends AbstractFunction {
     }
 
     @Override
-    public void doFunction(String args) {
+    public void doFunction(String args) throws Exception {
         Intent intent = null;
         if (isActionIntent(args)) {
             intent = getActionIntent(args);

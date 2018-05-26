@@ -20,11 +20,13 @@ public abstract class AbstractFunction implements IFunction {
     }
 
     @Override
-    public void exec() {
+    public boolean exec() {
         try {
             doFunction(getArgs());
+            return true;
         } catch (Exception e) {
             Logger.e("exec error " + e.getMessage());
+            return false;
         }
 
     }

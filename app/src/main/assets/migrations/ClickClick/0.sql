@@ -18,4 +18,4 @@ INSERT INTO defined_function (name, body, description) values ('组合功能', '
 INSERT INTO defined_function (name, body, description) values ('网易云喜爱', 'notification:com.netease.cloudmusic:4', '网易云喜爱功能（实验性功能）');
 INSERT INTO defined_function (name, body, description) values ('震动', 'internal:vibrate([500,200,500,200,500,200])', '胡乱震动');
 INSERT INTO defined_function (name, body, description) values ('音调', 'internal:tone(256:100,288:100,320:100,341:100,384:100,426:100,480:100)', '1234567');
-INSERT INTO defined_function (name, body, description) values ('小星星示例', 'internal:tone(256:600,0:200,256:600,0:200,384:600,0:200,384:600,0:200,426:600,0:200,426:600,0:200,384:600)', '一闪一闪亮晶晶');
+INSERT INTO defined_function (name, body, description) values ('小星星示例', 'internal:tone(256:400,0:100,256:400,0:100,384:400,0:100,384:400,0:100,426:400,0:100,426:400,0:100,384:400)', '一闪一闪亮晶晶');

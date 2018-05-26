@@ -18,11 +18,7 @@ public class KeyEventFunction extends AbstractFunction {
     }
 
     private int getKeyCode(String args) {
-        try {
-            return Integer.valueOf(args);
-        } catch (Exception e) {
-            return 0;
-        }
+        return Integer.valueOf(args);
     }
 
     private void toastAccessibilityError() {
@@ -31,7 +27,7 @@ public class KeyEventFunction extends AbstractFunction {
 
 
     @Override
-    public void doFunction(String args) {
+    public void doFunction(String args) throws Exception {
         int keyCode = getKeyCode(args);
         AccessibilityService service = AppEventManager.getInstance().getService();
         AudioManager audioManager = AppEventManager.getInstance().getAudioManager();

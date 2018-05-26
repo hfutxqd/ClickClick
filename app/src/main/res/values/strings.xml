@@ -52,4 +52,14 @@
     <string name="delete">Delete</string>
     <string name="notification_service_error">Notification Service Error !</string>
     <string name="accessibility_error">Accessibility Service Error !</string>
+    <string name="add_internal_func">添加内置功能</string>
+    <string name="add_func_from_web">从互联网添加功能</string>
+    <string name="add_func_name_hint">功能名称</string>
+    <string name="add_func_name_description_hint">功能简介</string>
+    <string name="add_func_name_code_hint">功能代码</string>
+    <string name="add_func_by_self">添加自定义功能(高级)</string>
+    <string name="can_not_be_empty">不能为空</string>
+    <string name="run_failed">执行失败</string>
+    <string name="run_successed">执行成功</string>
+
 </resources>

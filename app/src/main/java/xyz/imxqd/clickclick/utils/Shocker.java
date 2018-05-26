@@ -10,26 +10,26 @@ import xyz.imxqd.clickclick.App;
  */
 
 public class Shocker {
-    public static void shock(long[] ms) {
+    public static void shock(long[] ms) throws Exception {
         Vibrator vibrator = (Vibrator) App.get().getSystemService(Service.VIBRATOR_SERVICE);
         if (vibrator == null) {
-            return;
+            throw new Exception("no vibrator found");
         }
         vibrator.vibrate(ms, -1);
     }
 
-    public static void shock() {
+    public static void shock()  throws Exception {
         Vibrator vibrator = (Vibrator) App.get().getSystemService(Service.VIBRATOR_SERVICE);
         if (vibrator == null) {
-            return;
+            throw new Exception("no vibrator found");
         }
         vibrator.vibrate(60000);
     }
 
-    public static void cancal() {
+    public static void cancal() throws Exception {
         Vibrator vibrator = (Vibrator) App.get().getSystemService(Service.VIBRATOR_SERVICE);
         if (vibrator == null) {
-            return;
+            throw new Exception("no vibrator found");
         }
         vibrator.cancel();
     }

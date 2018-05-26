@@ -15,14 +15,14 @@ public class UrlFunction extends AbstractFunction {
     }
 
     @Override
-    public void doFunction(String args) {
+    public void doFunction(String args) throws Exception {
         if (PREFIX.equals(getPrefix())) {
             String url = getArgs();
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
             App.get().startActivity(intent);
         } else {
-            Logger.e("function prefix not match");
+            throw new RuntimeException("function prefix not match");
         }
 
     }

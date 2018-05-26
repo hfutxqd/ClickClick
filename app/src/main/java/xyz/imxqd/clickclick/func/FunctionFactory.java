@@ -19,7 +19,13 @@ public class FunctionFactory {
 
 
     public static IFunction getFunc(String data) {
-        switch (getPrefix(data)) {
+        String prefix = null;
+        try {
+            prefix = getPrefix(data);
+        } catch (Exception e) {
+            return null;
+        }
+        switch (prefix) {
             case InternalFunction.PREFIX:
                 return new InternalFunction(data);
             case UrlFunction.PREFIX:

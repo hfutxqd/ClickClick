@@ -36,6 +36,9 @@
             android:launchMode="singleTask">
 
         </activity>
+        <activity android:name=".ui.AddFunctionActivity"
+            android:theme="@style/AppTheme.Dialog"
+            android:launchMode="singleTask" />
 
         <service
             android:label="@string/accessibility_service_title"

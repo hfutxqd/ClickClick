@@ -5,7 +5,7 @@ package xyz.imxqd.clickclick.func;
  */
 
 public interface IFunction {
-    void doFunction(String args) throws RuntimeException;
+    void doFunction(String args) throws Exception;
 
-    void exec();
+    boolean exec();
 }

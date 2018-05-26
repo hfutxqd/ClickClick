@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.func;
 
+import android.media.AudioTrack;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -26,22 +27,22 @@ public class InternalFunction extends AbstractFunction {
     }
 
     @Override
-    public void doFunction(String args) {
+    public void doFunction(String args) throws Exception {
         Matcher matcher = match(args);
         if (!matcher.matches()) {
-            return;
+            throw new Exception("Syntax Error");
         }
         matcher.reset();
         if (matcher.find()) {
             if (matcher.groupCount() != 2) {
-                return;
+                throw new Exception("Syntax Error");
             }
             String name = matcher.group(1);
             String funcArgs = matcher.group(2);
             try {
                 this.getClass().getMethod(name, String.class).invoke(this, funcArgs);
             } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                e.printStackTrace();
+                throw new Exception("error");
             }
         }
     }
@@ -62,14 +63,10 @@ public class InternalFunction extends AbstractFunction {
         Toast.makeText(App.get(), str, Toast.LENGTH_LONG).show();
     }
 
-    public void vibrate(String str) {
+    public void vibrate(String str) throws Exception{
         Gson gson = new Gson();
-        try {
-            long[] times = gson.fromJson(str, long[].class);
-            Shocker.shock(times);
-        } catch (Exception e) {
-
-        }
+        long[] times = gson.fromJson(str, long[].class);
+        Shocker.shock(times);
     }
 
     private ToneUtil.Tone getTone(String tone) {
@@ -83,15 +80,23 @@ public class InternalFunction extends AbstractFunction {
     }
 
     public void tone(String str) {
-        try {
-            String[] tones = str.split(",");
-            List<ToneUtil.Tone> list = new ArrayList<>(tones.length);
-            for (String tone : tones) {
-                list.add(getTone(tone));
-            }
-            ToneUtil.genAudio(list).play();
-        } catch (Exception e) {
-            e.printStackTrace();
+        String[] tones = str.split(",");
+        List<ToneUtil.Tone> list = new ArrayList<>(tones.length);
+        for (String tone : tones) {
+            list.add(getTone(tone));
         }
+        AudioTrack track = ToneUtil.genAudio(list);
+        track.setPlaybackPositionUpdateListener(new AudioTrack.OnPlaybackPositionUpdateListener() {
+            @Override
+            public void onMarkerReached(AudioTrack track) {
+
+            }
+
+            @Override
+            public void onPeriodicNotification(AudioTrack track) {
+                track.release();
+            }
+        });
+        track.play();
     }
 }

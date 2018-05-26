@@ -1,30 +1,38 @@
 package xyz.imxqd.clickclick.ui.fragments;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.ui.AddFunctionActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 
 public class FunctionFragment extends BaseFragment implements FunctionAdapter.EventCallback {
 
+    private static final int REQUEST_ADD_FUNC = 60001;
     private volatile static FunctionFragment mInstance;
 
     @BindView(android.R.id.list)
@@ -35,6 +43,8 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
 
     FunctionAdapter mAdapter;
     ItemTouchHelper mItemTouchHelper;
+
+    ArrayAdapter<String> mMenuAdapter;
 
     public FunctionFragment() {
         // Required empty public constructor
@@ -106,6 +116,11 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         mAdapter = new FunctionAdapter();
+        List<String> list = new ArrayList<>();
+        list.add(getString(R.string.add_internal_func));
+        list.add(getString(R.string.add_func_from_web));
+        list.add(getString(R.string.add_func_by_self));
+        mMenuAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
         mAdapter.setOnStartDragCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
         vList.setAdapter(mAdapter);
@@ -139,12 +154,36 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
 
     @OnClick(R.id.action_add)
     public void onAddClick() {
-
+        new AlertDialog.Builder(getContext())
+                .setAdapter(mMenuAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                startAddFuncActivity();
+                                break;
+                             default:
+                        }
+                    }
+                })
+                .show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            mAdapter.refreshData();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 
+    private void startAddFuncActivity() {
+        Intent intent = new Intent(getActivity(), AddFunctionActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_FUNC);
     }
 
     @Override

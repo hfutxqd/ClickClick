@@ -2,19 +2,12 @@ package xyz.imxqd.clickclick.ui;
 
 import android.content.Intent;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.RelativeSizeSpan;
+import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.service.KeyEventService;
 
 /**
@@ -22,6 +15,8 @@ import xyz.imxqd.clickclick.service.KeyEventService;
  */
 
 public class BaseActivity extends AppCompatActivity {
+
+    private Toast mToast;
 
     public boolean isAccessibilitySettingsOn() {
         int accessibilityEnabled = 0;
@@ -55,5 +50,13 @@ public class BaseActivity extends AppCompatActivity {
 
     public void startAccessibilitySettings() {
         startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+    }
+
+    protected void showToast(String str) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+        mToast = Toast.makeText(this, str, Toast.LENGTH_LONG);
+        mToast.show();
     }
 }
