@@ -3,7 +3,6 @@ package xyz.imxqd.clickclick.func;
 import android.accessibilityservice.AccessibilityService;
 import android.media.AudioManager;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
@@ -21,11 +20,6 @@ public class KeyEventFunction extends AbstractFunction {
         return Integer.valueOf(args);
     }
 
-    private void toastAccessibilityError() {
-        Toast.makeText(App.get(), R.string.accessibility_error, Toast.LENGTH_LONG).show();
-    }
-
-
     @Override
     public void doFunction(String args) throws Exception {
         int keyCode = getKeyCode(args);
@@ -36,21 +30,21 @@ public class KeyEventFunction extends AbstractFunction {
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                 } else {
-                    toastAccessibilityError();
+                    throw new RuntimeException(App.get().getString(R.string.accessibility_error));
                 }
                 break;
             case KeyEvent.KEYCODE_HOME:
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
                 } else {
-                    toastAccessibilityError();
+                    throw new RuntimeException(App.get().getString(R.string.accessibility_error));
                 }
                 break;
             case KeyEvent.KEYCODE_APP_SWITCH:
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
                 } else {
-                    toastAccessibilityError();
+                    throw new RuntimeException(App.get().getString(R.string.accessibility_error));
                 }
                 break;
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
@@ -71,10 +65,14 @@ public class KeyEventFunction extends AbstractFunction {
                     KeyEvent[] events = KeyEventUtil.makeKeyEventGroup(keyCode);
                     audioManager.dispatchMediaKeyEvent(events[0]);
                     audioManager.dispatchMediaKeyEvent(events[1]);
+                } else {
+                    throw new RuntimeException("AudioManager Error");
                 }
                 break;
              default:
-                    KeyEventUtil.sendKeyEventByShell(keyCode);
+                 if (!KeyEventUtil.sendKeyEventByShell(keyCode)) {
+                     throw new RuntimeException("KeyEvent commend exec error");
+                 }
         }
     }
 }

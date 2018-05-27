@@ -242,7 +242,9 @@ public class FunctionsActivity extends AppCompatActivity {
         }
 
         private void reload() {
-            mRotation.startNow();
+            mRotation = AnimationUtils.loadAnimation(getContext(), R.anim.rotation);
+            mRotation.setRepeatCount(Animation.INFINITE);
+            mFab.startAnimation(mRotation);
             mListView.setVisibility(View.GONE);
             mEmpty.setVisibility(View.VISIBLE);
             if (isLocalMode) {
@@ -326,9 +328,6 @@ public class FunctionsActivity extends AppCompatActivity {
                     }
                 }
             });
-            mRotation = AnimationUtils.loadAnimation(getContext(), R.anim.rotation);
-            mRotation.setRepeatCount(Animation.INFINITE);
-            mFab.startAnimation(mRotation);
             reload();
         }
     }
