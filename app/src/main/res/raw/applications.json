@@ -180,6 +180,15 @@
       "version_name": "1.0",
       "author": "imxqd",
       "update_time": 1527414422000
+    },
+    {
+      "name": "拨打110",
+      "description": "拨打110",
+      "body": "url:tel:110",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
     }
   ]
 }

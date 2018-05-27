@@ -3,6 +3,7 @@ package xyz.imxqd.clickclick.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -313,6 +314,18 @@ public class FunctionsActivity extends AppCompatActivity {
             ButterKnife.bind(this, view);
             mListView.setLayoutManager(new LinearLayoutManager(getContext()));
             mListView.setAdapter(mAdapter);
+            mListView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                @Override
+                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                    int pos = parent.getChildAdapterPosition(view);
+                    int count = mAdapter.getItemCount();
+                    if (pos == count - 1) { // the last one
+                        outRect.bottom = getResources().getDimensionPixelSize(R.dimen.list_last_bottom);
+                    } else {
+                        outRect.bottom = 0;
+                    }
+                }
+            });
             mRotation = AnimationUtils.loadAnimation(getContext(), R.anim.rotation);
             mRotation.setRepeatCount(Animation.INFINITE);
             mFab.startAnimation(mRotation);
