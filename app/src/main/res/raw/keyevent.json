@@ -1,0 +1,32 @@
+{
+  "total": 20,
+  "data": [
+    {
+      "name": "返回键",
+      "description": "返回",
+      "body": "keyevent:4",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "HOME键",
+      "description": "返回到桌面",
+      "body": "keyevent:3",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "多任务键",
+      "description": "多任务切换程序",
+      "body": "keyevent:187",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    }
+  ]
+}

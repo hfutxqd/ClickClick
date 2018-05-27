@@ -1,6 +1,9 @@
 package xyz.imxqd.clickclick.func;
 
+import android.content.Context;
+import android.hardware.camera2.CameraManager;
 import android.media.AudioTrack;
+import android.os.Build;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -12,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.ToneUtil;
 

@@ -13,11 +13,16 @@ public class ToneUtil {
         public int duration; // ms
     }
 
-    public static AudioTrack genAudio(List<Tone> tones) {
+    public static int getTotalDuration(List<Tone> tones) {
         int totalDur = 0;
         for (Tone t : tones) {
             totalDur += t.duration;
         }
+        return totalDur;
+    }
+
+    public static AudioTrack genAudio(List<Tone> tones) {
+        int totalDur = getTotalDuration(tones);
         int numSamples = sampleRate / 1000 * totalDur;
         double sample[] = new double[numSamples];
         int i = 0;

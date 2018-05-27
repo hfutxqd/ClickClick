@@ -40,4 +40,6 @@
     <string name="save_successed">保存成功</string>
     <string name="save_failed">保存失败，可能已经存在</string>
     <string name="open_error">数据格式有误</string>
+    <string name="android_version_too_low">Android版本太低，不能支持该功能</string>
+    <string name="no_data">暂无数据</string>
 </resources>

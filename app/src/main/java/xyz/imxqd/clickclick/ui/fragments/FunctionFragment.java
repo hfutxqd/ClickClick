@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.ui.AddFunctionActivity;
+import xyz.imxqd.clickclick.ui.FunctionsActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
@@ -151,6 +152,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
+                                startFunctionsActivity();
                                 break;
                             case 1:
                                 break;
@@ -170,6 +172,11 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
             mAdapter.refreshData();
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void startFunctionsActivity() {
+        Intent intent = new Intent(getActivity(), FunctionsActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_FUNC);
     }
 
     private void startAddFuncActivity() {
