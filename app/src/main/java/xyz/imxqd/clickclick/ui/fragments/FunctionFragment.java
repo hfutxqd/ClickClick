@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
@@ -42,6 +43,9 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
 
     @BindView(R.id.function_state)
     TextView vState;
+
+    @BindView(R.id.empty_view)
+    FrameLayout mEmpty;
 
     FunctionAdapter mAdapter;
     ItemTouchHelper mItemTouchHelper;
@@ -142,6 +146,11 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         String state = getString(R.string.function_current_state, count);
         CharSequence text = getBigNumberText(state);
         vState.setText(text);
+        if (count == 0) {
+            mEmpty.setVisibility(View.VISIBLE);
+        } else {
+            mEmpty.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.action_add)

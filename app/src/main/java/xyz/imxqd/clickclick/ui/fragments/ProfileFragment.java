@@ -15,6 +15,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
@@ -41,6 +42,9 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
 
     @BindView(R.id.profile_state)
     TextView vState;
+
+    @BindView(R.id.empty_view)
+    FrameLayout mEmpty;
 
     ProfileAdapter mAdapter;
     ItemTouchHelper itemTouchHelper;
@@ -159,6 +163,11 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         int count = mAdapter.getEnableCount();
         String state = getString(R.string.profile_current_state, count);
         vState.setText(getBigNumberText(state));
+        if (mAdapter.getItemCount() == 0) {
+            mEmpty.setVisibility(View.VISIBLE);
+        } else {
+            mEmpty.setVisibility(View.GONE);
+        }
     }
 
     @OnClick(R.id.action_add)
