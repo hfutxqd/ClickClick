@@ -5,7 +5,7 @@ import com.raizlabs.android.dbflow.annotation.NotNull;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
-import com.raizlabs.android.dbflow.sql.language.OrderBy;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
@@ -40,5 +40,13 @@ public class DefinedFunction extends BaseModel {
                 .orderBy(DefinedFunction_Table.order, true)
                 .orderBy(DefinedFunction_Table.id, false)
                 .queryList();
+    }
+
+    @Override
+    public boolean delete() {
+        SQLite.delete(KeyMappingEvent.class)
+                .where(KeyMappingEvent_Table.func_id.eq(id))
+                .execute();
+        return super.delete();
     }
 }

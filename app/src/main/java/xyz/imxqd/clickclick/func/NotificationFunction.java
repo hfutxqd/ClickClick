@@ -32,7 +32,7 @@ public class NotificationFunction extends AbstractFunction {
         }
         int pos = args.indexOf(':');
         if (pos <= 0) {
-            return null;
+            throw new RuntimeException("Syntax Error");
         }
         String packageName = args.substring(0, pos);
         Pattern pattern = Pattern.compile(REGEX_PACKAGE);
@@ -40,7 +40,7 @@ public class NotificationFunction extends AbstractFunction {
         if (matcher.matches()) {
             return packageName;
         } else {
-            return null;
+            throw new RuntimeException("Syntax Error");
         }
     }
 
@@ -50,38 +50,35 @@ public class NotificationFunction extends AbstractFunction {
         }
         int pos = args.indexOf(':');
         if (pos <= 0) {
-            return -1;
+            throw new RuntimeException("Syntax Error");
         }
         if (pos >= args.length() - 1) {
-            return -1;
+            throw new RuntimeException("Syntax Error");
         }
         try {
             int order = Integer.valueOf(args.substring(pos + 1));
             return order;
         } catch (Exception e) {
-            return -1;
+            throw new RuntimeException("Syntax Error" );
         }
     }
 
     @Override
-    public void doFunction(String args) throws RuntimeException {
+    public void doFunction(String args) throws Exception {
         NotificationCollectorService service = AppEventManager.getInstance().getNotificationService();
         if (service != null) {
             List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
             if (notifications.size() == 0) {
-                return;
+                throw new RuntimeException("There are no notifications of " + getPackageName(args));
             }
             List<PendingIntent> intents = NotificationAccessUtil.getPendingIntents(notifications.get(0));
             int order = getOrder(args);
-            try {
-                if (order > 0 && intents.size() > order) {
-                    intents.get(order).send();
-                }
-            } catch (Exception e) {
-                Logger.e("error " + e);
+            if (order > 0 && intents.size() > order) {
+                intents.get(order).send();
             }
         } else {
-            Toast.makeText(App.get(), R.string.notification_service_error, Toast.LENGTH_LONG).show();
+            toast(App.get().getString(R.string.notification_service_error));
+            throw new RuntimeException(App.get().getString(R.string.notification_service_error));
         }
     }
 }

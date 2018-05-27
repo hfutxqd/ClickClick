@@ -21,6 +21,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Consumer;
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.func.FunctionFactory;
@@ -145,8 +146,10 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
                     IFunction function = FunctionFactory.getFuncById(f.id);
-                    if (function != null) {
-                        function.exec();
+                    if (function != null && function.exec()) {
+                        App.get().showToast(R.string.run_successed);
+                    } else {
+                        App.get().showToast(R.string.run_failed);
                     }
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:

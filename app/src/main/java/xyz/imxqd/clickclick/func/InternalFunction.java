@@ -1,9 +1,8 @@
 package xyz.imxqd.clickclick.func;
 
-import android.content.Context;
-import android.hardware.camera2.CameraManager;
 import android.media.AudioTrack;
-import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -14,8 +13,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.OnClick;
 import xyz.imxqd.clickclick.App;
-import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.ToneUtil;
 
@@ -63,8 +62,9 @@ public class InternalFunction extends AbstractFunction {
         // TODO: 2018/5/23
     }
 
-    public void toast(String str) {
-        Toast.makeText(App.get(), str, Toast.LENGTH_LONG).show();
+    @Override
+    public void toast(final String str) {
+        super.toast(str);
     }
 
     public void vibrate(String str) throws Exception{

@@ -33,7 +33,7 @@ import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 
-public class ProfileFragment extends BaseFragment implements ProfileAdapter.ProfileChangeCallback {
+public class ProfileFragment extends BaseFragment implements ProfileAdapter.ProfileChangeCallback, OnRefreshUI {
 
     private static final int REQUEST_CODE_ADD_KEY_EVENT = 1;
 
@@ -196,5 +196,12 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     @Override
     public void onStartDrag(RecyclerView.ViewHolder holder) {
         itemTouchHelper.startDrag(holder);
+    }
+
+    @Override
+    public void onDataChanged() {
+        mAdapter.refreshData();
+        mAdapter.notifyDataSetChanged();
+        initStateText();
     }
 }

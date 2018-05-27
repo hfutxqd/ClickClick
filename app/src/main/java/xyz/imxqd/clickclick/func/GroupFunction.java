@@ -1,9 +1,22 @@
 package xyz.imxqd.clickclick.func;
 
+import android.annotation.SuppressLint;
+import android.os.Looper;
+
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.R;
 
 public class GroupFunction extends AbstractFunction {
 
@@ -13,25 +26,35 @@ public class GroupFunction extends AbstractFunction {
         super(funcData);
     }
 
+    @SuppressLint("CheckResult")
     @Override
-    public void doFunction(final String args) throws RuntimeException {
-        new Thread(new Runnable() {
+    public void doFunction(final String args) throws Exception {
+        Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public void run() {
+            public void subscribe(ObservableEmitter<Boolean> emitter) throws Exception {
                 Gson gson = new Gson();
-                List<String> groupItemsStr = gson.fromJson(args, List.class);
-                try {
-                    List<GroupItem> groupItems = parseGroupItems(groupItemsStr);
-                    for (GroupItem item : groupItems) {
-                        Thread.sleep(item.timeBefore);
-                        FunctionFactory.getFunc(item.funcData).exec();
-                        Thread.sleep(item.timeAfter);
+                String[] groupItemsStr = gson.fromJson(args, String[].class);
+                List<GroupItem> groupItems = parseGroupItems(Arrays.asList(groupItemsStr));
+                for (GroupItem item : groupItems) {
+                    Thread.sleep(item.timeBefore);
+                    boolean success = FunctionFactory.getFunc(item.funcData).exec();
+                    Thread.sleep(item.timeAfter);
+                    if (!success) {
+                        emitter.onNext(false);
+                        break;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                }
+                emitter.onNext(true);
+                emitter.onComplete();
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean success) throws Exception {
+                if (!success) {
+                    toast(App.get().getString(R.string.run_failed));
                 }
             }
-        }, PREFIX).start();
+        });
     }
 
     public static List<GroupItem> parseGroupItems(List<String> groupItemStrList) throws Exception {
@@ -50,7 +73,7 @@ public class GroupFunction extends AbstractFunction {
                 item.funcData = str.substring(pos1 + 1, pos2);
                 list.add(item);
             } else {
-                return null;
+                throw new RuntimeException("Syntax Error");
             }
         }
         return list;

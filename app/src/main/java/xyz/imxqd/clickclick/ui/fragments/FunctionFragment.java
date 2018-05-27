@@ -30,6 +30,7 @@ import butterknife.OnClick;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.ui.AddFunctionActivity;
 import xyz.imxqd.clickclick.ui.FunctionsActivity;
+import xyz.imxqd.clickclick.ui.NaviActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
@@ -201,5 +202,8 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     @Override
     public void onDataChanged() {
         initStateText();
+        if (getActivity() != null) {
+            ((NaviActivity)getActivity()).requestRefreshUI();
+        }
     }
 }

@@ -60,6 +60,8 @@ public class ActionFunction extends AbstractFunction {
         }
         if (intent != null) {
             App.get().startActivity(intent);
+        } else {
+            throw new RuntimeException("Syntax Error");
         }
     }
 }

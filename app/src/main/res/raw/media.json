@@ -18,6 +18,60 @@
       "version_name": "1.0",
       "author": "imxqd",
       "update_time": 1527414422000
+    },
+    {
+      "name": "快退",
+      "description": "快退",
+      "body": "keyevent:273",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "快进",
+      "description": "快进",
+      "body": "keyevent:272",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "暂停",
+      "description": "暂停",
+      "body": "keyevent:127",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "播放",
+      "description": "播放",
+      "body": "keyevent:126",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "播放/暂停",
+      "description": "播放/暂停",
+      "body": "keyevent:85",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "截图",
+      "description": "截图",
+      "body": "keyevent:120",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
     }
   ]
 }

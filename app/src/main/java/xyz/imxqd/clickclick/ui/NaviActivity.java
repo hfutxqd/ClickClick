@@ -9,12 +9,16 @@ import android.util.ArrayMap;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.ui.fragments.FunctionFragment;
+import xyz.imxqd.clickclick.ui.fragments.OnRefreshUI;
 import xyz.imxqd.clickclick.ui.fragments.ProfileFragment;
 import xyz.imxqd.clickclick.ui.fragments.SettingsFragment;
 
@@ -25,6 +29,8 @@ public class NaviActivity extends BaseActivity {
 
     @BindView(R.id.navigation)
     BottomNavigationView vNavigation;
+
+    private Set<OnRefreshUI> mOnRefreshUICallbacks = new HashSet<>();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -74,6 +80,12 @@ public class NaviActivity extends BaseActivity {
         mFragments.put(R.id.navigation_settings, SettingsFragment.newInstance());
     }
 
+    public void requestRefreshUI() {
+        for (OnRefreshUI ui : mOnRefreshUICallbacks) {
+            ui.onDataChanged();
+        }
+    }
+
     @Override
     public void onAttachFragment(Fragment fragment) {
         if(fragment instanceof ProfileFragment) {
@@ -82,6 +94,9 @@ public class NaviActivity extends BaseActivity {
             mFragments.put(R.id.navigation_dashboard, fragment);
         } else if (fragment instanceof  SettingsFragment) {
             mFragments.put(R.id.navigation_settings, fragment);
+        }
+        if (fragment instanceof OnRefreshUI) {
+            mOnRefreshUICallbacks.add((OnRefreshUI) fragment);
         }
     }
 
