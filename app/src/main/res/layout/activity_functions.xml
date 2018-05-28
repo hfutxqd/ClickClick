@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -9,12 +9,19 @@
     <include layout="@layout/title_layout" />
     <android.support.design.widget.TabLayout
         android:id="@+id/functions_tab"
+        android:layout_below="@id/title_layout"
         app:tabMode="scrollable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <android.support.v4.view.ViewPager
-        android:id="@+id/functions_container"
-        android:layout_weight="1"
+    <View
+        android:id="@+id/toolbar_shadow"
+        android:layout_below="@id/functions_tab"
+        android:background="@drawable/toolbar_shadow"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
-</LinearLayout>
+        android:layout_height="5dp" />
+    <android.support.v4.view.ViewPager
+        android:layout_below="@id/functions_tab"
+        android:id="@+id/functions_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>
