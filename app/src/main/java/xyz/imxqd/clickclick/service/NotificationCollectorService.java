@@ -14,6 +14,7 @@ import java.util.List;
 
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 /**
@@ -61,11 +62,28 @@ public class NotificationCollectorService extends NotificationListenerService {
     // 2 关闭
     // 3 歌词
     // 4 喜爱
+    //测试版本
+    //网易云音乐 5.2.0.437608
+    //
+    //喜爱按钮
+    //mix2s: id 2131822537
+    //
+    //oneplus3 : id 2131822537
+    //
+    //2130838697 未喜爱
+    //2130838699 喜爱
+    //
+    //
+    //播放按钮
+    //id 2131822539
+    //正在播放（暂停按钮） 2130838709
+    //暂停状态（播放按钮） 2130838712
+
+
 
     @Override
-    public void onNotificationPosted(StatusBarNotification sbn) {
-        Log.d(TAG, "onNotificationPosted : " + sbn.getPackageName());
-
+    public void onNotificationPosted(StatusBarNotification sbn) { Log.d(TAG, "onNotificationPosted : " + sbn.getPackageName());
+        System.out.println(NotificationAccessUtil.getReflectionActions(sbn.getNotification().bigContentView, "setImageResource", 2131822537));
     }
 
     public List<Notification> getNotificationsByPackage(String packageName) {
