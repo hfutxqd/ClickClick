@@ -27,6 +27,15 @@
       "version_name": "1.0",
       "author": "imxqd",
       "update_time": 1527414422000
+    },
+    {
+      "name": "小星星示例xxx",
+      "description": "一闪一闪亮晶晶xxx",
+      "body": "internal:tone(256:400,0:100,256:400,0:100,384:400,0:100,384:400,0:100,426:400,0:100,426:400,0:100,384:400)",
+      "version_code": "2",
+      "version_name": "1.1",
+      "author": "imxqd",
+      "update_time": 1527414422000
     }
   ]
 }

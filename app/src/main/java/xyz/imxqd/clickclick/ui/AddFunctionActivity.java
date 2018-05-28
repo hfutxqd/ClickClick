@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
@@ -13,16 +14,23 @@ import com.google.gson.Gson;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.func.FunctionFactory;
 import xyz.imxqd.clickclick.func.IFunction;
+import xyz.imxqd.clickclick.model.web.RemoteFunction;
+import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class AddFunctionActivity extends BaseActivity {
 
     private static final String PATH_ADD = "add";
     private static final String PATH_SAVE = "save";
     private static final String PATH_RUN = "run";
+
+    private static final String ARGS_EDITABLE = "key_add_func_editable";
+    private static final String ARGS_REMOTE_FUNCATION = "key_add_func_remote";
 
     @BindView(R.id.add_func_name)
     TextInputEditText etName;
@@ -82,7 +90,34 @@ public class AddFunctionActivity extends BaseActivity {
             } catch (Exception e) {
                 showToast(getString(R.string.open_error));
             }
+        } else {
+            boolean editable = intent.getBooleanExtra(ARGS_EDITABLE, true);
+            if (SettingsUtil.displayDebug()) {
+                editable = true;
+            }
+            etName.setEnabled(editable);
+            etCode.setEnabled(editable);
+            etDescription.setEnabled(editable);
+            RemoteFunction f = intent.getParcelableExtra(ARGS_REMOTE_FUNCATION);
+            if (f == null) {
+                return;
+            }
+            if (f.versionCode > BuildConfig.VERSION_CODE) {
+                App.get().showToast(getString(R.string.app_version_too_old, f.versionName));
+                finish();
+            } else {
+                etName.setText(f.name);
+                etDescription.setText(f.description);
+                etCode.setText(f.body);
+            }
         }
+    }
+
+    public static void start(RemoteFunction function, boolean editable, Context context) {
+        Intent intent = new Intent(context, AddFunctionActivity.class);
+        intent.putExtra(ARGS_EDITABLE, editable);
+        intent.putExtra(ARGS_REMOTE_FUNCATION, function);
+        context.startActivity(intent);
     }
 
     @Override

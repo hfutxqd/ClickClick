@@ -49,4 +49,11 @@ public class DefinedFunction extends BaseModel {
                 .execute();
         return super.delete();
     }
+
+    public static boolean checkHas(String body) {
+        return new Select()
+                .from(DefinedFunction.class)
+                .where(DefinedFunction_Table.body.eq(body))
+                .querySingle() != null;
+    }
 }

@@ -72,5 +72,6 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="no_data">暂无数据</string>
+    <string name="app_version_too_old">应用版本过旧,此功能需要%1$s以上版本</string>
 
 </resources>

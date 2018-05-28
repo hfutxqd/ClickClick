@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -47,7 +48,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.model.web.HomePage;
 import xyz.imxqd.clickclick.model.web.HttpResult;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
@@ -160,6 +163,13 @@ public class FunctionsActivity extends AppCompatActivity {
                 holder.description.setText(f.description);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy M/d H:mm");
                 holder.time.setText(format.format(new Date(f.updateTime)));
+                if (DefinedFunction.checkHas(f.body)) {
+                    holder.add.setImageResource(R.drawable.ic_done_black_24dp);
+                    holder.add.setEnabled(false);
+                } else {
+                    holder.add.setImageResource(R.drawable.ic_add_black_24dp);
+                    holder.add.setEnabled(true);
+                }
             }
 
             @Override
@@ -177,6 +187,8 @@ public class FunctionsActivity extends AppCompatActivity {
                 TextView author;
                 @BindView(R.id.remote_func_time)
                 TextView time;
+                @BindView(R.id.remote_func_add)
+                ImageView add;
 
                 public RemoteFuncHolder(View itemView) {
                     super(itemView);
@@ -185,11 +197,7 @@ public class FunctionsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             RemoteFunction f = mPage.data.get(getAdapterPosition());
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            Gson gson = new Gson();
-                            String json = gson.toJson(f);
-                            intent.setData(Uri.parse("clickclick://add/" + Uri.encode(json)));
-                            App.get().startActivity(intent);
+                            AddFunctionActivity.start(f, false, App.get());
                         }
                     });
                 }
@@ -197,11 +205,22 @@ public class FunctionsActivity extends AppCompatActivity {
                 @OnClick({R.id.remote_func_add})
                 public void onAddClick() {
                     RemoteFunction f = mPage.data.get(getAdapterPosition());
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    Gson gson = new Gson();
-                    String json = gson.toJson(f);
-                    intent.setData(Uri.parse("clickclick://save/" + Uri.encode(json)));
-                    App.get().startActivity(intent);
+                    if (f.versionCode > BuildConfig.VERSION_CODE) {
+                        App.get().showToast(App.get().getString(R.string.app_version_too_old, f.versionName));
+                    } else {
+                        DefinedFunction function = new DefinedFunction();
+                        function.body = f.body;
+                        function.name = f.name;
+                        function.description = f.description;
+                        function.order = 0;
+                        try {
+                            function.save();
+                            App.get().showToast(R.string.save_successed);
+                        } catch (Exception e) {
+                            App.get().showToast(R.string.save_failed);
+                        }
+                        notifyItemChanged(getAdapterPosition());
+                    }
                 }
             }
         }
