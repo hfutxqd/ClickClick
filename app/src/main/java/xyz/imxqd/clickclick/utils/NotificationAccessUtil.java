@@ -102,6 +102,16 @@ public class NotificationAccessUtil {
         return list;
     }
 
+    public static Object getReflectionActionValue(Object rflectionAction) {
+        sFieldReflectionActionValue.setAccessible(true);
+        try {
+            return sFieldReflectionActionValue.get(rflectionAction);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static ArrayList getReflectionActions(RemoteViews rvs, String methodName, int viewId) {
         ArrayList list = new ArrayList();
         if (sClassReflectionAction == null) {
@@ -126,6 +136,27 @@ public class NotificationAccessUtil {
         return list;
     }
 
+    public static PendingIntent getPendingIntentByViewId(RemoteViews rvs,  int viewId) throws IllegalAccessException {
+        if (sClassSetOnClickPendingIntent == null) {
+            return null;
+        }
+        ArrayList list = getRemoteViewsActions(rvs);
+        for (Object a : list) {
+            if (sClassSetOnClickPendingIntent.isInstance(a)) {
+                sFieldReflectionActionViewId.setAccessible(true);
+                sFieldSetOnClickPendingIntentPendingIntent.setAccessible(true);
+                int id = sFieldReflectionActionViewId.getInt(a);
+                if (id == viewId) {
+                    Object i = sFieldSetOnClickPendingIntentPendingIntent.get(a);
+                    if (i instanceof  PendingIntent) {
+                        return (PendingIntent) i;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 
     // API 19以上可用
     @RequiresApi(Build.VERSION_CODES.KITKAT)
@@ -141,13 +172,16 @@ public class NotificationAccessUtil {
         }
         ArrayList actions = getRemoteViewsActions(rvs);
         for (Object action : actions) {
-            PendingIntent intent = null;
             try {
-                intent = (PendingIntent) sFieldActionPendingIntent.get(action);
+                if (sClassSetOnClickPendingIntent.isInstance(action)) {
+                    sFieldSetOnClickPendingIntentPendingIntent.setAccessible(true);
+                    PendingIntent intent = null;
+                    intent = (PendingIntent) sFieldSetOnClickPendingIntentPendingIntent.get(action);
+                    intents.add(intent);
+                }
             } catch (Throwable e) {
                 continue;
             }
-            intents.add(intent);
         }
         return intents;
     }
@@ -155,7 +189,7 @@ public class NotificationAccessUtil {
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private static ArrayList getRemoteViewsActions(RemoteViews rvs) {
         try {
-            return (ArrayList) sFieldmActions.get(rvs);
+            return (ArrayList) sFieldRemoteViewsmActions.get(rvs);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -169,7 +203,7 @@ public class NotificationAccessUtil {
 
             Field field = RemoteViews.class.getDeclaredField("mActions");
             field.setAccessible(true);
-            sFieldmActions = field;
+            sFieldRemoteViewsmActions = field;
             Class[] classes = RemoteViews.class.getDeclaredClasses();
             Class SetOnClickPendingIntent = null;
             for (Class c : classes) {
@@ -179,16 +213,14 @@ public class NotificationAccessUtil {
                 if (c.getName().endsWith("$ReflectionAction")) {
                     sClassReflectionAction = c;
                     sFieldReflectionActionMethodName = c.getDeclaredField("methodName");
+                    sFieldReflectionActionValue = c.getDeclaredField("value");
                 }
                 if (c.getName().endsWith("$Action")) {
                     sFieldReflectionActionViewId = c.getDeclaredField("viewId");
                 }
             }
             sClassSetOnClickPendingIntent = SetOnClickPendingIntent;
-            Field field2 = SetOnClickPendingIntent.getDeclaredField("pendingIntent");
-            field2.setAccessible(true);
-            sFieldActionPendingIntent = field2;
-
+            sFieldSetOnClickPendingIntentPendingIntent = SetOnClickPendingIntent.getDeclaredField("pendingIntent");
 
             RemoteViews.class.getDeclaredClasses();
         } catch (Exception e) {
@@ -198,11 +230,16 @@ public class NotificationAccessUtil {
 
     private static Class  sClassSetOnClickPendingIntent;
     private static Class  sClassReflectionAction;
-    private static Field sFieldmActions;
+    // Action
+    private static Field sFieldRemoteViewsmActions;
+    // String
     private static Field sFieldReflectionActionMethodName;
+    // int
     private static Field sFieldReflectionActionViewId;
-
-    private static Field sFieldActionPendingIntent;
+    // Object
+    private static Field sFieldReflectionActionValue;
+    // PendingIntent
+    private static Field sFieldSetOnClickPendingIntentPendingIntent;
 
      // 通过反射调用隐藏接口，可能不支持所有设备，高版本不支持
     private static Method sMethodGetIntent;

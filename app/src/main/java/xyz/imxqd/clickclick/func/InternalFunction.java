@@ -3,6 +3,7 @@ package xyz.imxqd.clickclick.func;
 import android.media.AudioTrack;
 import android.os.Handler;
 import android.os.Looper;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -15,6 +16,10 @@ import java.util.regex.Pattern;
 
 import butterknife.OnClick;
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.service.NotificationCollectorService;
+import xyz.imxqd.clickclick.utils.ResourceUtl;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.ToneUtil;
 
@@ -22,8 +27,12 @@ public class InternalFunction extends AbstractFunction {
     public static final String PREFIX = "internal";
 
     private static final String REGEX_FUNC = "([a-z_]+)\\((.*)\\)";
+    private static final String REGEX_RESOURCE = "@(id|drawable|string|array|color)/([a-zA-Z_]+)";
+    private static final String REGEX_RESOURCE_ID = "@id/([a-zA-Z_]+)";
 
     private static final Pattern FUNC_PATTERN = Pattern.compile(REGEX_FUNC);
+    private static final Pattern RESOURCE_PATTERN = Pattern.compile(REGEX_RESOURCE);
+    private static final Pattern RESOURCE_ID_PATTERN = Pattern.compile(REGEX_RESOURCE_ID);
 
     public InternalFunction(String funcData) {
         super(funcData);
@@ -31,7 +40,7 @@ public class InternalFunction extends AbstractFunction {
 
     @Override
     public void doFunction(String args) throws Exception {
-        Matcher matcher = match(args);
+        Matcher matcher = FUNC_PATTERN.matcher(args);
         if (!matcher.matches()) {
             throw new Exception("Syntax Error");
         }
@@ -50,15 +59,46 @@ public class InternalFunction extends AbstractFunction {
         }
     }
 
-    private Matcher match(String args) {
-        return FUNC_PATTERN.matcher(args);
+    public void cloud_music_like(String args) {
+        final NotificationCollectorService service = AppEventManager.getInstance().getNotificationService();
+        String idName = "playNotificationStar";
+        if (service == null) {
+            throw new RuntimeException(App.get().getString(R.string.notification_service_error));
+        }
+        Matcher matcher = RESOURCE_ID_PATTERN.matcher(args);
+        if (!matcher.matches()) {
+            throw new RuntimeException("Syntax Error");
+        }
+        matcher.reset();
+        if (matcher.find()) {
+            if (matcher.groupCount() != 1) {
+                throw new RuntimeException("Syntax Error");
+            }
+            idName = matcher.group(1);
+        }
+        new NotificationFunction("notification:com.netease.cloudmusic:4").exec();
+
+        final NotificationCollectorService.Feedback feedback = new NotificationCollectorService.Feedback();
+        feedback.packageName = "com.netease.cloudmusic";
+        feedback.methodName = "setImageResource";
+        feedback.viewId = ResourceUtl.getIdByName(feedback.packageName, idName);
+        feedback.callback = new NotificationCollectorService.Feedback.Callback() {
+            @Override
+            public void onNotificationPosted(Object val) {
+                if (val instanceof  Integer) {
+                    Toast toast = new Toast(App.get());
+                    ImageView imageView = new ImageView(App.get());
+                    imageView.setImageDrawable(ResourceUtl.getDrawableById(feedback.packageName, (Integer) val));
+                    toast.setView(imageView);
+                    toast.show();
+                }
+                service.removeFeedback(feedback);
+            }
+        };
+        service.addFeedback(feedback);
     }
 
-    public void cloudMusicLike() {
-        // TODO: 2018/5/23  
-    }
-
-    public void qqMusicLike() {
+    public void qq_music_like() {
         // TODO: 2018/5/23
     }
 

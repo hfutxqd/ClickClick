@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +28,8 @@ public class NotificationCollectorService extends NotificationListenerService {
     private Toast mToast;
 
     private boolean isConnected = false;
+
+    private ArrayList<Feedback> mFeedbackList = new ArrayList<>();
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -82,8 +85,30 @@ public class NotificationCollectorService extends NotificationListenerService {
 
 
     @Override
-    public void onNotificationPosted(StatusBarNotification sbn) { Log.d(TAG, "onNotificationPosted : " + sbn.getPackageName());
-        System.out.println(NotificationAccessUtil.getReflectionActions(sbn.getNotification().bigContentView, "setImageResource", 2131822537));
+    public void onNotificationPosted(StatusBarNotification sbn) {
+        Log.d(TAG, "onNotificationPosted : " + sbn.getPackageName());
+        for (Feedback feedback : mFeedbackList) {
+            if (sbn.getPackageName().equals(feedback.packageName)) {
+                Notification n = sbn.getNotification();
+                if (n == null) {
+                    return;
+                }
+                ArrayList list = new ArrayList();
+                if (n.bigContentView != null) {
+                    list.addAll(NotificationAccessUtil.getReflectionActions(n.bigContentView, feedback.methodName, feedback.viewId));
+                }
+                if (n.contentView != null) {
+                    list.addAll(NotificationAccessUtil.getReflectionActions(n.contentView, feedback.methodName, feedback.viewId));
+                }
+                if (list.size() == 0) {
+                    return;
+                }
+                if (feedback.callback != null) {
+                    feedback.callback.onNotificationPosted(NotificationAccessUtil.getReflectionActionValue(list.get(0)));
+                }
+            }
+        }
+
     }
 
     public List<Notification> getNotificationsByPackage(String packageName) {
@@ -123,6 +148,27 @@ public class NotificationCollectorService extends NotificationListenerService {
         }
         mToast = Toast.makeText(getApplicationContext(), str, Toast.LENGTH_LONG);
         mToast.show();
+    }
+
+    public void addFeedback(Feedback feedback) {
+        mFeedbackList.add(feedback);
+    }
+
+    public void removeFeedback(Feedback feedback) {
+        mFeedbackList.remove(feedback);
+    }
+
+    public static class Feedback {
+        public String packageName;
+        public String methodName;
+        public int viewId;
+
+        public Callback callback;
+
+        public interface Callback {
+            void onNotificationPosted(Object val);
+        }
+
     }
 
 }

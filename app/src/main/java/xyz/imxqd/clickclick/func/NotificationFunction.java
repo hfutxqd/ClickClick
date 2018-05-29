@@ -16,11 +16,14 @@ import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
+import xyz.imxqd.clickclick.utils.ResourceUtl;
 
 public class NotificationFunction extends AbstractFunction {
     public static final String PREFIX = "notification";
 
     private static final String REGEX_PACKAGE = "([a-zA-Z0-9_]+\\.{1})+[a-zA-Z0-9_]+";
+    private static final String REGEX_RESOURCE_ID = "@id/([a-zA-Z_]+)";
+    private static final Pattern RESOURCE_ID_PATTERN = Pattern.compile(REGEX_RESOURCE_ID);
 
     public NotificationFunction(String funcData) {
         super(funcData);
@@ -44,6 +47,16 @@ public class NotificationFunction extends AbstractFunction {
         }
     }
 
+
+    public String getPackageArgs(String args) {
+        int pos = args.indexOf(':');
+        if (pos <= 0) {
+            throw new RuntimeException("Syntax Error");
+        }
+        return args.substring(pos + 1);
+    }
+
+
     public int getOrder(String args) {
         if (TextUtils.isEmpty(args)) {
             return -1;
@@ -65,17 +78,45 @@ public class NotificationFunction extends AbstractFunction {
 
     @Override
     public void doFunction(String args) throws Exception {
+
         NotificationCollectorService service = AppEventManager.getInstance().getNotificationService();
         if (service != null) {
-            List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
-            if (notifications.size() == 0) {
-                throw new RuntimeException("There are no notifications of " + getPackageName(args));
+            Matcher matcher = RESOURCE_ID_PATTERN.matcher(getPackageArgs(args));
+            if (matcher.matches()) {
+                Logger.d("notification : id mode");
+                matcher.reset();
+                String idName = "playNotificationStar";
+                if (matcher.find()) {
+                    if (matcher.groupCount() != 1) {
+                        throw new RuntimeException("Syntax Error");
+                    }
+                    idName = matcher.group(1);
+                }
+                int viewId = ResourceUtl.getIdByName(getPackageName(args), idName);
+
+                List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
+                if (notifications.size() == 0) {
+                    throw new RuntimeException("There are no notifications of " + getPackageName(args));
+                }
+                PendingIntent intent;
+                intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).bigContentView, viewId);
+                if (intent == null) {
+                    intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).contentView, viewId);
+                }
+                intent.send();
+            } else {
+                Logger.d("notification : order mode");
+                List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
+                if (notifications.size() == 0) {
+                    throw new RuntimeException("There are no notifications of " + getPackageName(args));
+                }
+                List<PendingIntent> intents = NotificationAccessUtil.getPendingIntents(notifications.get(0));
+                int order = getOrder(args);
+                if (order > 0 && intents.size() > order) {
+                    intents.get(order).send();
+                }
             }
-            List<PendingIntent> intents = NotificationAccessUtil.getPendingIntents(notifications.get(0));
-            int order = getOrder(args);
-            if (order > 0 && intents.size() > order) {
-                intents.get(order).send();
-            }
+
         } else {
             toast(App.get().getString(R.string.notification_service_error));
             throw new RuntimeException(App.get().getString(R.string.notification_service_error));
