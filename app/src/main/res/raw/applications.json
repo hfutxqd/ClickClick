@@ -101,18 +101,18 @@
       "update_time": 1527414422000
     },
     {
-      "name": "播放网易云已下载的音乐",
-      "description": "播放网易云已下载的音乐",
-      "body": "url:orpheus://download",
+      "name": "网易云喜爱(新)",
+      "description": "网易云喜爱(新版),兼容性更好",
+      "body": "notification:com.netease.cloudmusic:@id/playNotificationStar",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
       "update_time": 1527414422000
     },
     {
-      "name": "网易云音乐听歌识曲",
-      "description": "网易云音乐听歌识曲",
-      "body": "url:orpheus://recognize",
+      "name": "网易云喜爱(新)+震动",
+      "description": "网易云喜爱(新版),兼容性更好",
+      "body": "group:[\"0|notification:com.netease.cloudmusic:@id/playNotificationStar|50\",\"0|internal:vibrate([0,200])|0\"]",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
@@ -149,24 +149,6 @@
       "name": "淘宝",
       "description": "打开淘宝",
       "body": "url:taobao://",
-      "version_code": "1",
-      "version_name": "1.0",
-      "author": "imxqd",
-      "update_time": 1527414422000
-    },
-    {
-      "name": "哔哩哔哩",
-      "description": "打开哔哩哔哩",
-      "body": "url:bilibili://﻿",
-      "version_code": "1",
-      "version_name": "1.0",
-      "author": "imxqd",
-      "update_time": 1527414422000
-    },
-    {
-      "name": "打开chrome进剪切板链接",
-      "description": "打开chrome直接进剪切板的链接",
-      "body": "url:googlechrome://%@",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
