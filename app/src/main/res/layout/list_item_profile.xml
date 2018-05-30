@@ -33,11 +33,15 @@
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/profile_sub_title"
                 android:text="小米耳机音量键上下曲"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
