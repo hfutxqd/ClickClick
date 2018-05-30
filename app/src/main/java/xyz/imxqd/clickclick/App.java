@@ -1,9 +1,13 @@
 package xyz.imxqd.clickclick;
 
 import android.app.Application;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.StringRes;
+import android.view.Gravity;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -70,5 +74,24 @@ public class App extends Application {
             }
         });
 
+    }
+
+    public void toastImage(Drawable drawable) {
+        Toast toast = new Toast(this);
+        ImageView imageView = new ImageView(this);
+        imageView.setImageDrawable(drawable);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        int width = getResources().getDimensionPixelSize(R.dimen.dimen_24_dp);
+        int height = getResources().getDimensionPixelSize(R.dimen.dimen_24_dp);
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(width, height);
+        imageView.setLayoutParams(params);
+
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setView(imageView);
+        toast.show();
+    }
+
+    public Handler getHandler() {
+        return mHandler;
     }
 }

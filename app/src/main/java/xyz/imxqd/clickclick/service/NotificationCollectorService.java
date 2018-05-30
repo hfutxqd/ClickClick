@@ -155,7 +155,9 @@ public class NotificationCollectorService extends NotificationListenerService {
     }
 
     public void removeFeedback(Feedback feedback) {
-        mFeedbackList.remove(feedback);
+        if (mFeedbackList.contains(feedback)) {
+            mFeedbackList.remove(feedback);
+        }
     }
 
     public static class Feedback {
