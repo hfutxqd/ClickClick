@@ -94,6 +94,9 @@
                 <action android:name="com.tencent.qqmusic.ACTION_REFRESH_PLAYER_NOTIFICATION.QQMusicPhone" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ui.AlertDialogActivity"
+            android:theme="@style/AppTheme.Dialog" />
     </application>
 
 </manifest>

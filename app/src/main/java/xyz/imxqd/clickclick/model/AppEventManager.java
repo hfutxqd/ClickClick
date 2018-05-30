@@ -18,6 +18,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.func.FunctionFactory;
 import xyz.imxqd.clickclick.func.IFunction;
+import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.KeyEventHandler;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
@@ -32,7 +33,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     private AudioManager mAudioManager;
     private KeyEventHandler mKeyEventHandler;
-    private AccessibilityService mService;
+    private KeyEventService mService;
     private NotificationCollectorService mNotification;
     private Toast mToast;
 
@@ -68,7 +69,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         }
     }
 
-    public AccessibilityService getService() {
+    public KeyEventService getService() {
         return mService;
     }
 
@@ -108,9 +109,13 @@ public class AppEventManager implements KeyEventHandler.Callback {
     }
 
     public boolean shouldInterrupt(KeyEvent event) {
-        if (App.get().isServiceOn && SettingsUtil.isServiceOn()) {
-            return mKeyEventHandler.inputKeyEvent(event);
-        } else {
+        try {
+            if (App.get().isServiceOn && SettingsUtil.isServiceOn()) {
+                return mKeyEventHandler.inputKeyEvent(event);
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
             return false;
         }
     }
@@ -133,7 +138,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         }
     }
 
-    public void attachToAccessibilityService(AccessibilityService service) {
+    public void attachToAccessibilityService(KeyEventService service) {
         mService = service;
     }
 

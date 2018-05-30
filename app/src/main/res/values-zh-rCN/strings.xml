@@ -62,4 +62,7 @@
     <string name="android_version_too_low">Android版本太低，不能支持该功能</string>
     <string name="no_data">暂无数据</string>
     <string name="app_version_too_old">应用版本过旧,此功能需要%1$s以上版本</string>
+    <string name="please_click_the_notification_item">请在15秒内点击通知上的按钮</string>
+    <string name="alert_notify_message"><![CDATA[<b>应用名:</b> %1$s<br/><b>包名:</b> %2$s<br/><b>控件id:</b> %3$s]]></string>
+    <string name="add_to_func">添加到自定义功能</string>
 </resources>

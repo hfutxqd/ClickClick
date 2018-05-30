@@ -15,7 +15,9 @@ import java.util.regex.Pattern;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
+import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.ToneUtil;
@@ -64,6 +66,27 @@ public class InternalFunction extends AbstractFunction {
 
     public void notify_helper(String args) {
 
+        final KeyEventService service = AppEventManager.getInstance().getService();
+        if (service != null) {
+            App.get().showToast(App.get().getString(R.string.please_click_the_notification_item), true);
+            final KeyEventService.OnNotificationWidgetClick callback = new KeyEventService.OnNotificationWidgetClick() {
+                @Override
+                public void onNotificationWidgetClick(String packageName, String viewId) {
+                    viewId = viewId.replaceAll(packageName + ":id/", "");
+                    AlertUtil.showNotify(packageName, viewId);
+                    service.removeOnNotificationWidgetClickCallback(this);
+                }
+            };
+            service.addOnNotificationWidgetClickCallback(callback);
+            App.get().getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    service.removeOnNotificationWidgetClickCallback(callback);
+                }
+            }, 15000);
+        } else {
+            throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+        }
     }
 
     public void cloud_music_like(String args) {
