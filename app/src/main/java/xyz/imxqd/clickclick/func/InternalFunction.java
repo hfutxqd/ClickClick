@@ -1,20 +1,16 @@
 package xyz.imxqd.clickclick.func;
 
 import android.media.AudioTrack;
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import butterknife.OnClick;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
@@ -76,7 +72,10 @@ public class InternalFunction extends AbstractFunction {
             }
             idName = matcher.group(1);
         }
-        new NotificationFunction("notification:com.netease.cloudmusic:4").exec();
+        IFunction f = new NotificationFunction("notification:com.netease.cloudmusic:4");
+        if (!f.exec()) {
+            throw new RuntimeException("Failed");
+        }
 
         final NotificationCollectorService.Feedback feedback = new NotificationCollectorService.Feedback();
         feedback.packageName = "com.netease.cloudmusic";
@@ -86,16 +85,18 @@ public class InternalFunction extends AbstractFunction {
             @Override
             public void onNotificationPosted(Object val) {
                 if (val instanceof  Integer) {
-                    Toast toast = new Toast(App.get());
-                    ImageView imageView = new ImageView(App.get());
-                    imageView.setImageDrawable(ResourceUtl.getDrawableById(feedback.packageName, (Integer) val));
-                    toast.setView(imageView);
-                    toast.show();
+                    App.get().toastImage(ResourceUtl.getDrawableById(feedback.packageName, (Integer) val));
                 }
                 service.removeFeedback(feedback);
             }
         };
         service.addFeedback(feedback);
+        App.get().getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                service.removeFeedback(feedback);
+            }
+        }, 1000);
     }
 
     public void qq_music_like() {
@@ -142,5 +143,31 @@ public class InternalFunction extends AbstractFunction {
             }
         });
         track.play();
+    }
+
+    public static HashMap<Character, String> map = new HashMap<>();
+
+    public static void main(String ... args) {
+        map.put('1', "256:400");
+        map.put('2', "288:400");
+        map.put('3', "320:400");
+        map.put('4', "341:400");
+        map.put('5', "384:400");
+        map.put('6', "426:400");
+        map.put('7', "480:400");
+        map.put('8', "512:400");
+        map.put('-', "0:800");
+        map.put(' ', "0:200");
+
+        StringBuilder str = new StringBuilder();
+        str.append("internal:tone(");
+        String sss = "1 1 5 5 6 6 5-4 4 3 3 2 2 1-5 5 4 4 3 3 2-5 5 4 4 3 3 2-1 1 5 5 6 6 5-4 4 3 3 2 2 1";
+        for (int i = 0; i < sss.length() - 1; i++) {
+            str.append(map.get(sss.charAt(i)));
+            str.append(',');
+        }
+        str.append(map.get(sss.charAt(sss.length() - 1)));
+        str.append(")");
+        System.out.println(str);
     }
 }
