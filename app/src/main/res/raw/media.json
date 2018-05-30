@@ -38,24 +38,6 @@
       "update_time": 1527414422000
     },
     {
-      "name": "暂停",
-      "description": "暂停",
-      "body": "keyevent:127",
-      "version_code": "1",
-      "version_name": "1.0",
-      "author": "imxqd",
-      "update_time": 1527414422000
-    },
-    {
-      "name": "播放",
-      "description": "播放",
-      "body": "keyevent:126",
-      "version_code": "1",
-      "version_name": "1.0",
-      "author": "imxqd",
-      "update_time": 1527414422000
-    },
-    {
       "name": "播放/暂停",
       "description": "播放/暂停",
       "body": "keyevent:85",
@@ -65,9 +47,54 @@
       "update_time": 1527414422000
     },
     {
-      "name": "截图",
-      "description": "截图",
-      "body": "keyevent:120",
+      "name": "QQ音乐喜爱",
+      "description": "QQ音乐喜爱",
+      "body": "internal:qq_music_like()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "网易云喜爱",
+      "description": "网易云音乐喜爱/取消喜爱当前播放歌曲（实验性功能）",
+      "body": "notification:com.netease.cloudmusic:4",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "网易云喜爱+震动",
+      "description": "网易云音乐喜爱/取消喜爱后震动200ms",
+      "body": "group:[\"0|notification:com.netease.cloudmusic:4|50\",\"0|internal:vibrate([0,200])|0\"]",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "网易云喜爱(新)",
+      "description": "网易云喜爱(新版),兼容性更好",
+      "body": "notification:com.netease.cloudmusic:@id/playNotificationStar",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "网易云喜爱(新)+震动",
+      "description": "网易云喜爱(新版),兼容性更好",
+      "body": "group:[\"0|notification:com.netease.cloudmusic:@id/playNotificationStar|50\",\"0|internal:vibrate([0,200])|0\"]",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "网易云音乐喜爱（内置）",
+      "description": "网易云音乐喜爱（内置），有爱心图标反馈",
+      "body": "internal:cloud_music_like(@id/playNotificationStar)",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",

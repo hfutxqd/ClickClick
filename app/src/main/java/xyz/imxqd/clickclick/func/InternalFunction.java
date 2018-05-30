@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.func;
 
+import android.content.Intent;
 import android.media.AudioTrack;
 
 import com.google.gson.Gson;
@@ -42,17 +43,27 @@ public class InternalFunction extends AbstractFunction {
         }
         matcher.reset();
         if (matcher.find()) {
-            if (matcher.groupCount() != 2) {
-                throw new Exception("Syntax Error");
-            }
-            String name = matcher.group(1);
-            String funcArgs = matcher.group(2);
-            try {
-                this.getClass().getMethod(name, String.class).invoke(this, funcArgs);
-            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                throw new Exception("error");
+            if (matcher.groupCount() == 1) {
+                String name = matcher.group(1);
+                try {
+                    this.getClass().getMethod(name, String.class).invoke(this, null);
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    throw new Exception("error");
+                }
+            } else if (matcher.groupCount() == 2) {
+                String name = matcher.group(1);
+                String funcArgs = matcher.group(2);
+                try {
+                    this.getClass().getMethod(name, String.class).invoke(this, funcArgs);
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    throw new Exception("error");
+                }
             }
         }
+    }
+
+    public void notify_helper(String args) {
+
     }
 
     public void cloud_music_like(String args) {
@@ -99,8 +110,9 @@ public class InternalFunction extends AbstractFunction {
         }, 1000);
     }
 
-    public void qq_music_like() {
-        // TODO: 2018/5/23
+    public void qq_music_like(String str) {
+        Intent intent = new Intent("com.tencent.qqmusic.ACTION_SERVICE_FAVORATE_SONG.QQMusicPhone");
+        App.get().sendBroadcast(intent);
     }
 
     @Override

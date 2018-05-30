@@ -83,8 +83,17 @@
 
         <activity
             android:name=".ui.FunctionsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/title_activity_functions" />
+            android:label="@string/title_activity_functions"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".reciver.EventReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.tencent.qqmusic.ACTION_REFRESH_PLAYER_NOTIFICATION.QQMusicPhone" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
