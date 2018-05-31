@@ -1,16 +1,12 @@
 package xyz.imxqd.clickclick.func;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.Toast;
-
-import com.orhanobut.logger.Logger;
-
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public abstract class AbstractFunction implements IFunction {
     private String funcData;
+    private Exception error;
 
     public AbstractFunction(String funcData) {
         this.funcData = funcData;
@@ -36,12 +32,18 @@ public abstract class AbstractFunction implements IFunction {
             doFunction(getArgs());
             return true;
         } catch (Exception e) {
-            Logger.e("exec error " + e.getMessage());
+            error = e;
+            LogUtils.e("exec error " + e.getMessage());
             if (SettingsUtil.displayDebug()) {
                 App.get().showToast(e.getMessage(), true, true);
             }
             return false;
         }
 
+    }
+
+    @Override
+    public Exception getErrorInfo() {
+        return error;
     }
 }

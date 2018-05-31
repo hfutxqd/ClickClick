@@ -1,27 +1,19 @@
 package xyz.imxqd.clickclick.service;
 
 import android.accessibilityservice.AccessibilityService;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
-
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
-import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
+import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class KeyEventService extends AccessibilityService {
@@ -48,7 +40,7 @@ public class KeyEventService extends AccessibilityService {
             } else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED) {
                 AccessibilityNodeInfo source = event.getSource();
                 if (source == null) {
-                    Log.d(TAG, "source was null for: " + event);
+                    LogUtils.d( "source was null for: " + event);
                 } else {
                     source.refresh();
                     if (source != source.getParent() && source.getParent() != null && !TextUtils.equals(source.getPackageName(), "com.android.systemui")) {
@@ -56,13 +48,13 @@ public class KeyEventService extends AccessibilityService {
                         do {
                             p = p.getParent();
                         } while (p.getParent() != null);
-                        Log.d(TAG, "root parent is " + p.getPackageName());
+                        LogUtils.d( "root parent is " + p.getPackageName());
                         if (TextUtils.equals(p.getPackageName(), "com.android.systemui")) {
                             for (OnNotificationWidgetClick c : mClickCallbacks) {
                                 c.onNotificationWidgetClick(source.getPackageName().toString(), source.getViewIdResourceName());
                             }
                             String viewIdResourceName = source.getViewIdResourceName();
-                            Log.d(TAG, "viewid: " + viewIdResourceName);
+                            LogUtils.d( "viewid: " + viewIdResourceName);
                         }
                     }
                 }
@@ -76,7 +68,7 @@ public class KeyEventService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
-        Logger.d("onInterrupt");
+        LogUtils.d("onInterrupt");
         if (SettingsUtil.displayDebug()) {
             App.get().showToast(getString(R.string.open_service_interrupt), true);
         }

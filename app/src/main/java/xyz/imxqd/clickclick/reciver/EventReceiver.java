@@ -4,7 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
+
+import xyz.imxqd.clickclick.utils.LogUtils;
 
 /**
  * worked on api 25 or lower
@@ -18,7 +19,7 @@ public class EventReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (TextUtils.equals(intent.getAction(), QQ_MUSIC_REFRESH_NOTIFICATION_ACTION)) {
-            Log.d(TAG, "QQMusic isLike = " + intent.getBooleanExtra(QQ_MUSIC_IS_LIKE_KEY, false));
+            LogUtils.d( "QQMusic isLike = " + intent.getBooleanExtra(QQ_MUSIC_IS_LIKE_KEY, false));
         }
     }
 }

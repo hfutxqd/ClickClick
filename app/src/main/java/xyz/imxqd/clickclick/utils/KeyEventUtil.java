@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.SystemClock;
 import android.view.KeyEvent;
 
-import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -29,7 +28,7 @@ public class KeyEventUtil {
                 }
             }
         } catch (IllegalAccessException e) {
-            Logger.e(e.getMessage());
+            LogUtils.e(e.getMessage());
         }
 
     }
@@ -59,7 +58,7 @@ public class KeyEventUtil {
                     .exec("input keyevent " + keyCode);
         } catch (IOException e) {
             success = false;
-            Logger.e(e.getMessage());
+            LogUtils.e(e.getMessage());
         }
         return success;
     }

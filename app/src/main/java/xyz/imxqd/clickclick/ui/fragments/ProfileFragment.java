@@ -18,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -29,6 +27,7 @@ import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.ui.AddKeyEventActivity;
 import xyz.imxqd.clickclick.ui.adapters.ProfileAdapter;
+import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
@@ -50,7 +49,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     ItemTouchHelper itemTouchHelper;
 
     public ProfileFragment() {
-        Logger.d("ProfileFragment new instance");
+        LogUtils.d("ProfileFragment new instance");
     }
 
     public static ProfileFragment newInstance() {
@@ -151,7 +150,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         assert getContext() != null;
 
         if (!NotificationAccessUtil.isEnabled(getContext())) {
-            Logger.d("NotificationAccess is disabled.");
+            LogUtils.d("NotificationAccess is disabled.");
         } else {
             getActivity().startService(new Intent(getActivity(), NotificationCollectorService.class));
         }

@@ -1,14 +1,10 @@
 package xyz.imxqd.clickclick.model;
 
-import android.accessibilityservice.AccessibilityService;
 import android.app.Application;
 import android.media.AudioManager;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -22,6 +18,7 @@ import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.KeyEventHandler;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
+import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK;
@@ -142,7 +139,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
                 function.exec();
             }
         } else {
-            Logger.e("function id not found.");
+            LogUtils.e("function id not found.");
         }
     }
 
@@ -182,7 +179,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     @Override
     public void onLongClick(KeyEvent event) {
-        Logger.d(event);
+        LogUtils.d(event.toString());
         if (SettingsUtil.displayDebug()) {
             showToast("onLongClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
@@ -191,7 +188,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     @Override
     public void onSingleClick(KeyEvent event) {
-        Logger.d(event);
+        LogUtils.d(event.toString());
         if (SettingsUtil.displayDebug()) {
             showToast("onSingleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
@@ -200,7 +197,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     @Override
     public void onDoubleClick(KeyEvent event) {
-        Logger.d(event);
+        LogUtils.d(event.toString());
         if (SettingsUtil.displayDebug()) {
             showToast("onDoubleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
@@ -209,7 +206,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     @Override
     public void onTripleClick(KeyEvent event) {
-        Logger.d(event);
+        LogUtils.d(event.toString());
         if (SettingsUtil.displayDebug()) {
             showToast("onTripleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }

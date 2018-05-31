@@ -15,6 +15,7 @@ import java.util.List;
 
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
@@ -41,7 +42,7 @@ public class NotificationCollectorService extends NotificationListenerService {
 
     @Override
     public void onListenerConnected() {
-        Log.d(TAG, "onListenerConnected");
+        LogUtils.d( "onListenerConnected");
         if (SettingsUtil.displayDebug()) {
             showToast(getString(R.string.open_notification_service_success));
         }
@@ -51,7 +52,7 @@ public class NotificationCollectorService extends NotificationListenerService {
 
     @Override
     public void onListenerDisconnected() {
-        Log.d(TAG, "onListenerDisconnected");
+        LogUtils.d("onListenerDisconnected");
         if (SettingsUtil.displayDebug()) {
             showToast(getString(R.string.open_notification_service_disconnected));
         }
@@ -62,7 +63,7 @@ public class NotificationCollectorService extends NotificationListenerService {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onListenerDisconnected");
+        LogUtils.d( "onListenerDisconnected");
         if (SettingsUtil.displayDebug()) {
             showToast(getString(R.string.open_notification_service_disconnected));
         }
@@ -73,7 +74,7 @@ public class NotificationCollectorService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        Log.d(TAG, "onNotificationPosted : " + sbn.getPackageName());
+        LogUtils.d(sbn.getPackageName());
         for (Feedback feedback : mFeedbackList) {
             if (sbn.getPackageName().equals(feedback.packageName)) {
                 Notification n = sbn.getNotification();
@@ -126,7 +127,7 @@ public class NotificationCollectorService extends NotificationListenerService {
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        Log.d(TAG, "onNotificationRemoved");
+        LogUtils.d( "onNotificationRemoved");
     }
 
     private void showToast(String str) {

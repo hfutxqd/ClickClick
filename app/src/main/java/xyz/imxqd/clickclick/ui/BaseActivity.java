@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 
 import xyz.imxqd.clickclick.service.KeyEventService;
+import xyz.imxqd.clickclick.utils.LogUtils;
 
 /**
  * Created by imxqd on 2017/11/25.
@@ -27,7 +27,7 @@ public class BaseActivity extends AppCompatActivity {
                     getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
         } catch (Settings.SettingNotFoundException e) {
-            Logger.d("Error finding setting, default accessibility to not found: "
+            LogUtils.d("Error finding setting, default accessibility to not found: "
                     + e.getMessage());
         }
         TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');

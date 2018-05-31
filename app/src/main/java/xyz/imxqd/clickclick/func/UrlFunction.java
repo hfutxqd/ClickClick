@@ -3,8 +3,6 @@ package xyz.imxqd.clickclick.func;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.orhanobut.logger.Logger;
-
 import xyz.imxqd.clickclick.App;
 
 public class UrlFunction extends AbstractFunction {

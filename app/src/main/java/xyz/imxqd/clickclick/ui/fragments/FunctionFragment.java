@@ -19,8 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.orhanobut.logger.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +31,7 @@ import xyz.imxqd.clickclick.ui.FunctionsActivity;
 import xyz.imxqd.clickclick.ui.NaviActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
 import xyz.imxqd.clickclick.utils.AlertUtil;
+import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 
@@ -55,7 +54,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     ArrayAdapter<String> mMenuAdapter;
 
     public FunctionFragment() {
-        Logger.d("FunctionFragment new instance");
+        LogUtils.d("FunctionFragment new instance");
     }
 
     public static FunctionFragment newInstance() {

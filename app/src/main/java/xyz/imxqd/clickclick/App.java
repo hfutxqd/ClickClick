@@ -5,22 +5,25 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 /**
  * Created by imxqd on 2017/11/24.
  */
 
 public class App extends Application {
+
+    private static final String TAG = "ClickClick";
 
     public boolean isServiceOn = true;
 
@@ -33,8 +36,14 @@ public class App extends Application {
         mApp = this;
         FlowManager.init(this);
         AppEventManager.getInstance().init(this);
-        Logger.addLogAdapter(new AndroidLogAdapter());
+        initLogger();
+    }
 
+    public void initLogger() {
+        Log.d(TAG, "initLogger");
+        LogUtils.allowD = SettingsUtil.displayDebug();
+        LogUtils.allowI = SettingsUtil.displayDebug();
+        LogUtils.allowV = SettingsUtil.displayDebug();
     }
 
     public static App get() {

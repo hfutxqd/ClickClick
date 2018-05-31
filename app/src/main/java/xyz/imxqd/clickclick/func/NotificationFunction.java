@@ -3,9 +3,6 @@ package xyz.imxqd.clickclick.func;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.text.TextUtils;
-import android.widget.Toast;
-
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,6 +13,7 @@ import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.AlertUtil;
+import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
 
@@ -84,7 +82,7 @@ public class NotificationFunction extends AbstractFunction {
         if (service != null) {
             Matcher matcher = RESOURCE_ID_PATTERN.matcher(getPackageArgs(args));
             if (matcher.matches()) {
-                Logger.d("notification : id mode");
+                LogUtils.d("notification : id mode");
                 matcher.reset();
                 String idName = "playNotificationStar";
                 if (matcher.find()) {
@@ -106,7 +104,7 @@ public class NotificationFunction extends AbstractFunction {
                 }
                 intent.send();
             } else {
-                Logger.d("notification : order mode");
+                LogUtils.d("notification : order mode");
                 List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
                 if (notifications.size() == 0) {
                     throw new RuntimeException("There are no notifications of " + getPackageName(args));

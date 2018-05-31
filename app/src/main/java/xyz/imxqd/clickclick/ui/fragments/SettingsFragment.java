@@ -10,15 +10,14 @@ import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.util.Log;
 
-import com.orhanobut.logger.Logger;
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
-import java.lang.reflect.Array;
-
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.ui.BaseActivity;
+import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
@@ -29,7 +28,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private Handler mHandler = new Handler();
 
     public SettingsFragment() {
-        Logger.d("SettingsFragment new instance");
+        LogUtils.d("SettingsFragment new instance");
     }
 
 
@@ -112,6 +111,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     private void addDebugSettings() {
         if (findPreference(getString(R.string.pref_key_app_debug)) == null) {
             addPreferencesFromResource(R.xml.settings_debug);
+            findPreference(getString(R.string.pref_key_app_debug)).setOnPreferenceChangeListener(this);
         }
     }
 
@@ -169,10 +169,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         assert getContext() != null;
         if (getString(R.string.pref_key_app_switch).equals(preference.getKey())) {
-            Log.d(TAG, "KeyEventService is " + newValue);
+            LogUtils.d( "KeyEventService is " + newValue);
         } else if (getString(R.string.pref_key_notification_switch).equals(preference.getKey())) {
             if (!NotificationAccessUtil.isEnabled(getContext())) {
-                Log.d(TAG, "NotificationService is disabled");
+                LogUtils.d( "NotificationService is disabled");
                 ((SwitchPreference)preference).setChecked(false);
                 NotificationAccessUtil.openNotificationAccess(getContext());
             } else {
@@ -185,6 +185,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         }  else if (getString(R.string.pref_key_quick_click_time).equals(preference.getKey())) {
             ((ListPreference)preference).setValue((String) newValue);
             AppEventManager.getInstance().updateClickTime();
+        } else if (getString(R.string.pref_key_app_debug).equals(preference.getKey())) {
+            getPreferenceManager()
+                    .getSharedPreferences()
+                    .edit()
+                    .putBoolean(getString(R.string.pref_key_app_debug), (Boolean) newValue)
+                    .apply();
+            App.get().initLogger();
         }
         initPrefs();
         return true;
