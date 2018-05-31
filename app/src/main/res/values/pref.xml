@@ -13,13 +13,13 @@
         <item>1000</item>
         <item>600</item>
     </string-array>
-    <string name="long_click_speed_time_default">1000</string>
+    <string name="long_click_speed_time_default" translatable="false">1000</string>
 
     <string-array name="quick_click_speed_time">
         <item>1500</item>
         <item>1000</item>
         <item>600</item>
     </string-array>
-    <string name="quick_click_speed_time_default">1000</string>
+    <string name="quick_click_speed_time_default" translatable="false">1000</string>
 
 </resources>
