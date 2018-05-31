@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="cloud_music_package">com.netease.cloudmusic</string>
-    <string name="qq_music_package">com.qq.music</string>
-    <string name="meizu_music_package">com.meizu.media.music</string>
+    <string name="cloud_music_package" translatable="false">com.netease.cloudmusic</string>
+    <string name="qq_music_package" translatable="false">com.qq.music</string>
+    <string name="meizu_music_package" translatable="false">com.meizu.media.music</string>
 </resources>
