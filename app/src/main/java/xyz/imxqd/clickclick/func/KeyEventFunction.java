@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
 
 public class KeyEventFunction extends AbstractFunction {
@@ -30,6 +31,7 @@ public class KeyEventFunction extends AbstractFunction {
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                 } else {
+                    AlertUtil.show(App.get().getString(R.string.accessibility_error));
                     throw new RuntimeException(App.get().getString(R.string.accessibility_error));
                 }
                 break;
@@ -37,6 +39,7 @@ public class KeyEventFunction extends AbstractFunction {
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
                 } else {
+                    AlertUtil.show(App.get().getString(R.string.accessibility_error));
                     throw new RuntimeException(App.get().getString(R.string.accessibility_error));
                 }
                 break;
@@ -44,6 +47,7 @@ public class KeyEventFunction extends AbstractFunction {
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
                 } else {
+                    AlertUtil.show(App.get().getString(R.string.accessibility_error));
                     throw new RuntimeException(App.get().getString(R.string.accessibility_error));
                 }
                 break;

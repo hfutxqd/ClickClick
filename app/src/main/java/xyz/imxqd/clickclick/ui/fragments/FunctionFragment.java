@@ -32,6 +32,7 @@ import xyz.imxqd.clickclick.ui.AddFunctionActivity;
 import xyz.imxqd.clickclick.ui.FunctionsActivity;
 import xyz.imxqd.clickclick.ui.NaviActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
+import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 
@@ -165,6 +166,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                                 startFunctionsActivity();
                                 break;
                             case 1:
+                                AlertUtil.show(getString(R.string.come_soon));
                                 break;
                             case 2:
                                 startAddFuncActivity();

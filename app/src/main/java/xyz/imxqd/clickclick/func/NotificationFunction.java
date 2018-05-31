@@ -15,6 +15,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
+import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
 
@@ -118,7 +119,7 @@ public class NotificationFunction extends AbstractFunction {
             }
 
         } else {
-            toast(App.get().getString(R.string.notification_service_error));
+            AlertUtil.show(App.get().getString(R.string.notification_service_error));
             throw new RuntimeException(App.get().getString(R.string.notification_service_error));
         }
     }

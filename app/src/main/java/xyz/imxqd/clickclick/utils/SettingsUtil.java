@@ -21,6 +21,11 @@ public class SettingsUtil {
         return shp.getBoolean(ResUtil.getString(R.string.pref_key_app_switch), true);
     }
 
+    public static boolean isNotificationOn() {
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
+        return shp.getBoolean(ResUtil.getString(R.string.pref_key_notification_switch), true);
+    }
+
 
     public static int getQuickClickTime() {
         String quickTime = SettingsUtil.getStringVal(App.get().getString(R.string.pref_key_quick_click_time),

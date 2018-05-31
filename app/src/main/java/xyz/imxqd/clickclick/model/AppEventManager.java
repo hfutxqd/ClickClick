@@ -70,7 +70,11 @@ public class AppEventManager implements KeyEventHandler.Callback {
     }
 
     public KeyEventService getService() {
-        return mService;
+        if (SettingsUtil.isServiceOn()) {
+            return mService;
+        } else {
+            return null;
+        }
     }
 
     public AudioManager getAudioManager() {
@@ -78,7 +82,11 @@ public class AppEventManager implements KeyEventHandler.Callback {
     }
 
     public NotificationCollectorService getNotificationService() {
-        return mNotification;
+        if (SettingsUtil.isNotificationOn()) {
+            return mNotification;
+        } else {
+            return null;
+        }
     }
 
     public void updateClickTime() {

@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +23,9 @@ public class AlertDialogActivity extends AppCompatActivity {
     public static final int TYPE_NOTIFY = 1;
     public static final String ARG_NOTIFY_PACKAGE = "notify_package";
     public static final String ARG_NOTIFY_VIEW_ID = "notify_view_id";
+
+    public static final int TYPE_NORMAL = 2;
+    public static final String ARG_NORMAL_MESSAGE = "normal_message";
 
     private int type = 0;
 
@@ -52,6 +56,13 @@ public class AlertDialogActivity extends AppCompatActivity {
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
+        } else {
+            btn1.setVisibility(View.GONE);
+            btn2.setVisibility(View.GONE);
+            btn3.setText(R.string.ok);
+            String msg = intent.getStringExtra(ARG_NORMAL_MESSAGE);
+            message.setText(msg);
+            message.setTextSize(17f);
         }
     }
 
@@ -75,6 +86,8 @@ public class AlertDialogActivity extends AppCompatActivity {
             function.description = "";
             function.body = "notification:" + getIntent().getStringExtra(ARG_NOTIFY_PACKAGE) + ":@id/" + getIntent().getStringExtra(ARG_NOTIFY_VIEW_ID);
             AddFunctionActivity.start(function, true, this);
+        } else if (type == TYPE_NORMAL) {
+            finish();
         }
     }
 }

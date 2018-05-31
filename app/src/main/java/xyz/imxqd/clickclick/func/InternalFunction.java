@@ -85,6 +85,7 @@ public class InternalFunction extends AbstractFunction {
                 }
             }, 15000);
         } else {
+            AlertUtil.show(App.get().getString(R.string.accessibility_error));
             throw new RuntimeException(App.get().getString(R.string.accessibility_error));
         }
     }
@@ -93,6 +94,7 @@ public class InternalFunction extends AbstractFunction {
         final NotificationCollectorService service = AppEventManager.getInstance().getNotificationService();
         String idName = "playNotificationStar";
         if (service == null) {
+            AlertUtil.show(App.get().getString(R.string.notification_service_error));
             throw new RuntimeException(App.get().getString(R.string.notification_service_error));
         }
         Matcher matcher = RESOURCE_ID_PATTERN.matcher(args);
@@ -106,7 +108,7 @@ public class InternalFunction extends AbstractFunction {
             }
             idName = matcher.group(1);
         }
-        IFunction f = new NotificationFunction("notification:com.netease.cloudmusic:4");
+        IFunction f = new NotificationFunction("notification:com.netease.cloudmusic:@id/" + idName);
         if (!f.exec()) {
             throw new RuntimeException("Failed");
         }

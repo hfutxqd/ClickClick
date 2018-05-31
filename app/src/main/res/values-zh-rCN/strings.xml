@@ -65,4 +65,6 @@
     <string name="please_click_the_notification_item">请在15秒内点击通知上的按钮</string>
     <string name="alert_notify_message"><![CDATA[<b>应用名:</b> %1$s<br/><b>包名:</b> %2$s<br/><b>控件id:</b> %3$s]]></string>
     <string name="add_to_func">添加到自定义功能</string>
+    <string name="ok">确定</string>
+    <string name="come_soon">敬请期待</string>
 </resources>
