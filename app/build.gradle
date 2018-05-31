@@ -22,6 +22,19 @@ android {
 //            }
 //        }
     }
+
+    flavorDimensions("free")
+    productFlavors {
+        china {
+            versionNameSuffix "-china"
+            dimension "free"
+        }
+        international {
+            versionNameSuffix "-international"
+            dimension "free"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

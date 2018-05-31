@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Common",
+    "url": "common"
+  },
+  {
+    "title": "Global",
+    "url": "global_control"
+  },
+  {
+    "title": "Applications",
+    "url": "applications"
+  },
+  {
+    "title": "Media",
+    "url": "media"
+  },
+  {
+    "title": "KeyEvent",
+    "url": "keyevent"
+  },
+  {
+    "title": "Fun",
+    "url": "fun"
+  }
+]

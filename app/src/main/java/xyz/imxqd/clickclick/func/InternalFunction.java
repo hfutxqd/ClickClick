@@ -48,7 +48,7 @@ public class InternalFunction extends AbstractFunction {
             if (matcher.groupCount() == 1) {
                 String name = matcher.group(1);
                 try {
-                    this.getClass().getMethod(name, String.class).invoke(this, null);
+                    this.getClass().getMethod(name, String.class).invoke(this, "");
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     throw new Exception("error");
                 }
