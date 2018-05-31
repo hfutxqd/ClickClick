@@ -59,29 +59,16 @@ public class NotificationCollectorService extends NotificationListenerService {
         AppEventManager.getInstance().detachFromNotificationService();
     }
 
-
-    // 0 暂停
-    // 1 下一曲
-    // 2 关闭
-    // 3 歌词
-    // 4 喜爱
-    //测试版本
-    //网易云音乐 5.2.0.437608
-    //
-    //喜爱按钮
-    //mix2s: id 2131822537
-    //
-    //oneplus3 : id 2131822537
-    //
-    //2130838697 未喜爱
-    //2130838699 喜爱
-    //
-    //
-    //播放按钮
-    //id 2131822539
-    //正在播放（暂停按钮） 2130838709
-    //暂停状态（播放按钮） 2130838712
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onListenerDisconnected");
+        if (SettingsUtil.displayDebug()) {
+            showToast(getString(R.string.open_notification_service_disconnected));
+        }
+        isConnected = false;
+        AppEventManager.getInstance().detachFromNotificationService();
+    }
 
 
     @Override

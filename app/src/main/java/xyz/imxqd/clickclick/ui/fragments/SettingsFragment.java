@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
+import android.util.Log;
 
 import com.orhanobut.logger.Logger;
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
@@ -24,6 +25,7 @@ import xyz.imxqd.clickclick.utils.SettingsUtil;
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
 
 
+    private static final String TAG = "SettingsFragment";
     private Handler mHandler = new Handler();
 
     public SettingsFragment() {
@@ -66,7 +68,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             }
             mPendingSwitchOn = false;
             SwitchPreference notificationSwitch = (SwitchPreference) findPreference(getString(R.string.pref_key_notification_switch));
-            if (mPendingNotificationOn && NotificationAccessUtil.isEnabled(getContext())) {
+            if (mPendingNotificationOn && (NotificationAccessUtil.isEnabled(getContext()) || AppEventManager.getInstance().getNotificationService() != null)) {
                 notificationSwitch.setChecked(true);
             }
             mPendingSwitchOn = false;
@@ -167,11 +169,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         assert getContext() != null;
         if (getString(R.string.pref_key_app_switch).equals(preference.getKey())) {
-            findPreference(getString(R.string.pref_key_notification_switch)).setEnabled((Boolean) newValue);
-//            findPreference(getString(R.string.pref_key_root_mode_switch)).setEnabled((Boolean) newValue);
+            Log.d(TAG, "KeyEventService is " + newValue);
         } else if (getString(R.string.pref_key_notification_switch).equals(preference.getKey())) {
             if (!NotificationAccessUtil.isEnabled(getContext())) {
-                Logger.d("NotificationAccess is disabled.");
+                Log.d(TAG, "NotificationService is disabled");
                 ((SwitchPreference)preference).setChecked(false);
                 NotificationAccessUtil.openNotificationAccess(getContext());
             } else {
