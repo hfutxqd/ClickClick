@@ -27,7 +27,7 @@ public abstract class AbstractFunction implements IFunction {
     }
 
     public void toast(final String str) {
-        App.get().showToast(str);
+        App.get().showToast(str, true, false);
     }
 
     @Override
@@ -38,7 +38,7 @@ public abstract class AbstractFunction implements IFunction {
         } catch (Exception e) {
             Logger.e("exec error " + e.getMessage());
             if (SettingsUtil.displayDebug()) {
-                App.get().showToast(e.getMessage(), true);
+                App.get().showToast(e.getMessage(), true, true);
             }
             return false;
         }

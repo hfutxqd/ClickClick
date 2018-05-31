@@ -68,7 +68,7 @@ public class InternalFunction extends AbstractFunction {
 
         final KeyEventService service = AppEventManager.getInstance().getService();
         if (service != null) {
-            App.get().showToast(App.get().getString(R.string.please_click_the_notification_item), true);
+            App.get().showToast(App.get().getString(R.string.please_click_the_notification_item), true, true);
             final KeyEventService.OnNotificationWidgetClick callback = new KeyEventService.OnNotificationWidgetClick() {
                 @Override
                 public void onNotificationWidgetClick(String packageName, String viewId) {

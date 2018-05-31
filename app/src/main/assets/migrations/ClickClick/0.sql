@@ -1,7 +1,7 @@
-INSERT INTO defined_function (name, body, description) values ('打开QQ', 'url:mqq://', '打开QQ');
 INSERT INTO defined_function (name, body, description) values ('打开微信', 'url:weixin://', '打开微信');
 INSERT INTO defined_function (name, body, description) values ('打开支付宝', 'url:alipays://', '一键打开支付宝');
 INSERT INTO defined_function (name, body, description) values ('支付宝付款', 'url:alipays://platformapi/startapp?appId=20000056', '打开支付宝付款界面');
+INSERT INTO defined_function (name, body, description) values ('支付宝滴滴', 'url:alipays://platformapi/startapp?appId=20000778', '打开支付宝滴滴打车');
 INSERT INTO defined_function (name, body, description) values ('打开相机', 'action:action://android.media.action.STILL_IMAGE_CAMERA', '打开相机');
 INSERT INTO defined_function (name, body, description) values ('微信扫一扫', 'action:intent://#Intent;component=com.tencent.mm/.ui.LauncherUI;B.LauncherUI.From.Scaner.Shortcut=true;end', '打开微信扫一扫');
 INSERT INTO defined_function (name, body, description) values ('返回键', 'keyevent:4', '返回');
@@ -9,8 +9,6 @@ INSERT INTO defined_function (name, body, description) values ('HOME键', 'keyev
 INSERT INTO defined_function (name, body, description) values ('多任务键', 'keyevent:187', '多任务切换程序');
 INSERT INTO defined_function (name, body, description) values ('下一曲', 'keyevent:87', '下一曲');
 INSERT INTO defined_function (name, body, description) values ('上一曲', 'keyevent:88', '上一曲');
-INSERT INTO defined_function (name, body, description) values ('组合功能测试', 'group:["0|keyevent:88|10000","0|keyevent:87|0"]', '上一曲十秒后下一曲');
-INSERT INTO defined_function (name, body, description) values ('网易云喜爱', 'notification:com.netease.cloudmusic:4', '网易云喜爱功能（实验性功能）');
-INSERT INTO defined_function (name, body, description) values ('震动', 'internal:vibrate(200,500,200,500,200,500])', '胡乱震动');
-INSERT INTO defined_function (name, body, description) values ('音调', 'internal:tone(256:100,288:100,320:100,341:100,384:100,426:100,480:100)', '1234567');
-INSERT INTO defined_function (name, body, description) values ('小星星示例', 'internal:tone(256:400,0:100,256:400,0:100,384:400,0:100,384:400,0:100,426:400,0:100,426:400,0:100,384:400)', '一闪一闪亮晶晶');
+INSERT INTO defined_function (name, body, description) values ('QQ音乐喜爱', 'internal:qq_music_like()', 'QQ音乐通知栏喜爱功能');
+INSERT INTO defined_function (name, body, description) values ('网易云音乐喜爱', 'internal:cloud_music_like(@id/playNotificationStar)', '网易云音乐喜爱（内置），有爱心图标反馈');
+INSERT INTO defined_function (name, body, description) values ('震动', 'internal:vibrate([200,500,200,500,200,500])', '胡乱震动');

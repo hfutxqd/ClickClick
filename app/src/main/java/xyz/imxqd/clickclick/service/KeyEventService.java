@@ -34,7 +34,7 @@ public class KeyEventService extends AccessibilityService {
     protected void onServiceConnected() {
 
         if (SettingsUtil.displayDebug()) {
-            App.get().showToast(getString(R.string.open_service_success));
+            App.get().showToast(getString(R.string.open_service_success), true);
         }
         AppEventManager.getInstance().attachToAccessibilityService(this);
     }
@@ -78,7 +78,7 @@ public class KeyEventService extends AccessibilityService {
     public void onInterrupt() {
         Logger.d("onInterrupt");
         if (SettingsUtil.displayDebug()) {
-            App.get().showToast(getString(R.string.open_service_interrupt));
+            App.get().showToast(getString(R.string.open_service_interrupt), true);
         }
         AppEventManager.getInstance().detachFromAccessibilityService();
     }

@@ -44,10 +44,10 @@ public class App extends Application {
     private Toast mToast;
 
     public void showToast(@StringRes final int str) {
-        showToast(getString(str));
+        showToast(getString(str), false);
     }
 
-    public void showToast(final String str) {
+    public void showToast(final String str, final boolean center) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -55,20 +55,27 @@ public class App extends Application {
                     mToast.cancel();
                 }
                 mToast = Toast.makeText(App.get(), str, Toast.LENGTH_LONG);
+                if (center) {
+                    mToast.setGravity(Gravity.CENTER, 0, 0);
+                }
                 mToast.show();
             }
         });
 
     }
 
-    public void showToast(final String str, final boolean show) {
+    public void showToast(final String str, final boolean show, final boolean center) {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (show) {
-                    Toast.makeText(App.get(), str, Toast.LENGTH_LONG).show();
+                    Toast t = Toast.makeText(App.get(), str, Toast.LENGTH_LONG);
+                    if (center) {
+                        t.setGravity(Gravity.CENTER, 0, 0);
+                    }
+                    t.show();
                 } else {
-                    showToast(str);
+                    showToast(str, center);
                 }
 
             }
@@ -76,19 +83,29 @@ public class App extends Application {
 
     }
 
-    public void toastImage(Drawable drawable) {
-        Toast toast = new Toast(this);
-        ImageView imageView = new ImageView(this);
-        imageView.setImageDrawable(drawable);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        int width = getResources().getDimensionPixelSize(R.dimen.dimen_24_dp);
-        int height = getResources().getDimensionPixelSize(R.dimen.dimen_24_dp);
-        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(width, height);
-        imageView.setLayoutParams(params);
+    public void toastCenter(final String str) {
 
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.setView(imageView);
-        toast.show();
+    }
+
+    public void toastImage(final Drawable drawable) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast toast = new Toast(App.get());
+                ImageView imageView = new ImageView(App.get());
+                imageView.setImageDrawable(drawable);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                int width = getResources().getDimensionPixelSize(R.dimen.dimen_24_dp);
+                int height = getResources().getDimensionPixelSize(R.dimen.dimen_24_dp);
+                ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(width, height);
+                imageView.setLayoutParams(params);
+
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.setView(imageView);
+                toast.show();
+            }
+        });
+
     }
 
     public Handler getHandler() {

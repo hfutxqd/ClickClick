@@ -103,7 +103,7 @@ public class AddFunctionActivity extends BaseActivity {
                 return;
             }
             if (f.versionCode > BuildConfig.VERSION_CODE) {
-                App.get().showToast(getString(R.string.app_version_too_old, f.versionName));
+                App.get().showToast(getString(R.string.app_version_too_old, f.versionName), false);
                 finish();
             } else {
                 etName.setText(f.name);

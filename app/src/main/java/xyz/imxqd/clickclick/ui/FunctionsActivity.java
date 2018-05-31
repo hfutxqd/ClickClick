@@ -206,7 +206,7 @@ public class FunctionsActivity extends AppCompatActivity {
                 public void onAddClick() {
                     RemoteFunction f = mPage.data.get(getAdapterPosition());
                     if (f.versionCode > BuildConfig.VERSION_CODE) {
-                        App.get().showToast(App.get().getString(R.string.app_version_too_old, f.versionName));
+                        App.get().showToast(App.get().getString(R.string.app_version_too_old, f.versionName), false);
                     } else {
                         DefinedFunction function = new DefinedFunction();
                         function.body = f.body;
