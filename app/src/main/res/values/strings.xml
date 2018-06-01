@@ -74,5 +74,6 @@
     <string name="android_version_too_low">Android version is too low</string>
     <string name="add_func_name_hint">Funcation Name</string>
     <string name="add_to_func">Create custom function</string>
+    <string name="settings_copyright_title">Copyright Information</string>
 
 </resources>

@@ -41,12 +41,8 @@
     <PreferenceCategory>
 
         <Preference
-            android:title="@string/settings_author_title"
-            android:summary="@string/settings_author_summary" />
-        <Preference
-            android:key="@string/pref_key_version"
-            android:id="@+id/settings_version"
-            android:title="@string/settings_version_title"
-            android:summary="@string/settings_version_summary" />
+            android:title="@string/settings_about_title">
+            <intent android:action="xyz.imxqd.clicklick.copyright" />
+        </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

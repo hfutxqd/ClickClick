@@ -67,4 +67,5 @@
     <string name="profile_current_state">當前開啟 ％1$d 個場景</string>
     <string name="function_current_state">當前共有 ％1$d 項定義功能</string>
     <string name="title_activity_functions">功能列表</string>
+    <string name="settings_copyright_title">Copyright Information</string>
 </resources>

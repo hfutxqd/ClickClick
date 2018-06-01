@@ -95,8 +95,18 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.AlertDialogActivity"
+        <activity
+            android:name=".ui.AlertDialogActivity"
             android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name=".ui.CopyRightActivity"
+            android:theme="@style/AppTheme.Dialog"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="xyz.imxqd.clicklick.copyright" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

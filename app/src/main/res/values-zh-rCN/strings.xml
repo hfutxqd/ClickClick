@@ -67,4 +67,5 @@
     <string name="ok">确定</string>
     <string name="come_soon">敬请期待</string>
     <string name="title_activity_functions">功能列表</string>
+    <string name="settings_copyright_title">Copyright Information</string>
 </resources>
