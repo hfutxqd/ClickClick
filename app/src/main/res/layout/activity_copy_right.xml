@@ -14,14 +14,15 @@
         android:id="@+id/copy_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="20sp"
+        android:padding="8dp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:paddingBottom="16dp"/>
     <WebView
         android:id="@+id/copy_webview"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="340dp" />
     <TextView
         android:id="@+id/copy_ok"
         android:layout_gravity="end"

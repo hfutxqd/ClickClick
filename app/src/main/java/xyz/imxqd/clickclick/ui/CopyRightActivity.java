@@ -24,11 +24,12 @@ public class CopyRightActivity extends AppCompatActivity {
         setContentView(R.layout.activity_copy_right);
         ButterKnife.bind(this);
         mTitle.setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
-        mWebView.loadUrl("file:///android_asset/LICENSE.txt");
+        mWebView.loadUrl("file:///android_asset/copyright.html");
     }
 
     @OnClick(R.id.copy_ok)
     public void onOkayClick() {
         finish();
+        overridePendingTransition(0, R.anim.slide_out_bottom);
     }
 }
