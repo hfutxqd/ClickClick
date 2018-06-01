@@ -44,7 +44,7 @@ public class AddKeyEventActivity extends BaseActivity {
     @BindView(R.id.key_device_id)
     TextView mTvDeviceId;
     @BindView(R.id.key_btn_add)
-    LinearLayout mBtnAdd;
+    View mBtnAdd;
     @BindView(R.id.key_info_layout)
     LinearLayout mInfoLayout;
     @BindView(R.id.key_ignore_device)
@@ -66,6 +66,7 @@ public class AddKeyEventActivity extends BaseActivity {
         ButterKnife.bind(this);
         App.get().isServiceOn = false;
         mBtnAdd.setEnabled(false);
+        mBtnAdd.setAlpha(0.5f);
         List<String> spinnerArray =  new ArrayList<>();
         Collections.addAll(spinnerArray, getResources().getStringArray(R.array.event_type));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, spinnerArray);
@@ -89,6 +90,7 @@ public class AddKeyEventActivity extends BaseActivity {
     public void onCloseBtnClick() {
         setResult(RESULT_CANCELED);
         finish();
+        overridePendingTransition(0, R.anim.slide_out_bottom);
     }
 
     @OnClick(R.id.key_btn_add)
@@ -113,6 +115,7 @@ public class AddKeyEventActivity extends BaseActivity {
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         mBtnAdd.setEnabled(true);
+        mBtnAdd.setAlpha(1f);
         mTvTips.setVisibility(View.GONE);
         mInfoLayout.setVisibility(View.VISIBLE);
         mKeyEvent.deviceId = event.getDeviceId();

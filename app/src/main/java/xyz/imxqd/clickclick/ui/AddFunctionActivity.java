@@ -142,6 +142,12 @@ public class AddFunctionActivity extends BaseActivity {
         isResumed = true;
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.slide_out_bottom);
+    }
+
     @OnClick(R.id.add_func_cancel)
     public void onCancelClick() {
         setResult(RESULT_CANCELED);

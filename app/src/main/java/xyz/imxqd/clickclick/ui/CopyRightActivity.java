@@ -30,6 +30,11 @@ public class CopyRightActivity extends AppCompatActivity {
     @OnClick(R.id.copy_ok)
     public void onOkayClick() {
         finish();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
         overridePendingTransition(0, R.anim.slide_out_bottom);
     }
 }

@@ -66,6 +66,12 @@ public class AlertDialogActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, R.anim.slide_out_bottom);
+    }
+
     @OnClick(R.id.alert_btn_1)
     public void onBtn1Click() {
         if (type == TYPE_NOTIFY) {

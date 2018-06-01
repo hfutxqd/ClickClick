@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -144,7 +145,11 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
                     outRect.top = ScreenUtl.dp2px(5);
                 }
             }
+
+
         });
+
+        vList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         assert getActivity() != null;
         assert getContext() != null;
