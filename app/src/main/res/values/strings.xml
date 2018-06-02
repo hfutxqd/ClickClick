@@ -64,7 +64,6 @@
     <string name="save_failed">Failed to save, may already exist</string>
     <string name="open_error">Wrong data format</string>
     <string name="title_activity_functions">Functions</string>
-    <string name="action_settings">Settings</string>
     <string name="no_data">No data</string>
     <string name="app_version_too_old">App version is too old, this function requires more than %1$s</string>
     <string name="please_click_the_notification_item">Please click the button on the notification within 15 seconds</string>

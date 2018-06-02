@@ -7,7 +7,7 @@
         <item>Triple Click</item>
     </string-array>
 
-    <string-array name="event_type_value">
+    <string-array name="event_type_value" translatable="false">
         <item>SingleClick</item>
         <item>LongClick</item>
         <item>DoubleClick</item>

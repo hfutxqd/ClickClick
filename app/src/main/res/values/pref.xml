@@ -8,18 +8,18 @@
     <string name="pref_key_quick_click_time" translatable="false">settings_quick_click_time</string>
     <string name="pref_key_long_click_time" translatable="false">settings_long_click_time</string>
 
-    <string-array name="long_click_speed_time">
+    <string-array name="long_click_speed_time" translatable="false">
         <item>1500</item>
         <item>1000</item>
         <item>600</item>
     </string-array>
-    <string name="long_click_speed_time_default">1000</string>
+    <string name="long_click_speed_time_default" translatable="false">1000</string>
 
-    <string-array name="quick_click_speed_time">
+    <string-array name="quick_click_speed_time" translatable="false">
         <item>1500</item>
         <item>1000</item>
         <item>600</item>
     </string-array>
-    <string name="quick_click_speed_time_default">1000</string>
+    <string name="quick_click_speed_time_default" translatable="false">1000</string>
 
 </resources>
