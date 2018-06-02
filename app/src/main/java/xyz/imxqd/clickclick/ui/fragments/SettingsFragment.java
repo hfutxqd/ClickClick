@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
-import android.util.Log;
 
 import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
@@ -21,7 +20,7 @@ import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
-public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener, OnRefreshUI {
 
 
     private static final String TAG = "SettingsFragment";
@@ -115,28 +114,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         }
     }
 
-    private int mClickCount = 0;
     private boolean mPendingSwitchOn = false;
     private boolean mPendingNotificationOn = false;
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
         assert  getContext() != null;
-        if (getString(R.string.pref_key_version).equals(preference.getKey())) {
-            if (mClickCount == 0) {
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mHandler.removeCallbacksAndMessages(null);
-                        mClickCount = 0;
-                    }
-                }, 1500);
-            }
-            mClickCount++;
-            if (mClickCount == 7) {
-                addDebugSettings();
-            }
-        } else if (getString(R.string.pref_key_app_switch).equals(preference.getKey())) {
+        if (getString(R.string.pref_key_app_switch).equals(preference.getKey())) {
             SwitchPreference p = (SwitchPreference) preference;
             if (p.isChecked()) {
                 BaseActivity activity = (BaseActivity)getActivity();
@@ -195,5 +179,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         }
         initPrefs();
         return true;
+    }
+
+    @Override
+    public void onDataChanged() {
+        initPrefs();
     }
 }

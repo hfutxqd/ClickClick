@@ -1,7 +1,9 @@
 package xyz.imxqd.clickclick;
 
+import android.app.Activity;
 import android.app.Application;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.StringRes;
@@ -13,6 +15,9 @@ import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
@@ -21,14 +26,18 @@ import xyz.imxqd.clickclick.utils.SettingsUtil;
  * Created by imxqd on 2017/11/24.
  */
 
-public class App extends Application {
+public class App extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = "ClickClick";
+
+    public static final int EVENT_WHAT_REFRESH_UI = 1;
 
     public boolean isServiceOn = true;
 
     private static App mApp;
     private Handler mHandler = new Handler(Looper.getMainLooper());
+
+    private Set<AppEventCallback> mAppEventCallbacks = new HashSet<>();
 
     @Override
     public void onCreate() {
@@ -37,6 +46,8 @@ public class App extends Application {
         FlowManager.init(this);
         AppEventManager.getInstance().init(this);
         initLogger();
+
+        registerActivityLifecycleCallbacks(this);
     }
 
     public void initLogger() {
@@ -119,5 +130,55 @@ public class App extends Application {
 
     public Handler getHandler() {
         return mHandler;
+    }
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        if (activity instanceof AppEventCallback) {
+            mAppEventCallbacks.add((AppEventCallback) activity);
+        }
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+        if (activity instanceof AppEventCallback && mAppEventCallbacks.contains(activity)) {
+            mAppEventCallbacks.remove(activity);
+        }
+    }
+
+
+    public void post(int what, Object data) {
+        for (AppEventCallback callback : mAppEventCallbacks) {
+            callback.onEvent(what, data);
+        }
+    }
+
+    public interface AppEventCallback {
+        void onEvent(int what, Object data);
     }
 }

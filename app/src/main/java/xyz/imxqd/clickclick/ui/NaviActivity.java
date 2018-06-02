@@ -16,13 +16,14 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.ui.fragments.FunctionFragment;
 import xyz.imxqd.clickclick.ui.fragments.OnRefreshUI;
 import xyz.imxqd.clickclick.ui.fragments.ProfileFragment;
 import xyz.imxqd.clickclick.ui.fragments.SettingsFragment;
 
-public class NaviActivity extends BaseActivity {
+public class NaviActivity extends BaseActivity implements App.AppEventCallback{
 
     @BindView(R.id.message)
     TextView vTitle;
@@ -146,4 +147,10 @@ public class NaviActivity extends BaseActivity {
         currentTabId = id;
     }
 
+    @Override
+    public void onEvent(int what, Object data) {
+        if (what == App.EVENT_WHAT_REFRESH_UI) {
+            requestRefreshUI();
+        }
+    }
 }
