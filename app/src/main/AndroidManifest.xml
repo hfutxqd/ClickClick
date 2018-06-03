@@ -8,6 +8,7 @@
         android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:name=".App"
@@ -100,13 +101,17 @@
             android:theme="@style/AppTheme.Dialog" />
         <activity
             android:name=".ui.CopyRightActivity"
-            android:theme="@style/AppTheme.Dialog"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/AppTheme.Dialog">
             <intent-filter>
                 <action android:name="xyz.imxqd.clicklick.copyright" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.AddHomeEventActivity"
+            android:theme="@style/AppTheme.Dialog"/>
     </application>
 
 </manifest>

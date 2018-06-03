@@ -67,5 +67,7 @@
     <string name="ok">确定</string>
     <string name="come_soon">敬请期待</string>
     <string name="title_activity_functions">功能列表</string>
-    <string name="settings_copyright_title">Copyright Information</string>
+    <string name="add_key_event_normal">添加常规按键映射</string>
+    <string name="add_key_event_home">HOME键功能附加</string>
+    <string name="device_id_error">设备ID不能为负数</string>
 </resources>

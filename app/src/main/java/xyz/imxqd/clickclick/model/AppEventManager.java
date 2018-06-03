@@ -1,9 +1,17 @@
 package xyz.imxqd.clickclick.model;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.os.Message;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.widget.Toast;
+
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +19,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
+import xyz.imxqd.clickclick.dao.KeyMappingEvent_Table;
 import xyz.imxqd.clickclick.func.FunctionFactory;
 import xyz.imxqd.clickclick.func.IFunction;
 import xyz.imxqd.clickclick.service.KeyEventService;
@@ -33,6 +43,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
     private KeyEventService mService;
     private NotificationCollectorService mNotification;
     private Toast mToast;
+    private ButtonHandler mButtonHandler = new ButtonHandler();
 
     private Map<String, Long> mKeyEventData = new HashMap<>();
 
@@ -61,6 +72,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
             mKeyEventHandler = new KeyEventHandler();
             updateKeyEventData();
             mKeyEventHandler.setCallback(this);
+            initHomeButtonListener();
             updateClickTime();
             init = true;
         }
@@ -97,7 +109,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         mKeyEventHandler.mTripleClickKeyCodes.clear();
         mKeyEventData.clear();
 
-        List<KeyMappingEvent> keyMappingEvents = KeyMappingEvent.getEnabledItems();
+        List<KeyMappingEvent> keyMappingEvents = KeyMappingEvent.getEnabledNormalItems();
         for (KeyMappingEvent event : keyMappingEvents) {
             if (event.eventType == AppKeyEventType.SingleClick) {
                 mKeyEventHandler.mSingleClickKeyCodes.add(event.keyCode);
@@ -220,5 +232,139 @@ public class AppEventManager implements KeyEventHandler.Callback {
         }
         mToast = Toast.makeText(App.get(), str, Toast.LENGTH_LONG);
         mToast.show();
+    }
+
+    public IFunction getHomeDoubleClickFunction(int button) {
+        KeyMappingEvent event = new Select()
+                .from(KeyMappingEvent.class)
+                .where(KeyMappingEvent_Table.enable.eq(true))
+                .and(KeyMappingEvent_Table.device_id.eq(-1))
+                .and(KeyMappingEvent_Table.event_type.eq(AppKeyEventType.DoubleClick))
+                .and(KeyMappingEvent_Table.key_code.eq(button))
+                .querySingle();
+        if (event != null) {
+            return FunctionFactory.getFuncById(event.funcId);
+        }
+        return null;
+    }
+
+    public IFunction getHomeTripleClickFunction(int button) {
+        KeyMappingEvent event = new Select()
+                .from(KeyMappingEvent.class)
+                .where(KeyMappingEvent_Table.enable.eq(true))
+                .and(KeyMappingEvent_Table.device_id.eq(-1))
+                .and(KeyMappingEvent_Table.event_type.eq(AppKeyEventType.TripleClick))
+                .and(KeyMappingEvent_Table.key_code.eq(button))
+                .querySingle();
+        if (event != null) {
+            return FunctionFactory.getFuncById(event.funcId);
+        }
+        return null;
+    }
+
+
+    private void initHomeButtonListener() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        App.get().registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (TextUtils.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS, action)) {
+                    String reason = intent.getStringExtra("reason");
+                    if (reason != null) {
+                        if (reason.equals("homekey")) {
+                            // Home
+                            LogUtils.d("homekey");
+                            mButtonHandler.handle(KeyEvent.KEYCODE_HOME);
+                        } else if (reason.equals("recentapps")) {
+                            // Recent
+                            LogUtils.d("recentapps");
+                            mButtonHandler.handle(KeyEvent.KEYCODE_APP_SWITCH);
+                        }
+                    }
+                }
+            }
+        }, filter);
+        mButtonHandler.setCallback(new ButtonHandler.Callback() {
+            @Override
+            public void onDoubleClick(int button) {
+                LogUtils.d("onDoubleClick " + button);
+                IFunction f = getHomeDoubleClickFunction(button);
+                if (f != null) {
+                    f.exec();
+                }
+            }
+
+            @Override
+            public void onTripleClick(int button) {
+                LogUtils.d("onTripleClick " + button);
+                IFunction f = getHomeTripleClickFunction(button);
+                if (f != null) {
+                    f.exec();
+                }
+            }
+        });
+    }
+
+    public static class ButtonHandler {
+        private static final int WHAT_BUTTON_HANDLER = 1223;
+
+        private Callback callback;
+        private int lastButton = 0;
+        private int count = 0;
+        public void handle(int button) {
+            if (lastButton == button) {
+                count++;
+                if (hasOnlyDoubleClick() && count == 2) {
+                    App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
+                    if (callback != null) {
+                        callback.onDoubleClick(lastButton);
+                    }
+                    reset();
+                } else if (count == 3) {
+                    App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
+                    if (callback != null) {
+                        callback.onTripleClick(lastButton);
+                    }
+                    reset();
+                }
+            } else {
+                count = 1;
+                lastButton = button;
+                App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
+                Message msg = Message.obtain(App.get().getHandler(), () -> {
+                    App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
+                    if (callback != null) {
+                        if (count == 2) {
+                            callback.onDoubleClick(lastButton);
+                        } else if (count == 3) {
+                            callback.onTripleClick(lastButton);
+                        }
+                    }
+                    reset();
+                });
+                msg.what = WHAT_BUTTON_HANDLER;
+                App.get().getHandler().sendMessageDelayed(msg, SettingsUtil.getQuickClickTime());
+            }
+        }
+
+        public boolean hasOnlyDoubleClick() {
+            return false;
+        }
+
+        private void reset() {
+            count = 0;
+            lastButton = 0;
+        }
+
+        public void setCallback(Callback callback) {
+            this.callback = callback;
+        }
+
+        public interface Callback {
+            void onDoubleClick(int button);
+            void onTripleClick(int button);
+        }
     }
 }

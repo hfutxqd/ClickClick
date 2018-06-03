@@ -14,6 +14,16 @@
         <item>TripleClick</item>
     </string-array>
 
+    <string-array name="home_event_type">
+        <item>Double Click</item>
+        <item>Triple Click</item>
+    </string-array>
+
+    <string-array name="home_event_type_value" translatable="false">
+        <item>DoubleClick</item>
+        <item>TripleClick</item>
+    </string-array>
+
     <string-array name="click_speed">
         <item>Slow</item>
         <item>Normal</item>

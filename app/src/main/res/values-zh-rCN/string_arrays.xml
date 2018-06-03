@@ -7,6 +7,11 @@
         <item>三击</item>
     </string-array>
 
+    <string-array name="home_event_type">
+        <item>双击</item>
+        <item>三击</item>
+    </string-array>
+
     <string-array name="click_speed">
         <item>慢速</item>
         <item>普通</item>

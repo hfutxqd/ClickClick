@@ -9,7 +9,6 @@ import android.util.ArrayMap;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,6 +58,26 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
             switchPageTo(currentTabId);
         }
 
+//        if (RxFingerprint.isAvailable(this)) {
+//            Disposable disposable = RxFingerprint.decrypt(EncryptionMethod.AES, this, "name", "tode")
+//                    .subscribe(fingerprintAuthenticationResult -> {
+//                        switch (fingerprintAuthenticationResult.getResult()) {
+//                            case FAILED:
+//                                LogUtils.d("Fingerprint not recognized, try again!");
+//                                break;
+//                            case HELP:
+//                                LogUtils.d(fingerprintAuthenticationResult.getMessage());
+//                                break;
+//                            case AUTHENTICATED:
+//                                LogUtils.d("Successfully authenticated!");
+//                                break;
+//                        }
+//                    }, throwable -> {
+//                        LogUtils.e("ERROR : authenticate", throwable);
+//                    });
+//        } else {
+//            // fingerprint is not available
+//        }
     }
 
     @Override

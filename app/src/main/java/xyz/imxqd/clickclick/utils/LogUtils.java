@@ -62,7 +62,7 @@ public class LogUtils {
 
     public static void d(String content) {
         if (!allowD || content == null) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {
@@ -74,7 +74,7 @@ public class LogUtils {
 
     public static void d(String content, Throwable tr) {
         if (!allowD) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {
@@ -86,7 +86,7 @@ public class LogUtils {
 
     public static void e(String content) {
         if (!allowE) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
         if (content == null) {
             content = "null";
@@ -100,7 +100,7 @@ public class LogUtils {
 
     public static void e(String content, Throwable tr) {
         if (!allowE) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {
@@ -112,7 +112,7 @@ public class LogUtils {
 
     public static void i(String content) {
         if (!allowI) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {
@@ -124,7 +124,7 @@ public class LogUtils {
 
     public static void i(String content, Throwable tr) {
         if (!allowI) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {
@@ -136,7 +136,7 @@ public class LogUtils {
 
     public static void v(String content) {
         if (!allowV) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {
@@ -148,7 +148,7 @@ public class LogUtils {
 
     public static void v(String content, Throwable tr) {
         if (!allowV) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {
@@ -160,7 +160,7 @@ public class LogUtils {
 
     public static void w(String content) {
         if (!allowW) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {
@@ -172,7 +172,7 @@ public class LogUtils {
 
     public static void w(String content, Throwable tr) {
         if (!allowW) return;
-        StackTraceElement caller = Thread.currentThread().getStackTrace()[4];
+        StackTraceElement caller = Thread.currentThread().getStackTrace()[3];
         String tag = generateTag(caller);
 
         if (customLogger != null) {

@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+        
     <string-array name="event_type">
-        <item>单击</item>
-        <item>长按</item>
-        <item>双击</item>
-        <item>三击</item>
+        <item>單擊</item>
+        <item>長按</item>
+        <item>雙擊</item>
+        <item>三擊</item>
+    </string-array>
+
+    <string-array name="home_event_type">
+        <item>雙擊</item>
+        <item>三擊</item>
     </string-array>
 
     <string-array name="click_speed">

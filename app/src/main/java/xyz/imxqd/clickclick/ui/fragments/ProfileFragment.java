@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick.ui.fragments;
 
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,8 +18,13 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +33,7 @@ import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
+import xyz.imxqd.clickclick.ui.AddHomeEventActivity;
 import xyz.imxqd.clickclick.ui.AddKeyEventActivity;
 import xyz.imxqd.clickclick.ui.adapters.ProfileAdapter;
 import xyz.imxqd.clickclick.utils.LogUtils;
@@ -48,6 +56,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
 
     ProfileAdapter mAdapter;
     ItemTouchHelper itemTouchHelper;
+    ArrayAdapter<String> mMenuAdapter;
 
     public ProfileFragment() {
         LogUtils.d("ProfileFragment new instance");
@@ -134,6 +143,12 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         mAdapter.setCheckChangeCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
         vList.setAdapter(mAdapter);
+
+        List<String> list = new ArrayList<>();
+        list.add(getString(R.string.add_key_event_normal));
+        list.add(getString(R.string.add_key_event_home));
+        mMenuAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
+
         itemTouchHelper = new ItemTouchHelper(mCallback);
         itemTouchHelper.attachToRecyclerView(vList);
         vList.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -176,7 +191,31 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
 
     @OnClick(R.id.action_add)
     public void onAddClick() {
+        new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+                .setAdapter(mMenuAdapter, (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            startAddKeyEventActivity();
+                            break;
+                        case 1:
+                            startAddHomeEventActivity();
+                            break;
+                        default:
+                    }
+                })
+                .show();
+    }
+
+    private void startAddKeyEventActivity() {
         Intent intent = new Intent(getActivity(), AddKeyEventActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        }
+        startActivityForResult(intent, REQUEST_CODE_ADD_KEY_EVENT);
+    }
+
+    private void startAddHomeEventActivity() {
+        Intent intent = new Intent(getActivity(), AddHomeEventActivity.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }

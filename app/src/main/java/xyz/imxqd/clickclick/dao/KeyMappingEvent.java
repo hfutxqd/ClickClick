@@ -68,6 +68,13 @@ public class KeyMappingEvent extends BaseModel implements Parcelable {
                 .queryList();
     }
 
+    public static List<KeyMappingEvent> getEnabledNormalItems() {
+        return new Select().from(KeyMappingEvent.class)
+                .where(KeyMappingEvent_Table.enable.eq(true))
+                .and(KeyMappingEvent_Table.device_id.notEq(-1))
+                .queryList();
+    }
+
     public static List<KeyMappingEvent> getOrderedAll() {
         return new Select().from(KeyMappingEvent.class)
                 .orderBy(KeyMappingEvent_Table.order, true)
