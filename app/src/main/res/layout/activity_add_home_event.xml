@@ -50,7 +50,6 @@
         <ImageView
             android:id="@+id/key_btn_add"
             android:src="@drawable/ic_dialog_add"
-            android:alpha="0.5"
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless"
