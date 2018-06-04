@@ -76,5 +76,8 @@
     <string name="add_key_event_normal">Add regular button mapping</string>
     <string name="add_key_event_home">HOME button function attachment</string>
     <string name="device_id_error">Device ID cannot be negative</string>
+    <string name="add_to_home">Shortcut</string>
+    <string name="added_to_home">Added</string>
+    <string name="func_not_found">Function not found</string>
 
 </resources>

@@ -26,6 +26,7 @@ import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.func.FunctionFactory;
 import xyz.imxqd.clickclick.func.IFunction;
+import xyz.imxqd.clickclick.utils.ShortcutUtil;
 
 /**
  * Created by imxqd on 2017/11/26.
@@ -122,7 +123,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
                             .setMessage(R.string.dialog_what_intent_message)
                             .setPositiveButton(R.string.run_it, FunctionHolder.this)
                             .setNegativeButton(R.string.delete, FunctionHolder.this)
-                            .setNeutralButton(R.string.cancel, FunctionHolder.this)
+                            .setNeutralButton(R.string.add_to_home, FunctionHolder.this)
                             .show();
                 }
             });
@@ -161,7 +162,8 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
                     notifyItemRemoved(getAdapterPosition());
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
-
+                    ShortcutUtil.createRunFunc(f.id, f.name);
+                    App.get().showToast(R.string.added_to_home);
                     break;
                 default:
             }

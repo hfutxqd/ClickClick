@@ -70,4 +70,7 @@
     <string name="add_key_event_normal">添加常規按鍵映射</string>
     <string name="add_key_event_home">HOME鍵功能附加</string>
     <string name="device_id_error">設備ID不能為負數</string>
+    <string name="add_to_home">添加到主屏幕</string>
+    <string name="added_to_home">已添加到主屏幕</string>
+    <string name="func_not_found">功能不存在</string>
 </resources>
