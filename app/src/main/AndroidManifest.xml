@@ -116,6 +116,7 @@
             android:theme="@style/AppTheme.Dialog" />
         <activity
             android:exported="true"
+            android:launchMode="singleInstance"
             android:name=".ui.NoDisplayActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>

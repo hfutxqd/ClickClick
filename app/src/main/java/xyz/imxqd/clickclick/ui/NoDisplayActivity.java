@@ -1,6 +1,7 @@
 package xyz.imxqd.clickclick.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import xyz.imxqd.clickclick.App;
@@ -15,6 +16,11 @@ public class NoDisplayActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getIntent() == null) {
+            startActivity(new Intent(this, NaviActivity.class));
+            finish();
+            return;
+        }
         long funcId = getIntent().getLongExtra(ARG_FUNC_ID, -1);
         if (funcId >= 0) {
             IFunction function = FunctionFactory.getFuncById(funcId);
