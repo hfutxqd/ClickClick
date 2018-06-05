@@ -1,0 +1,14 @@
+INSERT INTO defined_function (name, body, description) values ('打开微信', 'url:weixin://', '打开微信');
+INSERT INTO defined_function (name, body, description) values ('打开支付宝', 'url:alipays://', '一键打开支付宝');
+INSERT INTO defined_function (name, body, description) values ('支付宝付款', 'url:alipays://platformapi/startapp?appId=20000056', '打开支付宝付款界面');
+INSERT INTO defined_function (name, body, description) values ('支付宝滴滴', 'url:alipays://platformapi/startapp?appId=20000778', '打开支付宝滴滴打车');
+INSERT INTO defined_function (name, body, description) values ('打开相机', 'action:action://android.media.action.STILL_IMAGE_CAMERA', '打开相机');
+INSERT INTO defined_function (name, body, description) values ('微信扫一扫', 'action:intent://#Intent;component=com.tencent.mm/.ui.LauncherUI;B.LauncherUI.From.Scaner.Shortcut=true;end', '打开微信扫一扫');
+INSERT INTO defined_function (name, body, description) values ('返回键', 'keyevent:4', '返回');
+INSERT INTO defined_function (name, body, description) values ('HOME键', 'keyevent:3', '返回到桌面');
+INSERT INTO defined_function (name, body, description) values ('多任务键', 'keyevent:187', '多任务切换程序');
+INSERT INTO defined_function (name, body, description) values ('下一曲', 'keyevent:87', '下一曲');
+INSERT INTO defined_function (name, body, description) values ('上一曲', 'keyevent:88', '上一曲');
+INSERT INTO defined_function (name, body, description) values ('QQ音乐喜爱', 'internal:qq_music_like()', 'QQ音乐通知栏喜爱功能');
+INSERT INTO defined_function (name, body, description) values ('网易云音乐喜爱', 'internal:cloud_music_like(@id/playNotificationStar)', '网易云音乐喜爱（内置），有爱心图标反馈');
+INSERT INTO defined_function (name, body, description) values ('震动', 'internal:vibrate([200,500,200,500,200,500])', '胡乱震动');

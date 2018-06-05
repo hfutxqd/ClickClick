@@ -1,0 +1,58 @@
+{
+  "total": 20,
+  "data": [
+    {
+      "name": "支付宝付款",
+      "description": "打开支付宝付款界面",
+      "body": "url:alipays://platformapi/startapp?appId=20000056",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "微信扫一扫",
+      "description": "打开微信扫一扫",
+      "body": "action:intent://#Intent;component=com.tencent.mm/.ui.LauncherUI;B.LauncherUI.From.Scaner.Shortcut=true;end",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },{
+      "name": "下一曲",
+      "description": "下一曲",
+      "body": "keyevent:87",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "上一曲",
+      "description": "上一曲",
+      "body": "keyevent:88",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "打开相机",
+      "description": "打开相机",
+      "body": "action:action://android.media.action.STILL_IMAGE_CAMERA",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "通知控件id搜寻器",
+      "description": "此功能可以很方便地寻找通知中某个控件的id，并可以一键生成通知类功能",
+      "body": "internal:notify_helper()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    }
+  ]
+}

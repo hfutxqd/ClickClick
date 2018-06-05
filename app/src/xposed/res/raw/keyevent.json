@@ -1,0 +1,2579 @@
+{
+  "total": 20,
+  "data": [
+    {
+      "name": "返回键",
+      "description": "返回",
+      "body": "keyevent:4",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "HOME键",
+      "description": "返回到桌面",
+      "body": "keyevent:3",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "多任务键",
+      "description": "多任务切换程序",
+      "body": "keyevent:187",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SOFT_LEFT",
+      "description": "按键SOFT_LEFT",
+      "body": "keyevent:1",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SOFT_RIGHT",
+      "description": "按键SOFT_RIGHT",
+      "body": "keyevent:2",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键HOME",
+      "description": "按键HOME",
+      "body": "keyevent:3",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BACK",
+      "description": "按键BACK",
+      "body": "keyevent:4",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CALL",
+      "description": "按键CALL",
+      "body": "keyevent:5",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ENDCALL",
+      "description": "按键ENDCALL",
+      "body": "keyevent:6",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键0",
+      "description": "按键0",
+      "body": "keyevent:7",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键1",
+      "description": "按键1",
+      "body": "keyevent:8",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键2",
+      "description": "按键2",
+      "body": "keyevent:9",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键3",
+      "description": "按键3",
+      "body": "keyevent:10",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键4",
+      "description": "按键4",
+      "body": "keyevent:11",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键5",
+      "description": "按键5",
+      "body": "keyevent:12",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键6",
+      "description": "按键6",
+      "body": "keyevent:13",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键7",
+      "description": "按键7",
+      "body": "keyevent:14",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键8",
+      "description": "按键8",
+      "body": "keyevent:15",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键9",
+      "description": "按键9",
+      "body": "keyevent:16",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键STAR",
+      "description": "按键STAR",
+      "body": "keyevent:17",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键POUND",
+      "description": "按键POUND",
+      "body": "keyevent:18",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_UP",
+      "description": "按键DPAD_UP",
+      "body": "keyevent:19",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_DOWN",
+      "description": "按键DPAD_DOWN",
+      "body": "keyevent:20",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_LEFT",
+      "description": "按键DPAD_LEFT",
+      "body": "keyevent:21",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_RIGHT",
+      "description": "按键DPAD_RIGHT",
+      "body": "keyevent:22",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_CENTER",
+      "description": "按键DPAD_CENTER",
+      "body": "keyevent:23",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键VOLUME_UP",
+      "description": "按键VOLUME_UP",
+      "body": "keyevent:24",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键VOLUME_DOWN",
+      "description": "按键VOLUME_DOWN",
+      "body": "keyevent:25",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键POWER",
+      "description": "按键POWER",
+      "body": "keyevent:26",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CAMERA",
+      "description": "按键CAMERA",
+      "body": "keyevent:27",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CLEAR",
+      "description": "按键CLEAR",
+      "body": "keyevent:28",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键A",
+      "description": "按键A",
+      "body": "keyevent:29",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键B",
+      "description": "按键B",
+      "body": "keyevent:30",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键C",
+      "description": "按键C",
+      "body": "keyevent:31",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键D",
+      "description": "按键D",
+      "body": "keyevent:32",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键E",
+      "description": "按键E",
+      "body": "keyevent:33",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F",
+      "description": "按键F",
+      "body": "keyevent:34",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键G",
+      "description": "按键G",
+      "body": "keyevent:35",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键H",
+      "description": "按键H",
+      "body": "keyevent:36",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键I",
+      "description": "按键I",
+      "body": "keyevent:37",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键J",
+      "description": "按键J",
+      "body": "keyevent:38",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键K",
+      "description": "按键K",
+      "body": "keyevent:39",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键L",
+      "description": "按键L",
+      "body": "keyevent:40",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键M",
+      "description": "按键M",
+      "body": "keyevent:41",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键N",
+      "description": "按键N",
+      "body": "keyevent:42",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键O",
+      "description": "按键O",
+      "body": "keyevent:43",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键P",
+      "description": "按键P",
+      "body": "keyevent:44",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键Q",
+      "description": "按键Q",
+      "body": "keyevent:45",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键R",
+      "description": "按键R",
+      "body": "keyevent:46",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键S",
+      "description": "按键S",
+      "body": "keyevent:47",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键T",
+      "description": "按键T",
+      "body": "keyevent:48",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键U",
+      "description": "按键U",
+      "body": "keyevent:49",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键V",
+      "description": "按键V",
+      "body": "keyevent:50",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键W",
+      "description": "按键W",
+      "body": "keyevent:51",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键X",
+      "description": "按键X",
+      "body": "keyevent:52",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键Y",
+      "description": "按键Y",
+      "body": "keyevent:53",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键Z",
+      "description": "按键Z",
+      "body": "keyevent:54",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键COMMA",
+      "description": "按键COMMA",
+      "body": "keyevent:55",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PERIOD",
+      "description": "按键PERIOD",
+      "body": "keyevent:56",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ALT_LEFT",
+      "description": "按键ALT_LEFT",
+      "body": "keyevent:57",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ALT_RIGHT",
+      "description": "按键ALT_RIGHT",
+      "body": "keyevent:58",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SHIFT_LEFT",
+      "description": "按键SHIFT_LEFT",
+      "body": "keyevent:59",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SHIFT_RIGHT",
+      "description": "按键SHIFT_RIGHT",
+      "body": "keyevent:60",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TAB",
+      "description": "按键TAB",
+      "body": "keyevent:61",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SPACE",
+      "description": "按键SPACE",
+      "body": "keyevent:62",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SYM",
+      "description": "按键SYM",
+      "body": "keyevent:63",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键EXPLORER",
+      "description": "按键EXPLORER",
+      "body": "keyevent:64",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ENVELOPE",
+      "description": "按键ENVELOPE",
+      "body": "keyevent:65",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ENTER",
+      "description": "按键ENTER",
+      "body": "keyevent:66",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DEL",
+      "description": "按键DEL",
+      "body": "keyevent:67",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键GRAVE",
+      "description": "按键GRAVE",
+      "body": "keyevent:68",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MINUS",
+      "description": "按键MINUS",
+      "body": "keyevent:69",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键EQUALS",
+      "description": "按键EQUALS",
+      "body": "keyevent:70",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键LEFT_BRACKET",
+      "description": "按键LEFT_BRACKET",
+      "body": "keyevent:71",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键RIGHT_BRACKET",
+      "description": "按键RIGHT_BRACKET",
+      "body": "keyevent:72",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BACKSLASH",
+      "description": "按键BACKSLASH",
+      "body": "keyevent:73",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SEMICOLON",
+      "description": "按键SEMICOLON",
+      "body": "keyevent:74",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键APOSTROPHE",
+      "description": "按键APOSTROPHE",
+      "body": "keyevent:75",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SLASH",
+      "description": "按键SLASH",
+      "body": "keyevent:76",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键AT",
+      "description": "按键AT",
+      "body": "keyevent:77",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUM",
+      "description": "按键NUM",
+      "body": "keyevent:78",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键HEADSETHOOK",
+      "description": "按键HEADSETHOOK",
+      "body": "keyevent:79",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键FOCUS",
+      "description": "按键FOCUS",
+      "body": "keyevent:80",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PLUS",
+      "description": "按键PLUS",
+      "body": "keyevent:81",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MENU",
+      "description": "按键MENU",
+      "body": "keyevent:82",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NOTIFICATION",
+      "description": "按键NOTIFICATION",
+      "body": "keyevent:83",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SEARCH",
+      "description": "按键SEARCH",
+      "body": "keyevent:84",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_PLAY_PAUSE",
+      "description": "按键MEDIA_PLAY_PAUSE",
+      "body": "keyevent:85",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_STOP",
+      "description": "按键MEDIA_STOP",
+      "body": "keyevent:86",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_NEXT",
+      "description": "按键MEDIA_NEXT",
+      "body": "keyevent:87",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_PREVIOUS",
+      "description": "按键MEDIA_PREVIOUS",
+      "body": "keyevent:88",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_REWIND",
+      "description": "按键MEDIA_REWIND",
+      "body": "keyevent:89",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_FAST_FORWARD",
+      "description": "按键MEDIA_FAST_FORWARD",
+      "body": "keyevent:90",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MUTE",
+      "description": "按键MUTE",
+      "body": "keyevent:91",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PAGE_UP",
+      "description": "按键PAGE_UP",
+      "body": "keyevent:92",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PAGE_DOWN",
+      "description": "按键PAGE_DOWN",
+      "body": "keyevent:93",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PICTSYMBOLS",
+      "description": "按键PICTSYMBOLS",
+      "body": "keyevent:94",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SWITCH_CHARSET",
+      "description": "按键SWITCH_CHARSET",
+      "body": "keyevent:95",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_A",
+      "description": "按键BUTTON_A",
+      "body": "keyevent:96",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_B",
+      "description": "按键BUTTON_B",
+      "body": "keyevent:97",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_C",
+      "description": "按键BUTTON_C",
+      "body": "keyevent:98",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_X",
+      "description": "按键BUTTON_X",
+      "body": "keyevent:99",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_Y",
+      "description": "按键BUTTON_Y",
+      "body": "keyevent:100",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_Z",
+      "description": "按键BUTTON_Z",
+      "body": "keyevent:101",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_L1",
+      "description": "按键BUTTON_L1",
+      "body": "keyevent:102",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_R1",
+      "description": "按键BUTTON_R1",
+      "body": "keyevent:103",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_L2",
+      "description": "按键BUTTON_L2",
+      "body": "keyevent:104",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_R2",
+      "description": "按键BUTTON_R2",
+      "body": "keyevent:105",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_THUMBL",
+      "description": "按键BUTTON_THUMBL",
+      "body": "keyevent:106",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_THUMBR",
+      "description": "按键BUTTON_THUMBR",
+      "body": "keyevent:107",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_START",
+      "description": "按键BUTTON_START",
+      "body": "keyevent:108",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_SELECT",
+      "description": "按键BUTTON_SELECT",
+      "body": "keyevent:109",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_MODE",
+      "description": "按键BUTTON_MODE",
+      "body": "keyevent:110",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ESCAPE",
+      "description": "按键ESCAPE",
+      "body": "keyevent:111",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键FORWARD_DEL",
+      "description": "按键FORWARD_DEL",
+      "body": "keyevent:112",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CTRL_LEFT",
+      "description": "按键CTRL_LEFT",
+      "body": "keyevent:113",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CTRL_RIGHT",
+      "description": "按键CTRL_RIGHT",
+      "body": "keyevent:114",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CAPS_LOCK",
+      "description": "按键CAPS_LOCK",
+      "body": "keyevent:115",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SCROLL_LOCK",
+      "description": "按键SCROLL_LOCK",
+      "body": "keyevent:116",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键META_LEFT",
+      "description": "按键META_LEFT",
+      "body": "keyevent:117",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键META_RIGHT",
+      "description": "按键META_RIGHT",
+      "body": "keyevent:118",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键FUNCTION",
+      "description": "按键FUNCTION",
+      "body": "keyevent:119",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SYSRQ",
+      "description": "按键SYSRQ",
+      "body": "keyevent:120",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BREAK",
+      "description": "按键BREAK",
+      "body": "keyevent:121",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MOVE_HOME",
+      "description": "按键MOVE_HOME",
+      "body": "keyevent:122",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MOVE_END",
+      "description": "按键MOVE_END",
+      "body": "keyevent:123",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键INSERT",
+      "description": "按键INSERT",
+      "body": "keyevent:124",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键FORWARD",
+      "description": "按键FORWARD",
+      "body": "keyevent:125",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_PLAY",
+      "description": "按键MEDIA_PLAY",
+      "body": "keyevent:126",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_PAUSE",
+      "description": "按键MEDIA_PAUSE",
+      "body": "keyevent:127",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_CLOSE",
+      "description": "按键MEDIA_CLOSE",
+      "body": "keyevent:128",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_EJECT",
+      "description": "按键MEDIA_EJECT",
+      "body": "keyevent:129",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_RECORD",
+      "description": "按键MEDIA_RECORD",
+      "body": "keyevent:130",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F1",
+      "description": "按键F1",
+      "body": "keyevent:131",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F2",
+      "description": "按键F2",
+      "body": "keyevent:132",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F3",
+      "description": "按键F3",
+      "body": "keyevent:133",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F4",
+      "description": "按键F4",
+      "body": "keyevent:134",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F5",
+      "description": "按键F5",
+      "body": "keyevent:135",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F6",
+      "description": "按键F6",
+      "body": "keyevent:136",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F7",
+      "description": "按键F7",
+      "body": "keyevent:137",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F8",
+      "description": "按键F8",
+      "body": "keyevent:138",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F9",
+      "description": "按键F9",
+      "body": "keyevent:139",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F10",
+      "description": "按键F10",
+      "body": "keyevent:140",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F11",
+      "description": "按键F11",
+      "body": "keyevent:141",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键F12",
+      "description": "按键F12",
+      "body": "keyevent:142",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUM_LOCK",
+      "description": "按键NUM_LOCK",
+      "body": "keyevent:143",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_0",
+      "description": "按键NUMPAD_0",
+      "body": "keyevent:144",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_1",
+      "description": "按键NUMPAD_1",
+      "body": "keyevent:145",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_2",
+      "description": "按键NUMPAD_2",
+      "body": "keyevent:146",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_3",
+      "description": "按键NUMPAD_3",
+      "body": "keyevent:147",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_4",
+      "description": "按键NUMPAD_4",
+      "body": "keyevent:148",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_5",
+      "description": "按键NUMPAD_5",
+      "body": "keyevent:149",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_6",
+      "description": "按键NUMPAD_6",
+      "body": "keyevent:150",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_7",
+      "description": "按键NUMPAD_7",
+      "body": "keyevent:151",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_8",
+      "description": "按键NUMPAD_8",
+      "body": "keyevent:152",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_9",
+      "description": "按键NUMPAD_9",
+      "body": "keyevent:153",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_DIVIDE",
+      "description": "按键NUMPAD_DIVIDE",
+      "body": "keyevent:154",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_MULTIPLY",
+      "description": "按键NUMPAD_MULTIPLY",
+      "body": "keyevent:155",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_SUBTRACT",
+      "description": "按键NUMPAD_SUBTRACT",
+      "body": "keyevent:156",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_ADD",
+      "description": "按键NUMPAD_ADD",
+      "body": "keyevent:157",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_DOT",
+      "description": "按键NUMPAD_DOT",
+      "body": "keyevent:158",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_COMMA",
+      "description": "按键NUMPAD_COMMA",
+      "body": "keyevent:159",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_ENTER",
+      "description": "按键NUMPAD_ENTER",
+      "body": "keyevent:160",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_EQUALS",
+      "description": "按键NUMPAD_EQUALS",
+      "body": "keyevent:161",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_LEFT_PAREN",
+      "description": "按键NUMPAD_LEFT_PAREN",
+      "body": "keyevent:162",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NUMPAD_RIGHT_PAREN",
+      "description": "按键NUMPAD_RIGHT_PAREN",
+      "body": "keyevent:163",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键VOLUME_MUTE",
+      "description": "按键VOLUME_MUTE",
+      "body": "keyevent:164",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键INFO",
+      "description": "按键INFO",
+      "body": "keyevent:165",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CHANNEL_UP",
+      "description": "按键CHANNEL_UP",
+      "body": "keyevent:166",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CHANNEL_DOWN",
+      "description": "按键CHANNEL_DOWN",
+      "body": "keyevent:167",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ZOOM_IN",
+      "description": "按键ZOOM_IN",
+      "body": "keyevent:168",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ZOOM_OUT",
+      "description": "按键ZOOM_OUT",
+      "body": "keyevent:169",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV",
+      "description": "按键TV",
+      "body": "keyevent:170",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键WINDOW",
+      "description": "按键WINDOW",
+      "body": "keyevent:171",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键GUIDE",
+      "description": "按键GUIDE",
+      "body": "keyevent:172",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DVR",
+      "description": "按键DVR",
+      "body": "keyevent:173",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BOOKMARK",
+      "description": "按键BOOKMARK",
+      "body": "keyevent:174",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CAPTIONS",
+      "description": "按键CAPTIONS",
+      "body": "keyevent:175",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SETTINGS",
+      "description": "按键SETTINGS",
+      "body": "keyevent:176",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_POWER",
+      "description": "按键TV_POWER",
+      "body": "keyevent:177",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT",
+      "description": "按键TV_INPUT",
+      "body": "keyevent:178",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键STB_POWER",
+      "description": "按键STB_POWER",
+      "body": "keyevent:179",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键STB_INPUT",
+      "description": "按键STB_INPUT",
+      "body": "keyevent:180",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键AVR_POWER",
+      "description": "按键AVR_POWER",
+      "body": "keyevent:181",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键AVR_INPUT",
+      "description": "按键AVR_INPUT",
+      "body": "keyevent:182",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PROG_RED",
+      "description": "按键PROG_RED",
+      "body": "keyevent:183",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PROG_GREEN",
+      "description": "按键PROG_GREEN",
+      "body": "keyevent:184",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PROG_YELLOW",
+      "description": "按键PROG_YELLOW",
+      "body": "keyevent:185",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PROG_BLUE",
+      "description": "按键PROG_BLUE",
+      "body": "keyevent:186",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键APP_SWITCH",
+      "description": "按键APP_SWITCH",
+      "body": "keyevent:187",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_1",
+      "description": "按键BUTTON_1",
+      "body": "keyevent:188",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_2",
+      "description": "按键BUTTON_2",
+      "body": "keyevent:189",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_3",
+      "description": "按键BUTTON_3",
+      "body": "keyevent:190",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_4",
+      "description": "按键BUTTON_4",
+      "body": "keyevent:191",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_5",
+      "description": "按键BUTTON_5",
+      "body": "keyevent:192",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_6",
+      "description": "按键BUTTON_6",
+      "body": "keyevent:193",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_7",
+      "description": "按键BUTTON_7",
+      "body": "keyevent:194",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_8",
+      "description": "按键BUTTON_8",
+      "body": "keyevent:195",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_9",
+      "description": "按键BUTTON_9",
+      "body": "keyevent:196",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_10",
+      "description": "按键BUTTON_10",
+      "body": "keyevent:197",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_11",
+      "description": "按键BUTTON_11",
+      "body": "keyevent:198",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_12",
+      "description": "按键BUTTON_12",
+      "body": "keyevent:199",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_13",
+      "description": "按键BUTTON_13",
+      "body": "keyevent:200",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_14",
+      "description": "按键BUTTON_14",
+      "body": "keyevent:201",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_15",
+      "description": "按键BUTTON_15",
+      "body": "keyevent:202",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BUTTON_16",
+      "description": "按键BUTTON_16",
+      "body": "keyevent:203",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键LANGUAGE_SWITCH",
+      "description": "按键LANGUAGE_SWITCH",
+      "body": "keyevent:204",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MANNER_MODE",
+      "description": "按键MANNER_MODE",
+      "body": "keyevent:205",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键3D_MODE",
+      "description": "按键3D_MODE",
+      "body": "keyevent:206",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CONTACTS",
+      "description": "按键CONTACTS",
+      "body": "keyevent:207",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CALENDAR",
+      "description": "按键CALENDAR",
+      "body": "keyevent:208",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MUSIC",
+      "description": "按键MUSIC",
+      "body": "keyevent:209",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CALCULATOR",
+      "description": "按键CALCULATOR",
+      "body": "keyevent:210",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ZENKAKU_HANKAKU",
+      "description": "按键ZENKAKU_HANKAKU",
+      "body": "keyevent:211",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键EISU",
+      "description": "按键EISU",
+      "body": "keyevent:212",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MUHENKAN",
+      "description": "按键MUHENKAN",
+      "body": "keyevent:213",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键HENKAN",
+      "description": "按键HENKAN",
+      "body": "keyevent:214",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键KATAKANA_HIRAGANA",
+      "description": "按键KATAKANA_HIRAGANA",
+      "body": "keyevent:215",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键YEN",
+      "description": "按键YEN",
+      "body": "keyevent:216",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键RO",
+      "description": "按键RO",
+      "body": "keyevent:217",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键KANA",
+      "description": "按键KANA",
+      "body": "keyevent:218",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键ASSIST",
+      "description": "按键ASSIST",
+      "body": "keyevent:219",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BRIGHTNESS_DOWN",
+      "description": "按键BRIGHTNESS_DOWN",
+      "body": "keyevent:220",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键BRIGHTNESS_UP",
+      "description": "按键BRIGHTNESS_UP",
+      "body": "keyevent:221",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_AUDIO_TRACK",
+      "description": "按键MEDIA_AUDIO_TRACK",
+      "body": "keyevent:222",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SLEEP",
+      "description": "按键SLEEP",
+      "body": "keyevent:223",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键WAKEUP",
+      "description": "按键WAKEUP",
+      "body": "keyevent:224",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PAIRING",
+      "description": "按键PAIRING",
+      "body": "keyevent:225",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_TOP_MENU",
+      "description": "按键MEDIA_TOP_MENU",
+      "body": "keyevent:226",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键11",
+      "description": "按键11",
+      "body": "keyevent:227",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键12",
+      "description": "按键12",
+      "body": "keyevent:228",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键LAST_CHANNEL",
+      "description": "按键LAST_CHANNEL",
+      "body": "keyevent:229",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_DATA_SERVICE",
+      "description": "按键TV_DATA_SERVICE",
+      "body": "keyevent:230",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键VOICE_ASSIST",
+      "description": "按键VOICE_ASSIST",
+      "body": "keyevent:231",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_RADIO_SERVICE",
+      "description": "按键TV_RADIO_SERVICE",
+      "body": "keyevent:232",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_TELETEXT",
+      "description": "按键TV_TELETEXT",
+      "body": "keyevent:233",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_NUMBER_ENTRY",
+      "description": "按键TV_NUMBER_ENTRY",
+      "body": "keyevent:234",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_TERRESTRIAL_ANALOG",
+      "description": "按键TV_TERRESTRIAL_ANALOG",
+      "body": "keyevent:235",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_TERRESTRIAL_DIGITAL",
+      "description": "按键TV_TERRESTRIAL_DIGITAL",
+      "body": "keyevent:236",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_SATELLITE",
+      "description": "按键TV_SATELLITE",
+      "body": "keyevent:237",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_SATELLITE_BS",
+      "description": "按键TV_SATELLITE_BS",
+      "body": "keyevent:238",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_SATELLITE_CS",
+      "description": "按键TV_SATELLITE_CS",
+      "body": "keyevent:239",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_SATELLITE_SERVICE",
+      "description": "按键TV_SATELLITE_SERVICE",
+      "body": "keyevent:240",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_NETWORK",
+      "description": "按键TV_NETWORK",
+      "body": "keyevent:241",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_ANTENNA_CABLE",
+      "description": "按键TV_ANTENNA_CABLE",
+      "body": "keyevent:242",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_HDMI_1",
+      "description": "按键TV_INPUT_HDMI_1",
+      "body": "keyevent:243",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_HDMI_2",
+      "description": "按键TV_INPUT_HDMI_2",
+      "body": "keyevent:244",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_HDMI_3",
+      "description": "按键TV_INPUT_HDMI_3",
+      "body": "keyevent:245",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_HDMI_4",
+      "description": "按键TV_INPUT_HDMI_4",
+      "body": "keyevent:246",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_COMPOSITE_1",
+      "description": "按键TV_INPUT_COMPOSITE_1",
+      "body": "keyevent:247",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_COMPOSITE_2",
+      "description": "按键TV_INPUT_COMPOSITE_2",
+      "body": "keyevent:248",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_COMPONENT_1",
+      "description": "按键TV_INPUT_COMPONENT_1",
+      "body": "keyevent:249",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_COMPONENT_2",
+      "description": "按键TV_INPUT_COMPONENT_2",
+      "body": "keyevent:250",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_INPUT_VGA_1",
+      "description": "按键TV_INPUT_VGA_1",
+      "body": "keyevent:251",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_AUDIO_DESCRIPTION",
+      "description": "按键TV_AUDIO_DESCRIPTION",
+      "body": "keyevent:252",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_AUDIO_DESCRIPTION_MIX_UP",
+      "description": "按键TV_AUDIO_DESCRIPTION_MIX_UP",
+      "body": "keyevent:253",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_AUDIO_DESCRIPTION_MIX_DOWN",
+      "description": "按键TV_AUDIO_DESCRIPTION_MIX_DOWN",
+      "body": "keyevent:254",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_ZOOM_MODE",
+      "description": "按键TV_ZOOM_MODE",
+      "body": "keyevent:255",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_CONTENTS_MENU",
+      "description": "按键TV_CONTENTS_MENU",
+      "body": "keyevent:256",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_MEDIA_CONTEXT_MENU",
+      "description": "按键TV_MEDIA_CONTEXT_MENU",
+      "body": "keyevent:257",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键TV_TIMER_PROGRAMMING",
+      "description": "按键TV_TIMER_PROGRAMMING",
+      "body": "keyevent:258",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键HELP",
+      "description": "按键HELP",
+      "body": "keyevent:259",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NAVIGATE_PREVIOUS",
+      "description": "按键NAVIGATE_PREVIOUS",
+      "body": "keyevent:260",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NAVIGATE_NEXT",
+      "description": "按键NAVIGATE_NEXT",
+      "body": "keyevent:261",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NAVIGATE_IN",
+      "description": "按键NAVIGATE_IN",
+      "body": "keyevent:262",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键NAVIGATE_OUT",
+      "description": "按键NAVIGATE_OUT",
+      "body": "keyevent:263",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键STEM_PRIMARY",
+      "description": "按键STEM_PRIMARY",
+      "body": "keyevent:264",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键STEM_1",
+      "description": "按键STEM_1",
+      "body": "keyevent:265",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键STEM_2",
+      "description": "按键STEM_2",
+      "body": "keyevent:266",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键STEM_3",
+      "description": "按键STEM_3",
+      "body": "keyevent:267",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_UP_LEFT",
+      "description": "按键DPAD_UP_LEFT",
+      "body": "keyevent:268",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_DOWN_LEFT",
+      "description": "按键DPAD_DOWN_LEFT",
+      "body": "keyevent:269",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_UP_RIGHT",
+      "description": "按键DPAD_UP_RIGHT",
+      "body": "keyevent:270",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键DPAD_DOWN_RIGHT",
+      "description": "按键DPAD_DOWN_RIGHT",
+      "body": "keyevent:271",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_SKIP_FORWARD",
+      "description": "按键MEDIA_SKIP_FORWARD",
+      "body": "keyevent:272",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_SKIP_BACKWARD",
+      "description": "按键MEDIA_SKIP_BACKWARD",
+      "body": "keyevent:273",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_STEP_FORWARD",
+      "description": "按键MEDIA_STEP_FORWARD",
+      "body": "keyevent:274",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键MEDIA_STEP_BACKWARD",
+      "description": "按键MEDIA_STEP_BACKWARD",
+      "body": "keyevent:275",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SOFT_SLEEP",
+      "description": "按键SOFT_SLEEP",
+      "body": "keyevent:276",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键CUT",
+      "description": "按键CUT",
+      "body": "keyevent:277",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键COPY",
+      "description": "按键COPY",
+      "body": "keyevent:278",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键PASTE",
+      "description": "按键PASTE",
+      "body": "keyevent:279",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SYSTEM_NAVIGATION_UP",
+      "description": "按键SYSTEM_NAVIGATION_UP",
+      "body": "keyevent:280",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SYSTEM_NAVIGATION_DOWN",
+      "description": "按键SYSTEM_NAVIGATION_DOWN",
+      "body": "keyevent:281",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SYSTEM_NAVIGATION_LEFT",
+      "description": "按键SYSTEM_NAVIGATION_LEFT",
+      "body": "keyevent:282",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "按键SYSTEM_NAVIGATION_RIGHT",
+      "description": "按键SYSTEM_NAVIGATION_RIGHT",
+      "body": "keyevent:283",
+      "version_code": 1,
+      "version_name": "1.0",
+      "author": "IMXQD",
+      "update_time": 1527414422000
+    }
+  ]
+}
