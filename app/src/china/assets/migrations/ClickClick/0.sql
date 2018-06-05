@@ -11,4 +11,5 @@ INSERT INTO defined_function (name, body, description) values ('下一曲', 'key
 INSERT INTO defined_function (name, body, description) values ('上一曲', 'keyevent:88', '上一曲');
 INSERT INTO defined_function (name, body, description) values ('QQ音乐喜爱', 'internal:qq_music_like()', 'QQ音乐通知栏喜爱功能');
 INSERT INTO defined_function (name, body, description) values ('网易云音乐喜爱', 'internal:cloud_music_like(@id/playNotificationStar)', '网易云音乐喜爱（内置），有爱心图标反馈');
+INSERT INTO defined_function (name, body, description) values ('网易云音乐喜爱', 'internal:cloud_music_like(@id/ajw)', '网易云音乐喜爱4.1.3，有爱心图标反馈');
 INSERT INTO defined_function (name, body, description) values ('震动', 'internal:vibrate([200,500,200,500,200,500])', '胡乱震动');
