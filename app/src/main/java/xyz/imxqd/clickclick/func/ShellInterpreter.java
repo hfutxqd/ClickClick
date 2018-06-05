@@ -1,13 +1,18 @@
 package xyz.imxqd.clickclick.func;
 
 
-
-import com.udojava.evalex.Expression;
+import com.killover.expressionevaluator.evaluator.CommonEvaluator;
+import com.killover.expressionevaluator.operand.Operand;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,19 +28,21 @@ public class ShellInterpreter {
     private static final Pattern RESOURCE_ID_PATTERN = Pattern.compile(REGEX_RESOURCE_ID);
 
     public static void main(String[] args) throws Exception {
-        Scanner scanner = new Scanner(new File("test.click"));
-        ShellInterpreter main = new ShellInterpreter();
-        while (scanner.hasNextLine()) {
-            main.readLine(scanner.nextLine());
-        }
-        main.exec();
+//        Scanner scanner = new Scanner(new File("test.click"));
+//        ShellInterpreter main = new ShellInterpreter();
+//        while (scanner.hasNextLine()) {
+//            main.readLine(scanner.nextLine());
+//        }
+//        main.exec();
+
+
     }
 
     private List<String> mCommends = new ArrayList<>();
-    private Map<String, Object> mValues = new HashMap<>();
+    private Map<String, String> mValues = new TreeMap<>();
     private int mLoopStartLine = -1;
     private int mCurrentExecLine = 0;
-    private Object mResult = null;
+    private String mResult = null;
 
     public void readLine(String line) {
         mCommends.add(line);
@@ -124,21 +131,6 @@ public class ShellInterpreter {
         mValues.put(str.trim(), null);
     }
 
-    public void intVal(String str) {
-        System.out.println("intVal: " + str);
-        mResult = Integer.valueOf(str.trim());
-    }
-
-    // Null -> NotNull  NotNull -> Null
-    public void not(String str) {
-        Object o = mValues.get(str.trim());
-        if (o == null) {
-            mResult = Boolean.TRUE;
-        } else {
-            mResult = null;
-        }
-    }
-
     public void eq(String str) {
         System.out.println("eq: " + str);
     }
@@ -165,9 +157,9 @@ public class ShellInterpreter {
         mResult = str;
     }
 
-    private void expression_eval(String str) {
-        Expression expression = new Expression(str);
-        expression.eval();
+    private void eval(String str) throws Exception {
+        Operand result = CommonEvaluator.value(str, mValues);
+        System.out.println("Sample1 result: " + result.value());
     }
 
     public void if_do(String str) {
