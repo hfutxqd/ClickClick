@@ -2,7 +2,6 @@ package xyz.imxqd.clickclick.ui.fragments;
 
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -36,7 +35,7 @@ import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.ui.AddHomeEventActivity;
 import xyz.imxqd.clickclick.ui.AddKeyEventActivity;
 import xyz.imxqd.clickclick.ui.adapters.ProfileAdapter;
-import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 

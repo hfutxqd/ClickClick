@@ -73,4 +73,7 @@
     <string name="add_to_home">添加到主屏幕</string>
     <string name="added_to_home">已添加到主屏幕</string>
     <string name="func_not_found">功能不存在</string>
+    <string name="app_crashed">ClickClick crash</string>
+    <string name="app_crashed_dialog_text">Sorry, ClickClick crashed. Please send a report to me.</string>
+    <string name="app_crashed_dialog_comment">You can add a comment here.</string>
 </resources>

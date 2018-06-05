@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.log.LogUtils;
 
 /**
  * worked on api 25 or lower

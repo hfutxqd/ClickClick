@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 
 import xyz.imxqd.clickclick.service.KeyEventService;
-import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.log.LogUtils;
 
 /**
  * Created by imxqd on 2017/11/25.

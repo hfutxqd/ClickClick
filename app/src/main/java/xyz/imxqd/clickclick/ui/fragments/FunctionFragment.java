@@ -32,7 +32,7 @@ import xyz.imxqd.clickclick.ui.FunctionsActivity;
 import xyz.imxqd.clickclick.ui.NaviActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
 import xyz.imxqd.clickclick.utils.AlertUtil;
-import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 

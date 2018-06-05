@@ -2,7 +2,6 @@ package xyz.imxqd.clickclick.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -13,7 +12,7 @@ import java.util.Set;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
-import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class KeyEventService extends AccessibilityService {

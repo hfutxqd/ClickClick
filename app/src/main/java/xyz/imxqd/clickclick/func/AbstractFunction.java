@@ -1,7 +1,7 @@
 package xyz.imxqd.clickclick.func;
 
 import xyz.imxqd.clickclick.App;
-import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public abstract class AbstractFunction implements IFunction {

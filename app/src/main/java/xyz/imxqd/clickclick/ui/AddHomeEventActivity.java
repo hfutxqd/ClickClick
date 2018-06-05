@@ -20,7 +20,7 @@ import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.model.AppKeyEventType;
 import xyz.imxqd.clickclick.ui.adapters.FunctionSpinnerAdapter;
-import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.log.LogUtils;
 
 public class AddHomeEventActivity extends AppCompatActivity {
 

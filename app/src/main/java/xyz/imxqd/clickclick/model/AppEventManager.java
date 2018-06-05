@@ -19,7 +19,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import xyz.imxqd.clickclick.App;
-import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent_Table;
 import xyz.imxqd.clickclick.func.FunctionFactory;
@@ -28,7 +27,7 @@ import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.KeyEventHandler;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
-import xyz.imxqd.clickclick.utils.LogUtils;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK;

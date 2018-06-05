@@ -1,4 +1,4 @@
-package xyz.imxqd.clickclick.utils;
+package xyz.imxqd.clickclick.log;
 
 import android.text.TextUtils;
 import android.util.Log;

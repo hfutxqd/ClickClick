@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,17 +16,25 @@ import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import org.acra.ACRA;
+import org.acra.annotation.AcraCore;
+import org.acra.annotation.AcraDialog;
+import org.acra.annotation.AcraMailSender;
+import org.acra.data.StringFormat;
+
 import java.util.HashSet;
 import java.util.Set;
 
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
-import xyz.imxqd.clickclick.utils.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 /**
  * Created by imxqd on 2017/11/24.
  */
-
+@AcraCore(buildConfigClass = BuildConfig.class, reportFormat = StringFormat.KEY_VALUE_LIST)
+@AcraMailSender(mailTo = "ahtlxqd@gmail.com", reportFileName = "clickclick_app_crash_log.txt", resSubject = R.string.app_crashed)
+@AcraDialog(resTitle = R.string.app_crashed,resText = R.string.app_crashed_dialog_text,resCommentPrompt = R.string.app_crashed_dialog_comment)
 public class App extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = "ClickClick";
@@ -48,6 +57,12 @@ public class App extends Application implements Application.ActivityLifecycleCal
         initLogger();
 
         registerActivityLifecycleCallbacks(this);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        ACRA.init(this);
     }
 
     public void initLogger() {

@@ -79,5 +79,8 @@
     <string name="add_to_home">Shortcut</string>
     <string name="added_to_home">Added</string>
     <string name="func_not_found">Function not found</string>
+    <string name="app_crashed">ClickClick crash</string>
+    <string name="app_crashed_dialog_text">Sorry, ClickClick crashed. Please send a report to me.</string>
+    <string name="app_crashed_dialog_comment">You can add a comment here.</string>
 
 </resources>
