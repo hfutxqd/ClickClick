@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.text.TextUtils;
 
 import java.util.List;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,6 +76,8 @@ public class NotificationFunction extends AbstractFunction {
         }
     }
 
+    private static TreeMap<String, PendingIntent> mCacheIntents = new TreeMap<>();
+
     @Override
     public void doFunction(String args) throws Exception {
 
@@ -102,6 +105,12 @@ public class NotificationFunction extends AbstractFunction {
                 if (intent == null) {
                     intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).contentView, viewId);
                 }
+                if (intent != null) {
+                    mCacheIntents.put(args, intent);
+                } else  {
+                    intent = mCacheIntents.get(args);
+                }
+
                 intent.send();
             } else {
                 LogUtils.d("notification : order mode");

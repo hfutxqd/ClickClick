@@ -142,6 +142,9 @@ public class NotificationAccessUtil {
             return null;
         }
         ArrayList list = getRemoteViewsActions(rvs);
+        if (list == null) {
+            return null;
+        }
         for (Object a : list) {
             if (sClassSetOnClickPendingIntent.isInstance(a)) {
                 sFieldReflectionActionViewId.setAccessible(true);
@@ -190,6 +193,7 @@ public class NotificationAccessUtil {
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private static ArrayList getRemoteViewsActions(RemoteViews rvs) {
         try {
+            sFieldRemoteViewsmActions.setAccessible(true);
             return (ArrayList) sFieldRemoteViewsmActions.get(rvs);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
