@@ -17,7 +17,7 @@
             android:value="true" />
         <meta-data
             android:name="xposeddescription"
-            android:value="ClickClick keyevent inject" />
+            android:value="ClickClick" />
         <meta-data
             android:name="xposedminversion"
             android:value="53" />
