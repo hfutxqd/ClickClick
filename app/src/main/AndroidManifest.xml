@@ -105,6 +105,7 @@
         <activity
             android:name=".ui.CopyRightActivity"
             android:exported="false"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.Dialog">
             <intent-filter>
                 <action android:name="xyz.imxqd.clicklick.copyright" />
