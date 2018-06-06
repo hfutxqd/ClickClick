@@ -17,6 +17,7 @@ public class UrlFunction extends AbstractFunction {
         if (PREFIX.equals(getPrefix())) {
             String url = getArgs();
             Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setData(Uri.parse(url));
             App.get().startActivity(intent);
         } else {
