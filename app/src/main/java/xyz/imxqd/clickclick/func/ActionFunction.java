@@ -59,6 +59,7 @@ public class ActionFunction extends AbstractFunction {
             intent = getPureIntent(args);
         }
         if (intent != null) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             App.get().startActivity(intent);
         } else {
             throw new RuntimeException("Syntax Error");
