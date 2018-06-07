@@ -6,12 +6,13 @@ import android.support.v4.content.pm.ShortcutManagerCompat;
 import android.support.v4.graphics.drawable.IconCompat;
 
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.ui.NoDisplayActivity;
 
 public class ShortcutUtil {
 
-    public static final String ACTION_RUN = "xyz.imxqd.clicklick.run";
+    public static final String ACTION_RUN = BuildConfig.APPLICATION_ID + ".run";
 
     public static void createRunFunc(long funcId, String name) {
         Intent shortcutIntent = new Intent(ACTION_RUN);
