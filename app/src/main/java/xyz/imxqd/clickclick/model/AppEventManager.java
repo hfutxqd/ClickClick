@@ -119,7 +119,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
             } else if (event.eventType == AppKeyEventType.TripleClick) {
                 mKeyEventHandler.mTripleClickKeyCodes.add(event.keyCode);
             }
-            String key =makeAppKeyEventData(event.keyCode, event.deviceId, event.eventType);
+            String key = makeAppKeyEventData(event.keyCode, event.deviceId, event.eventType);
             mKeyEventData.put(key, event.funcId);
         }
     }
@@ -226,11 +226,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
     }
 
     private void showToast(String str) {
-        if (mToast != null) {
-            mToast.cancel();
-        }
-        mToast = Toast.makeText(App.get(), str, Toast.LENGTH_LONG);
-        mToast.show();
+        App.get().showToast(str, false);
     }
 
     public IFunction getHomeDoubleClickFunction(int button) {

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 import xyz.imxqd.clickclick.log.LogUtils;
+import xyz.imxqd.clickclick.model.AppEventManager;
 
 public class ClickService extends Service {
 
@@ -19,11 +20,9 @@ public class ClickService extends Service {
 
         @Override
         public boolean onKeyEvent(KeyEvent event) throws RemoteException {
-            LogUtils.d(event.toString());
-            if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
-                return true;
-            }
-            return false;
+            boolean interrupt = AppEventManager.getInstance().shouldInterrupt(event);
+            LogUtils.d("KeyCode: " + event.getKeyCode() + " Interrupt: " + interrupt);
+            return interrupt;
         }
     };
 
