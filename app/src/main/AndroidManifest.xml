@@ -85,6 +85,14 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".service.ClickService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="xyz.imxqd.clickclick.ipc" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".ui.FunctionsActivity"
             android:label="@string/title_activity_functions"
@@ -96,6 +104,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="com.tencent.qqmusic.ACTION_REFRESH_PLAYER_NOTIFICATION.QQMusicPhone" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 

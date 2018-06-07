@@ -2,8 +2,13 @@ package xyz.imxqd.clickclick.xposed;
 
 import android.app.AndroidAppHelper;
 import android.app.Application;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
-import android.os.Process;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.view.KeyEvent;
 
 import java.lang.reflect.Field;
@@ -11,6 +16,7 @@ import java.lang.reflect.Field;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import de.robv.android.xposed.callbacks.XCallback;
+import xyz.imxqd.clickclick.service.IClickIPC;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
@@ -61,19 +67,61 @@ public class KeyEventMod {
         } catch (Throwable e) {
             Log.d(TAG, e.getMessage());
         }
+        bindService();
+    }
+
+    private static IClickIPC sClickIPC = null;
+    private static void bindService() {
+        try {
+            Application app = AndroidAppHelper.currentApplication();
+            if (app == null) {
+                return;
+            }
+            if (sClickIPC != null) {
+                return;
+            }
+            Intent intent = new Intent("xyz.imxqd.clickclick.ipc");
+            intent.setPackage("xyz.imxqd.clickclick");
+            app.bindService(intent, new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    Log.d(TAG, "onServiceConnected");
+                    try {
+                        sClickIPC = IClickIPC.Stub.asInterface(service);
+                        sClickIPC.hello("xposed hello");
+                    } catch (RemoteException e) {
+                        Log.d(TAG, e.getMessage());
+                        sClickIPC = null;
+                    }
+                }
+
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    Log.d(TAG, "onServiceDisconnected");
+                    sClickIPC = null;
+                }
+            }, Context.BIND_AUTO_CREATE);
+        } catch (Throwable e) {
+            Log.d(TAG, e.getMessage());
+        }
+
     }
 
     private static XC_MethodHook handleInterceptKeyBeforeQueueing = new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-
+            bindService();
         }
 
         @Override
         protected void afterHookedMethod(MethodHookParam param) throws Throwable {
             final KeyEvent event = (KeyEvent) param.args[0];
             Log.d(TAG, "afterHookedMethod -----> " + event);
-            if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
+            boolean inject = false;
+            if (sClickIPC != null) {
+                inject = sClickIPC.onKeyEvent(event);
+            }
+            if (inject) {
                 param.setResult(0);
             }
 
