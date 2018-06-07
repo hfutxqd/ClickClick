@@ -20,9 +20,27 @@
       "update_time": 1527414422000
     },
     {
+      "name": "Mi Pay",
+      "description": "Mi Pay",
+      "body": "action:intent://#Intent;action=com.miui.intent.action.DOUBLE_CLICK;component=com.miui.tsmclient/.ui.quick.DoubleClickActivity;end",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
       "name": "支付宝扫码",
       "description": "支付宝扫码",
       "body": "url:alipays://platformapi/startapp?saId=10000007",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "支付宝乘车码",
+      "description": "支付宝乘车码",
+      "body": "url:alipays://platformapi/startapp?appId=200011235&transparentTitle=auto&url=/www/offline_qrcode.html?cardType=ANT00001&source=shortCut&snapshot=no&canPullDown=NO&showOptionMenu=NO",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
