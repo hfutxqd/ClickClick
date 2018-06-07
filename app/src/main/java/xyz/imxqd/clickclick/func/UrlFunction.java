@@ -1,9 +1,11 @@
 package xyz.imxqd.clickclick.func;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.log.LogUtils;
 
 public class UrlFunction extends AbstractFunction {
     public static final String PREFIX = "url";
@@ -19,7 +21,14 @@ public class UrlFunction extends AbstractFunction {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setData(Uri.parse(url));
-            App.get().startActivity(intent);
+            PendingIntent pendingIntent =
+                    PendingIntent.getActivity(App.get(), 0, intent, 0);
+            try {
+                pendingIntent.send();
+            } catch (PendingIntent.CanceledException e) {
+                LogUtils.e(e.getMessage());
+                throw new RuntimeException("start activity failed. : " + e.getMessage());
+            }
         } else {
             throw new RuntimeException("function prefix not match");
         }

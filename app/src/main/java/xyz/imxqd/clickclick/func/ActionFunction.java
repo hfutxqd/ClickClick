@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.func;
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.text.TextUtils;
 
@@ -60,7 +61,13 @@ public class ActionFunction extends AbstractFunction {
         }
         if (intent != null) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            App.get().startActivity(intent);
+            PendingIntent pendingIntent =
+                    PendingIntent.getActivity(App.get(), 0, intent, 0);
+            try {
+                pendingIntent.send();
+            } catch (PendingIntent.CanceledException e) {
+                throw new RuntimeException("start activity failed. : " + e.getMessage());
+            }
         } else {
             throw new RuntimeException("Syntax Error");
         }

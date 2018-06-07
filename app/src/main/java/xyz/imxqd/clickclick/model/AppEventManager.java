@@ -229,7 +229,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         App.get().showToast(str, false);
     }
 
-    public IFunction getHomeDoubleClickFunction(int button) {
+    public static IFunction getHomeDoubleClickFunction(int button) {
         KeyMappingEvent event = new Select()
                 .from(KeyMappingEvent.class)
                 .where(KeyMappingEvent_Table.enable.eq(true))
@@ -243,7 +243,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         return null;
     }
 
-    public IFunction getHomeTripleClickFunction(int button) {
+    public static IFunction getHomeTripleClickFunction(int button) {
         KeyMappingEvent event = new Select()
                 .from(KeyMappingEvent.class)
                 .where(KeyMappingEvent_Table.enable.eq(true))
@@ -285,19 +285,29 @@ public class AppEventManager implements KeyEventHandler.Callback {
             @Override
             public void onDoubleClick(int button) {
                 LogUtils.d("onDoubleClick " + button);
-                IFunction f = getHomeDoubleClickFunction(button);
-                if (f != null) {
-                    f.exec();
-                }
+                App.get().getHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        IFunction f = getHomeDoubleClickFunction(button);
+                        if (f != null) {
+                            f.exec();
+                        }
+                    }
+                });
             }
 
             @Override
             public void onTripleClick(int button) {
                 LogUtils.d("onTripleClick " + button);
-                IFunction f = getHomeTripleClickFunction(button);
-                if (f != null) {
-                    f.exec();
-                }
+                App.get().getHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        IFunction f = getHomeTripleClickFunction(button);
+                        if (f != null) {
+                            f.exec();
+                        }
+                    }
+                });
             }
         });
     }
@@ -311,7 +321,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         public void handle(int button) {
             if (lastButton == button) {
                 count++;
-                if (hasOnlyDoubleClick() && count == 2) {
+                if (hasOnlyDoubleClick(button) && count == 2) {
                     App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
                     if (callback != null) {
                         callback.onDoubleClick(lastButton);
@@ -344,8 +354,8 @@ public class AppEventManager implements KeyEventHandler.Callback {
             }
         }
 
-        public boolean hasOnlyDoubleClick() {
-            return false;
+        public boolean hasOnlyDoubleClick(int button) {
+            return getHomeTripleClickFunction(button) == null;
         }
 
         private void reset() {
