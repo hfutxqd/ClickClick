@@ -85,14 +85,6 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name=".service.ClickService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="xyz.imxqd.clickclick.ipc" />
-            </intent-filter>
-        </service>
-
         <activity
             android:name=".ui.FunctionsActivity"
             android:label="@string/title_activity_functions"
@@ -120,7 +112,7 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Dialog">
             <intent-filter>
-                <action android:name="xyz.imxqd.clicklick.copyright" />
+                <action android:name="${appId}.copyright" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -134,7 +126,7 @@
             android:name=".ui.NoDisplayActivity"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
-                <action android:name="xyz.imxqd.clicklick.run" />
+                <action android:name="${appId}.run" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

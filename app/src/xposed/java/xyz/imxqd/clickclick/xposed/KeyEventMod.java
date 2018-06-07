@@ -80,8 +80,8 @@ public class KeyEventMod {
             if (sClickIPC != null) {
                 return;
             }
-            Intent intent = new Intent("xyz.imxqd.clickclick.ipc");
-            intent.setPackage("xyz.imxqd.clickclick");
+            Intent intent = new Intent("xyz.imxqd.clickclick.xposed.ipc");
+            intent.setPackage("xyz.imxqd.clickclick.xposed");
             app.bindService(intent, new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder service) {

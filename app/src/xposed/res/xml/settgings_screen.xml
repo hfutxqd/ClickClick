@@ -30,6 +30,6 @@
 
     <Preference
         android:title="@string/settings_about_title">
-        <intent android:action="xyz.imxqd.clicklick.copyright" />
+        <intent android:action="xyz.imxqd.clickclick.xposed.copyright" />
     </Preference>
 </PreferenceScreen>

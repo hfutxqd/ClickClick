@@ -76,4 +76,5 @@
     <string name="app_crashed">ClickClick crash</string>
     <string name="app_crashed_dialog_text">Sorry, ClickClick crashed. Please send a report to me.</string>
     <string name="app_crashed_dialog_comment">You can add a comment here.</string>
+    <string name="app_name_xposed">快按键X</string>
 </resources>
