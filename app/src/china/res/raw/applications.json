@@ -112,7 +112,7 @@
     {
       "name": "QQ音乐喜爱",
       "description": "QQ音乐喜爱",
-      "body": "internal:qq_music_like()",
+      "body": "action:broadcast://#Intent;action=com.tencent.qqmusic.ACTION_SERVICE_FAVORATE_SONG.QQMusicPhone;end",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
@@ -158,6 +158,15 @@
       "name": "网易云音乐喜爱（内置）",
       "description": "网易云音乐喜爱（内置），有爱心图标反馈",
       "body": "internal:cloud_music_like(@id/playNotificationStar)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "虾米音乐喜爱",
+      "description": "虾米音乐喜爱",
+      "body": "action:service://#Intent;action=fm.xiami.main.business.notification.ACTION_NOTIFICATION_FAV_TOGGLE;component=fm.xiami.main/.service.PlayService;end",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",

@@ -7,6 +7,9 @@ import android.text.TextUtils;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import xyz.imxqd.clickclick.App;
 
@@ -25,6 +28,20 @@ public class ActionFunction extends AbstractFunction {
         return new JSONObject();
     }
 
+
+    public Intent getIntent(String prefix, String args) {
+        try {
+            Matcher matcher = Pattern.compile(prefix + "(.+)").matcher(args);
+            if (matcher.find()) {
+                return Intent.parseUri(matcher.group(1), 0);
+            } else {
+                throw new RuntimeException("intent uri: Syntax Error");
+            }
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("intent uri: Syntax Error");
+        }
+    }
+
     private boolean isPureIntent(String args) {
         if (TextUtils.isEmpty(args) || args.length() < 10) {
             return false;
@@ -33,11 +50,7 @@ public class ActionFunction extends AbstractFunction {
     }
 
     public Intent getPureIntent(String args) {
-        try {
-            return Intent.parseUri(args.substring(9), 0);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException("intent uri: Syntax Error");
-        }
+        return getIntent("intent://", args);
     }
 
     private boolean isActionIntent(String args) {
@@ -48,7 +61,29 @@ public class ActionFunction extends AbstractFunction {
     }
 
     private Intent getActionIntent(String args) {
-        return new Intent(args.substring(9));
+        return getIntent("action://", args);
+    }
+
+    private boolean isBroadcastIntent(String args) {
+        if (TextUtils.isEmpty(args) || args.length() < 10) {
+            return false;
+        }
+        return args.startsWith("broadcast://");
+    }
+
+    private Intent getBroadcastIntent(String args) {
+        return getIntent("broadcast://", args);
+    }
+
+    private boolean isServiceIntent(String args) {
+        if (TextUtils.isEmpty(args) || args.length() < 10) {
+            return false;
+        }
+        return args.startsWith("service://");
+    }
+
+    private Intent getServiceIntent(String args) {
+        return getIntent("service://", args);
     }
 
     @Override
@@ -56,17 +91,41 @@ public class ActionFunction extends AbstractFunction {
         Intent intent = null;
         if (isActionIntent(args)) {
             intent = getActionIntent(args);
-        } else if (isPureIntent(args)) {
-            intent = getPureIntent(args);
-        }
-        if (intent != null) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pendingIntent =
-                    PendingIntent.getActivity(App.get(), 0, intent, 0);
+                    PendingIntent.getActivity(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
                 pendingIntent.send();
             } catch (PendingIntent.CanceledException e) {
                 throw new RuntimeException("start activity failed. : " + e.getMessage());
+            }
+        } else if (isPureIntent(args)) {
+            intent = getPureIntent(args);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            PendingIntent pendingIntent =
+                    PendingIntent.getActivity(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            try {
+                pendingIntent.send();
+            } catch (PendingIntent.CanceledException e) {
+                throw new RuntimeException("start activity failed. : " + e.getMessage());
+            }
+        } else if (isBroadcastIntent(args)) {
+            intent = getBroadcastIntent(args);
+            PendingIntent pendingIntent =
+                    PendingIntent.getBroadcast(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            try {
+                pendingIntent.send();
+            } catch (Exception e) {
+                throw new RuntimeException("start broadcast failed. : " + e.getMessage());
+            }
+        } else if (isServiceIntent(args)) {
+            intent = getServiceIntent(args);
+            PendingIntent pendingIntent =
+                    PendingIntent.getService(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            try {
+                pendingIntent.send();
+            } catch (Exception e) {
+                throw new RuntimeException("start service failed. : " + e.getMessage());
             }
         } else {
             throw new RuntimeException("Syntax Error");
