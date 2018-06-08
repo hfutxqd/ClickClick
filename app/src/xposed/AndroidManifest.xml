@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="xyz.imxqd.clickclick">
 
-
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -26,8 +24,7 @@
         <activity
             android:name=".ui.NaviActivity"
             android:label="@string/app_name_xposed"
-            tools:replace="android:label"/>
-
+            tools:replace="android:label" />
 
         <service
             android:name=".service.ClickService"
@@ -37,7 +34,14 @@
             </intent-filter>
         </service>
 
-
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

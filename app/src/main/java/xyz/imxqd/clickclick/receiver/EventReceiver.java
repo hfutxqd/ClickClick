@@ -1,4 +1,4 @@
-package xyz.imxqd.clickclick.reciver;
+package xyz.imxqd.clickclick.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import xyz.imxqd.clickclick.log.LogUtils;
-import xyz.imxqd.clickclick.service.ClickService;
 
 /**
  * worked on api 25 or lower
@@ -22,6 +21,5 @@ public class EventReceiver extends BroadcastReceiver {
         if (TextUtils.equals(intent.getAction(), QQ_MUSIC_REFRESH_NOTIFICATION_ACTION)) {
             LogUtils.d( "QQMusic isLike = " + intent.getBooleanExtra(QQ_MUSIC_IS_LIKE_KEY, false));
         }
-        context.startService(new Intent(context, ClickService.class));
     }
 }
