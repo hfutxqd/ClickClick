@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick.func;
 
 import android.content.Intent;
 import android.media.AudioTrack;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
@@ -20,6 +21,7 @@ import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
 import xyz.imxqd.clickclick.utils.Shocker;
+import xyz.imxqd.clickclick.utils.SystemSettingsUtl;
 import xyz.imxqd.clickclick.utils.ToneUtil;
 
 public class InternalFunction extends AbstractFunction {
@@ -149,6 +151,59 @@ public class InternalFunction extends AbstractFunction {
         Gson gson = new Gson();
         long[] times = gson.fromJson(str, long[].class);
         Shocker.shock(times);
+    }
+
+    public void auto_rotation(String enable) {
+        boolean res = false;
+        if (TextUtils.isEmpty(enable)) {
+            res = SystemSettingsUtl.switchAutoRotation();
+        } else {
+            try {
+                int r = Integer.valueOf(enable);
+                if (r == 0 || r == 1) {
+                    res = SystemSettingsUtl.switchAutoRotation(r);
+                } else {
+                    throw new RuntimeException("auto_rotation value is wrong");
+                }
+            } catch (Exception e) {
+                throw new RuntimeException("auto_rotation value is wrong");
+            }
+        }
+
+        if(!res) {
+            App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
+            SystemSettingsUtl.startPackageSettings();
+        }
+    }
+
+    public void rotation(String rotation) {
+        try {
+            int r = Integer.valueOf(rotation);
+            int rota = 0;
+            switch (r) {
+                case 0:
+                    rota = 0;
+                    break;
+                case 90:
+                    rota = 1;
+                    break;
+                case 180:
+                    rota = 2;
+                    break;
+                case 270:
+                    rota = 3;
+                    break;
+                default:
+                    throw new RuntimeException("rotation wrong");
+            }
+            if (SystemSettingsUtl.switchRotation(rota)) {
+            } else {
+                App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
+                SystemSettingsUtl.startPackageSettings();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("rotation wrong");
+        }
     }
 
     private ToneUtil.Tone getTone(String tone) {
