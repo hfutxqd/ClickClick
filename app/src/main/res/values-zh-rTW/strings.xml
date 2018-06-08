@@ -77,4 +77,7 @@
     <string name="app_crashed_dialog_text">Sorry, ClickClick crashed. Please send a report to me.</string>
     <string name="app_crashed_dialog_comment">You can add a comment here.</string>
     <string name="app_name_xposed">快按鍵X</string>
+    <string name="request_write_settings">請授予修改系統設置權限</string>
+    <string name="auto_rotation_turn_off">自動旋轉已關閉</string>
+    <string name="auto_rotation_turn_on">自動旋轉已開啟</string>
 </resources>
