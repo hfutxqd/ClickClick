@@ -101,6 +101,15 @@
       "update_time": 1527414422000
     },
     {
+      "name": "发新微博",
+      "description": "发新微博",
+      "body": "url:sinaweibo://compose",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
       "name": "QQ音乐喜爱",
       "description": "QQ音乐喜爱",
       "body": "internal:qq_music_like()",
