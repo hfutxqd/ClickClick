@@ -74,7 +74,6 @@ public class InternalFunction extends AbstractFunction {
             final KeyEventService.OnNotificationWidgetClick callback = new KeyEventService.OnNotificationWidgetClick() {
                 @Override
                 public void onNotificationWidgetClick(String packageName, String viewId) {
-                    viewId = viewId.replaceAll(packageName + ":id/", "");
                     AlertUtil.showNotify(packageName, viewId);
                     service.removeOnNotificationWidgetClickCallback(this);
                 }

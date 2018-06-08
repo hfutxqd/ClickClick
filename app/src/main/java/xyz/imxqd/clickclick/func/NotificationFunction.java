@@ -23,7 +23,9 @@ public class NotificationFunction extends AbstractFunction {
 
     private static final String REGEX_PACKAGE = "([a-zA-Z0-9_]+\\.{1})+[a-zA-Z0-9_]+";
     private static final String REGEX_RESOURCE_ID = "@id/([a-zA-Z_]+)";
+    private static final String REGEX_ID = "@id/(([a-zA-Z0-9_]+){1}(\\.{1}[a-zA-Z0-9_]+)*):id/([a-zA-Z0-9_]+)";
     private static final Pattern RESOURCE_ID_PATTERN = Pattern.compile(REGEX_RESOURCE_ID);
+    private static final Pattern ID_PATTERN = Pattern.compile(REGEX_ID);
 
     public NotificationFunction(String funcData) {
         super(funcData);
@@ -84,6 +86,7 @@ public class NotificationFunction extends AbstractFunction {
         NotificationCollectorService service = AppEventManager.getInstance().getNotificationService();
         if (service != null) {
             Matcher matcher = RESOURCE_ID_PATTERN.matcher(getPackageArgs(args));
+            Matcher matcher2 = ID_PATTERN.matcher(getPackageArgs(args));
             if (matcher.matches()) {
                 LogUtils.d("notification : id mode");
                 matcher.reset();
@@ -112,6 +115,30 @@ public class NotificationFunction extends AbstractFunction {
                 }
 
                 intent.send();
+            } else if (matcher2.matches()) {
+                LogUtils.d("notification : id mode2");
+                matcher2.reset();
+                String packageArgs = getPackageArgs(args);
+                String idName = getIdName(packageArgs);
+                String idPackageName = getIdPackageName(packageArgs);
+                int viewId = ResourceUtl.getIdByName(idPackageName, idName);
+                List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
+                if (notifications.size() == 0) {
+                    throw new RuntimeException("There are no notifications of " + getPackageName(args));
+                }
+                PendingIntent intent;
+                intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).bigContentView, viewId);
+                if (intent == null) {
+                    intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).contentView, viewId);
+                }
+                if (intent != null) {
+                    mCacheIntents.put(args, intent);
+                } else  {
+                    intent = mCacheIntents.get(args);
+                }
+
+                intent.send();
+
             } else {
                 LogUtils.d("notification : order mode");
                 List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
@@ -130,4 +157,21 @@ public class NotificationFunction extends AbstractFunction {
             throw new RuntimeException(App.get().getString(R.string.notification_service_error));
         }
     }
+
+    private static String getIdPackageName(String id) {
+        Matcher matcher = ID_PATTERN.matcher(id);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
+    }
+
+    private static String getIdName(String id) {
+        Matcher matcher = ID_PATTERN.matcher(id);
+        if (matcher.find()) {
+            return matcher.group(matcher.groupCount());
+        }
+        return null;
+    }
+
 }
