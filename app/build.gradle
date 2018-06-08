@@ -6,8 +6,8 @@ android {
         applicationId "xyz.imxqd.clickclick"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 7
-        versionName "1.23"
+        versionCode 8
+        versionName "1.30"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 //        externalNativeBuild {
@@ -61,7 +61,6 @@ def dbflow_version = "4.2.3"
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.takisoft.fix:preference-v7:27.1.1.0'
