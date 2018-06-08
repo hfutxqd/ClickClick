@@ -61,7 +61,7 @@ public class ActionFunction extends AbstractFunction {
     }
 
     private Intent getActionIntent(String args) {
-        return getIntent("action://", args);
+        return new Intent(args.substring(9));
     }
 
     private boolean isBroadcastIntent(String args) {
