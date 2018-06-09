@@ -10,7 +10,7 @@ android {
         versionName "1.31"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        manifestPlaceholders = [appId:"xyz.imxqd.clickclick"]
+        manifestPlaceholders = [appId: "xyz.imxqd.clickclick"]
 //        externalNativeBuild {
 //            cmake {
 //                // Passes optional arguments to CMake.
@@ -36,7 +36,7 @@ android {
         }
         xposed {
             applicationId "xyz.imxqd.clickclick.xposed"
-            manifestPlaceholders = [appId:"xyz.imxqd.clickclick.xposed"]
+            manifestPlaceholders = [appId: "xyz.imxqd.clickclick.xposed"]
             versionNameSuffix "-xposed"
             dimension "free"
         }

@@ -31,6 +31,7 @@ import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.ui.AddFunctionActivity;
+import xyz.imxqd.clickclick.ui.AppChooseActivity;
 import xyz.imxqd.clickclick.ui.FunctionsActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
 import xyz.imxqd.clickclick.utils.AlertUtil;
@@ -127,6 +128,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         List<String> list = new ArrayList<>();
         list.add(getString(R.string.add_internal_func));
         list.add(getString(R.string.add_shortcut));
+        list.add(getString(R.string.open_application));
         list.add(getString(R.string.add_func_from_web));
         list.add(getString(R.string.add_func_by_self));
         mMenuAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
@@ -175,9 +177,12 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                                 startAddShortcut();
                                 break;
                             case 2:
-                                AlertUtil.show(getString(R.string.come_soon));
+                                startAddApplication();
                                 break;
                             case 3:
+                                AlertUtil.show(getString(R.string.come_soon));
+                                break;
+                            case 4:
                                 startAddFuncActivity();
                                 break;
                              default:
@@ -192,6 +197,10 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         intent.putExtra(Intent.EXTRA_INTENT, new Intent(Intent.ACTION_CREATE_SHORTCUT));
         intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.add_shortcut));
         startActivityForResult(intent, REQUEST_ADD_SHORTCUT);
+    }
+
+    public void startAddApplication() {
+        startActivity(new Intent(getActivity(), AppChooseActivity.class));
     }
 
     @Override

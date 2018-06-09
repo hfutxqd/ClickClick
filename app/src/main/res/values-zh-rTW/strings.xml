@@ -82,4 +82,7 @@
     <string name="auto_rotation_turn_on">自動旋轉已開啟</string>
     <string name="add_shortcut">添加快捷方式</string>
     <string name="open">打開</string>
+    <string name="open_application">打開應用程序</string>
+    <string name="title_activity_app_list">選擇應用程序</string>
+    <string name="app_can_not_open">該應用程序無法打開</string>
 </resources>

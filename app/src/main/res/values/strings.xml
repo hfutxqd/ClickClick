@@ -88,5 +88,8 @@
     <string name="auto_rotation_turn_on">Automatic rotation is turned on</string>
     <string name="add_shortcut">Add shortcut</string>
     <string name="open">Open </string>
+    <string name="open_application">Launch a application</string>
+    <string name="title_activity_app_list">Choose a application</string>
+    <string name="app_can_not_open">Application selected can not be launched</string>
 
 </resources>
