@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.utils.PackageUtil;
 
 public class ActionFunction extends AbstractFunction {
     public static final String PREFIX = "action";
@@ -92,6 +93,9 @@ public class ActionFunction extends AbstractFunction {
         if (isActionIntent(args)) {
             intent = getActionIntent(args);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (!PackageUtil.checkIntentForActivity(intent)) {
+                throw new RuntimeException("no activity found");
+            }
             PendingIntent pendingIntent =
                     PendingIntent.getActivity(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
@@ -102,6 +106,9 @@ public class ActionFunction extends AbstractFunction {
         } else if (isPureIntent(args)) {
             intent = getPureIntent(args);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (!PackageUtil.checkIntentForActivity(intent)) {
+                throw new RuntimeException("no activity found");
+            }
             PendingIntent pendingIntent =
                     PendingIntent.getActivity(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
@@ -111,6 +118,9 @@ public class ActionFunction extends AbstractFunction {
             }
         } else if (isBroadcastIntent(args)) {
             intent = getBroadcastIntent(args);
+            if (!PackageUtil.checkIntentForBroadcastReceiver(intent)) {
+                throw new RuntimeException("no receiver found");
+            }
             PendingIntent pendingIntent =
                     PendingIntent.getBroadcast(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
@@ -120,6 +130,9 @@ public class ActionFunction extends AbstractFunction {
             }
         } else if (isServiceIntent(args)) {
             intent = getServiceIntent(args);
+            if (!PackageUtil.checkIntentForService(intent)) {
+                throw new RuntimeException("no service found");
+            }
             PendingIntent pendingIntent =
                     PendingIntent.getService(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {

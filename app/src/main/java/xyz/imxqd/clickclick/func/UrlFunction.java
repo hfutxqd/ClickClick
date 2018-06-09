@@ -6,6 +6,7 @@ import android.net.Uri;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.log.LogUtils;
+import xyz.imxqd.clickclick.utils.PackageUtil;
 
 public class UrlFunction extends AbstractFunction {
     public static final String PREFIX = "url";
@@ -21,6 +22,9 @@ public class UrlFunction extends AbstractFunction {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setData(Uri.parse(url));
+            if (!PackageUtil.checkIntentForActivity(intent)) {
+                throw new RuntimeException("no activity found");
+            }
             PendingIntent pendingIntent =
                     PendingIntent.getActivity(App.get(), 0, intent, 0);
             try {
