@@ -26,19 +26,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.ui.AddFunctionActivity;
 import xyz.imxqd.clickclick.ui.FunctionsActivity;
-import xyz.imxqd.clickclick.ui.NaviActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
 import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 
-public class FunctionFragment extends BaseFragment implements FunctionAdapter.EventCallback {
+public class FunctionFragment extends BaseFragment implements FunctionAdapter.EventCallback, OnRefreshUI{
 
     private static final int REQUEST_ADD_FUNC = 60001;
+    private static final int REQUEST_ADD_SHORTCUT = 60002;
+    private static final int REQUEST_CHOOSE_SHORTCUT = 60003;
 
     @BindView(android.R.id.list)
     RecyclerView vList;
@@ -122,6 +126,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         mAdapter = new FunctionAdapter();
         List<String> list = new ArrayList<>();
         list.add(getString(R.string.add_internal_func));
+        list.add(getString(R.string.add_shortcut));
         list.add(getString(R.string.add_func_from_web));
         list.add(getString(R.string.add_func_by_self));
         mMenuAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
@@ -167,9 +172,12 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                                 startFunctionsActivity();
                                 break;
                             case 1:
-                                AlertUtil.show(getString(R.string.come_soon));
+                                startAddShortcut();
                                 break;
                             case 2:
+                                AlertUtil.show(getString(R.string.come_soon));
+                                break;
+                            case 3:
                                 startAddFuncActivity();
                                 break;
                              default:
@@ -179,11 +187,39 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                 .show();
     }
 
+    public void startAddShortcut() {
+        Intent intent = new Intent(Intent.ACTION_PICK_ACTIVITY);
+        intent.putExtra(Intent.EXTRA_INTENT, new Intent(Intent.ACTION_CREATE_SHORTCUT));
+        intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.add_shortcut));
+        startActivityForResult(intent, REQUEST_ADD_SHORTCUT);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-            mAdapter.refreshData();
-            mAdapter.notifyDataSetChanged();
+            if (requestCode == REQUEST_ADD_FUNC) {
+                mAdapter.refreshData();
+                mAdapter.notifyDataSetChanged();
+            } else if (requestCode == REQUEST_ADD_SHORTCUT && data != null) {
+                startActivityForResult(data, REQUEST_CHOOSE_SHORTCUT);
+            } else if (requestCode == REQUEST_CHOOSE_SHORTCUT && data != null) {
+                String name = data.getStringExtra(Intent.EXTRA_SHORTCUT_NAME);
+                Intent i = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT);
+                try {
+                    RemoteFunction f = new RemoteFunction();
+                    f.name = name;
+                    f.description = getString(R.string.open) + name;
+                    f.body = "action:intent://" + i.toUri(0);
+                    f.versionCode = BuildConfig.VERSION_CODE;
+                    f.versionName = BuildConfig.VERSION_NAME;
+                    f.updateTime = System.currentTimeMillis() / 1000;
+                    AddFunctionActivity.start(f, true, getContext());
+                } catch (Exception e) {
+                    LogUtils.e(e.getMessage());
+                    App.get().showToast(R.string.save_failed);
+                }
+            }
+
         }
     }
 
@@ -205,8 +241,11 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     @Override
     public void onDataChanged() {
         initStateText();
-        if (getActivity() != null) {
-            ((NaviActivity)getActivity()).requestRefreshUI();
-        }
+    }
+
+    @Override
+    public void onRefreshUI() {
+        mAdapter.refreshData();
+        mAdapter.notifyDataSetChanged();
     }
 }

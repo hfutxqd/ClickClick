@@ -182,7 +182,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     @Override
-    public void onDataChanged() {
+    public void onRefreshUI() {
         initPrefs();
     }
 }

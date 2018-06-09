@@ -86,5 +86,7 @@
     <string name="request_write_settings"> Please give permission to modify system settings </string>
     <string name="auto_rotation_turn_off">Automatic rotation is turned off</string>
     <string name="auto_rotation_turn_on">Automatic rotation is turned on</string>
+    <string name="add_shortcut">Add shortcut</string>
+    <string name="open">Open </string>
 
 </resources>

@@ -102,7 +102,7 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
 
     public void requestRefreshUI() {
         for (OnRefreshUI ui : mOnRefreshUICallbacks) {
-            ui.onDataChanged();
+            ui.onRefreshUI();
         }
     }
 

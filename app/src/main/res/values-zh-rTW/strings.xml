@@ -80,4 +80,6 @@
     <string name="request_write_settings">請授予修改系統設置權限</string>
     <string name="auto_rotation_turn_off">自動旋轉已關閉</string>
     <string name="auto_rotation_turn_on">自動旋轉已開啟</string>
+    <string name="add_shortcut">添加快捷方式</string>
+    <string name="open">打開</string>
 </resources>

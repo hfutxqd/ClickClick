@@ -61,6 +61,7 @@ public class AddFunctionActivity extends BaseActivity {
                     try {
                         function.save();
                         showToast(getString(R.string.save_successed));
+                        App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
                     }catch (SQLiteConstraintException e) {
                         showToast(getString(R.string.save_failed));
                     }
@@ -167,6 +168,7 @@ public class AddFunctionActivity extends BaseActivity {
             function.order = 0;
             try {
                 function.save();
+                App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
                 setResult(RESULT_OK);
                 finish();
             } catch (Exception e) {

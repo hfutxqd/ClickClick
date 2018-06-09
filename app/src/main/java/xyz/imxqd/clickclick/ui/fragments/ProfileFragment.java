@@ -241,7 +241,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     }
 
     @Override
-    public void onDataChanged() {
+    public void onRefreshUI() {
         mAdapter.refreshData();
         mAdapter.notifyDataSetChanged();
         initStateText();
