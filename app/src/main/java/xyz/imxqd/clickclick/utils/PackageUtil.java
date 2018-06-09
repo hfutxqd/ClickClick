@@ -26,7 +26,12 @@ public class PackageUtil {
     }
 
     public static boolean checkIntentForBroadcastReceiver(Intent intent) {
-        List<ResolveInfo> list =  App.get().getPackageManager().queryBroadcastReceivers(intent,PackageManager.MATCH_DEFAULT_ONLY);
+        List<ResolveInfo> list = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            list = App.get().getPackageManager().queryBroadcastReceivers(intent, PackageManager.MATCH_ALL);
+        } else {
+            list =  App.get().getPackageManager().queryBroadcastReceivers(intent,PackageManager.MATCH_DEFAULT_ONLY);
+        }
         return list != null && list.size() > 0;
     }
 }

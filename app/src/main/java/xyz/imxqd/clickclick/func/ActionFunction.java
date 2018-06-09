@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.PackageUtil;
 
 public class ActionFunction extends AbstractFunction {
@@ -119,7 +120,7 @@ public class ActionFunction extends AbstractFunction {
         } else if (isBroadcastIntent(args)) {
             intent = getBroadcastIntent(args);
             if (!PackageUtil.checkIntentForBroadcastReceiver(intent)) {
-                throw new RuntimeException("no receiver found");
+                LogUtils.e("no static receiver found");
             }
             PendingIntent pendingIntent =
                     PendingIntent.getBroadcast(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
