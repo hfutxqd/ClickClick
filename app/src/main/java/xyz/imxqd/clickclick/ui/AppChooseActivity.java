@@ -11,8 +11,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,8 +65,13 @@ public class AppChooseActivity extends AppCompatActivity implements AppListAdapt
                 appInfo.name = applicationInfo.loadLabel(pm).toString();
                 appInfo.icon = applicationInfo.loadIcon(pm);
                 appInfo.packageName = applicationInfo.packageName;
-                infos.add(appInfo);
+                Intent intent = pm.getLaunchIntentForPackage(appInfo.packageName);
+                if (intent != null) {
+                    infos.add(appInfo);
+                }
             }
+            Comparator<AppListAdapter.AppInfo> cmp = (o1, o2) -> Collator.getInstance(Locale.getDefault()).compare(o1.name, o2.name);
+            Collections.sort(infos, cmp);
             emitter.onNext(infos);
             emitter.onComplete();
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
