@@ -89,4 +89,5 @@
     <string name="notification_filter_priority">僅限高優先級</string>
     <string name="notification_filter_none">完全阻止</string>
     <string name="notification_filter_alarms">僅限鬧鈴</string>
+    <string name="add_notification_func">模擬通知控件點擊</string>
 </resources>

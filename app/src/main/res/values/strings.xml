@@ -95,5 +95,6 @@
     <string name="notification_filter_priority">Priority only</string>
     <string name="notification_filter_none">Total silence</string>
     <string name="notification_filter_alarms">Alarms only</string>
+    <string name="add_notification_func">Simulate clicking a notification widget</string>
 
 </resources>

@@ -29,6 +29,7 @@ import butterknife.OnClick;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.func.InternalFunction;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.ui.AddFunctionActivity;
 import xyz.imxqd.clickclick.ui.AppChooseActivity;
@@ -129,7 +130,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         list.add(getString(R.string.add_internal_func));
         list.add(getString(R.string.add_shortcut));
         list.add(getString(R.string.open_application));
-        list.add(getString(R.string.add_func_from_web));
+        list.add(getString(R.string.add_notification_func));
         list.add(getString(R.string.add_func_by_self));
         mMenuAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
         mAdapter.setOnStartDragCallback(this);
@@ -180,7 +181,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                                 startAddApplication();
                                 break;
                             case 3:
-                                AlertUtil.show(getString(R.string.come_soon));
+                                addNotificationFunc();
                                 break;
                             case 4:
                                 startAddFuncActivity();
@@ -201,6 +202,11 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
 
     public void startAddApplication() {
         startActivity(new Intent(getActivity(), AppChooseActivity.class));
+    }
+
+    public void addNotificationFunc() {
+        InternalFunction f = new InternalFunction("internal:notify_helper()");
+        f.exec();
     }
 
     @Override
