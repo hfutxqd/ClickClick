@@ -67,7 +67,14 @@ public class KeyEventMod {
         } catch (Throwable e) {
             Log.d(TAG, e.getMessage());
         }
-        bindService();
+        new Thread(() -> {
+            try {
+                Thread.sleep(15000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            bindService();
+        }).start();
     }
 
     private static IClickIPC sClickIPC = null;
@@ -86,13 +93,7 @@ public class KeyEventMod {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder service) {
                     Log.d(TAG, "onServiceConnected");
-                    try {
-                        sClickIPC = IClickIPC.Stub.asInterface(service);
-                        sClickIPC.hello("xposed hello");
-                    } catch (RemoteException e) {
-                        Log.d(TAG, e.getMessage());
-                        sClickIPC = null;
-                    }
+                    sClickIPC = IClickIPC.Stub.asInterface(service);
                 }
 
                 @Override
@@ -116,10 +117,16 @@ public class KeyEventMod {
         @Override
         protected void afterHookedMethod(MethodHookParam param) throws Throwable {
             final KeyEvent event = (KeyEvent) param.args[0];
-            Log.d(TAG, "afterHookedMethod -----> " + event);
+            Log.d(TAG, "keycode = " + event.getKeyCode());
             boolean inject = false;
-            if (sClickIPC != null) {
-                inject = sClickIPC.onKeyEvent(event);
+            try {
+                if (sClickIPC != null) {
+                    inject = sClickIPC.onKeyEvent(event);
+                }
+            } catch (Exception e) {
+                sClickIPC = null;
+                bindService();
+                inject = false;
             }
             if (inject) {
                 param.setResult(0);
