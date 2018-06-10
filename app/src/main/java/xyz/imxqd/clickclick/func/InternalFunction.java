@@ -1,7 +1,11 @@
 package xyz.imxqd.clickclick.func;
 
+import android.annotation.SuppressLint;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioTrack;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -202,6 +206,48 @@ public class InternalFunction extends AbstractFunction {
             }
         } catch (Exception e) {
             throw new RuntimeException("rotation wrong");
+        }
+    }
+
+    @SuppressLint("WrongConstant")
+    public void do_not_disturb(String str) {
+        NotificationManager notificationManager = (NotificationManager) App.get().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager == null) {
+            throw new RuntimeException("NotificationManager is null");
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!notificationManager.isNotificationPolicyAccessGranted()) {
+                Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                App.get().startActivity(intent);
+            } else {
+                int filter = 1;
+                if (TextUtils.isEmpty(str)) {
+                    filter = notificationManager.getCurrentInterruptionFilter();
+                    filter = filter + 1 > 4 ? 1 : filter + 1;
+                    switch (filter) {
+                        case NotificationManager.INTERRUPTION_FILTER_ALL:
+                            App.get().showToast(R.string.notification_filter_all, false, true);
+                            break;
+                        case NotificationManager.INTERRUPTION_FILTER_PRIORITY:
+                            App.get().showToast(R.string.notification_filter_priority, false, true);
+                            break;
+                        case NotificationManager.INTERRUPTION_FILTER_NONE:
+                            App.get().showToast(R.string.notification_filter_none, false, true);
+                            break;
+                        case NotificationManager.INTERRUPTION_FILTER_ALARMS:
+                            App.get().showToast(R.string.notification_filter_alarms, false, true);
+                            break;
+                        default:
+                    }
+                } else {
+                    filter = Integer.valueOf(str);
+                    if (filter < 1 || filter > 4) {
+                        throw new RuntimeException("do_not_disturb: value is from 1 to 4");
+                    }
+                }
+                notificationManager.setInterruptionFilter(filter);
+            }
         }
     }
 

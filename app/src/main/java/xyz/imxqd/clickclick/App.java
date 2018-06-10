@@ -82,6 +82,10 @@ public class App extends Application implements Application.ActivityLifecycleCal
         showToast(getString(str), false);
     }
 
+    public void showToast(@StringRes final int str, final boolean show, final boolean center) {
+        showToast(getString(str), show, center);
+    }
+
     public void showToast(final String str, final boolean center) {
         mHandler.post(new Runnable() {
             @Override

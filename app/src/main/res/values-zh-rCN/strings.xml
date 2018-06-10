@@ -85,4 +85,8 @@
     <string name="open_application">打开应用程序</string>
     <string name="title_activity_app_list">选择应用程序</string>
     <string name="app_can_not_open">该应用无法打开</string>
+    <string name="notification_filter_all">勿扰模式关闭</string>
+    <string name="notification_filter_priority">仅限高优先级</string>
+    <string name="notification_filter_none">完全阻止</string>
+    <string name="notification_filter_alarms">仅限闹铃</string>
 </resources>

@@ -46,6 +46,15 @@
       "update_time": 1527414422000
     },
     {
+      "name": "切换勿扰模式",
+      "description": "切换多种勿扰模式",
+      "body": "internal:do_not_disturb()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
       "name": "开启/关闭自动旋转",
       "description": "开启/关闭自动旋转",
       "body": "internal:auto_rotation()",

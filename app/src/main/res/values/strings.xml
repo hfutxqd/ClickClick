@@ -91,5 +91,9 @@
     <string name="open_application">Launch a application</string>
     <string name="title_activity_app_list">Choose a application</string>
     <string name="app_can_not_open">Application selected can not be launched</string>
+    <string name="notification_filter_all">Do not disturb off</string>
+    <string name="notification_filter_priority">Priority only</string>
+    <string name="notification_filter_none">Total silence</string>
+    <string name="notification_filter_alarms">Alarms only</string>
 
 </resources>

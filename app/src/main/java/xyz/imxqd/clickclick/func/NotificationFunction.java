@@ -11,10 +11,9 @@ import java.util.regex.Pattern;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
-import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.AlertUtil;
-import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
 
@@ -82,9 +81,7 @@ public class NotificationFunction extends AbstractFunction {
 
     @Override
     public void doFunction(String args) throws Exception {
-
-        NotificationCollectorService service = AppEventManager.getInstance().getNotificationService();
-        if (service != null) {
+        if (NotificationCollectorService.getNotificationsByPackage(getPackageName(args)).size() > 0) {
             Matcher matcher = RESOURCE_ID_PATTERN.matcher(getPackageArgs(args));
             Matcher matcher2 = ID_PATTERN.matcher(getPackageArgs(args));
             if (matcher.matches()) {
@@ -99,7 +96,7 @@ public class NotificationFunction extends AbstractFunction {
                 }
                 int viewId = ResourceUtl.getIdByName(getPackageName(args), idName);
 
-                List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
+                List<Notification> notifications = NotificationCollectorService.getNotificationsByPackage(getPackageName(args));
                 if (notifications.size() == 0) {
                     throw new RuntimeException("There are no notifications of " + getPackageName(args));
                 }
@@ -122,7 +119,7 @@ public class NotificationFunction extends AbstractFunction {
                 String idName = getIdName(packageArgs);
                 String idPackageName = getIdPackageName(packageArgs);
                 int viewId = ResourceUtl.getIdByName(idPackageName, idName);
-                List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
+                List<Notification> notifications = NotificationCollectorService.getNotificationsByPackage(getPackageName(args));
                 if (notifications.size() == 0) {
                     throw new RuntimeException("There are no notifications of " + getPackageName(args));
                 }
@@ -141,7 +138,7 @@ public class NotificationFunction extends AbstractFunction {
 
             } else {
                 LogUtils.d("notification : order mode");
-                List<Notification> notifications = service.getNotificationsByPackage(getPackageName(args));
+                List<Notification> notifications = NotificationCollectorService.getNotificationsByPackage(getPackageName(args));
                 if (notifications.size() == 0) {
                     throw new RuntimeException("There are no notifications of " + getPackageName(args));
                 }

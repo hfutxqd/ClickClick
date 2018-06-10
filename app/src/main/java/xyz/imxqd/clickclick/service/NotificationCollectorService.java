@@ -1,8 +1,11 @@
 package xyz.imxqd.clickclick.service;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.widget.Toast;
@@ -10,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.log.LogUtils;
@@ -96,7 +100,7 @@ public class NotificationCollectorService extends NotificationListenerService {
 
     }
 
-    public List<Notification> getNotificationsByPackage(String packageName) {
+    private List<Notification> findNotificationsByPackage(String packageName) {
         List<Notification> notifications = new ArrayList<>();
         StatusBarNotification[] ns = getActiveNotifications();
         if (ns == null) {
@@ -108,6 +112,31 @@ public class NotificationCollectorService extends NotificationListenerService {
             }
         }
         return notifications;
+    }
+
+    public static List<Notification> getNotificationsByPackage(String packageName) {
+        NotificationCollectorService service =  AppEventManager.getInstance().getNotificationService();
+        if (service != null) {
+            return service.findNotificationsByPackage(packageName);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            NotificationManager notificationManager = (NotificationManager) App.get().getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager == null) {
+                return new ArrayList<>();
+            }
+            StatusBarNotification[] ns = notificationManager.getActiveNotifications();
+            List<Notification> notifications = new ArrayList<>();
+            if (ns == null) {
+                return notifications;
+            }
+            for (StatusBarNotification sn : ns) {
+                if (sn.getPackageName().equals(packageName)) {
+                    notifications.add(sn.getNotification());
+                }
+            }
+            return notifications;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
 
