@@ -43,19 +43,11 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
     @SuppressLint("CheckResult")
     public FunctionAdapter() {
         mFuncList = DefinedFunction.getOrderedAll();
-        Observable.create(new ObservableOnSubscribe<Object>() {
-            @Override
-            public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
-                savePositionEmitter = emitter;
-            }
-        }).debounce(800, TimeUnit.MILLISECONDS)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        for (int i = 0; i < mFuncList.size(); i++) {
-                            mFuncList.get(i).order = i;
-                            mFuncList.get(i).save();
-                        }
+        Observable.create(emitter -> savePositionEmitter = emitter).debounce(400, TimeUnit.MILLISECONDS)
+                .subscribe(o -> {
+                    for (int i = 0; i < mFuncList.size(); i++) {
+                        mFuncList.get(i).order = i + 1;
+                        mFuncList.get(i).save();
                     }
                 });
     }
@@ -67,6 +59,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
             callback.onDataChanged();
         }
     }
+
 
     @Override
     public FunctionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -95,7 +88,6 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
         DefinedFunction function = mFuncList.get(position);
         holder.title.setText(function.name);
         holder.subTitle.setText(function.description);
-        function.order = position;
     }
 
     @Override
@@ -115,28 +107,20 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
         public FunctionHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle(mFuncList.get(getAdapterPosition()).name)
-                            .setMessage(R.string.dialog_what_intent_message)
-                            .setPositiveButton(R.string.run_it, FunctionHolder.this)
-                            .setNegativeButton(R.string.delete, FunctionHolder.this)
-                            .setNeutralButton(R.string.add_to_home, FunctionHolder.this)
-                            .show();
+            itemView.setOnClickListener(v -> new AlertDialog.Builder(v.getContext())
+                    .setTitle(mFuncList.get(getAdapterPosition()).name)
+                    .setMessage(R.string.dialog_what_intent_message)
+                    .setPositiveButton(R.string.run_it, FunctionHolder.this)
+                    .setNegativeButton(R.string.delete, FunctionHolder.this)
+                    .setNeutralButton(R.string.add_to_home, FunctionHolder.this)
+                    .show());
+            handle.setOnTouchListener((v, event) -> {
+                if (callback != null && event.getAction() == MotionEvent.ACTION_DOWN) {
+                    callback.onStartDrag(FunctionHolder.this);
+                } else {
+                    return false;
                 }
-            });
-            handle.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (callback != null && event.getAction() == MotionEvent.ACTION_DOWN) {
-                        callback.onStartDrag(FunctionHolder.this);
-                    } else {
-                        return false;
-                    }
-                    return true;
-                }
+                return true;
             });
         }
 
@@ -161,6 +145,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
                         callback.onDataChanged();
                     }
                     notifyItemRemoved(getAdapterPosition());
+                    App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
                     break;
                 case DialogInterface.BUTTON_NEUTRAL:
                     ShortcutUtil.createRunFunc(f.id, f.name);

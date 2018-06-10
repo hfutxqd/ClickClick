@@ -42,12 +42,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
             public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
                 savePositionEmitter = emitter;
             }
-        }).debounce(800, TimeUnit.MILLISECONDS)
+        }).debounce(400, TimeUnit.MILLISECONDS)
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
                         for (int i = 0; i < mEvents.size(); i++) {
-                            mEvents.get(i).order = i;
+                            mEvents.get(i).order = i + 1;
                             mEvents.get(i).save();
                         }
                     }
@@ -102,8 +102,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         holder.subTitle.setText(event.keyName + "  " + event.eventType.getName());
         holder.enable.setChecked(event.enable);
         holder.deleteAlpha(0f);
-        event.order = position;
-        event.async().save();
     }
 
     @Override
@@ -128,28 +126,21 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         public KeyMapHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            enable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    int pos = getAdapterPosition();
-                    mEvents.get(pos).enable = isChecked;
-                    mEvents.get(pos).save();
-                    if (mCallback != null) {
-                        mCallback.onCheckedChanged(isChecked);
-                    }
+            enable.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                int pos = getAdapterPosition();
+                mEvents.get(pos).enable = isChecked;
+                mEvents.get(pos).async().save();
+                if (mCallback != null) {
+                    mCallback.onCheckedChanged(isChecked);
                 }
             });
-            handle.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        if (mCallback != null) {
-                            mCallback.onStartDrag(KeyMapHolder.this);
-                        }
+            handle.setOnTouchListener((v, event) -> {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (mCallback != null) {
+                        mCallback.onStartDrag(KeyMapHolder.this);
                     }
-                    return true;
                 }
-
+                return true;
             });
         }
 

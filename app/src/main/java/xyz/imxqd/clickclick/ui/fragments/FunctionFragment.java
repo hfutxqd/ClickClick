@@ -215,6 +215,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
             if (requestCode == REQUEST_ADD_FUNC) {
                 mAdapter.refreshData();
                 mAdapter.notifyDataSetChanged();
+                mAdapter.savePosition();
             } else if (requestCode == REQUEST_ADD_SHORTCUT && data != null) {
                 startActivityForResult(data, REQUEST_CHOOSE_SHORTCUT);
             } else if (requestCode == REQUEST_CHOOSE_SHORTCUT && data != null) {
@@ -256,11 +257,13 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     @Override
     public void onDataChanged() {
         initStateText();
+        mAdapter.savePosition();
     }
 
     @Override
     public void onRefreshUI() {
         mAdapter.refreshData();
         mAdapter.notifyDataSetChanged();
+        mAdapter.savePosition();
     }
 }

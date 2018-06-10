@@ -73,6 +73,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
             int toPosition = target.getAdapterPosition();
             mAdapter.swap(fromPosition, toPosition);
             mAdapter.notifyItemMoved(fromPosition, toPosition);
+            mAdapter.savePosition();
             return true;
         }
 
@@ -87,7 +88,6 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
             KeyMappingEvent.deleteById(id);
             mAdapter.refreshData();
             mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-            mAdapter.savePosition();
             initStateText();
         }
 
@@ -227,6 +227,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
             mAdapter.refreshData();
             initStateText();
             mAdapter.notifyDataSetChanged();
+            mAdapter.savePosition();
         }
     }
 
@@ -245,5 +246,6 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         mAdapter.refreshData();
         mAdapter.notifyDataSetChanged();
         initStateText();
+        mAdapter.savePosition();
     }
 }

@@ -59,7 +59,7 @@ android {
     }
 }
 
-def dbflow_version = "4.2.3"
+def dbflow_version = "4.2.4"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')

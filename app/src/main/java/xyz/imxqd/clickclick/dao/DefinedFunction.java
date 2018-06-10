@@ -32,7 +32,7 @@ public class DefinedFunction extends BaseModel {
     public String description;
 
     @Column(name = "order", defaultValue = "0")
-    public int order;
+    public int order = 0;
 
     public static List<DefinedFunction> getOrderedAll() {
         return new Select()
