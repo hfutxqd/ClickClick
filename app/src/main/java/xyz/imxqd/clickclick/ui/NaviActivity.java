@@ -100,7 +100,7 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
     @Override
     protected void onResume() {
         super.onResume();
-        showSnackBarInNeed();
+        App.get().getHandler().postDelayed(this::showSnackBarInNeed, 100);
     }
 
     private Snackbar mSnackbar;
@@ -194,12 +194,7 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
         if (what == App.EVENT_WHAT_REFRESH_UI) {
             requestRefreshUI();
         } else if (what == App.EVENT_WHAT_APP_SWITCH_CHANGED) {
-            App.get().getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showSnackBarInNeed();
-                }
-            }, 100);
+            App.get().getHandler().postDelayed(this::showSnackBarInNeed, 100);
         }
     }
 }

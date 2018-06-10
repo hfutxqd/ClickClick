@@ -1,16 +1,17 @@
 package xyz.imxqd.clickclick.func;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioTrack;
 import android.os.Build;
+import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +20,13 @@ import java.util.regex.Pattern;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.AlertUtil;
+import xyz.imxqd.clickclick.utils.Flash;
+import xyz.imxqd.clickclick.utils.PackageUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.SystemSettingsUtl;
@@ -53,19 +57,11 @@ public class InternalFunction extends AbstractFunction {
         if (matcher.find()) {
             if (matcher.groupCount() == 1) {
                 String name = matcher.group(1);
-                try {
-                    this.getClass().getMethod(name, String.class).invoke(this, "");
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    throw new Exception("error");
-                }
+                this.getClass().getMethod(name, String.class).invoke(this, "");
             } else if (matcher.groupCount() == 2) {
                 String name = matcher.group(1);
                 String funcArgs = matcher.group(2);
-                try {
-                    this.getClass().getMethod(name, String.class).invoke(this, funcArgs);
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    throw new Exception("error");
-                }
+                this.getClass().getMethod(name, String.class).invoke(this, funcArgs);
             }
         }
     }
@@ -249,6 +245,39 @@ public class InternalFunction extends AbstractFunction {
                 notificationManager.setInterruptionFilter(filter);
             }
         }
+    }
+
+    public void flash_light(String str) throws Exception {
+        if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
+            try {
+                if (TextUtils.isEmpty(str)) {
+                    if (Flash.isFlashOn()) {
+                        Flash.get().off();
+                        Flash.get().close();
+                    } else {
+                        Flash.get().on();
+                    }
+                } else {
+                    int enable = Integer.valueOf(str);
+                    if (enable == 1) {
+                        Flash.get().on();
+                    } else if (enable == 0) {
+                        Flash.get().off();
+                        Flash.get().close();
+                    } else {
+                        throw new RuntimeException("flash_light: value is from 0 to 1");
+                    }
+                }
+            } catch (Exception e) {
+                LogUtils.e(e.getMessage());
+                throw new RuntimeException("Open camera failed.");
+            }
+        } else {
+            App.get().showToast(App.get().getString(R.string.request_camera), true, true);
+            PackageUtil.showInstalledAppDetails(App.get().getPackageName());
+            throw new RuntimeException("no permission");
+        }
+
     }
 
     private ToneUtil.Tone getTone(String tone) {

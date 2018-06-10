@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.provider.Settings;
 
 import java.util.List;
 
@@ -34,4 +36,17 @@ public class PackageUtil {
         }
         return list != null && list.size() > 0;
     }
+
+
+    private static final String SCHEME = "package";
+
+    public static void showInstalledAppDetails(String packageName) {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts(SCHEME, packageName, null);
+        intent.setData(uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        App.get().startActivity(intent);
+    }
+
 }

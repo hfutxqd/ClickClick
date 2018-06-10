@@ -79,6 +79,7 @@ public class AddFunctionActivity extends BaseActivity {
                             showToast(getString(R.string.run_successed));
                         } else {
                             showToast(getString(R.string.run_failed));
+                            App.get().showToast(func.getErrorInfo().getMessage(), true, true);
                         }
 
                     }catch (SQLiteConstraintException e) {

@@ -6,7 +6,7 @@ import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public abstract class AbstractFunction implements IFunction {
     private String funcData;
-    private Exception error;
+    private Exception error = new Exception("no error");
 
     public AbstractFunction(String funcData) {
         this.funcData = funcData;

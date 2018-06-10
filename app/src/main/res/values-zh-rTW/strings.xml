@@ -91,4 +91,5 @@
     <string name="notification_filter_alarms">僅限鬧鈴</string>
     <string name="add_notification_func">模擬通知控件點擊</string>
     <string name="snack_bar_app_off">功能已關閉，請去設置開啟</string>
+    <string name="request_camera">請授予相機權限</string>
 </resources>
