@@ -20,9 +20,27 @@
       "update_time": 1527414422000
     },
     {
+      "name": "Mi Pay",
+      "description": "Mi Pay",
+      "body": "action:intent://#Intent;action=com.miui.intent.action.DOUBLE_CLICK;component=com.miui.tsmclient/.ui.quick.DoubleClickActivity;end",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
       "name": "支付宝扫码",
       "description": "支付宝扫码",
       "body": "url:alipays://platformapi/startapp?saId=10000007",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "支付宝乘车码",
+      "description": "支付宝乘车码",
+      "body": "url:alipays://platformapi/startapp?appId=200011235&transparentTitle=auto&url=/www/offline_qrcode.html?cardType=ANT00001&source=shortCut&snapshot=no&canPullDown=NO&showOptionMenu=NO",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
@@ -83,9 +101,18 @@
       "update_time": 1527414422000
     },
     {
+      "name": "发新微博",
+      "description": "发新微博",
+      "body": "url:sinaweibo://compose",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
       "name": "QQ音乐喜爱",
       "description": "QQ音乐喜爱",
-      "body": "internal:qq_music_like()",
+      "body": "action:broadcast://#Intent;action=com.tencent.qqmusic.ACTION_SERVICE_FAVORATE_SONG.QQMusicPhone;end",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
@@ -137,36 +164,9 @@
       "update_time": 1527414422000
     },
     {
-      "name": "知乎",
-      "description": "打开知乎",
-      "body": "url:zhihu://",
-      "version_code": "1",
-      "version_name": "1.0",
-      "author": "imxqd",
-      "update_time": 1527414422000
-    },
-    {
-      "name": "微博",
-      "description": "打开微博",
-      "body": "url:sinaweibo://",
-      "version_code": "1",
-      "version_name": "1.0",
-      "author": "imxqd",
-      "update_time": 1527414422000
-    },
-    {
-      "name": "淘宝",
-      "description": "打开淘宝",
-      "body": "url:taobao://",
-      "version_code": "1",
-      "version_name": "1.0",
-      "author": "imxqd",
-      "update_time": 1527414422000
-    },
-    {
-      "name": "打开chrome",
-      "description": "打开chrome",
-      "body": "url:googlechrome://",
+      "name": "虾米音乐喜爱",
+      "description": "虾米音乐喜爱",
+      "body": "action:service://#Intent;action=fm.xiami.main.business.notification.ACTION_NOTIFICATION_FAV_TOGGLE;component=fm.xiami.main/.service.PlayService;end",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",

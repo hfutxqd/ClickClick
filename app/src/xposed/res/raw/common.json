@@ -46,9 +46,72 @@
       "update_time": 1527414422000
     },
     {
-      "name": "通知控件id搜寻器",
-      "description": "此功能可以很方便地寻找通知中某个控件的id，并可以一键生成通知类功能",
-      "body": "internal:notify_helper()",
+      "name": "切换勿扰模式",
+      "description": "切换多种勿扰模式",
+      "body": "internal:do_not_disturb()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "开启/关闭自动旋转",
+      "description": "开启/关闭自动旋转",
+      "body": "internal:auto_rotation()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "开启自动旋转",
+      "description": "开启自动旋转",
+      "body": "internal:auto_rotation(1)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "关闭自动旋转",
+      "description": "关闭自动旋转",
+      "body": "internal:auto_rotation(0)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "旋转至270度",
+      "description": "旋转至270度",
+      "body": "internal:rotation(270)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "旋转至0度",
+      "description": "旋转至0度",
+      "body": "internal:rotation(0)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "旋转至90度",
+      "description": "旋转至90度",
+      "body": "internal:rotation(90)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "开关手电筒",
+      "description": "开关手电筒",
+      "body": "internal:flash_light()",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
