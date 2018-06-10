@@ -41,6 +41,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
     private static final String TAG = "ClickClick";
 
     public static final int EVENT_WHAT_REFRESH_UI = 1;
+    public static final int EVENT_WHAT_APP_SWITCH_CHANGED = 2;
 
     public boolean isServiceOn = true;
 

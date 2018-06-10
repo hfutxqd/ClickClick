@@ -11,4 +11,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="item_pressed">#11000000</color>
+    <color name="fast_scroller_trumb_color">#b0bec5</color>
 </resources>

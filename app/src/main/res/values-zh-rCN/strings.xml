@@ -90,4 +90,5 @@
     <string name="notification_filter_none">完全阻止</string>
     <string name="notification_filter_alarms">仅限闹铃</string>
     <string name="add_notification_func">模拟通知控件点击</string>
+    <string name="snack_bar_app_off">功能已关闭，请去设置开启</string>
 </resources>

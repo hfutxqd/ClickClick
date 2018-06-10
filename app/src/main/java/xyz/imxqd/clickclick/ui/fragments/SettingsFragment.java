@@ -22,10 +22,6 @@ import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements Preference.OnPreferenceChangeListener, OnRefreshUI {
 
-
-    private static final String TAG = "SettingsFragment";
-    private Handler mHandler = new Handler();
-
     public SettingsFragment() {
         LogUtils.d("SettingsFragment new instance");
     }
@@ -38,7 +34,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public void onResume() {
         super.onResume();
-        initPrefs();
+        if (mPendingSwitchOn || mPendingNotificationOn) {
+            App.get().getHandler().postDelayed(this::initPrefs, 150);
+        } else {
+            initPrefs();
+        }
     }
 
 
@@ -66,7 +66,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             }
             mPendingSwitchOn = false;
             SwitchPreference notificationSwitch = (SwitchPreference) findPreference(getString(R.string.pref_key_notification_switch));
-            if (mPendingNotificationOn && (NotificationAccessUtil.isEnabled(getContext()) || AppEventManager.getInstance().getNotificationService() != null)) {
+            if (mPendingNotificationOn && NotificationAccessUtil.isEnabled(getContext())) {
                 notificationSwitch.setChecked(true);
             }
             mPendingSwitchOn = false;
@@ -82,6 +82,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (debug) {
             addDebugSettings();
         }
+        App.get().post(App.EVENT_WHAT_APP_SWITCH_CHANGED, null);
     }
 
     private void initClickTimes() {
@@ -153,6 +154,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         assert getContext() != null;
         if (getString(R.string.pref_key_app_switch).equals(preference.getKey())) {
+            App.get().post(App.EVENT_WHAT_APP_SWITCH_CHANGED, null);
             LogUtils.d( "KeyEventService is " + newValue);
         } else if (getString(R.string.pref_key_notification_switch).equals(preference.getKey())) {
             if (!NotificationAccessUtil.isEnabled(getContext())) {

@@ -92,6 +92,7 @@ public class AlertDialogActivity extends AppCompatActivity {
             function.description = "";
             function.body = "notification:" + getIntent().getStringExtra(ARG_NOTIFY_PACKAGE) + ":@id/" + getIntent().getStringExtra(ARG_NOTIFY_VIEW_ID);
             AddFunctionActivity.start(function, true, this);
+            finish();
         } else if (type == TYPE_NORMAL) {
             finish();
         }

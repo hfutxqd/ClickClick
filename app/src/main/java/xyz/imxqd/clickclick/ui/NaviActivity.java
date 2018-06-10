@@ -3,6 +3,7 @@ package xyz.imxqd.clickclick.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.ArrayMap;
@@ -17,10 +18,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.ui.fragments.FunctionFragment;
 import xyz.imxqd.clickclick.ui.fragments.OnRefreshUI;
 import xyz.imxqd.clickclick.ui.fragments.ProfileFragment;
 import xyz.imxqd.clickclick.ui.fragments.SettingsFragment;
+import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class NaviActivity extends BaseActivity implements App.AppEventCallback{
 
@@ -91,6 +94,26 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
         super.onDestroy();
         mFragments.clear();
         currentTabId = 0;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showSnackBarInNeed();
+    }
+
+    private Snackbar mSnackbar;
+    private void showSnackBarInNeed() {
+        if (AppEventManager.getInstance().getService() == null) {
+            if (mSnackbar != null && mSnackbar.isShown()) {
+                return;
+            }
+            mSnackbar = Snackbar.make(findViewById(R.id.nav_container), R.string.snack_bar_app_off, Snackbar.LENGTH_INDEFINITE);
+            mSnackbar.show();
+        } else if (mSnackbar != null && mSnackbar.isShownOrQueued()){
+            mSnackbar.dismiss();
+        }
     }
 
     private void initViews() {
@@ -170,6 +193,13 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
     public void onEvent(int what, Object data) {
         if (what == App.EVENT_WHAT_REFRESH_UI) {
             requestRefreshUI();
+        } else if (what == App.EVENT_WHAT_APP_SWITCH_CHANGED) {
+            App.get().getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showSnackBarInNeed();
+                }
+            }, 100);
         }
     }
 }

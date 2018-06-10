@@ -2,25 +2,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:key="@string/pref_key_app_switch"
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:title="@string/settings_app_switch_title"
         android:summaryOn="@string/settings_app_switch_on_summary"
         android:summaryOff="@string/settings_app_switch_off_summary" />
 
     <SwitchPreference
         android:key="@string/pref_key_notification_switch"
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:title="@string/settings_notification_title"
         android:summaryOn="@string/settings_notification_on_summary"
         android:summaryOff="@string/settings_notification_off_summary" />
-
-    <SwitchPreference
-        android:key="@string/pref_key_root_mode_switch"
-        android:enabled="false"
-        android:defaultValue="false"
-        android:title="@string/settings_root_mode_title"
-        android:summaryOn="@string/settings_root_mode_on_summary"
-        android:summaryOff="@string/settings_root_mode_off_summary" />
 
     <ListPreference
         android:key="@string/pref_key_quick_click_time"

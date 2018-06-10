@@ -96,5 +96,6 @@
     <string name="notification_filter_none">Total silence</string>
     <string name="notification_filter_alarms">Alarms only</string>
     <string name="add_notification_func">Simulate clicking a notification widget</string>
+    <string name="snack_bar_app_off">Key mapping service is off. Please turn on in settings screen.</string>
 
 </resources>

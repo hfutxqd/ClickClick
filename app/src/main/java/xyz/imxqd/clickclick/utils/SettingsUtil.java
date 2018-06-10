@@ -5,6 +5,7 @@ import android.support.v7.preference.PreferenceManager;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.model.AppEventManager;
 
 /**
  * Created by imxqd on 2017/11/26.
@@ -18,12 +19,16 @@ public class SettingsUtil {
 
     public static boolean isServiceOn() {
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
-        return shp.getBoolean(ResUtil.getString(R.string.pref_key_app_switch), true);
+        return shp.getBoolean(ResUtil.getString(R.string.pref_key_app_switch), false);
     }
 
     public static boolean isNotificationOn() {
         SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
-        return shp.getBoolean(ResUtil.getString(R.string.pref_key_notification_switch), true);
+        return shp.getBoolean(ResUtil.getString(R.string.pref_key_notification_switch), false);
+    }
+
+    public static boolean isNotificationWorking() {
+        return AppEventManager.getInstance().getNotificationService() != null;
     }
 
 
