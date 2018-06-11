@@ -92,4 +92,5 @@
     <string name="add_notification_func">模拟通知控件点击</string>
     <string name="snack_bar_app_off">功能已关闭，请去设置开启</string>
     <string name="request_camera">请赋予相机权限</string>
+    <string name="add_key_event_finger">指纹按键映射</string>
 </resources>

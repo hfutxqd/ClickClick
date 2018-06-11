@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -21,10 +22,15 @@ import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.model.AppKeyEventType;
 import xyz.imxqd.clickclick.ui.adapters.FunctionSpinnerAdapter;
 import xyz.imxqd.clickclick.log.LogUtils;
+import xyz.imxqd.clickclick.utils.KeyEventUtil;
 
 public class AddHomeEventActivity extends AppCompatActivity {
 
     public static final String ARG_KEY_EVENT = "key_event";
+
+    public static final String ARG_IS_ADD_FINGERPRINT = "is_fingerprint";
+
+    private boolean isAddFringerprint = false;
 
     private KeyMappingEvent mKeyEvent = new KeyMappingEvent();
 
@@ -43,10 +49,16 @@ public class AddHomeEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_home_event);
         ButterKnife.bind(this);
 
+        isAddFringerprint = getIntent().getBooleanExtra(ARG_IS_ADD_FINGERPRINT, false);
+
         List<String> spinnerArray =  new ArrayList<>();
         Collections.addAll(spinnerArray, getResources().getStringArray(R.array.home_event_type));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, spinnerArray);
         mSpEventType.setAdapter(adapter);
+
+        if (isAddFringerprint) {
+            mSpEventType.setVisibility(View.GONE);
+        }
 
         mEventTypeValues = new ArrayList<>();
         Collections.addAll(mEventTypeValues, getResources().getStringArray(R.array.home_event_type_value));
@@ -66,15 +78,27 @@ public class AddHomeEventActivity extends AppCompatActivity {
     public void onAddBtnClick() {
         try {
 
-            DefinedFunction function = (DefinedFunction) mSpFunction.getSelectedItem();
-            mKeyEvent.keyCode = KeyEvent.KEYCODE_HOME;
-            mKeyEvent.keyName = "HOME";
-            mKeyEvent.deviceId = -1;
-            mKeyEvent.deviceName = "System";
-            mKeyEvent.funcName = function.name;
-            mKeyEvent.funcId = function.id;
-            mKeyEvent.eventType = AppKeyEventType.valueOf(mEventTypeValues.get(mSpEventType.getSelectedItemPosition()));
-            mKeyEvent.save();
+            if (isAddFringerprint) {
+                DefinedFunction function = (DefinedFunction) mSpFunction.getSelectedItem();
+                mKeyEvent.keyCode = KeyEventUtil.KEY_CODE_FINGERPRINT;
+                mKeyEvent.keyName = "Fingerprint";
+                mKeyEvent.deviceId = -1;
+                mKeyEvent.deviceName = "System";
+                mKeyEvent.funcName = function.name;
+                mKeyEvent.funcId = function.id;
+                mKeyEvent.eventType = AppKeyEventType.SingleClick;
+                mKeyEvent.save();
+            } else {
+                DefinedFunction function = (DefinedFunction) mSpFunction.getSelectedItem();
+                mKeyEvent.keyCode = KeyEvent.KEYCODE_HOME;
+                mKeyEvent.keyName = "HOME";
+                mKeyEvent.deviceId = -1;
+                mKeyEvent.deviceName = "System";
+                mKeyEvent.funcName = function.name;
+                mKeyEvent.funcId = function.id;
+                mKeyEvent.eventType = AppKeyEventType.valueOf(mEventTypeValues.get(mSpEventType.getSelectedItemPosition()));
+                mKeyEvent.save();
+            }
 
             Intent intent = new Intent();
             intent.putExtra(ARG_KEY_EVENT, mKeyEvent);

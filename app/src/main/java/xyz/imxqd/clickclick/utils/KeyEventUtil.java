@@ -18,6 +18,8 @@ import xyz.imxqd.clickclick.log.LogUtils;
 @SuppressLint("UseSparseArrays")
 public class KeyEventUtil {
 
+    public static final int KEY_CODE_FINGERPRINT = 8000;
+
     public static final Map<Integer, String> mKeyName;
     static {
         mKeyName = new HashMap<>();

@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick.dao;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.KeyEvent;
 import android.widget.LinearLayout;
 
 import com.raizlabs.android.dbflow.annotation.Column;
@@ -17,6 +18,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import java.util.List;
 
 import xyz.imxqd.clickclick.model.AppKeyEventType;
+import xyz.imxqd.clickclick.utils.KeyEventUtil;
 
 @Table(name = "key_mapping_event", database = AppDatabase.class, uniqueColumnGroups = {@UniqueGroup(groupNumber = 1)})
 public class KeyMappingEvent extends BaseModel implements Parcelable {
@@ -81,6 +83,13 @@ public class KeyMappingEvent extends BaseModel implements Parcelable {
                 .orderBy(KeyMappingEvent_Table.id, false)
                 .queryList();
 
+    }
+
+    public static KeyMappingEvent getFingerPrintEvent() {
+        return new Select().from(KeyMappingEvent.class)
+                .where(KeyMappingEvent_Table.key_code.eq(KeyEventUtil.KEY_CODE_FINGERPRINT))
+                .and(KeyMappingEvent_Table.enable.eq(true))
+                .querySingle();
     }
 
     public static void deleteById(long id) {
