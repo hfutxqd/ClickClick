@@ -13,6 +13,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,7 @@ import xyz.imxqd.clickclick.utils.ResourceUtl;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.SystemSettingsUtl;
 import xyz.imxqd.clickclick.utils.ToneUtil;
+import xyz.imxqd.clickclick.xposed.Log;
 
 public class InternalFunction extends AbstractFunction {
     public static final String PREFIX = "internal";
@@ -50,20 +52,28 @@ public class InternalFunction extends AbstractFunction {
     }
 
     @Override
-    public void doFunction(String args) throws Exception {
+    public void doFunction(String args) throws Throwable {
         Matcher matcher = FUNC_PATTERN.matcher(args);
         if (!matcher.matches()) {
-            throw new Exception("Syntax Error");
+            throw new IllegalArgumentException("Syntax Error");
         }
         matcher.reset();
         if (matcher.find()) {
-            if (matcher.groupCount() == 1) {
-                String name = matcher.group(1);
-                this.getClass().getMethod(name, String.class).invoke(this, "");
-            } else if (matcher.groupCount() == 2) {
-                String name = matcher.group(1);
-                String funcArgs = matcher.group(2);
-                this.getClass().getMethod(name, String.class).invoke(this, funcArgs);
+            try {
+                if (matcher.groupCount() == 1) {
+                    String name = matcher.group(1);
+                    this.getClass().getMethod(name, String.class).invoke(this, "");
+                } else if (matcher.groupCount() == 2) {
+                    String name = matcher.group(1);
+                    String funcArgs = matcher.group(2);
+                    this.getClass().getMethod(name, String.class).invoke(this, funcArgs);
+                }
+            } catch (IllegalAccessException | NoSuchMethodException e) {
+                LogUtils.e(e.getMessage());
+                throw new IllegalArgumentException("Syntax Error");
+            } catch (InvocationTargetException e) {
+                LogUtils.e(e.getMessage());
+                throw e.getCause();
             }
         }
     }

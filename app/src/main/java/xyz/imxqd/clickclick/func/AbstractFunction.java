@@ -6,7 +6,7 @@ import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public abstract class AbstractFunction implements IFunction {
     private String funcData;
-    private Exception error = new Exception("no error");
+    private Throwable error = new Exception("no error");
 
     public AbstractFunction(String funcData) {
         this.funcData = funcData;
@@ -31,7 +31,7 @@ public abstract class AbstractFunction implements IFunction {
         try {
             doFunction(getArgs());
             return true;
-        } catch (Exception e) {
+        } catch (Throwable e) {
             error = e;
             LogUtils.e("exec error " + e.getMessage());
             if (SettingsUtil.displayDebug()) {
@@ -43,7 +43,7 @@ public abstract class AbstractFunction implements IFunction {
     }
 
     @Override
-    public Exception getErrorInfo() {
+    public Throwable getErrorInfo() {
         return error;
     }
 }

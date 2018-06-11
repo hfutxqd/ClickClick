@@ -5,9 +5,9 @@ package xyz.imxqd.clickclick.func;
  */
 
 public interface IFunction {
-    void doFunction(String args) throws Exception;
+    void doFunction(String args) throws Throwable;
 
-    Exception getErrorInfo();
+    Throwable getErrorInfo();
 
     boolean exec();
 }
