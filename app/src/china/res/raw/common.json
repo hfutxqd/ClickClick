@@ -116,6 +116,15 @@
       "version_name": "1.0",
       "author": "imxqd",
       "update_time": 1527414422000
+    },
+    {
+      "name": "隐藏/显示Flyme悬浮球",
+      "description": "隐藏/显示Flyme悬浮球, 仅在系统开启悬浮球时有效",
+      "body": "internal:smart_touch()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
     }
   ]
 }

@@ -31,6 +31,7 @@ import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.Flash;
 import xyz.imxqd.clickclick.utils.PackageUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
+import xyz.imxqd.clickclick.utils.RomUtil;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.SystemSettingsUtl;
 import xyz.imxqd.clickclick.utils.ToneUtil;
@@ -293,6 +294,9 @@ public class InternalFunction extends AbstractFunction {
     }
 
     public void smart_touch(String str) throws RemoteException {
+        if (!RomUtil.isMeizuFlyme()) {
+            throw new RuntimeException("This is not a flyme os");
+        }
         if (TextUtils.isEmpty(str)) {
             if (FlymeSmartTouchHelper.get().isShowing()) {
                 FlymeSmartTouchHelper.get().hide();
