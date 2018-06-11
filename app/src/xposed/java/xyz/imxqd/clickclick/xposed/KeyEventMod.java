@@ -16,7 +16,10 @@ import java.lang.reflect.Field;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import de.robv.android.xposed.callbacks.XCallback;
+import xyz.imxqd.clickclick.service.Command;
+import xyz.imxqd.clickclick.service.IClickCallback;
 import xyz.imxqd.clickclick.service.IClickIPC;
+import xyz.imxqd.clickclick.service.Result;
 
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
@@ -78,6 +81,22 @@ public class KeyEventMod {
     }
 
     private static IClickIPC sClickIPC = null;
+
+    private static IClickCallback sClickCallback = new IClickCallback.Stub() {
+
+        @Override
+        public Result send(Command cmd) throws RemoteException {
+            switch (cmd.what) {
+                case Command.WHAT_HELLO:
+                    Log.d(TAG, "Hello from ClickClik");
+                    return new Result(Command.WHAT_HELLO, null);
+            }
+            return null;
+        }
+    };
+
+    private static boolean isConnecting = false;
+
     private static void bindService() {
         try {
             Application app = AndroidAppHelper.currentApplication();
@@ -87,21 +106,33 @@ public class KeyEventMod {
             if (sClickIPC != null) {
                 return;
             }
+            if (isConnecting) {
+                return;
+            }
             Intent intent = new Intent("xyz.imxqd.clickclick.xposed.ipc");
             intent.setPackage("xyz.imxqd.clickclick.xposed");
             app.bindService(intent, new ServiceConnection() {
                 @Override
                 public void onServiceConnected(ComponentName name, IBinder service) {
                     Log.d(TAG, "onServiceConnected");
+                    isConnecting = false;
                     sClickIPC = IClickIPC.Stub.asInterface(service);
+                    try {
+                        sClickIPC.hello();
+                        sClickIPC.registerCallback(sClickCallback);
+                    } catch (RemoteException e) {
+                        Log.d(TAG, e.getMessage());
+                    }
                 }
 
                 @Override
                 public void onServiceDisconnected(ComponentName name) {
                     Log.d(TAG, "onServiceDisconnected");
                     sClickIPC = null;
+                    isConnecting = false;
                 }
             }, Context.BIND_AUTO_CREATE);
+            isConnecting = true;
         } catch (Throwable e) {
             Log.d(TAG, e.getMessage());
         }
@@ -117,7 +148,6 @@ public class KeyEventMod {
         @Override
         protected void afterHookedMethod(MethodHookParam param) throws Throwable {
             final KeyEvent event = (KeyEvent) param.args[0];
-            Log.d(TAG, "keycode = " + event.getKeyCode());
             boolean inject = false;
             try {
                 if (sClickIPC != null) {
