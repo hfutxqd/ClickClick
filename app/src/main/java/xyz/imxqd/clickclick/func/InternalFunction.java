@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioTrack;
 import android.os.Build;
+import android.os.RemoteException;
 import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
 
@@ -22,6 +23,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.model.FlymeSmartTouchHelper;
 import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.AlertUtil;
@@ -278,6 +280,25 @@ public class InternalFunction extends AbstractFunction {
             throw new RuntimeException("no permission");
         }
 
+    }
+
+    public void smart_touch(String str) throws RemoteException {
+        if (TextUtils.isEmpty(str)) {
+            if (FlymeSmartTouchHelper.get().isShowing()) {
+                FlymeSmartTouchHelper.get().hide();
+            } else {
+                FlymeSmartTouchHelper.get().show();
+            }
+        } else {
+            int show = Integer.valueOf(str);
+            if (show == 0) {
+                FlymeSmartTouchHelper.get().hide();
+            } else if (show == 1) {
+                FlymeSmartTouchHelper.get().show();
+            } else {
+                throw new RuntimeException("smart_touch: value is from 0 to 1");
+            }
+        }
     }
 
     private ToneUtil.Tone getTone(String tone) {

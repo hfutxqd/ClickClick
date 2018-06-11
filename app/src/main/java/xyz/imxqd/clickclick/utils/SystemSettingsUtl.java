@@ -100,4 +100,15 @@ public class SystemSettingsUtl {
         }
         return false;
     }
+
+
+    public static boolean switchSmartTouch() {
+        if (canWrite()) {
+            int enable = Settings.System.getInt(App.get().getContentResolver(), "mz_smart_touch_switch", 0);
+            enable = enable == 0 ? 1 : 0;
+            Settings.System.putInt(App.get().getContentResolver(), "mz_smart_touch_switch", enable);
+            return true;
+        }
+        return false;
+    }
 }
