@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
@@ -30,13 +31,13 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.func.InternalFunction;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.ui.AddFunctionActivity;
 import xyz.imxqd.clickclick.ui.AppChooseActivity;
+import xyz.imxqd.clickclick.ui.CreateGestureActivity;
 import xyz.imxqd.clickclick.ui.FunctionsActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
-import xyz.imxqd.clickclick.utils.AlertUtil;
-import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
 
@@ -131,6 +132,9 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         list.add(getString(R.string.add_shortcut));
         list.add(getString(R.string.open_application));
         list.add(getString(R.string.add_notification_func));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            list.add(getString(R.string.add_tap_or_swipe));
+        }
         list.add(getString(R.string.add_func_by_self));
         mMenuAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
         mAdapter.setOnStartDragCallback(this);
@@ -184,6 +188,13 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                                 addNotificationFunc();
                                 break;
                             case 4:
+                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    createGesture();
+                                } else {
+                                    startAddFuncActivity();
+                                }
+                                break;
+                            case 5:
                                 startAddFuncActivity();
                                 break;
                              default:
@@ -191,6 +202,10 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                     }
                 })
                 .show();
+    }
+
+    public void createGesture() {
+        startActivity(new Intent(getActivity(), CreateGestureActivity.class));
     }
 
     public void startAddShortcut() {

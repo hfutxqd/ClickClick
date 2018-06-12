@@ -26,6 +26,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="AppTheme.Dialog.AnimationActivity" parent="@android:style/Animation">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_bottom</item>

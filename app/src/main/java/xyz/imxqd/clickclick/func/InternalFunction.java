@@ -356,7 +356,7 @@ public class InternalFunction extends AbstractFunction {
         }
     }
 
-    private static final String REGEX_SWIPE_ARGS = "([0-9]+)\\s*,\\s*([0-9]+)\\s*([0-9]+)\\s*,\\s*([0-9]+),\\s*([0-9]+)";
+    private static final String REGEX_SWIPE_ARGS = "([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)\\s*,\\s*([0-9]+)";
     private static final Pattern SWIPE_ARGS_PATTERN = Pattern.compile(REGEX_SWIPE_ARGS);
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void swipe(String str) {
@@ -369,7 +369,9 @@ public class InternalFunction extends AbstractFunction {
             String numY = matcher.group(2).trim();
             String numX2 = matcher.group(3).trim();
             String numY2 = matcher.group(4).trim();
-            GestureDescription description = GestureUtil.makeSwipe(Float.valueOf(numX), Float.valueOf(numY), Float.valueOf(numX2), Float.valueOf(numY2));
+            String duration = matcher.group(5).trim();
+            GestureDescription description = GestureUtil.makeSwipe(Float.valueOf(numX), Float.valueOf(numY), Float.valueOf(numX2), Float.valueOf(numY2),
+                    Integer.valueOf(duration));
             KeyEventService service = AppEventManager.getInstance().getService();
             if (service != null) {
                 service.dispatchGesture(description, null, null);

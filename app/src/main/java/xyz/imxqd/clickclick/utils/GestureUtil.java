@@ -12,17 +12,17 @@ public class GestureUtil {
         Path path = new Path();
         path.moveTo(x, y);
         return new GestureDescription.Builder()
-                .addStroke(new GestureDescription.StrokeDescription(path, 100, 50))
+                .addStroke(new GestureDescription.StrokeDescription(path, 0, 50))
                 .build();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static GestureDescription makeSwipe(float x, float y, float x2, float y2) {
+    public static GestureDescription makeSwipe(float x, float y, float x2, float y2, int dur) {
         Path path = new Path();
         path.moveTo(x, y);
         path.lineTo(x2, y2);
         return new GestureDescription.Builder()
-                .addStroke(new GestureDescription.StrokeDescription(path, 100, 200))
+                .addStroke(new GestureDescription.StrokeDescription(path, 0, dur))
                 .build();
     }
 }

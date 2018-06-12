@@ -98,5 +98,7 @@
     <string name="add_notification_func">Simulate clicking a notification widget</string>
     <string name="snack_bar_app_off">Key mapping service is off. Please turn on in settings screen.</string>
     <string name="request_camera">Please grant the camera permission</string>
+    <string name="create_gesture_hint"><![CDATA[Please click or swipe to create a gesture <br>Only supports linear gestures <br> Press back key to cancel ]]></string>
+    <string name="add_tap_or_swipe">Simulate clicks or gestures</string>
 
 </resources>
