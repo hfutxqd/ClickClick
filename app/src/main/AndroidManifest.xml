@@ -90,7 +90,6 @@
                 <action android:name="xyz.imxqd.mediacontroller.cloud_music_like" />
             </intent-filter>
         </service>
-        <service android:name=".service.FingerService" />
 
         <activity
             android:name=".ui.FunctionsActivity"

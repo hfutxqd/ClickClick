@@ -27,7 +27,6 @@ import java.util.Set;
 
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
-import xyz.imxqd.clickclick.service.FingerService;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 /**

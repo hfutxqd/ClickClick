@@ -23,7 +23,6 @@ import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent_Table;
 import xyz.imxqd.clickclick.func.FunctionFactory;
 import xyz.imxqd.clickclick.func.IFunction;
-import xyz.imxqd.clickclick.service.FingerService;
 import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.KeyEventHandler;
@@ -41,8 +40,8 @@ public class AppEventManager implements KeyEventHandler.Callback {
     private AudioManager mAudioManager;
     private KeyEventHandler mKeyEventHandler;
     private KeyEventService mService;
-    private FingerService mFingerService;
     private NotificationCollectorService mNotification;
+    private Toast mToast;
     private ButtonHandler mButtonHandler = new ButtonHandler();
 
     private Map<String, Long> mKeyEventData = new HashMap<>();
@@ -74,9 +73,6 @@ public class AppEventManager implements KeyEventHandler.Callback {
             mKeyEventHandler.setCallback(this);
             initHomeButtonListener();
             updateClickTime();
-            if (KeyMappingEvent.getFingerPrintEvent() != null) {
-                FingerService.init();
-            }
             init = true;
         }
     }
@@ -172,14 +168,6 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     public void detachFromNotificationService() {
         mNotification = null;
-    }
-
-    public void attachToFingerService(FingerService service) {
-        mFingerService = service;
-    }
-
-    public void detachFromFingerService() {
-        mFingerService = null;
     }
 
     @Override

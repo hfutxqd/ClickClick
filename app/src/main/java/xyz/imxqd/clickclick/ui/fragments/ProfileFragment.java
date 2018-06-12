@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,7 +28,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.model.AppEventManager;
@@ -40,8 +38,6 @@ import xyz.imxqd.clickclick.ui.adapters.ProfileAdapter;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
-
-import static android.content.Context.FINGERPRINT_SERVICE;
 
 
 public class ProfileFragment extends BaseFragment implements ProfileAdapter.ProfileChangeCallback, OnRefreshUI {
@@ -150,12 +146,6 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         List<String> list = new ArrayList<>();
         list.add(getString(R.string.add_key_event_normal));
         list.add(getString(R.string.add_key_event_home));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            FingerprintManager fm = (FingerprintManager) App.get().getSystemService(FINGERPRINT_SERVICE);
-            if (fm != null && fm.isHardwareDetected()) {
-                list.add(getString(R.string.add_key_event_finger));
-            }
-        }
         mMenuAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
 
         itemTouchHelper = new ItemTouchHelper(mCallback);
@@ -209,9 +199,6 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
                         case 1:
                             startAddHomeEventActivity();
                             break;
-                        case 2:
-                            startFingerPrint();
-                            break;
                         default:
                     }
                 })
@@ -231,15 +218,6 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
-        startActivityForResult(intent, REQUEST_CODE_ADD_KEY_EVENT);
-    }
-
-    public void startFingerPrint() {
-        Intent intent = new Intent(getActivity(), AddHomeEventActivity.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        }
-        intent.putExtra(AddHomeEventActivity.ARG_IS_ADD_FINGERPRINT, true);
         startActivityForResult(intent, REQUEST_CODE_ADD_KEY_EVENT);
     }
 
