@@ -1,6 +1,7 @@
 package xyz.imxqd.clickclick.func;
 
 import android.Manifest;
+import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -311,6 +312,19 @@ public class InternalFunction extends AbstractFunction {
             } else {
                 throw new RuntimeException("smart_touch: value is from 0 to 1");
             }
+        }
+    }
+
+    public void show_notifications(String str) throws Exception {
+        KeyEventService service = AppEventManager.getInstance().getService();
+        if (service == null) {
+            AlertUtil.show(App.get().getString(R.string.accessibility_error));
+            throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+        }
+        if (TextUtils.isEmpty(str)) {
+            service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
+        } else {
+            throw new RuntimeException("show_notification: value is no need");
         }
     }
 
