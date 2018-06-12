@@ -33,6 +33,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.service.FingerService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.ui.AddHomeEventActivity;
 import xyz.imxqd.clickclick.ui.AddKeyEventActivity;
@@ -256,6 +257,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     @Override
     public void onCheckedChanged(boolean isChecked) {
         initStateText();
+        FingerService.init();
     }
 
     @Override

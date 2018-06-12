@@ -129,7 +129,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
             enable.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 int pos = getAdapterPosition();
                 mEvents.get(pos).enable = isChecked;
-                mEvents.get(pos).async().save();
+                mEvents.get(pos).save();
                 if (mCallback != null) {
                     mCallback.onCheckedChanged(isChecked);
                 }

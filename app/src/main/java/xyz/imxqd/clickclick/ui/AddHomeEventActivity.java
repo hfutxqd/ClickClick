@@ -20,6 +20,7 @@ import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.model.AppKeyEventType;
+import xyz.imxqd.clickclick.service.FingerService;
 import xyz.imxqd.clickclick.ui.adapters.FunctionSpinnerAdapter;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
@@ -88,6 +89,7 @@ public class AddHomeEventActivity extends AppCompatActivity {
                 mKeyEvent.funcId = function.id;
                 mKeyEvent.eventType = AppKeyEventType.SingleClick;
                 mKeyEvent.save();
+                FingerService.init();
             } else {
                 DefinedFunction function = (DefinedFunction) mSpFunction.getSelectedItem();
                 mKeyEvent.keyCode = KeyEvent.KEYCODE_HOME;
@@ -98,6 +100,7 @@ public class AddHomeEventActivity extends AppCompatActivity {
                 mKeyEvent.funcId = function.id;
                 mKeyEvent.eventType = AppKeyEventType.valueOf(mEventTypeValues.get(mSpEventType.getSelectedItemPosition()));
                 mKeyEvent.save();
+                FingerService.init();
             }
 
             Intent intent = new Intent();

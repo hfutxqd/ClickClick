@@ -35,7 +35,6 @@ import xyz.imxqd.clickclick.utils.RomUtil;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.SystemSettingsUtl;
 import xyz.imxqd.clickclick.utils.ToneUtil;
-import xyz.imxqd.clickclick.xposed.Log;
 
 public class InternalFunction extends AbstractFunction {
     public static final String PREFIX = "internal";

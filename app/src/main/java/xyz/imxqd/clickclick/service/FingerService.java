@@ -25,16 +25,29 @@ public class FingerService extends Service {
     private static final String TAG = "FingerService";
     private static int CHECK_INTERVAL = 1000;
 
-    private boolean isOpen = false;
     private FingerprintManager fm;
     private CancellationSignal signal;
     private Handler handler;
     private static boolean isRunning = false;
 
+    private boolean isOpening = false;
+
     public static void init() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        KeyMappingEvent event = KeyMappingEvent.getFingerPrintEvent();
+        if (isRunning() && event == null) {
+            stopService();
+        } else if (event != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Intent intent = new Intent(App.get(), FingerService.class);
+                App.get().startService(intent);
+            }
+        }
+    }
+
+    private static void stopService() {
+        if (FingerService.isRunning()) {
             Intent intent = new Intent(App.get(), FingerService.class);
-            App.get().startService(intent);
+            App.get().stopService(intent);
         }
     }
 
@@ -45,21 +58,8 @@ public class FingerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        new Thread(() -> {
-            while (true) {
-                if (!isOpen) {
-                    handler.sendEmptyMessage(0);
-                }
-                boolean c = false;
-                if (CHECK_INTERVAL > 1000) {
-                    c = true;
-                }
-                SystemClock.sleep(CHECK_INTERVAL);
-                if (c) {
-                    CHECK_INTERVAL = 1000;
-                }
-            }
-        }).start();
+        Log.d(TAG, "onStartCommand");
+        handler.sendEmptyMessageDelayed(0, CHECK_INTERVAL);
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -67,6 +67,7 @@ public class FingerService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d(TAG, "onCreate");
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             stopSelf();
             return;
@@ -74,17 +75,24 @@ public class FingerService extends Service {
         isRunning = true;
         initHandler();
         initManager();
-        reconnect();
+        start();
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initHandler() {
+        Log.d(TAG, "initHandler");
         handler = new Handler(msg -> {
             switch (msg.what) {
                 case 0:
+                    restart();
+                    handler.sendEmptyMessageDelayed(0, CHECK_INTERVAL);
+                    return true;
+                case 1:
                     initManager();
-                    reconnect();
+                    signal = null;
+                    isOpening = false;
+                    restart();
                     return true;
             }
             return false;
@@ -93,23 +101,26 @@ public class FingerService extends Service {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void reconnect() {
-        if (isOpen) {
+        Log.d(TAG, "reconnect");
+        if (isOpening) {
             return;
         }
-        isOpen = true;
+        isOpening = true;
         signal = new CancellationSignal();
         if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+            stop();
             stopSelf();
             return;
         }
         fm.authenticate(null, signal, 0, new FingerprintManager.AuthenticationCallback() {
             @Override
-            public void onAuthenticationError(int errMsgId, CharSequence errString) {
-                Log.d(TAG, "onAuthenticationError");
-                super.onAuthenticationError(errMsgId, errString);
-                CHECK_INTERVAL = 60000;
-                stop();
-                reconnect();
+            public void onAuthenticationError(int errorCode, CharSequence errString) {
+                Log.d(TAG, "onAuthenticationError, " + errString + " -> " + errorCode);
+                super.onAuthenticationError(errorCode, errString);
+                isOpening = false;
+                if (errorCode == 5) {
+                    handler.sendEmptyMessageDelayed(1, 1000);
+                }
             }
 
             @Override
@@ -127,18 +138,16 @@ public class FingerService extends Service {
                         App.get().showToast(f.getErrorInfo().getMessage(), false);
                     }
                 }
-                stop();
-                reconnect();
                 super.onAuthenticationSucceeded(result);
                 Log.d(TAG, "onAuthenticationSucceeded");
+                isOpening = false;
             }
 
             @Override
             public void onAuthenticationFailed() {
                 Log.d(TAG, "onAuthenticationFailed");
-                stop();
-                reconnect();
                 super.onAuthenticationFailed();
+                isOpening = false;
 
             }
         }, null);
@@ -149,22 +158,40 @@ public class FingerService extends Service {
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initManager() {
         if (fm == null) {
+            Log.d(TAG, "initManager");
             fm = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void restart() {
+        if (!isOpening) {
+            Log.d(TAG, "restart");
+            stop();
+            start();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void start() {
+        reconnect();
+    }
+
     private void stop() {
+        Log.d(TAG, "stop");
         if (signal != null) {
             signal.cancel();
             signal = null;
         }
-        isOpen = false;
+        isOpening = false;
     }
 
     @Override
     public void onDestroy() {
         Log.d(TAG, "onDestroy");
         super.onDestroy();
+        stop();
+        handler.removeCallbacksAndMessages(null);
         isRunning = false;
         AppEventManager.getInstance().detachFromFingerService();
     }
