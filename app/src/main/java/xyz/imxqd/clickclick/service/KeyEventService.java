@@ -11,8 +11,8 @@ import java.util.Set;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
-import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.log.LogUtils;
+import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class KeyEventService extends AccessibilityService {
@@ -24,6 +24,7 @@ public class KeyEventService extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
 
+        LogUtils.d("time = " + System.currentTimeMillis());
         if (SettingsUtil.displayDebug()) {
             App.get().showToast(getString(R.string.open_service_success), true);
         }
@@ -67,7 +68,7 @@ public class KeyEventService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
-        LogUtils.d("onInterrupt");
+        LogUtils.d("time = " + System.currentTimeMillis());
         if (SettingsUtil.displayDebug()) {
             App.get().showToast(getString(R.string.open_service_interrupt), true);
         }

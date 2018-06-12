@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick.func;
 
 import android.Manifest;
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.media.AudioTrack;
 import android.os.Build;
 import android.os.RemoteException;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
 
@@ -30,6 +32,7 @@ import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.Flash;
+import xyz.imxqd.clickclick.utils.GestureUtil;
 import xyz.imxqd.clickclick.utils.PackageUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
 import xyz.imxqd.clickclick.utils.RomUtil;
@@ -325,6 +328,57 @@ public class InternalFunction extends AbstractFunction {
             service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
         } else {
             throw new RuntimeException("show_notification: value is no need");
+        }
+    }
+
+    private static final String REGEX_TAP_ARGS = "([0-9]+)\\s*,\\s*([0-9]+)";
+    private static final Pattern TAP_ARGS_PATTERN = Pattern.compile(REGEX_TAP_ARGS);
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void tap(String str) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            throw new UnsupportedOperationException();
+        }
+        Matcher matcher = TAP_ARGS_PATTERN.matcher(str);
+        if (matcher.find()) {
+            String numX = matcher.group(1).trim();
+            String numY = matcher.group(2).trim();
+            GestureDescription description = GestureUtil.makeTap(Float.valueOf(numX), Float.valueOf(numY));
+            KeyEventService service = AppEventManager.getInstance().getService();
+            if (service != null) {
+                service.dispatchGesture(description, null, null);
+            } else {
+                AlertUtil.show(App.get().getString(R.string.accessibility_error));
+                throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+            }
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static final String REGEX_SWIPE_ARGS = "([0-9]+)\\s*,\\s*([0-9]+)\\s*([0-9]+)\\s*,\\s*([0-9]+),\\s*([0-9]+)";
+    private static final Pattern SWIPE_ARGS_PATTERN = Pattern.compile(REGEX_SWIPE_ARGS);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void swipe(String str) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            throw new UnsupportedOperationException();
+        }
+        Matcher matcher = SWIPE_ARGS_PATTERN.matcher(str);
+        if (matcher.find()) {
+            String numX = matcher.group(1).trim();
+            String numY = matcher.group(2).trim();
+            String numX2 = matcher.group(3).trim();
+            String numY2 = matcher.group(4).trim();
+            GestureDescription description = GestureUtil.makeSwipe(Float.valueOf(numX), Float.valueOf(numY), Float.valueOf(numX2), Float.valueOf(numY2));
+            KeyEventService service = AppEventManager.getInstance().getService();
+            if (service != null) {
+                service.dispatchGesture(description, null, null);
+            } else {
+                AlertUtil.show(App.get().getString(R.string.accessibility_error));
+                throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+            }
+        } else {
+            throw new IllegalArgumentException();
         }
     }
 
