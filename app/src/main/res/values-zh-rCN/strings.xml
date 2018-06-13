@@ -90,8 +90,11 @@
     <string name="notification_filter_none">完全阻止</string>
     <string name="notification_filter_alarms">仅限闹铃</string>
     <string name="add_notification_func">模拟通知控件点击</string>
-    <string name="snack_bar_app_off">功能已关闭，请去设置开启</string>
+    <string name="snack_bar_app_off">功能已关闭，请打开功能开关</string>
     <string name="request_camera">请赋予相机权限</string>
     <string name="create_gesture_hint"><![CDATA[请点击或者滑动创建手势<br>返回键取消创建]]></string>
     <string name="add_tap_or_swipe">模拟点击或手势</string>
+    <string name="snack_bar_accessibility_error">系统无障碍服务异常</string>
+    <string name="re_turn_on">重新开关一次</string>
+    <string name="to_turn_on">去打开</string>
 </resources>

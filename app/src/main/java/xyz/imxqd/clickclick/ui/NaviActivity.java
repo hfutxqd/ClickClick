@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.ArrayMap;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -60,27 +61,6 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
             clearFragments();
             switchPageTo(currentTabId);
         }
-
-//        if (RxFingerprint.isAvailable(this)) {
-//            Disposable disposable = RxFingerprint.decrypt(EncryptionMethod.AES, this, "name", "tode")
-//                    .subscribe(fingerprintAuthenticationResult -> {
-//                        switch (fingerprintAuthenticationResult.getResult()) {
-//                            case FAILED:
-//                                LogUtils.d("Fingerprint not recognized, try again!");
-//                                break;
-//                            case HELP:
-//                                LogUtils.d(fingerprintAuthenticationResult.getMessage());
-//                                break;
-//                            case AUTHENTICATED:
-//                                LogUtils.d("Successfully authenticated!");
-//                                break;
-//                        }
-//                    }, throwable -> {
-//                        LogUtils.e("ERROR : authenticate", throwable);
-//                    });
-//        } else {
-//            // fingerprint is not available
-//        }
     }
 
     @Override
@@ -106,10 +86,19 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
     private Snackbar mSnackbar;
     private void showSnackBarInNeed() {
         if (AppEventManager.getInstance().getService() == null) {
+            if (isAccessibilitySettingsOn() && SettingsUtil.isServiceOn()) {
+                mSnackbar = Snackbar.make(findViewById(R.id.nav_container), R.string.snack_bar_accessibility_error, Snackbar.LENGTH_INDEFINITE);
+                mSnackbar.setAction(R.string.re_turn_on, v -> startAccessibilitySettings());
+                mSnackbar.getView().setBackgroundResource(R.color.snackbar_error_bg);
+                mSnackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_error_accent));
+                mSnackbar.show();
+                return;
+            }
             if (mSnackbar != null && mSnackbar.isShown()) {
                 return;
             }
             mSnackbar = Snackbar.make(findViewById(R.id.nav_container), R.string.snack_bar_app_off, Snackbar.LENGTH_INDEFINITE);
+            mSnackbar.setAction(R.string.to_turn_on, v -> vNavigation.setSelectedItemId(R.id.navigation_settings));
             mSnackbar.show();
         } else if (mSnackbar != null && mSnackbar.isShownOrQueued()){
             mSnackbar.dismiss();

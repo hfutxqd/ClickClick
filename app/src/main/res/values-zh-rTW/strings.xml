@@ -90,8 +90,11 @@
     <string name="notification_filter_none">完全阻止</string>
     <string name="notification_filter_alarms">僅限鬧鈴</string>
     <string name="add_notification_func">模擬通知控件點擊</string>
-    <string name="snack_bar_app_off">功能已關閉，請去設置開啟</string>
+    <string name="snack_bar_app_off">功能已關閉，請打開功能開關</string>
     <string name="request_camera">請授予相機權限</string>
     <string name="create_gesture_hint"><![CDATA[請點擊或者滑動創建手勢<br>返回鍵取消創建]]></string>
     <string name="add_tap_or_swipe">模擬點擊或手勢</string>
+    <string name="snack_bar_accessibility_error">系統無障礙服務異常</string>
+    <string name="re_turn_on">重新開關一次</string>
+    <string name="to_turn_on">去打開</string>
 </resources>

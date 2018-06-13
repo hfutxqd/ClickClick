@@ -96,9 +96,12 @@
     <string name="notification_filter_none">Total silence</string>
     <string name="notification_filter_alarms">Alarms only</string>
     <string name="add_notification_func">Simulate clicking a notification widget</string>
-    <string name="snack_bar_app_off">Key mapping service is off. Please turn on in settings screen.</string>
+    <string name="snack_bar_app_off">Key mapping service is off. Please turn it on.</string>
     <string name="request_camera">Please grant the camera permission</string>
     <string name="create_gesture_hint"><![CDATA[Please click or swipe to create a gesture <br> Press back key to cancel ]]></string>
     <string name="add_tap_or_swipe">Simulate clicks or gestures</string>
+    <string name="snack_bar_accessibility_error">System accessibility service is abnormal</string>
+    <string name="re_turn_on">Re-switch it</string>
+    <string name="to_turn_on">To turn on</string>
 
 </resources>
