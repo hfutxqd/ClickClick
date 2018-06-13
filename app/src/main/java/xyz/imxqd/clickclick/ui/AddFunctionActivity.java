@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
@@ -120,6 +121,13 @@ public class AddFunctionActivity extends BaseActivity {
         intent.putExtra(ARGS_EDITABLE, editable);
         intent.putExtra(ARGS_REMOTE_FUNCATION, function);
         context.startActivity(intent);
+    }
+
+    public static void startForResult(RemoteFunction function, boolean editable, Activity context, int requestCode) {
+        Intent intent = new Intent(context, AddFunctionActivity.class);
+        intent.putExtra(ARGS_EDITABLE, editable);
+        intent.putExtra(ARGS_REMOTE_FUNCATION, function);
+        context.startActivityForResult(intent, requestCode);
     }
 
     @Override
