@@ -99,6 +99,7 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
             }
             mSnackbar = Snackbar.make(findViewById(R.id.nav_container), R.string.snack_bar_app_off, Snackbar.LENGTH_INDEFINITE);
             mSnackbar.setAction(R.string.to_turn_on, v -> vNavigation.setSelectedItemId(R.id.navigation_settings));
+            mSnackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_error_accent));
             mSnackbar.show();
         } else if (mSnackbar != null && mSnackbar.isShownOrQueued()){
             mSnackbar.dismiss();
