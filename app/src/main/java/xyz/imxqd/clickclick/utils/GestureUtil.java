@@ -25,4 +25,12 @@ public class GestureUtil {
                 .addStroke(new GestureDescription.StrokeDescription(path, 0, dur))
                 .build();
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static GestureDescription makeGesture(Path path, int dur) {
+        return new GestureDescription.Builder()
+                .addStroke(new GestureDescription.StrokeDescription(path, 0, dur))
+                .build();
+    }
 }

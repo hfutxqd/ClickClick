@@ -92,6 +92,6 @@
     <string name="add_notification_func">模擬通知控件點擊</string>
     <string name="snack_bar_app_off">功能已關閉，請去設置開啟</string>
     <string name="request_camera">請授予相機權限</string>
-    <string name="create_gesture_hint"><![CDATA[請點擊或者滑動創建手勢<br>僅支持直線手勢<br>返回鍵取消創建]]></string>
+    <string name="create_gesture_hint"><![CDATA[請點擊或者滑動創建手勢<br>返回鍵取消創建]]></string>
     <string name="add_tap_or_swipe">模擬點擊或手勢</string>
 </resources>

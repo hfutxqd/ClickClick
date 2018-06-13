@@ -1,19 +1,17 @@
 package xyz.imxqd.clickclick.ui;
 
 import android.content.Intent;
-import android.graphics.Path;
-import android.graphics.PathMeasure;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 
+import java.util.List;
 import java.util.Locale;
 
 import xyz.imxqd.clickclick.R;
@@ -52,15 +50,30 @@ public class CreateGestureActivity extends AppCompatActivity implements GestureV
     }
 
     @Override
-    public void onGesture(Path path) {
-        PathMeasure pm = new PathMeasure(path, false);
-        // TODO: 2018/6/13 get all points
+    public void onGesture(GestureView.LinePath path, long duration) {
+        StringBuilder body = new StringBuilder();
+        body.append("internal:gesture(");
+        List<PointF> points = path.getPoints();
+        for (int i = 0; i < points.size(); i++) {
+            PointF p = points.get(i);
+            body.append(String.format(Locale.getDefault(), "%.0f,%.0f", p.x, p.y));
+            body.append(",");
+        }
+        body.append(duration);
+        body.append(")");
+        RemoteFunction f = new RemoteFunction();
+        f.name = "";
+        f.description = "";
+        f.body = body.toString();
+        AddFunctionActivity.startForResult(f, true, this, REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
+            finish();
+        } else if (resultCode == RESULT_CANCELED) {
             finish();
         }
     }

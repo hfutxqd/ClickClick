@@ -6,15 +6,20 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GestureView extends AppCompatTextView {
 
-    private static final float SWIPE_MIN_DISTANCE = 80;
-    private Path mPath;
+    private static final float SWIPE_MIN_DISTANCE = 50;
+    private static final float TAP_MAX_TIME = 200;
+    private LinePath mPath;
     private Paint mPaint;
 
     private boolean init = false;
@@ -38,7 +43,7 @@ public class GestureView extends AppCompatTextView {
 
     private void init() {
         if (!init) {
-            mPath = new Path();
+            mPath = new LinePath();
             mPaint = new Paint();
             mPaint.setStrokeWidth(20f);
             mPaint.setColor(Color.BLACK);
@@ -89,13 +94,13 @@ public class GestureView extends AppCompatTextView {
                 break;
             case MotionEvent.ACTION_UP:
                 mPath.lineTo(event.getX(), event.getY());
-                if (getDistance(downX, downY, event.getX(), event.getY()) <= SWIPE_MIN_DISTANCE) {
+                if (getDistance(downX, downY, event.getX(), event.getY()) <= SWIPE_MIN_DISTANCE && System.currentTimeMillis() - downTime <= TAP_MAX_TIME) {
                     if (mCallback != null) {
                         mCallback.onTap(downX, downY);
                     }
                 } else {
                     if (mCallback != null) {
-                        mCallback.onGesture(mPath);
+                        mCallback.onGesture(mPath, System.currentTimeMillis() - downTime);
                     }
                 }
                 break;
@@ -104,8 +109,46 @@ public class GestureView extends AppCompatTextView {
         return true;
     }
 
+    public static class LinePath extends Path {
+        private List<PointF> mLinePoints = new ArrayList<>();
+
+        @Override
+        public void lineTo(float x, float y) {
+            super.lineTo(x, y);
+            if (isNewPoint(x, y)) {
+                mLinePoints.add(new PointF(x, y));
+            }
+        }
+
+        private boolean isNewPoint(float x, float y) {
+            if (mLinePoints.size() == 0) {
+                return true;
+            } else {
+                PointF p = mLinePoints.get(mLinePoints.size() - 1);
+                return !(p.x == x && p.y == y);
+            }
+        }
+
+        @Override
+        public void moveTo(float x, float y) {
+            super.moveTo(x, y);
+            mLinePoints.clear();
+            mLinePoints.add(new PointF(x, y));
+        }
+
+        @Override
+        public void reset() {
+            super.reset();
+            mLinePoints.clear();
+        }
+
+        public List<PointF> getPoints() {
+            return mLinePoints;
+        }
+    }
+
     public interface GestureCreatedCallback {
         void onTap(float x, float y);
-        void onGesture(Path path);
+        void onGesture(LinePath path, long duration);
     }
 }

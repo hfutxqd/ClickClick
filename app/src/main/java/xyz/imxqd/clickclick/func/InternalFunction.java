@@ -39,6 +39,7 @@ import xyz.imxqd.clickclick.utils.RomUtil;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.SystemSettingsUtl;
 import xyz.imxqd.clickclick.utils.ToneUtil;
+import xyz.imxqd.clickclick.widget.GestureView;
 
 public class InternalFunction extends AbstractFunction {
     public static final String PREFIX = "internal";
@@ -372,6 +373,35 @@ public class InternalFunction extends AbstractFunction {
             String duration = matcher.group(5).trim();
             GestureDescription description = GestureUtil.makeSwipe(Float.valueOf(numX), Float.valueOf(numY), Float.valueOf(numX2), Float.valueOf(numY2),
                     Integer.valueOf(duration));
+            KeyEventService service = AppEventManager.getInstance().getService();
+            if (service != null) {
+                service.dispatchGesture(description, null, null);
+            } else {
+                AlertUtil.show(App.get().getString(R.string.accessibility_error));
+                throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+            }
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+
+    private static final String REGEX_GESTURE_ARGS = "(([0-9]+)\\s*,\\s*)+([0-9]+)";
+    private static final Pattern GESTURE_ARGS_PATTERN = Pattern.compile(REGEX_GESTURE_ARGS);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void gesture(String str) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            throw new UnsupportedOperationException();
+        }
+        Matcher matcher = GESTURE_ARGS_PATTERN.matcher(str);
+        if (matcher.matches()) {
+            GestureView.LinePath path = new GestureView.LinePath();
+            String[] args = str.split(",");
+            path.moveTo(Float.valueOf(args[0].trim()), Float.valueOf(args[1].trim()));
+            for (int i = 2; i < args.length - 1; i += 2) {
+                path.lineTo(Float.valueOf(args[i].trim()), Float.valueOf(args[i + 1].trim()));
+            }
+            GestureDescription description = GestureUtil.makeGesture(path, Integer.valueOf(args[args.length - 1].trim()));
             KeyEventService service = AppEventManager.getInstance().getService();
             if (service != null) {
                 service.dispatchGesture(description, null, null);
