@@ -30,6 +30,7 @@ import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.model.FlymeSmartTouchHelper;
 import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
+import xyz.imxqd.clickclick.ui.ScreenCaptureActivity;
 import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.Flash;
 import xyz.imxqd.clickclick.utils.GestureUtil;
@@ -412,6 +413,17 @@ public class InternalFunction extends AbstractFunction {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void screenshot(String str) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            throw new UnsupportedOperationException();
+        }
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setClass(App.get(), ScreenCaptureActivity.class);
+        App.get().startActivity(intent);
     }
 
     private ToneUtil.Tone getTone(String tone) {

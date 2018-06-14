@@ -97,4 +97,6 @@
     <string name="snack_bar_accessibility_error">系统无障碍服务异常</string>
     <string name="re_turn_on">重新开关一次</string>
     <string name="to_turn_on">去打开</string>
+    <string name="no_permission_write">没有权限保存屏幕截图</string>
+    <string name="screen_shot_notification_title">屏幕已截图</string>
 </resources>

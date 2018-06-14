@@ -103,5 +103,9 @@
     <string name="snack_bar_accessibility_error">System accessibility service is abnormal</string>
     <string name="re_turn_on">Re-switch it</string>
     <string name="to_turn_on">To turn on</string>
+    <string name="no_permission_write">No permission to save screenshot</string>
+
+    <string name="screen_shot_notification_title">Screen shot</string>
+
 
 </resources>
