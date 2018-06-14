@@ -72,6 +72,15 @@
       "version_name": "1.0",
       "author": "imxqd",
       "update_time": 1527414422000
+    },
+    {
+      "name": "截取当前屏幕",
+      "description": "截取当前屏幕",
+      "body": "internal:screenshot()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
     }
   ]
 }
