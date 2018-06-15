@@ -143,12 +143,14 @@
             android:name=".ui.CreateGestureActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:launchMode="singleTop"
+            android:excludeFromRecents="true"
             android:name=".ui.ScreenCaptureActivity"
             android:theme="@style/AppTheme.Translucent" />
 
         <service
             android:name=".service.ScreenShotService"
-            android:exported="false"></service>
+            android:exported="false" />
     </application>
 
 </manifest>
