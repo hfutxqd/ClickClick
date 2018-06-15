@@ -106,6 +106,8 @@
     <string name="no_permission_write">No permission to save screenshot</string>
 
     <string name="screen_shot_notification_title">Screen shot</string>
+    <string name="screen_shot_channel_name">ScreenShot</string>
+    <string name="screen_shot_channel_description">Notify when screenshot</string>
 
 
 </resources>

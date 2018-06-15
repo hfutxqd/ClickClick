@@ -99,4 +99,6 @@
     <string name="to_turn_on">去打开</string>
     <string name="no_permission_write">没有权限保存屏幕截图</string>
     <string name="screen_shot_notification_title">屏幕已截图</string>
+    <string name="screen_shot_channel_name">屏幕截图</string>
+    <string name="screen_shot_channel_description">屏幕截图完成时发出</string>
 </resources>

@@ -10,8 +10,10 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 
 /**
@@ -62,14 +64,18 @@ public class ScreenShotNotification {
     private static void notify(final Context context, final Notification notification) {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            CharSequence name = "click_screen_shot";
-            String description = "click_screen_shot";
+        if (nm == null) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            CharSequence name = App.get().getString(R.string.screen_shot_channel_name);
+            String description = App.get().getString(R.string.screen_shot_channel_description);
 
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
             mChannel.setDescription(description);
-            mChannel.enableLights(true);
+            mChannel.enableLights(false);
+            mChannel.setShowBadge(false);
             nm.createNotificationChannel(mChannel);
         }
         nm.notify(NOTIFICATION_TAG, 0, notification);
@@ -78,6 +84,9 @@ public class ScreenShotNotification {
     public static void cancel(final Context context) {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
+        if (nm == null) {
+            return;
+        }
         nm.cancel(NOTIFICATION_TAG, 0);
     }
 }
