@@ -23,8 +23,10 @@ public class NotificationFunction extends AbstractFunction {
     private static final String REGEX_PACKAGE = "([a-zA-Z0-9_]+\\.{1})+[a-zA-Z0-9_]+";
     private static final String REGEX_RESOURCE_ID = "@id/([a-zA-Z_]+)";
     private static final String REGEX_ID = "@id/(([a-zA-Z0-9_]+){1}(\\.{1}[a-zA-Z0-9_]+)*):id/([a-zA-Z0-9_]+)";
+    private static final String REGEX_ACTION = "@action/([0-9]+)";
     private static final Pattern RESOURCE_ID_PATTERN = Pattern.compile(REGEX_RESOURCE_ID);
     private static final Pattern ID_PATTERN = Pattern.compile(REGEX_ID);
+    private static final Pattern ACTION_PATTERN = Pattern.compile(REGEX_ACTION);
 
     public NotificationFunction(String funcData) {
         super(funcData);
@@ -84,6 +86,7 @@ public class NotificationFunction extends AbstractFunction {
         if (NotificationCollectorService.getNotificationsByPackage(getPackageName(args)).size() > 0) {
             Matcher matcher = RESOURCE_ID_PATTERN.matcher(getPackageArgs(args));
             Matcher matcher2 = ID_PATTERN.matcher(getPackageArgs(args));
+            Matcher matcher3 = ACTION_PATTERN.matcher(getPackageArgs(args));
             if (matcher.matches()) {
                 LogUtils.d("notification : id mode");
                 matcher.reset();
@@ -137,6 +140,23 @@ public class NotificationFunction extends AbstractFunction {
                 }
 
                 intent.send();
+
+            } else if (matcher3.matches()) {
+                matcher3.reset();
+                int actionOrder = 0;
+                if (matcher3.find()) {
+                    actionOrder = Integer.valueOf(matcher3.group(1));
+                    List<Notification> notifications = NotificationCollectorService.getNotificationsByPackage(getPackageName(args));
+                    if (notifications.size() == 0) {
+                        throw new RuntimeException("There are no notifications of " + getPackageName(args));
+                    }
+                    Notification.Action[] actions = notifications.get(0).actions;
+                    if (actions != null) {
+                        actions[actionOrder].actionIntent.send();
+                    } else {
+                        throw new RuntimeException("There are no notification actions for " + getPackageName(args));
+                    }
+                }
 
             } else {
                 LogUtils.d("notification : order mode");

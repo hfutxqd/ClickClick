@@ -137,6 +137,17 @@ public class NotificationAccessUtil {
         return list;
     }
 
+    public static PendingIntent getPendingIntentByViewId(Notification n, int viewId) throws IllegalAccessException {
+        PendingIntent intent = null;
+        if (n.bigContentView != null) {
+            intent = NotificationAccessUtil.getPendingIntentByViewId(n.bigContentView, viewId);
+        }
+        if (intent == null && n.contentView != null) {
+            intent = NotificationAccessUtil.getPendingIntentByViewId(n.contentView, viewId);
+        }
+        return intent;
+    }
+
     public static PendingIntent getPendingIntentByViewId(RemoteViews rvs,  int viewId) throws IllegalAccessException {
         if (sClassSetOnClickPendingIntent == null) {
             return null;
