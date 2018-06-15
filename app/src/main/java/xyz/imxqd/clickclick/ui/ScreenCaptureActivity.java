@@ -2,7 +2,6 @@ package xyz.imxqd.clickclick.ui;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,28 +19,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.PermissionChecker;
 import android.util.DisplayMetrics;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.reactivestreams.Subscriber;
-
 import java.nio.ByteBuffer;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.ObservableSource;
-import io.reactivex.Scheduler;
-import io.reactivex.functions.Consumer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import io.reactivex.internal.operators.flowable.FlowableFlatMap;
 import io.reactivex.schedulers.Schedulers;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
@@ -51,6 +42,12 @@ import xyz.imxqd.clickclick.utils.ScreenShotNotification;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class ScreenCaptureActivity extends Activity {
+
+    public static final String ARGS_MODE = "capture_mode";
+
+    public static final int MODE_DERECT = 1;
+    public static final int MODE_SERVICE = 2;
+
 
     private static final String STATE_RESULT_CODE = "result_code";
     private static final String STATE_RESULT_DATA = "result_data";
@@ -71,65 +68,86 @@ public class ScreenCaptureActivity extends Activity {
     private MediaProjectionManager mMediaProjectionManager;
     private ImageReader mImageReader;
     private MediaActionSound mCameraSound;
-
-    private boolean isScreenShotDone = false;
-
     private Bitmap mScreenShotBitmap;
+
+    private Image image = null;
+
+    private ObservableEmitter<ImageReader> mEmitter;
+    private Disposable mDisposable;
+
+    private int mode = MODE_DERECT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mode = getIntent().getIntExtra(ARGS_MODE, MODE_DERECT);
 
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-        mScreenDensity = metrics.densityDpi;
-        mScreenWidth = metrics.widthPixels;
-        mScreenHeight = metrics.heightPixels;
-        mMediaProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
-        mImageReader = ImageReader.newInstance(mScreenWidth, mScreenHeight, PixelFormat.RGBA_8888, 1);
-        mCameraSound = new MediaActionSound();
-        mCameraSound.load(MediaActionSound.SHUTTER_CLICK);
-        mImageReader.setOnImageAvailableListener(reader -> {
-            if (isScreenShotDone) {
-                return;
-            }
-            LogUtils.d(reader.toString());
-            Image image = null;
-            image = reader.acquireLatestImage();
-            if (image == null) {
-                return;
-            }
-            isScreenShotDone = true;
-            Observable.just(image)
+        if (mode == MODE_DERECT) {
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+            mScreenDensity = metrics.densityDpi;
+            mScreenWidth = metrics.widthPixels;
+            mScreenHeight = metrics.heightPixels;
+            mMediaProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+            mImageReader = ImageReader.newInstance(mScreenWidth, mScreenHeight, PixelFormat.RGBA_8888, 1);
+            mCameraSound = new MediaActionSound();
+            mCameraSound.load(MediaActionSound.SHUTTER_CLICK);
+            mDisposable = Observable.create((ObservableOnSubscribe<ImageReader>) emitter -> mEmitter = emitter)
+                    .debounce(400, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .flatMap((Function<Image, ObservableSource<Bitmap>>) image1 -> {
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .flatMap((Function<ImageReader, ObservableSource<Bitmap>>) reader2 -> {
+                        LogUtils.d(reader2.toString());
+                        image = reader2.acquireNextImage();
+                        if (image == null) {
+                            mScreenShotBitmap = null;
+                            return Observable.just(Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8));
+                        }
                         Bitmap bitmap = null;
-                        final Image.Plane[] planes = image1.getPlanes();
+                        final Image.Plane[] planes = image.getPlanes();
                         final ByteBuffer buffer = planes[0].getBuffer();
+                        if (buffer == null) {
+                            mScreenShotBitmap = null;
+                            return Observable.just(Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8));
+                        }
                         int pixelStride = planes[0].getPixelStride();
                         int rowStride = planes[0].getRowStride();
-                        int rowPadding = rowStride - pixelStride * image1.getWidth();
-                        bitmap = Bitmap.createBitmap(image1.getWidth() + rowPadding / pixelStride, image1.getHeight(), Bitmap.Config.ARGB_8888);
+                        int rowPadding = rowStride - pixelStride * image.getWidth();
+                        bitmap = Bitmap.createBitmap(image.getWidth() + rowPadding / pixelStride, image.getHeight(), Bitmap.Config.ARGB_8888);
                         bitmap.copyPixelsFromBuffer(buffer);
-                        Bitmap bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, image1.getWidth(), image1.getHeight());
-                        image1.close();
+                        Bitmap bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, image.getWidth(), image.getHeight());
+                        mScreenShotBitmap = bitmap;
+                        image.close();
+                        image = null;
                         return Observable.just(bitmap2);
                     }).subscribe(bitmap -> {
+                        if (mScreenShotBitmap == null) {
+                            return;
+                        }
+                        mImageReader.close();
                         if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
-                            mScreenShotBitmap = bitmap;
                             saveScreenShot();
-                            stopScreenCapture();
                             finish();
                         } else {
                             ActivityCompat.requestPermissions(ScreenCaptureActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
                         }
 
-            });
+                    });
 
 
-        }, App.get().getHandler());
-        startScreenCapture();
+            mImageReader.setOnImageAvailableListener(reader -> {
+                if (mEmitter != null) {
+                    mEmitter.onNext(reader);
+                }
+
+            }, App.get().getHandler());
+            startScreenCapture();
+        } else if (mode == MODE_SERVICE) {
+
+        } else {
+            finish();
+        }
+
     }
 
     @Override
@@ -143,15 +161,23 @@ public class ScreenCaptureActivity extends Activity {
             mResultCode = resultCode;
             mResultData = data;
             setUpMediaProjection();
-            setUpVirtualDisplay();
+            if (mode == MODE_DERECT) {
+                setUpVirtualDisplay();
+            }
+
         }
     }
 
 
     private void saveScreenShot() {
+        if (mScreenShotBitmap == null) {
+            return;
+        }
         mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
-        String url = CapturePhotoUtils.insertImage(getContentResolver(), mScreenShotBitmap, "screenshot by ClickClick", "screenshot file by ClickClick");
-        ScreenShotNotification.notify(App.get(), mScreenShotBitmap, Uri.parse(url), 0);
+        String url = CapturePhotoUtils.insertImage(getContentResolver(), mScreenShotBitmap, "Screenshot by ClickClick", "Screenshot file by ClickClick");
+        if (url != null) {
+            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, Uri.parse(url), 0);
+        }
     }
 
     @Override
@@ -161,6 +187,7 @@ public class ScreenCaptureActivity extends Activity {
             finish();
         } else {
             Toast.makeText(this, R.string.no_permission_write, Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 
@@ -198,11 +225,19 @@ public class ScreenCaptureActivity extends Activity {
     }
 
     private void stopScreenCapture() {
-        if (mVirtualDisplay == null) {
-            return;
+        if (mVirtualDisplay != null) {
+            mVirtualDisplay.release();
+            mVirtualDisplay = null;
         }
-        mVirtualDisplay.release();
-        mVirtualDisplay = null;
         tearDownMediaProjection();
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopScreenCapture();
     }
 }

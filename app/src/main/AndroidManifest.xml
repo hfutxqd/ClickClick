@@ -127,6 +127,7 @@
             android:name=".ui.NoDisplayActivity"
             android:exported="true"
             android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="${appId}.run" />
@@ -143,7 +144,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.ScreenCaptureActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/AppTheme.Translucent" />
     </application>
 
 </manifest>

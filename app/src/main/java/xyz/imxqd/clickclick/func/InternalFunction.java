@@ -5,6 +5,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.GestureDescription;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioTrack;
@@ -416,14 +417,14 @@ public class InternalFunction extends AbstractFunction {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public void screenshot(String str) {
+    public void screenshot(String str) throws PendingIntent.CanceledException {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             throw new UnsupportedOperationException();
         }
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setClass(App.get(), ScreenCaptureActivity.class);
-        App.get().startActivity(intent);
+        PendingIntent.getActivity(App.get(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT).send();
     }
 
     private ToneUtil.Tone getTone(String tone) {
