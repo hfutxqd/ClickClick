@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class CapturePhotoUtils {
-    public static String insertImage(ContentResolver cr,
+    public static Uri insertImage(ContentResolver cr,
                                            Bitmap source,
                                            String title,
                                            String description) {
@@ -22,7 +22,8 @@ public class CapturePhotoUtils {
         values.put(MediaStore.Images.Media.DESCRIPTION, description);
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         // Add the date meta data to ensure the image is added at the front of the gallery
-        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
+        values.put(MediaStore.Images.Media.DATE_MODIFIED, System.currentTimeMillis() / 1000);
         values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
 
         Uri url = null;
@@ -54,12 +55,7 @@ public class CapturePhotoUtils {
                 url = null;
             }
         }
-
-        if (url != null) {
-            stringUrl = url.toString();
-        }
-
-        return stringUrl;
+        return url;
     }
 
     /**

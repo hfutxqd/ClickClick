@@ -208,9 +208,9 @@ public class ScreenCaptureActivity extends Activity {
             return;
         }
         mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
-        String url = CapturePhotoUtils.insertImage(getContentResolver(), mScreenShotBitmap, "Screenshot by ClickClick", "Screenshot file by ClickClick");
+        Uri url = CapturePhotoUtils.insertImage(getContentResolver(), mScreenShotBitmap, "Screenshot by ClickClick", "Screenshot file by ClickClick");
         if (url != null) {
-            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, Uri.parse(url), 0);
+            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, url, 0);
         }
     }
 
