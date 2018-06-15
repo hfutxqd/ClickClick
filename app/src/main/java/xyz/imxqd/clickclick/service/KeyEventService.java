@@ -29,15 +29,31 @@ public class KeyEventService extends AccessibilityService {
         if (SettingsUtil.displayDebug()) {
             App.get().showToast(getString(R.string.open_service_success), true);
         }
+        exitTouchExplorationMode();
+        AppEventManager.getInstance().attachToAccessibilityService(this);
+    }
+
+    private void enterTouchExplorationMode() {
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
         info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
         info.flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS |
-                     AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS |
-                     AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
+                AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS |
+                AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS |
+                AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE;
         info.notificationTimeout = 100;
         setServiceInfo(info);
-        AppEventManager.getInstance().attachToAccessibilityService(this);
+    }
+
+    private void exitTouchExplorationMode() {
+        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
+        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
+        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
+        info.flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS |
+                AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS |
+                AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
+        info.notificationTimeout = 100;
+        setServiceInfo(info);
     }
 
     private boolean isNotificationWidget(AccessibilityNodeInfo source) {
@@ -76,6 +92,20 @@ public class KeyEventService extends AccessibilityService {
                     }
                 }
 
+            } else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_HOVER_ENTER) {
+                AccessibilityNodeInfo source = event.getSource();
+                if (source == null) {
+                    LogUtils.d( "source was null for: " + event);
+                } else {
+                    if (isNotificationWidget(source)) {
+                        for (OnNotificationWidgetClick c : mClickCallbacks) {
+                            c.onNotificationWidgetClick(source.getPackageName().toString(), source.getViewIdResourceName());
+                        }
+                        String viewIdResourceName = source.getViewIdResourceName();
+                        LogUtils.d( "viewid: " + viewIdResourceName);
+                        exitTouchExplorationMode();
+                    }
+                }
             }
         } catch (Exception e) {
             LogUtils.e(e.getMessage());
@@ -94,12 +124,14 @@ public class KeyEventService extends AccessibilityService {
 
     public void addOnNotificationWidgetClickCallback(OnNotificationWidgetClick callback) {
         if (callback != null) {
+//            enterTouchExplorationMode();
             mClickCallbacks.add(callback);
         }
     }
 
     public void removeOnNotificationWidgetClickCallback(OnNotificationWidgetClick callback) {
         if (callback != null && mClickCallbacks.contains(callback)) {
+//            exitTouchExplorationMode();
             mClickCallbacks.remove(callback);
         }
     }

@@ -97,6 +97,7 @@ public class InternalFunction extends AbstractFunction {
                     service.removeOnNotificationWidgetClickCallback(this);
                 }
             };
+            service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
             service.addOnNotificationWidgetClickCallback(callback);
             App.get().getHandler().postDelayed(new Runnable() {
                 @Override
