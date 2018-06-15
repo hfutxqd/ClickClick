@@ -123,9 +123,11 @@ public class NotificationFunction extends AbstractFunction {
                 if (notifications.size() == 0) {
                     throw new RuntimeException("There are no notifications of " + getPackageName(args));
                 }
-                PendingIntent intent;
-                intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).bigContentView, viewId);
-                if (intent == null) {
+                PendingIntent intent = null;
+                if (notifications.get(0).bigContentView != null) {
+                    intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).bigContentView, viewId);
+                }
+                if (intent == null && notifications.get(0).contentView != null) {
                     intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).contentView, viewId);
                 }
                 if (intent != null) {

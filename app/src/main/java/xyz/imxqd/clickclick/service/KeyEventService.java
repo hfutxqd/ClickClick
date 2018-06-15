@@ -1,6 +1,7 @@
 package xyz.imxqd.clickclick.service;
 
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
@@ -28,41 +29,56 @@ public class KeyEventService extends AccessibilityService {
         if (SettingsUtil.displayDebug()) {
             App.get().showToast(getString(R.string.open_service_success), true);
         }
+        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
+        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
+        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
+        info.flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS |
+                     AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS |
+                     AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
+        info.notificationTimeout = 100;
+        setServiceInfo(info);
         AppEventManager.getInstance().attachToAccessibilityService(this);
+    }
+
+    private boolean isNotificationWidget(AccessibilityNodeInfo source) {
+        source.refresh();
+        if (source != source.getParent() && source.getParent() != null && !TextUtils.equals(source.getPackageName(), "com.android.systemui")) {
+            AccessibilityNodeInfo p = source;
+            do {
+                LogUtils.d(p.getViewIdResourceName());
+                p = p.getParent();
+            } while (p.getParent() != null);
+            LogUtils.d( "root parent is " + p.getPackageName());
+            if (TextUtils.equals(p.getPackageName(), "com.android.systemui")) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+        return false;
     }
 
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         try {
-            if (event.getEventType() == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
-
-            } else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED) {
+            if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED) {
                 AccessibilityNodeInfo source = event.getSource();
                 if (source == null) {
                     LogUtils.d( "source was null for: " + event);
                 } else {
-                    source.refresh();
-                    if (source != source.getParent() && source.getParent() != null && !TextUtils.equals(source.getPackageName(), "com.android.systemui")) {
-                        AccessibilityNodeInfo p = source;
-                        do {
-                            p = p.getParent();
-                        } while (p.getParent() != null);
-                        LogUtils.d( "root parent is " + p.getPackageName());
-                        if (TextUtils.equals(p.getPackageName(), "com.android.systemui")) {
-                            for (OnNotificationWidgetClick c : mClickCallbacks) {
-                                c.onNotificationWidgetClick(source.getPackageName().toString(), source.getViewIdResourceName());
-                            }
-                            String viewIdResourceName = source.getViewIdResourceName();
-                            LogUtils.d( "viewid: " + viewIdResourceName);
+                    if (isNotificationWidget(source)) {
+                        for (OnNotificationWidgetClick c : mClickCallbacks) {
+                            c.onNotificationWidgetClick(source.getPackageName().toString(), source.getViewIdResourceName());
                         }
+                        String viewIdResourceName = source.getViewIdResourceName();
+                        LogUtils.d( "viewid: " + viewIdResourceName);
                     }
                 }
 
-            } else if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtils.e(e.getMessage());
         }
     }
 
@@ -73,6 +89,7 @@ public class KeyEventService extends AccessibilityService {
             App.get().showToast(getString(R.string.open_service_interrupt), true);
         }
         AppEventManager.getInstance().detachFromAccessibilityService();
+        stopSelf();
     }
 
     public void addOnNotificationWidgetClickCallback(OnNotificationWidgetClick callback) {
