@@ -125,9 +125,9 @@
             android:theme="@style/AppTheme.Dialog" />
         <activity
             android:name=".ui.NoDisplayActivity"
+            android:excludeFromRecents="true"
             android:exported="true"
             android:launchMode="singleInstance"
-            android:excludeFromRecents="true"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="${appId}.run" />
@@ -145,6 +145,10 @@
         <activity
             android:name=".ui.ScreenCaptureActivity"
             android:theme="@style/AppTheme.Translucent" />
+
+        <service
+            android:name=".service.ScreenShotService"
+            android:exported="false"></service>
     </application>
 
 </manifest>

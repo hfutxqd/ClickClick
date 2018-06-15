@@ -2,8 +2,10 @@ package xyz.imxqd.clickclick.ui;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
@@ -16,6 +18,7 @@ import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -37,6 +40,7 @@ import io.reactivex.schedulers.Schedulers;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
+import xyz.imxqd.clickclick.service.ScreenShotService;
 import xyz.imxqd.clickclick.utils.CapturePhotoUtils;
 import xyz.imxqd.clickclick.utils.ScreenShotNotification;
 
@@ -74,6 +78,8 @@ public class ScreenCaptureActivity extends Activity {
 
     private ObservableEmitter<ImageReader> mEmitter;
     private Disposable mDisposable;
+
+    private ScreenShotService.ScreenShotBinder mScreenShotService;
 
     private int mode = MODE_DERECT;
 
@@ -143,7 +149,19 @@ public class ScreenCaptureActivity extends Activity {
             }, App.get().getHandler());
             startScreenCapture();
         } else if (mode == MODE_SERVICE) {
+            Intent intent = new Intent(this, ScreenShotService.class);
+            bindService(intent, new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    mScreenShotService = (ScreenShotService.ScreenShotBinder) service;
+                }
 
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+                    mScreenShotService = null;
+                }
+            }, BIND_AUTO_CREATE);
+            startScreenCapture();
         } else {
             finish();
         }
@@ -193,6 +211,11 @@ public class ScreenCaptureActivity extends Activity {
 
     private void setUpMediaProjection() {
         mMediaProjection = mMediaProjectionManager.getMediaProjection(mResultCode, mResultData);
+        if (mode == MODE_SERVICE && mScreenShotService != null) {
+            mScreenShotService.setMediaProjectionManager(mMediaProjection);
+        } else if (mode == MODE_SERVICE) {
+            finish();
+        }
     }
 
     private void tearDownMediaProjection() {
@@ -229,7 +252,9 @@ public class ScreenCaptureActivity extends Activity {
             mVirtualDisplay.release();
             mVirtualDisplay = null;
         }
-        tearDownMediaProjection();
+        if (mode == MODE_DERECT) {
+            tearDownMediaProjection();
+        }
         if (mDisposable != null) {
             mDisposable.dispose();
         }
