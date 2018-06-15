@@ -48,6 +48,7 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(0, 0);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navi);
         if (savedInstanceState != null) {

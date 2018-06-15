@@ -84,6 +84,12 @@ public class ScreenCaptureActivity extends Activity {
     private int mode = MODE_DERECT;
 
     @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mode = getIntent().getIntExtra(ARGS_MODE, MODE_DERECT);
@@ -101,11 +107,14 @@ public class ScreenCaptureActivity extends Activity {
             mDisposable = Observable.create((ObservableOnSubscribe<ImageReader>) emitter -> mEmitter = emitter)
                     .debounce(400, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(Schedulers.io())
                     .flatMap((Function<ImageReader, ObservableSource<Bitmap>>) reader2 -> {
                         LogUtils.d(reader2.toString());
                         image = reader2.acquireNextImage();
                         if (image == null) {
+                            if (mScreenShotBitmap != null && !mScreenShotBitmap.isRecycled()) {
+                                mScreenShotBitmap.recycle();
+                            }
                             mScreenShotBitmap = null;
                             return Observable.just(Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8));
                         }
@@ -113,6 +122,9 @@ public class ScreenCaptureActivity extends Activity {
                         final Image.Plane[] planes = image.getPlanes();
                         final ByteBuffer buffer = planes[0].getBuffer();
                         if (buffer == null) {
+                            if (mScreenShotBitmap != null && !mScreenShotBitmap.isRecycled()) {
+                                mScreenShotBitmap.recycle();
+                            }
                             mScreenShotBitmap = null;
                             return Observable.just(Bitmap.createBitmap(1, 1, Bitmap.Config.ALPHA_8));
                         }
@@ -122,7 +134,11 @@ public class ScreenCaptureActivity extends Activity {
                         bitmap = Bitmap.createBitmap(image.getWidth() + rowPadding / pixelStride, image.getHeight(), Bitmap.Config.ARGB_8888);
                         bitmap.copyPixelsFromBuffer(buffer);
                         Bitmap bitmap2 = Bitmap.createBitmap(bitmap, 0, 0, image.getWidth(), image.getHeight());
-                        mScreenShotBitmap = bitmap;
+                        bitmap.recycle();
+                        if (mScreenShotBitmap != null && !mScreenShotBitmap.isRecycled()) {
+                            mScreenShotBitmap.recycle();
+                        }
+                        mScreenShotBitmap = bitmap2;
                         image.close();
                         image = null;
                         return Observable.just(bitmap2);
@@ -255,14 +271,30 @@ public class ScreenCaptureActivity extends Activity {
         if (mode == MODE_DERECT) {
             tearDownMediaProjection();
         }
-        if (mDisposable != null) {
-            mDisposable.dispose();
-        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         stopScreenCapture();
+        if (mEmitter != null) {
+            mEmitter.onComplete();
+            mEmitter = null;
+        }
+        if (mDisposable != null) {
+            mDisposable.dispose();
+            mDisposable = null;
+        }
+        if (image != null) {
+            image.close();
+            image = null;
+        }
+        if (mScreenShotBitmap != null && !mScreenShotBitmap.isRecycled()) {
+            mScreenShotBitmap.recycle();
+        }
+        if (mImageReader != null) {
+            mImageReader.close();
+        }
+
     }
 }
