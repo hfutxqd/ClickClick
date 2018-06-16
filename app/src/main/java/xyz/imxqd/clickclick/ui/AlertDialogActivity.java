@@ -24,6 +24,8 @@ public class AlertDialogActivity extends AppCompatActivity {
     public static final String ARG_NOTIFY_PACKAGE = "notify_package";
     public static final String ARG_NOTIFY_VIEW_ID = "notify_view_id";
 
+    public static final int TYPE_NOTIFY_ACTION = 3;
+
     public static final int TYPE_NORMAL = 2;
     public static final String ARG_NORMAL_MESSAGE = "normal_message";
 
@@ -45,7 +47,7 @@ public class AlertDialogActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent intent = getIntent();
         type = intent.getIntExtra(ARG_TYPE, 0);
-        if (type == TYPE_NOTIFY) {
+        if (type == TYPE_NOTIFY || type == TYPE_NOTIFY_ACTION) {
             try {
                 btn2.setVisibility(View.GONE);
                 String packageName = intent.getStringExtra(ARG_NOTIFY_PACKAGE);
@@ -91,6 +93,13 @@ public class AlertDialogActivity extends AppCompatActivity {
             function.name = "";
             function.description = "";
             function.body = "notification:" + getIntent().getStringExtra(ARG_NOTIFY_PACKAGE) + ":@id/" + getIntent().getStringExtra(ARG_NOTIFY_VIEW_ID);
+            AddFunctionActivity.start(function, true, this);
+            finish();
+        } else if (type == TYPE_NOTIFY_ACTION) {
+            RemoteFunction function = new RemoteFunction();
+            function.name = "";
+            function.description = "";
+            function.body = "notification:" + getIntent().getStringExtra(ARG_NOTIFY_PACKAGE) + ":" + getIntent().getStringExtra(ARG_NOTIFY_VIEW_ID);
             AddFunctionActivity.start(function, true, this);
             finish();
         } else if (type == TYPE_NORMAL) {

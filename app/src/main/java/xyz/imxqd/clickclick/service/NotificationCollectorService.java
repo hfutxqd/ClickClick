@@ -75,7 +75,6 @@ public class NotificationCollectorService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        LogUtils.d(sbn.getPackageName());
         for (Feedback feedback : mFeedbackList) {
             if (sbn.getPackageName().equals(feedback.packageName)) {
                 Notification n = sbn.getNotification();
@@ -153,7 +152,7 @@ public class NotificationCollectorService extends NotificationListenerService {
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        LogUtils.d( "onNotificationRemoved");
+
     }
 
     private void showToast(String str) {

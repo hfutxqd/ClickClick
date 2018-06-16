@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
+import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
@@ -113,7 +114,9 @@ public class NotificationFunction extends AbstractFunction {
                 } else  {
                     intent = mCacheIntents.get(args);
                 }
-
+                if (intent == null) {
+                    intent = notifications.get(0).contentIntent;
+                }
                 intent.send();
             } else if (matcher2.matches()) {
                 LogUtils.d("notification : id mode2");
@@ -138,7 +141,9 @@ public class NotificationFunction extends AbstractFunction {
                 } else  {
                     intent = mCacheIntents.get(args);
                 }
-
+                if (intent == null) {
+                    intent = notifications.get(0).contentIntent;
+                }
                 intent.send();
 
             } else if (matcher3.matches()) {
@@ -151,8 +156,16 @@ public class NotificationFunction extends AbstractFunction {
                         throw new RuntimeException("There are no notifications of " + getPackageName(args));
                     }
                     Notification.Action[] actions = notifications.get(0).actions;
+                    PendingIntent intent = null;
                     if (actions != null) {
-                        actions[actionOrder].actionIntent.send();
+                        intent = actions[actionOrder].actionIntent;
+                        if (intent != null) {
+                            mCacheIntents.put(args, intent);
+                            intent.send();
+                        } else {
+                            intent = mCacheIntents.get(args);
+                            intent.send();
+                        }
                     } else {
                         throw new RuntimeException("There are no notification actions for " + getPackageName(args));
                     }
@@ -171,9 +184,11 @@ public class NotificationFunction extends AbstractFunction {
                 }
             }
 
-        } else {
+        } else if (AppEventManager.getInstance().getNotificationService() == null){
             AlertUtil.show(App.get().getString(R.string.notification_service_error));
             throw new RuntimeException(App.get().getString(R.string.notification_service_error));
+        } else {
+            throw new RuntimeException("There are no notification actions for " + getPackageName(args));
         }
     }
 

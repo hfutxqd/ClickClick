@@ -96,6 +96,12 @@ public class InternalFunction extends AbstractFunction {
                     AlertUtil.showNotify(packageName, viewId);
                     service.removeOnNotificationWidgetClickCallback(this);
                 }
+
+                @Override
+                public void onNotificationActionClick(String packageName, int index) {
+                    AlertUtil.showNotifyAction(packageName, "@action/" + index);
+                    service.removeOnNotificationWidgetClickCallback(this);
+                }
             };
             service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
             service.addOnNotificationWidgetClickCallback(callback);

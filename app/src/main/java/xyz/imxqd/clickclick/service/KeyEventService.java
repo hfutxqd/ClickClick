@@ -41,7 +41,7 @@ public class KeyEventService extends AccessibilityService {
                 AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS |
                 AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS |
                 AccessibilityServiceInfo.FLAG_REQUEST_TOUCH_EXPLORATION_MODE;
-        info.notificationTimeout = 100;
+        info.notificationTimeout = 0;
         setServiceInfo(info);
     }
 
@@ -52,61 +52,117 @@ public class KeyEventService extends AccessibilityService {
         info.flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS |
                 AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS |
                 AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
-        info.notificationTimeout = 100;
+        info.notificationTimeout = 0;
         setServiceInfo(info);
     }
 
     private boolean isNotificationWidget(AccessibilityNodeInfo source) {
         source.refresh();
-        if (source != source.getParent() && source.getParent() != null && !TextUtils.equals(source.getPackageName(), "com.android.systemui")) {
+        if (source != source.getParent() && source.getParent() != null) {
             AccessibilityNodeInfo p = source;
             do {
-                LogUtils.d(p.getViewIdResourceName());
                 p = p.getParent();
+                if (TextUtils.equals(p.getViewIdResourceName(), "com.android.systemui:id/notification_stack_scroller")
+                         || TextUtils.equals(p.getViewIdResourceName(), "android:id/status_bar_latest_event_content")
+                        || TextUtils.equals(p.getViewIdResourceName(), "com.android.systemui:id/expanded_notifications") ) {
+                    return true;
+                }
             } while (p.getParent() != null);
-            LogUtils.d( "root parent is " + p.getPackageName());
-            if (TextUtils.equals(p.getPackageName(), "com.android.systemui")) {
-                return true;
-            }
+
         } else {
             return false;
         }
         return false;
     }
 
+    private boolean isNotificationAction(AccessibilityNodeInfo source) {
+        if (mClickCallbacks.size() > 0) {
+            performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS);
+        }
+        if (TextUtils.equals(source.getViewIdResourceName(), "android:id/action0")) {
+            return true;
+        }
+        AccessibilityNodeInfo parent = source.getParent();
+        if (parent == null) {
+            return false;
+        }
+        if (TextUtils.equals(parent.getViewIdResourceName(), "android:id/media_actions")) {
+            return true;
+        }
+
+        AccessibilityNodeInfo parent2 = parent.getParent();
+        if (parent2 == null) {
+            return false;
+        }
+        if (TextUtils.equals(parent.getViewIdResourceName(), "android:id/actions")
+                && TextUtils.equals(parent2.getViewIdResourceName(), "android:id/actions_container")) {
+            return true;
+        }
+        return false;
+    }
+
+    private int getNotificationActionIndex(AccessibilityNodeInfo source) {
+        AccessibilityNodeInfo parent = source.getParent();
+        if (TextUtils.equals(parent.getViewIdResourceName(), "android:id/actions") ||
+                TextUtils.equals(parent.getViewIdResourceName(), "android:id/media_actions") ||
+                TextUtils.equals(source.getViewIdResourceName(), "android:id/action0")) {
+            for (int i = 0; i < parent.getChildCount(); i++) {
+                if (parent.getChild(i).equals(source)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         try {
-            if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED) {
+            if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED || event.getEventType() == AccessibilityEvent.TYPE_VIEW_CONTEXT_CLICKED) {
                 AccessibilityNodeInfo source = event.getSource();
                 if (source == null) {
                     LogUtils.d( "source was null for: " + event);
                 } else {
-                    if (isNotificationWidget(source)) {
+                    if (isNotificationAction(source)) {
                         for (OnNotificationWidgetClick c : mClickCallbacks) {
-                            c.onNotificationWidgetClick(source.getPackageName().toString(), source.getViewIdResourceName());
+                            c.onNotificationActionClick(source.getPackageName().toString(), getNotificationActionIndex(source));
+                        }
+                        LogUtils.d("notification action order : " + getNotificationActionIndex(source));
+                    } else if (isNotificationWidget(source)) {
+                        for (OnNotificationWidgetClick c : mClickCallbacks) {
+                            if (TextUtils.equals("android:id/action0", source.getViewIdResourceName())) {
+                                c.onNotificationActionClick(source.getPackageName().toString(), getNotificationActionIndex(source) + 1);
+                            } else {
+                                c.onNotificationWidgetClick(source.getPackageName().toString(), source.getViewIdResourceName());
+                            }
                         }
                         String viewIdResourceName = source.getViewIdResourceName();
                         LogUtils.d( "viewid: " + viewIdResourceName);
+                    } else {
+                        LogUtils.d( "unknown");
                     }
                 }
 
-            } else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_HOVER_ENTER) {
-                AccessibilityNodeInfo source = event.getSource();
-                if (source == null) {
-                    LogUtils.d( "source was null for: " + event);
-                } else {
-                    if (isNotificationWidget(source)) {
-                        for (OnNotificationWidgetClick c : mClickCallbacks) {
-                            c.onNotificationWidgetClick(source.getPackageName().toString(), source.getViewIdResourceName());
-                        }
-                        String viewIdResourceName = source.getViewIdResourceName();
-                        LogUtils.d( "viewid: " + viewIdResourceName);
-                        exitTouchExplorationMode();
-                    }
-                }
             }
+//            else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_HOVER_ENTER) {
+//                AccessibilityNodeInfo source = event.getSource();
+//                if (source == null) {
+//                    LogUtils.d( "source was null for: " + event);
+//                } else {
+//                    if (isNotificationAction(source)) {
+//                        LogUtils.d("notification action order : " + getNotificationActionIndex(source));
+//                    } else if (isNotificationWidget(source)) {
+//                        for (OnNotificationWidgetClick c : mClickCallbacks) {
+//                            c.onNotificationWidgetClick(source.getPackageName().toString(), source.getViewIdResourceName());
+//                        }
+//                        String viewIdResourceName = source.getViewIdResourceName();
+//                        LogUtils.d( "viewid: " + viewIdResourceName);
+//                    }
+//                }
+//            } else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_HOVER_ENTER) {
+//                event.getSource().performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS);
+//            }
         } catch (Exception e) {
             LogUtils.e(e.getMessage());
         }
@@ -138,6 +194,7 @@ public class KeyEventService extends AccessibilityService {
 
     public interface OnNotificationWidgetClick {
         void onNotificationWidgetClick(String packageName, String viewId);
+        void onNotificationActionClick(String packageName, int index);
     }
 
     @Override
