@@ -111,8 +111,6 @@ public class AppChooseActivity extends AppCompatActivity implements AppListAdapt
             f.description = getString(R.string.open) + appInfo.name;
             f.body = "action:intent://" + intent.toUri(0);
             f.updateTime = System.currentTimeMillis() / 1000;
-            f.versionCode = BuildConfig.VERSION_CODE;
-            f.versionName = BuildConfig.VERSION_NAME;
             AddFunctionActivity.start(f, true, this);
         } else {
             App.get().showToast(R.string.app_can_not_open);

@@ -241,8 +241,6 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                     f.name = name;
                     f.description = getString(R.string.open) + name;
                     f.body = "action:intent://" + i.toUri(0);
-                    f.versionCode = BuildConfig.VERSION_CODE;
-                    f.versionName = BuildConfig.VERSION_NAME;
                     f.updateTime = System.currentTimeMillis() / 1000;
                     AddFunctionActivity.start(f, true, getContext());
                 } catch (Exception e) {

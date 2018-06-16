@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick.utils;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
@@ -35,6 +36,16 @@ public class PackageUtil {
             list =  App.get().getPackageManager().queryBroadcastReceivers(intent,PackageManager.MATCH_DEFAULT_ONLY);
         }
         return list != null && list.size() > 0;
+    }
+
+    public static int getPackageVersionCode(String packageName) {
+        PackageInfo info = null;
+        try {
+            info = App.get().getPackageManager().getPackageInfo(packageName, PackageManager.GET_META_DATA);
+            return info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            return -1;
+        }
     }
 
 

@@ -53,6 +53,7 @@ import xyz.imxqd.clickclick.model.web.HomePage;
 import xyz.imxqd.clickclick.model.web.HttpResult;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.model.web.ServerApi;
+import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.RawUtil;
 
 public class FunctionsActivity extends AppCompatActivity {
@@ -203,9 +204,7 @@ public class FunctionsActivity extends AppCompatActivity {
                 @OnClick({R.id.remote_func_add})
                 public void onAddClick() {
                     RemoteFunction f = mPage.data.get(getAdapterPosition());
-                    if (f.versionCode > BuildConfig.VERSION_CODE) {
-                        App.get().showToast(App.get().getString(R.string.app_version_too_old, f.versionName), false);
-                    } else {
+                    if (f.checkDependencies()) {
                         DefinedFunction function = new DefinedFunction();
                         function.body = f.body;
                         function.name = f.name;
@@ -218,6 +217,14 @@ public class FunctionsActivity extends AppCompatActivity {
                             App.get().showToast(R.string.save_failed);
                         }
                         notifyItemChanged(getAdapterPosition());
+                    } else {
+                        StringBuilder messages = new StringBuilder();
+                        List<String> msgs = f.getDependenciesMessages();
+                        for (String s : msgs) {
+                            messages.append(s);
+                            messages.append("\n");
+                        }
+                        AlertUtil.show(messages.toString());
                     }
                 }
             }

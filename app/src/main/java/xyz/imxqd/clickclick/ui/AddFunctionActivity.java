@@ -12,6 +12,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,6 +24,7 @@ import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.func.FunctionFactory;
 import xyz.imxqd.clickclick.func.IFunction;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
+import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class AddFunctionActivity extends BaseActivity {
@@ -105,13 +108,19 @@ public class AddFunctionActivity extends BaseActivity {
             if (f == null) {
                 return;
             }
-            if (f.versionCode > BuildConfig.VERSION_CODE) {
-                App.get().showToast(getString(R.string.app_version_too_old, f.versionName), false);
-                finish();
-            } else {
+            if (f.checkDependencies() || SettingsUtil.displayDebug()) {
                 etName.setText(f.name);
                 etDescription.setText(f.description);
                 etCode.setText(f.body);
+            } else {
+                StringBuilder messages = new StringBuilder();
+                List<String> msgs = f.getDependenciesMessages();
+                for (String s : msgs) {
+                    messages.append(s);
+                    messages.append("\n");
+                }
+                AlertUtil.show(messages.toString());
+                finish();
             }
         }
     }
@@ -120,6 +129,7 @@ public class AddFunctionActivity extends BaseActivity {
         Intent intent = new Intent(context, AddFunctionActivity.class);
         intent.putExtra(ARGS_EDITABLE, editable);
         intent.putExtra(ARGS_REMOTE_FUNCATION, function);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
