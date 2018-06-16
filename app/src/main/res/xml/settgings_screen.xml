@@ -14,6 +14,11 @@
         android:summaryOn="@string/settings_notification_on_summary"
         android:summaryOff="@string/settings_notification_off_summary" />
 
+    <SwitchPreference
+        android:key="@string/pref_key_shock_after_run"
+        android:defaultValue="true"
+        android:title="@string/settings_shock_after_run_title"/>
+
     <ListPreference
         android:key="@string/pref_key_quick_click_time"
         android:entries="@array/click_speed"

@@ -108,6 +108,7 @@
     <string name="screen_shot_notification_title">Screen shot</string>
     <string name="screen_shot_channel_name">ScreenShot</string>
     <string name="screen_shot_channel_description">Notify when screenshot</string>
+    <string name="settings_shock_after_run_title">Shock if run successfully</string>
 
 
 </resources>

@@ -198,6 +198,7 @@ public class InternalFunction extends AbstractFunction {
         if(!res) {
             App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
             SystemSettingsUtl.startPackageSettings();
+            throw new RuntimeException("no permission");
         }
     }
 
@@ -225,6 +226,7 @@ public class InternalFunction extends AbstractFunction {
             } else {
                 App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
                 SystemSettingsUtl.startPackageSettings();
+                throw new RuntimeException("no permission");
             }
         } catch (Exception e) {
             throw new RuntimeException("rotation wrong");

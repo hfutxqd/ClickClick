@@ -3,6 +3,7 @@ package xyz.imxqd.clickclick.func;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
+import xyz.imxqd.clickclick.utils.Shocker;
 
 public abstract class AbstractFunction implements IFunction {
     private String funcData;
@@ -30,6 +31,13 @@ public abstract class AbstractFunction implements IFunction {
     public boolean exec() {
         try {
             doFunction(getArgs());
+            try {
+                if (SettingsUtil.isShockOn()) {
+                    Shocker.shock(new long[]{0, 200});
+                }
+            } catch (Throwable e) {
+
+            }
             return true;
         } catch (Throwable e) {
             error = e;

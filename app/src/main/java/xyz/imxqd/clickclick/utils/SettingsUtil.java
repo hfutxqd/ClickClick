@@ -31,6 +31,11 @@ public class SettingsUtil {
         return AppEventManager.getInstance().getNotificationService() != null;
     }
 
+    public static boolean isShockOn() {
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
+        return shp.getBoolean(ResUtil.getString(R.string.pref_key_shock_after_run), true);
+    }
+
 
     public static int getQuickClickTime() {
         String quickTime = SettingsUtil.getStringVal(App.get().getString(R.string.pref_key_quick_click_time),

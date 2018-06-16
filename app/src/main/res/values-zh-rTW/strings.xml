@@ -101,4 +101,5 @@
     <string name="screen_shot_notification_title">屏幕已截圖</string>
     <string name="screen_shot_channel_name">屏幕截圖</string>
     <string name="screen_shot_channel_description">屏幕截圖完成時發出</string>
+    <string name="settings_shock_after_run_title">執行成功後震動</string>
 </resources>
