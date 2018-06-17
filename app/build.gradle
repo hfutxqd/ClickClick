@@ -6,8 +6,8 @@ android {
         applicationId "xyz.imxqd.clickclick"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 16
-        versionName "1.70"
+        versionCode 17
+        versionName "1.75"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         manifestPlaceholders = [appId: "xyz.imxqd.clickclick"]
