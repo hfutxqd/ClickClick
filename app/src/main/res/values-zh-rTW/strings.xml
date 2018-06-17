@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">快按鍵</string>
+    <string name="app_name">易按鍵</string>
 
     <string name="key_code">鍵值: %1$d</string>
     <string name="key_name">鍵名: %1$s</string>
