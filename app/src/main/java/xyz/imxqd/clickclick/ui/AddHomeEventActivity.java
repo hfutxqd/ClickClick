@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -37,6 +39,9 @@ public class AddHomeEventActivity extends AppCompatActivity {
 
     FunctionSpinnerAdapter mFuncAdapter;
 
+
+    int mLastSelectedPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,23 @@ public class AddHomeEventActivity extends AppCompatActivity {
 
         mFuncAdapter = new FunctionSpinnerAdapter();
         mSpFunction.setAdapter(mFuncAdapter);
+        mSpFunction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (id != -1) {
+                    mLastSelectedPosition = position;
+                } else {
+                    mSpFunction.setSelection(mLastSelectedPosition);
+                    Intent intent = new Intent(AddHomeEventActivity.this, FunctionsActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @OnClick(R.id.key_btn_close)
@@ -66,7 +88,7 @@ public class AddHomeEventActivity extends AppCompatActivity {
     public void onAddBtnClick() {
         try {
 
-            DefinedFunction function = (DefinedFunction) mSpFunction.getSelectedItem();
+            DefinedFunction function = (DefinedFunction) mFuncAdapter.getItem(mLastSelectedPosition);
             mKeyEvent.keyCode = KeyEvent.KEYCODE_HOME;
             mKeyEvent.keyName = "HOME";
             mKeyEvent.deviceId = -1;

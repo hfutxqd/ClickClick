@@ -1,16 +1,18 @@
 package xyz.imxqd.clickclick.ui.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -21,8 +23,12 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Consumer;
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
+import xyz.imxqd.clickclick.ui.FunctionsActivity;
+import xyz.imxqd.clickclick.utils.DialogUtil;
 
 /**
  * Created by imxqd on 2017/11/26.
@@ -142,6 +148,49 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
                 }
                 return true;
             });
+            itemView.setOnClickListener(v -> {
+                List<String> list = new ArrayList<>();
+                list.add(App.get().getString(R.string.change_function));
+                list.add(App.get().getString(R.string.delete));
+
+                DialogUtil.showList(itemView.getContext(), list, (pos, item) -> {
+                    switch (pos) {
+                        case 0:
+                            showFunctions();
+                            break;
+                        case 1:
+                            int index = getAdapterPosition();
+                            getItem(index).delete();
+                            mEvents.remove(index);
+                            notifyItemRemoved(index);
+                            if (mCallback != null) {
+                                mCallback.onCheckedChanged(false);
+                            }
+                            break;
+                    }
+                });
+            });
+        }
+
+
+        public void showFunctions() {
+            final FunctionSpinnerAdapter adapter = new FunctionSpinnerAdapter();
+            new AlertDialog.Builder(itemView.getContext())
+                    .setAdapter(adapter, (dialog, which) -> {
+                        DefinedFunction function = (DefinedFunction) adapter.getItem(which);
+                        if (function.id == -1) {
+                            Intent intent = new Intent(itemView.getContext(), FunctionsActivity.class);
+                            itemView.getContext().startActivity(intent);
+                        } else {
+                            KeyMappingEvent event = getItem(getAdapterPosition());
+                            event.funcId = function.id;
+                            event.funcName = function.name;
+                            event.save();
+                            notifyItemChanged(getAdapterPosition());
+                        }
+
+                    })
+                    .show();
         }
 
         public void deleteAlpha(float alpha) {

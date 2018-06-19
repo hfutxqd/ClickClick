@@ -10,6 +10,8 @@ import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.List;
 
+import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.DefinedFunction_Table;
 
@@ -19,6 +21,10 @@ public class FunctionSpinnerAdapter extends BaseAdapter {
 
     public FunctionSpinnerAdapter() {
         mFuncList = DefinedFunction.getOrderedAll();
+        DefinedFunction f = new DefinedFunction();
+        f.name = App.get().getString(R.string.more_functions);
+        f.id = -1;
+        mFuncList.add(f);
     }
 
     @Override

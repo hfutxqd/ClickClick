@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -57,6 +58,7 @@ public class AddKeyEventActivity extends BaseActivity {
     List<String> mEventTypeValues;
 
     FunctionSpinnerAdapter mFuncAdapter;
+    int mLastSelectedPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,23 @@ public class AddKeyEventActivity extends BaseActivity {
 
         mFuncAdapter = new FunctionSpinnerAdapter();
         mSpFunction.setAdapter(mFuncAdapter);
+        mSpFunction.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (id != -1) {
+                    mLastSelectedPosition = position;
+                } else {
+                    mSpFunction.setSelection(mLastSelectedPosition);
+                    Intent intent = new Intent(AddKeyEventActivity.this, FunctionsActivity.class);
+                    startActivity(intent);
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     @Override
@@ -101,7 +119,7 @@ public class AddKeyEventActivity extends BaseActivity {
         }
         try {
 
-            DefinedFunction function = (DefinedFunction) mSpFunction.getSelectedItem();
+            DefinedFunction function = (DefinedFunction) mFuncAdapter.getItem(mLastSelectedPosition);
             mKeyEvent.funcName = function.name;
             mKeyEvent.funcId = function.id;
             mKeyEvent.eventType = AppKeyEventType.valueOf(mEventTypeValues.get(mSpEventType.getSelectedItemPosition()));
