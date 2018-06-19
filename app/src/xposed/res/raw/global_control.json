@@ -29,6 +29,47 @@
       "update_time": 1527414422000
     },
     {
+      "name": "电源菜单",
+      "description": "电源菜单",
+      "body": "internal:global_action(6)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000,
+      "dependencies": [
+        {
+          "type": "api_level",
+          "value": "21",
+          "message": "必须Android 5.0以上才可以使用"
+        }
+      ]
+    },
+    {
+      "name": "快速设置",
+      "description": "快速设置",
+      "body": "internal:global_action(5)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "分屏模式",
+      "description": "分屏模式",
+      "body": "internal:global_action(7)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000,
+      "dependencies": [
+        {
+          "type": "api_level",
+          "value": "24",
+          "message": "必须Android 7.0以上才可以使用"
+        }
+      ]
+    },
+    {
       "name": "切换勿扰模式",
       "description": "切换多种勿扰模式",
       "body": "internal:do_not_disturb()",

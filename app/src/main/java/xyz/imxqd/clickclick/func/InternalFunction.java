@@ -178,6 +178,28 @@ public class InternalFunction extends AbstractFunction {
         Shocker.shock(times);
     }
 
+    public void global_action(String str) {
+        final KeyEventService service = AppEventManager.getInstance().getService();
+        if (service != null) {
+            try {
+                int n = Integer.valueOf(str);
+                if ( n < 1 || n > 7) {
+                    throw new NumberFormatException();
+                }
+                service.performGlobalAction(n);
+            } catch (Exception e) {
+                if (e instanceof  NumberFormatException) {
+                    throw new RuntimeException("global_action value is must a number between 1 to 7");
+                } else {
+                    throw new RuntimeException("Android version too low");
+                }
+            }
+        } else {
+            AlertUtil.show(App.get().getString(R.string.accessibility_error));
+            throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+        }
+    }
+
     public void auto_rotation(String enable) {
         boolean res = false;
         if (TextUtils.isEmpty(enable)) {
