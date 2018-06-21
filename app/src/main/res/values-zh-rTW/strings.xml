@@ -10,14 +10,14 @@
     <string name="key_event_activity_tips">請按鍵…</string>
     <string name="btn_add">添加</string>
     <string name="title_settings">設置</string>
-    <string name="title_activity_navi">快按鍵</string>
+    <string name="title_activity_navi">易按鍵</string>
     <string name="title_home">場景</string>
     <string name="title_dashboard">功能</string>
     <string name="action_add_description">點擊可以添加場景</string>
     <string name="settings_author_title">作者</string>
     <string name="settings_author_summary">IMXQD</string>
-    <string name="accessibility_service_title">快按鍵-按鍵服務</string>
-    <string name="accessibility_description">快按鍵需要此權限用來攔截按鍵事件。快按鍵承諾不會收集任何用戶隱私相關的數據。</string>
+    <string name="accessibility_service_title">易按鍵-按鍵服務</string>
+    <string name="accessibility_description">易按鍵需要此權限用來攔截按鍵事件。易按鍵承諾不會收集任何用戶隱私相關的數據。</string>
     <string name="add_key_event_failed">添加失敗，與現有條目衝突</string>
     <string name="settings_quick_click_time_title">雙擊/三擊速度</string>
     <string name="settings_long_click_time_title">長按速度</string>
@@ -76,7 +76,7 @@
     <string name="app_crashed">ClickClick crash</string>
     <string name="app_crashed_dialog_text">Sorry, ClickClick crashed. Please send a report to me.</string>
     <string name="app_crashed_dialog_comment">You can add a comment here.</string>
-    <string name="app_name_xposed">快按鍵X</string>
+    <string name="app_name_xposed">易按鍵X</string>
     <string name="request_write_settings">請授予修改系統設置權限</string>
     <string name="auto_rotation_turn_off">自動旋轉已關閉</string>
     <string name="auto_rotation_turn_on">自動旋轉已開啟</string>
