@@ -6,7 +6,11 @@ import android.os.Parcelable;
 
 public class Command implements Parcelable {
 
+    public static final int WHAT_RESULT_OK = -1;
+    public static final int WHAT_RESULT_ERROR = -2;
     public static final int WHAT_HELLO = 0;
+    public static final int WHAT_WAKELOCK = 1;
+    public static final int WHAT_WAKELOCK_RELEASE = 2;
 
 
     public int what;

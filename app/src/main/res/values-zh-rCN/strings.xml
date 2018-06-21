@@ -104,4 +104,6 @@
     <string name="settings_shock_after_run_title">执行成功后震动</string>
     <string name="change_function">更改功能</string>
     <string name="more_functions">更多功能</string>
+    <string name="foreground_service_channel_name">Foreground Service</string>
+    <string name="foreground_service_description">Foreground service notifications</string>
 </resources>

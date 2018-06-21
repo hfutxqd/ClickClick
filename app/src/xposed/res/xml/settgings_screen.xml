@@ -19,6 +19,13 @@
         android:defaultValue="true"
         android:title="@string/settings_shock_after_run_title"/>
 
+    <SwitchPreference
+        android:key="@string/pref_key_work_screen_off"
+        android:defaultValue="false"
+        android:title="@string/settings_work_screen_off"
+        android:summaryOn="@string/settings_work_screen_off_on_summary"
+        android:summaryOff="@string/settings_work_screen_off_off_summary"/>
+
     <ListPreference
         android:key="@string/pref_key_quick_click_time"
         android:entries="@array/click_speed"

@@ -6,8 +6,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.Process;
 import android.os.RemoteException;
 import android.view.KeyEvent;
 
@@ -55,30 +58,38 @@ public class KeyEventMod {
             return;
         }
         Log.d(TAG, "android loaded.");
+
         try {
-            Class<?> classPhoneWindowManager;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                classPhoneWindowManager = findClass("com.android.server.policy.PhoneWindowManager", packageParam.classLoader);
-            } else {
-                classPhoneWindowManager = findClass("com.android.internal.policy.impl.PhoneWindowManager", packageParam.classLoader);
+            Class<?> classInputMonitor = null;
+            classInputMonitor = findClass("com.android.server.wm.InputMonitor", packageParam.classLoader);
+            if (classInputMonitor != null) {
+                findAndHookMethod(classInputMonitor, "interceptKeyBeforeQueueing", KeyEvent.class, int.class, handleInterceptKeyBeforeQueueing);
+                Log.d(TAG, "InputMonitor hooked.");
             }
-            if (classPhoneWindowManager == null) {
-                return;
+            Class<?> classMediaSessionService = null;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                classMediaSessionService = findClass("com.android.server.media.MediaSessionService$SessionManagerImpl", packageParam.classLoader);
             }
-            findAndHookMethod(classPhoneWindowManager, "interceptKeyBeforeQueueing", KeyEvent.class, int.class,
-                    handleInterceptKeyBeforeQueueing);
+            if (classMediaSessionService != null) {
+                findAndHookMethod(classMediaSessionService, "dispatchMediaKeyEvent", KeyEvent.class, boolean.class, handleDispatchMediaKeyEvent);
+                Log.d(TAG, "MediaSessionService hooked.");
+            }
+
         } catch (Throwable e) {
             Log.d(TAG, e.getMessage());
+        } finally {
+            new Thread(() -> {
+                try {
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                bindService();
+            }).start();
         }
-        new Thread(() -> {
-            try {
-                Thread.sleep(15000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            bindService();
-        }).start();
     }
+
+    private static PowerManager.WakeLock sKeyEventWakeLock;
 
     private static IClickIPC sClickIPC = null;
 
@@ -86,10 +97,30 @@ public class KeyEventMod {
 
         @Override
         public Result send(Command cmd) throws RemoteException {
+            Log.d(TAG, "pid : " + getCallingPid());
+            Log.d(TAG, "uid : " + getCallingUid());
             switch (cmd.what) {
                 case Command.WHAT_HELLO:
-                    Log.d(TAG, "Hello from ClickClik");
+                    Log.d(TAG, "Hello from ClickClick");
                     return new Result(Command.WHAT_HELLO, null);
+                case Command.WHAT_WAKELOCK:
+                    Log.d(TAG, "Acquire wakelock from ClickClick");
+                    if (sKeyEventWakeLock != null && !sKeyEventWakeLock.isHeld()) {
+                        sKeyEventWakeLock.acquire();
+                        return new Result(Command.WHAT_RESULT_OK, null);
+                    } else {
+                        return new Result(Command.WHAT_RESULT_ERROR, null);
+                    }
+
+                case Command.WHAT_WAKELOCK_RELEASE:
+                    Log.d(TAG, "Release wakelock from ClickClick");
+                    if (sKeyEventWakeLock != null && sKeyEventWakeLock.isHeld()) {
+                        sKeyEventWakeLock.release();
+                        return new Result(Command.WHAT_RESULT_OK, null);
+                    } else {
+                        return new Result(Command.WHAT_RESULT_ERROR, null);
+                    }
+
             }
             return null;
         }
@@ -109,6 +140,11 @@ public class KeyEventMod {
             if (isConnecting) {
                 return;
             }
+            PowerManager pm = (PowerManager)app.getSystemService(Context.POWER_SERVICE);
+            if (sKeyEventWakeLock != null && sKeyEventWakeLock.isHeld()) {
+                sKeyEventWakeLock.release();
+            }
+            sKeyEventWakeLock = pm.newWakeLock(1, "handleKeyEvent");
             Intent intent = new Intent("xyz.imxqd.clickclick.xposed.ipc");
             intent.setPackage("xyz.imxqd.clickclick.xposed");
             app.bindService(intent, new ServiceConnection() {
@@ -140,6 +176,33 @@ public class KeyEventMod {
     }
 
     private static XC_MethodHook handleInterceptKeyBeforeQueueing = new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
+        @Override
+        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+            bindService();
+        }
+
+        @Override
+        protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+            final KeyEvent event = (KeyEvent) param.args[0];
+            boolean inject = false;
+            try {
+                if (sClickIPC != null) {
+                    inject = sClickIPC.onKeyEvent(event);
+                }
+            } catch (Exception e) {
+                sClickIPC = null;
+                bindService();
+                inject = false;
+            }
+            if (inject) {
+                param.setResult(0);
+            }
+
+        }
+    };
+
+
+    private static XC_MethodHook handleDispatchMediaKeyEvent = new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             bindService();

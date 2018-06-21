@@ -1,3 +1,7 @@
 <resources>
     <string name="xposed_description">If activated, it can work when the screen off</string>
+    <string name="settings_work_screen_off">息屏时响应</string>
+    <string name="settings_work_screen_off_on_summary">保证息屏时能响应，但可能会增加耗电</string>
+    <string name="settings_work_screen_off_off_summary">不保证息屏时能工作</string>
+
 </resources>

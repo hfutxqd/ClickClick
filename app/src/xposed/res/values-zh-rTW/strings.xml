@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="xposed_description">開啟後，在息屏狀態下也可以響應按鍵事件</string>
+    <string name="settings_work_screen_off">息屏时响应</string>
+    <string name="settings_work_screen_off_on_summary">保证息屏时能响应，但可能会增加耗电</string>
+    <string name="settings_work_screen_off_off_summary">不保证息屏时能工作</string>
 </resources>

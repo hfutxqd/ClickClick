@@ -7,15 +7,16 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.utils.XposedSettingsUtil;
 
 public class ClickService extends Service {
 
     private static ClickService sClickService;
 
     IClickCallback mCallback = null;
-
 
 
     IClickIPC.Stub stub = new IClickIPC.Stub() {
@@ -41,6 +42,16 @@ public class ClickService extends Service {
             if (result != null && result.what == Command.WHAT_HELLO) {
                 LogUtils.d("response from xposed");
             }
+//            App.get().getHandler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (XposedSettingsUtil.isWorkScreenOff()) {
+//                        wakeLock();
+//                    } else {
+//                        releaseWakeLock();
+//                    }
+//                }
+//            }, 30000);
         }
 
         @Override
@@ -60,6 +71,28 @@ public class ClickService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return stub;
+    }
+
+    public void wakeLock() {
+        IClickCallback callback = ClickService.getXposed();
+        if (callback != null) {
+            try {
+                callback.send(new Command(Command.WHAT_WAKELOCK, null));
+            } catch (RemoteException e) {
+                LogUtils.e(e.getMessage());
+            }
+        }
+    }
+
+    public void releaseWakeLock() {
+        IClickCallback callback = ClickService.getXposed();
+        if (callback != null) {
+            try {
+                callback.send(new Command(Command.WHAT_WAKELOCK_RELEASE, null));
+            } catch (RemoteException e) {
+                LogUtils.e(e.getMessage());
+            }
+        }
     }
 
     public static IClickCallback getXposed() {

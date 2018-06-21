@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_key_work_screen_off" translatable="false">settings_work_screen_off</string>
+</resources>
