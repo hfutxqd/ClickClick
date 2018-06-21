@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="xposed_description">開啟後，在息屏狀態下也可以響應按鍵事件</string>
+</resources>

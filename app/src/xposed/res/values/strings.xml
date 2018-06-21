@@ -1,0 +1,3 @@
+<resources>
+    <string name="xposed_description">If activated, it can work when the screen off</string>
+</resources>
