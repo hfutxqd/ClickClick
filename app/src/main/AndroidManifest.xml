@@ -37,11 +37,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.HOME" />-->
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.HOME" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ui.AddKeyEventActivity"
@@ -148,14 +148,20 @@
             android:name=".ui.CreateGestureActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:launchMode="singleTop"
-            android:excludeFromRecents="true"
             android:name=".ui.ScreenCaptureActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.Translucent" />
 
         <service
             android:name=".service.ScreenShotService"
             android:exported="false" />
+
+        <provider
+            android:name=".data.FunctionProvider"
+            android:authorities="click_func"
+            android:enabled="true"
+            android:exported="true"></provider>
     </application>
 
 </manifest>

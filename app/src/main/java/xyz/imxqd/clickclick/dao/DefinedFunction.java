@@ -8,6 +8,7 @@ import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.structure.database.FlowCursor;
 
 import java.util.List;
 
@@ -40,6 +41,14 @@ public class DefinedFunction extends BaseModel {
                 .orderBy(DefinedFunction_Table.order, true)
                 .orderBy(DefinedFunction_Table.id, false)
                 .queryList();
+    }
+
+    public static FlowCursor getOrderedCursor() {
+        return new Select(DefinedFunction_Table.id.as("_id"), DefinedFunction_Table.name, DefinedFunction_Table.description)
+                .from(DefinedFunction.class)
+                .orderBy(DefinedFunction_Table.order, true)
+                .orderBy(DefinedFunction_Table.id, false)
+                .query();
     }
 
     @Override
