@@ -1,13 +1,11 @@
 package xyz.imxqd.clickclick.data;
 
 import android.content.ContentProvider;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.text.TextUtils;
 
-import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 
@@ -32,6 +30,7 @@ public class FunctionProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
+        FlowManager.init(getContext());
         return true;
     }
 

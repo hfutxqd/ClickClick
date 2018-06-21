@@ -139,6 +139,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="${appId}.run" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.AppChooseActivity"
@@ -161,7 +165,7 @@
             android:name=".data.FunctionProvider"
             android:authorities="click_func"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
     </application>
 
 </manifest>
