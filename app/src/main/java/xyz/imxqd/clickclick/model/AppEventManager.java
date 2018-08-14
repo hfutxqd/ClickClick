@@ -89,6 +89,11 @@ public class AppEventManager implements KeyEventHandler.Callback {
         return mAudioManager;
     }
 
+    public void refreshKeyMappingEvents() {
+        updateKeyEventData();
+        initHomeButtonListener();
+    }
+
     public NotificationCollectorService getNotificationService() {
         if (SettingsUtil.isNotificationOn()) {
             return mNotification;

@@ -27,6 +27,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
+import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.ui.FunctionsActivity;
 import xyz.imxqd.clickclick.utils.DialogUtil;
 
@@ -181,12 +182,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
                         if (function.id == -1) {
                             Intent intent = new Intent(itemView.getContext(), FunctionsActivity.class);
                             itemView.getContext().startActivity(intent);
+                            AppEventManager.getInstance().refreshKeyMappingEvents();
                         } else {
                             KeyMappingEvent event = getItem(getAdapterPosition());
                             event.funcId = function.id;
                             event.funcName = function.name;
                             event.save();
                             notifyItemChanged(getAdapterPosition());
+                            AppEventManager.getInstance().refreshKeyMappingEvents();
                         }
 
                     })
