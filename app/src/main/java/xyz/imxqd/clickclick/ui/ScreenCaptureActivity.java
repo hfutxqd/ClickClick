@@ -13,12 +13,15 @@ import android.hardware.display.VirtualDisplay;
 import android.media.Image;
 import android.media.ImageReader;
 import android.media.MediaActionSound;
+import android.media.MediaScannerConnection;
 import android.media.projection.MediaProjection;
 import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -208,9 +211,18 @@ public class ScreenCaptureActivity extends Activity {
             return;
         }
         mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
-        Uri url = CapturePhotoUtils.insertImage(getContentResolver(), mScreenShotBitmap, "Screenshot by ClickClick", "Screenshot file by ClickClick");
+        String url = MediaStore.Images.Media.insertImage(getContentResolver(), mScreenShotBitmap, "Screenshot by ClickClick", "Screenshot file by ClickClick");
         if (url != null) {
-            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, url, 0);
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES))));
+            } else {
+                MediaScannerConnection.scanFile(getApplicationContext(), new String[]{Environment.DIRECTORY_PICTURES}, null, (path, uri) -> {
+
+                });
+            }
+            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, Uri.parse(url), 0);
+        } else {
+            LogUtils.e("can not save image to gallery!");
         }
     }
 

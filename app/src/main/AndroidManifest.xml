@@ -109,6 +109,9 @@
             <intent-filter>
                 <action android:name="com.tencent.qqmusic.ACTION_REFRESH_PLAYER_NOTIFICATION.QQMusicPhone" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="event_delete_picture" />
+            </intent-filter>
         </receiver>
 
         <activity

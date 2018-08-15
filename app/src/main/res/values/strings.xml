@@ -113,6 +113,7 @@
     <string name="more_functions">More functions ...</string>
     <string name="foreground_service_channel_name">Foreground Service</string>
     <string name="foreground_service_description">Foreground service notifications</string>
+    <string name="notification_aciton_share">Share</string>
 
 
 </resources>

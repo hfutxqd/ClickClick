@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.receiver.EventReceiver;
 
 /**
  * Helper class for showing and canceling screen shot
@@ -35,6 +36,14 @@ public class ScreenShotNotification {
 
         final String title = res.getString(
                 R.string.screen_shot_notification_title);
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        shareIntent.setType("image/jpeg");
+
+        Intent deleteIntent = new Intent(context, EventReceiver.class);
+        deleteIntent.setAction(EventReceiver.EVENT_DELETE_PICTURE);
+        deleteIntent.setData(uri);
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
 
@@ -47,6 +56,16 @@ public class ScreenShotNotification {
                 .setNumber(number)
                 .setWhen(System.currentTimeMillis())
                 .setShowWhen(true)
+                .addAction(0, context.getText(R.string.notification_aciton_share), PendingIntent.getActivity(
+                        context,
+                        0,
+                        shareIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT))
+                .addAction(0, context.getText(R.string.delete), PendingIntent.getBroadcast(
+                        context,
+                        0,
+                        deleteIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT))
                 .setContentIntent(
                         PendingIntent.getActivity(
                                 context,
