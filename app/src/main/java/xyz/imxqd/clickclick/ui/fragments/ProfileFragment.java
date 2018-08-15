@@ -129,6 +129,13 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     };
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.refreshData();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
