@@ -107,4 +107,5 @@
     <string name="foreground_service_channel_name">前台服務</string>
     <string name="foreground_service_description">前台服務通知</string>
     <string name="notification_aciton_share">分享</string>
+    <string name="send_to">發送到…</string>
 </resources>

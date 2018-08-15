@@ -36,10 +36,14 @@ public class ScreenShotNotification {
 
         final String title = res.getString(
                 R.string.screen_shot_notification_title);
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        Intent openIntent = new Intent(Intent.ACTION_VIEW);
+        openIntent.setDataAndType(uri, "image/*");
+
+        Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-        shareIntent.setType("image/jpeg");
+        shareIntent.setType("image/*");
+        shareIntent = Intent.createChooser(shareIntent, context.getText(R.string.send_to));
 
         Intent deleteIntent = new Intent(context, EventReceiver.class);
         deleteIntent.setAction(EventReceiver.EVENT_DELETE_PICTURE);
@@ -68,10 +72,10 @@ public class ScreenShotNotification {
                         PendingIntent.FLAG_UPDATE_CURRENT))
                 .setContentIntent(
                         PendingIntent.getActivity(
-                                context,
-                                0,
-                                new Intent(Intent.ACTION_VIEW, uri),
-                                PendingIntent.FLAG_UPDATE_CURRENT))
+                        context,
+                        0,
+                        openIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT))
                 .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap)
                         .setBigContentTitle(title))
 

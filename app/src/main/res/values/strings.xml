@@ -114,6 +114,7 @@
     <string name="foreground_service_channel_name">Foreground Service</string>
     <string name="foreground_service_description">Foreground service notifications</string>
     <string name="notification_aciton_share">Share</string>
+    <string name="send_to">Send to …</string>
 
 
 </resources>
