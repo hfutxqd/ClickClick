@@ -133,9 +133,11 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
                     IFunction function = FunctionFactory.getFuncById(f.id);
                     if (function != null && function.exec()) {
                         App.get().showToast(R.string.run_successed);
-                    } else {
+                    } else if (function != null){
                         App.get().showToast(R.string.run_failed);
                         App.get().showToast(function.getErrorInfo().getMessage(), true, true);
+                    } else {
+                        App.get().showToast(R.string.run_failed);
                     }
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:

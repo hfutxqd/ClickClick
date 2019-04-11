@@ -27,7 +27,7 @@ android {
     flavorDimensions("free")
     productFlavors {
         china {
-            versionNameSuffix "-china"
+            versionNameSuffix "-cn"
             dimension "free"
         }
         international {
@@ -37,7 +37,7 @@ android {
         xposed {
             applicationId "xyz.imxqd.clickclick.xposed"
             manifestPlaceholders = [appId: "xyz.imxqd.clickclick.xposed"]
-            versionNameSuffix "-xposed"
+            versionNameSuffix "-xp"
             dimension "free"
         }
     }

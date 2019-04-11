@@ -81,9 +81,11 @@ public class AddFunctionActivity extends BaseActivity {
                         IFunction func = FunctionFactory.getFunc(function.body);
                         if (func != null && func.exec()) {
                             showToast(getString(R.string.run_successed));
-                        } else {
+                        } else if (func != null){
                             showToast(getString(R.string.run_failed));
                             App.get().showToast(func.getErrorInfo().getMessage(), true, true);
+                        } else {
+                            showToast(getString(R.string.run_failed));
                         }
 
                     }catch (SQLiteConstraintException e) {

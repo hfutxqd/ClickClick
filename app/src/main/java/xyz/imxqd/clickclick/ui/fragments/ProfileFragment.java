@@ -53,7 +53,7 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     @BindView(R.id.empty_view)
     FrameLayout mEmpty;
 
-    ProfileAdapter mAdapter;
+    ProfileAdapter mAdapter = new ProfileAdapter();
     ItemTouchHelper itemTouchHelper;
     ArrayAdapter<String> mMenuAdapter;
 
@@ -145,7 +145,6 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mAdapter = new ProfileAdapter();
         mAdapter.setCheckChangeCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
         vList.setAdapter(mAdapter);
