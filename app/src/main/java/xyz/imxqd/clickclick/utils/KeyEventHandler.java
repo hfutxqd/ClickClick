@@ -206,6 +206,9 @@ public class KeyEventHandler {
     }
 
     private boolean isSingleClick(KeyEvent event) {
+        if (mLastEvent.empty() || mLastEvent.peek().getAction() != KeyEvent.ACTION_DOWN) {
+            return false;
+        }
         if (!supportSingleClick(event.getKeyCode())) {
             return false;
         }
