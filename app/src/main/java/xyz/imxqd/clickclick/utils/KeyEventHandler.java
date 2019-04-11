@@ -48,7 +48,7 @@ public class KeyEventHandler {
             if (event.getAction() == KeyEvent.ACTION_UP) {
                 isKeyActionUp = true;
                 doActon(event);
-            } else {
+            } else if (event.getAction() == KeyEvent.ACTION_UP){
                 isKeyActionUp = false;
                 if (!mLastEvent.empty() && !isSameKey(mLastEvent.peek(), event)) {
                     // 如果本次按键与上次不同，取消定时器，立即执行动作
@@ -60,12 +60,7 @@ public class KeyEventHandler {
                 mLastEvent.push(event);
                 if (supportDoubleClick(event.getKeyCode())
                         || supportTripleClick(event.getKeyCode())) {
-                    mHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            doActionInNeed(false);
-                        }
-                    }, QUICK_CLICK_TIME);
+                    mHandler.postDelayed(() -> doActionInNeed(false), QUICK_CLICK_TIME);
                 }
             }
             return true;
@@ -75,31 +70,28 @@ public class KeyEventHandler {
         }
     }
 
+    private void clearAction() {
+        mLastEvent.clear();
+        mKeyClickCount = 1;
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
     private void doActon(KeyEvent event) {
         if (isLongClick(event)) {
             mCallback.onLongClick(event);
-            mLastEvent.clear();
-            mKeyClickCount = 1;
-            mHandler.removeCallbacksAndMessages(null);
+            clearAction();
         } else if(isSingleClick(event)) {
             mCallback.onSingleClick(event);
-            mLastEvent.clear();
-            mKeyClickCount = 1;
-            mHandler.removeCallbacksAndMessages(null);
+            clearAction();
         } else if (isDoubleClick(event)) {
             mCallback.onDoubleClick(event);
-            mLastEvent.clear();
-            mKeyClickCount = 1;
-            mHandler.removeCallbacksAndMessages(null);
+            clearAction();
         } else if (isTripleClick(event)) {
             mCallback.onTripleClick(event);
-            mLastEvent.clear();
-            mKeyClickCount = 1;
-            mHandler.removeCallbacksAndMessages(null);
+            clearAction();
         } else if (!supportDoubleClick(event.getKeyCode()) && !supportTripleClick(event.getKeyCode())){
             mCallback.onNormalKeyEvent(event);
-            mLastEvent.clear();
-            mKeyClickCount = 1;
+            clearAction();
         }
     }
 
@@ -110,19 +102,13 @@ public class KeyEventHandler {
         KeyEvent event = mLastEvent.peek();
         if (mKeyClickCount == 1 && supportSingleClick(event.getKeyCode())) {
             mCallback.onSingleClick(event);
-            mLastEvent.clear();
-            mKeyClickCount = 1;
-            mHandler.removeCallbacksAndMessages(null);
+            clearAction();
         } else if (mKeyClickCount == 2 && supportDoubleClick(event.getKeyCode())) {
             mCallback.onDoubleClick(event);
-            mLastEvent.clear();
-            mKeyClickCount = 1;
-            mHandler.removeCallbacksAndMessages(null);
+            clearAction();
         } else {
             mCallback.onNormalKeyEvent(event);
-            mLastEvent.clear();
-            mKeyClickCount = 1;
-            mHandler.removeCallbacksAndMessages(null);
+            clearAction();
         }
     }
 
@@ -226,6 +212,11 @@ public class KeyEventHandler {
     }
 
     private boolean isDoubleClick(KeyEvent event) {
+        if (supportDoubleClick(event.getKeyCode())
+                && !supportTripleClick(event.getKeyCode())
+                && mKeyClickCount == 2) {
+            return true;
+        }
         return false;
     }
 
