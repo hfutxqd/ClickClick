@@ -48,7 +48,7 @@ public class KeyEventHandler {
             if (event.getAction() == KeyEvent.ACTION_UP) {
                 isKeyActionUp = true;
                 doActon(event);
-            } else if (event.getAction() == KeyEvent.ACTION_UP){
+            } else if (event.getAction() == KeyEvent.ACTION_DOWN){
                 isKeyActionUp = false;
                 if (!mLastEvent.empty() && !isSameKey(mLastEvent.peek(), event)) {
                     // 如果本次按键与上次不同，取消定时器，立即执行动作
@@ -61,6 +61,10 @@ public class KeyEventHandler {
                 if (supportDoubleClick(event.getKeyCode())
                         || supportTripleClick(event.getKeyCode())) {
                     mHandler.postDelayed(() -> doActionInNeed(false), QUICK_CLICK_TIME);
+                }
+
+                if (supportLongPress(event.getKeyCode())) {
+                    mHandler.postDelayed(() -> doActionInNeed(true), LONG_CLICK_TIME);
                 }
             }
             return true;
@@ -77,10 +81,7 @@ public class KeyEventHandler {
     }
 
     private void doActon(KeyEvent event) {
-        if (isLongClick(event)) {
-            mCallback.onLongClick(event);
-            clearAction();
-        } else if(isSingleClick(event)) {
+        if(isSingleClick(event)) {
             mCallback.onSingleClick(event);
             clearAction();
         } else if (isDoubleClick(event)) {
@@ -89,8 +90,10 @@ public class KeyEventHandler {
         } else if (isTripleClick(event)) {
             mCallback.onTripleClick(event);
             clearAction();
-        } else if (!supportDoubleClick(event.getKeyCode()) && !supportTripleClick(event.getKeyCode())){
-            mCallback.onNormalKeyEvent(event);
+        } else if (!supportDoubleClick(event.getKeyCode()) && !supportTripleClick(event.getKeyCode())) {
+            if (!mLastEvent.empty() && mLastEvent.peek().getAction() == KeyEvent.ACTION_DOWN) {
+                mCallback.onNormalKeyEvent(event);
+            }
             clearAction();
         }
     }
@@ -100,6 +103,11 @@ public class KeyEventHandler {
             return;
         }
         KeyEvent event = mLastEvent.peek();
+        if (mKeyClickCount == 1 && supportLongPress(event.getKeyCode()) && !isKeyActionUp) {
+            mCallback.onLongClick(event);
+            clearAction();
+            return;
+        }
         if (mKeyClickCount == 1 && supportSingleClick(event.getKeyCode())) {
             mCallback.onSingleClick(event);
             clearAction();
