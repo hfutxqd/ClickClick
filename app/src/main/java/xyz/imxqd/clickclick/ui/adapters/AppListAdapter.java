@@ -18,7 +18,7 @@ import xyz.imxqd.clickclick.R;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewHolder>{
 
-    List<AppInfo> packages = new ArrayList<>();
+    private List<AppInfo> packages = new ArrayList<>();
 
     private OnAppSelectedCallback mCallback;
 

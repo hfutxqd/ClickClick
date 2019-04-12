@@ -6,18 +6,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.raizlabs.android.dbflow.sql.language.Select;
-
 import java.util.List;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
-import xyz.imxqd.clickclick.dao.DefinedFunction_Table;
 
 public class FunctionSpinnerAdapter extends BaseAdapter {
 
-    List<DefinedFunction> mFuncList;
+    private List<DefinedFunction> mFuncList;
 
     public FunctionSpinnerAdapter() {
         mFuncList = DefinedFunction.getOrderedAll();

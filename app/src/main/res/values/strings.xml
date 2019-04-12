@@ -41,8 +41,8 @@
     <string name="settings_notification_title">Notification service</string>
     <string name="settings_notification_on_summary">Turned on. Support for notification funcations.</string>
     <string name="settings_notification_off_summary">Turned off. Notification funcations can\'t work</string>
-    <string name="profile_current_state">%1$d profile(s) are active</string>
-    <string name="function_current_state">%1$d function(s) are defined</string>
+    <string name="profile_current_state" formatted="true">%1$d profile(s) are active</string>
+    <string name="function_current_state" formatted="true">%1$d function(s) are defined</string>
     <string name="add_key_event_failed">Error : Conflict with existing items</string>
     <string name="settings_quick_click_time_title">Double-click / triple-click speed</string>
     <string name="settings_long_click_time_title">Long-click speed</string>

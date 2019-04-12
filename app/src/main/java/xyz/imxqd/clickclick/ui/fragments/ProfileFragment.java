@@ -1,6 +1,7 @@
 package xyz.imxqd.clickclick.ui.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -30,12 +31,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.ui.AddHomeEventActivity;
 import xyz.imxqd.clickclick.ui.AddKeyEventActivity;
 import xyz.imxqd.clickclick.ui.adapters.ProfileAdapter;
-import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.ScreenUtl;
 
@@ -144,7 +145,12 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        assert getActivity() != null;
+        assert getContext() != null;
+
         mAdapter.setCheckChangeCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
         vList.setAdapter(mAdapter);
@@ -165,14 +171,11 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
                     outRect.top = ScreenUtl.dp2px(5);
                 }
             }
-
-
         });
 
         vList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
-        assert getActivity() != null;
-        assert getContext() != null;
+
 
         if (!NotificationAccessUtil.isEnabled(getContext())) {
             LogUtils.d("NotificationAccess is disabled.");
@@ -182,6 +185,13 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
         initStateText();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter.destroy();
+    }
+
+    @SuppressLint("StringFormatInvalid")
     private void initStateText() {
         AppEventManager.getInstance().updateKeyEventData();
         int count = mAdapter.getEnableCount();

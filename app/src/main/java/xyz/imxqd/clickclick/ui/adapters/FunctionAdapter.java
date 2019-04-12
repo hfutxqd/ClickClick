@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
@@ -34,16 +35,18 @@ import xyz.imxqd.clickclick.utils.ShortcutUtil;
 
 public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.FunctionHolder> {
 
-    List<DefinedFunction> mFuncList;
-    EventCallback callback;
+    private List<DefinedFunction> mFuncList;
+    private EventCallback callback;
 
-    ObservableEmitter<Object> savePositionEmitter;
+    private ObservableEmitter<Object> savePositionEmitter;
+
+    private Disposable mDisposable = null;
 
 
     @SuppressLint("CheckResult")
     public FunctionAdapter() {
         mFuncList = DefinedFunction.getOrderedAll();
-        Observable.create(emitter -> savePositionEmitter = emitter).debounce(400, TimeUnit.MILLISECONDS)
+        mDisposable = Observable.create(emitter -> savePositionEmitter = emitter).debounce(400, TimeUnit.MILLISECONDS)
                 .subscribe(o -> {
                     for (int i = 0; i < mFuncList.size(); i++) {
                         mFuncList.get(i).order = i + 1;
@@ -57,6 +60,12 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
         mFuncList.addAll(DefinedFunction.getOrderedAll());
         if (callback != null) {
             callback.onDataChanged();
+        }
+    }
+
+    public void destroy() {
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
         }
     }
 
@@ -104,6 +113,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
         @BindView(R.id.func_sub_title)
         TextView subTitle;
 
+        @SuppressLint("ClickableViewAccessibility")
         public FunctionHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

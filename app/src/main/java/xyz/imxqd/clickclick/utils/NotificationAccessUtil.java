@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.ComponentName;
@@ -53,6 +54,7 @@ public class NotificationAccessUtil {
         context.startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
     }
 
+    @SuppressLint("PrivateApi")
     public static Intent getIntent(PendingIntent pendingIntent) {
         try {
             Method getIntent = PendingIntent.class.getDeclaredMethod("getIntent");
@@ -81,8 +83,8 @@ public class NotificationAccessUtil {
         return null;
     }
 
-    public static ArrayList getReflectionActions(RemoteViews rvs, String methodName) {
-        ArrayList list = new ArrayList();
+    public static ArrayList<Object> getReflectionActions(RemoteViews rvs, String methodName) {
+        ArrayList<Object> list = new ArrayList<>();
         if (sClassReflectionAction == null) {
             return list;
         }

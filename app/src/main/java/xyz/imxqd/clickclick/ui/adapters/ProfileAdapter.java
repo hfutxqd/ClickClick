@@ -21,8 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.functions.Consumer;
+import io.reactivex.disposables.Disposable;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
@@ -37,26 +36,20 @@ import xyz.imxqd.clickclick.utils.DialogUtil;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHolder> {
 
-    List<KeyMappingEvent> mEvents;
-    ProfileChangeCallback mCallback;
-    ObservableEmitter<Object> savePositionEmitter;
+    private List<KeyMappingEvent> mEvents;
+    private ProfileChangeCallback mCallback;
+    private ObservableEmitter<Object> savePositionEmitter;
+
+    private Disposable mDisposable = null;
 
     @SuppressLint("CheckResult")
     public ProfileAdapter() {
         mEvents = KeyMappingEvent.getOrderedAll();
-        Observable.create(new ObservableOnSubscribe<Object>() {
-            @Override
-            public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
-                savePositionEmitter = emitter;
-            }
-        }).debounce(400, TimeUnit.MILLISECONDS)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) throws Exception {
-                        for (int i = 0; i < mEvents.size(); i++) {
-                            mEvents.get(i).order = i + 1;
-                            mEvents.get(i).save();
-                        }
+        mDisposable = Observable.create(emitter -> savePositionEmitter = emitter).debounce(400, TimeUnit.MILLISECONDS)
+                .subscribe(o -> {
+                    for (int i = 0; i < mEvents.size(); i++) {
+                        mEvents.get(i).order = i + 1;
+                        mEvents.get(i).save();
                     }
                 });
     }
@@ -85,6 +78,12 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         mEvents.addAll(events);
     }
 
+    public void destroy() {
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
+    }
+
     public void swap(int index1, int index2) {
         Collections.swap(mEvents, index1, index2);
     }
@@ -102,6 +101,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         return new KeyMapHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ProfileAdapter.KeyMapHolder holder, int position) {
         KeyMappingEvent event = mEvents.get(position);
@@ -130,6 +130,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         TextView deleteHint;
         @BindView(R.id.profile_item_content)
         View content;
+        @SuppressLint("ClickableViewAccessibility")
         public KeyMapHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

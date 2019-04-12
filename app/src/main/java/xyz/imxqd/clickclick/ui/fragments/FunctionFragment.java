@@ -1,6 +1,7 @@
 package xyz.imxqd.clickclick.ui.fragments;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -125,7 +126,12 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        assert getActivity() != null;
+        assert getContext() != null;
+
         mAdapter = new FunctionAdapter();
         List<String> list = new ArrayList<>();
         list.add(getString(R.string.add_internal_func));
@@ -156,6 +162,13 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         initStateText();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAdapter.destroy();
+    }
+
+    @SuppressLint("StringFormatInvalid")
     private void initStateText() {
         int count = mAdapter.getItemCount();
         String state = getString(R.string.function_current_state, count);
