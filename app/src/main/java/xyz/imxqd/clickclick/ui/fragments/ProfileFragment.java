@@ -179,8 +179,11 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
 
         if (!NotificationAccessUtil.isEnabled(getContext())) {
             LogUtils.d("NotificationAccess is disabled.");
-        } else {
-            getActivity().startService(new Intent(getActivity(), NotificationCollectorService.class));
+        } else if (AppEventManager.getInstance().getNotificationService() == null) {
+            try {
+                getActivity().startService(new Intent(getActivity(), NotificationCollectorService.class));
+            } catch (Throwable t) {
+            }
         }
         initStateText();
     }

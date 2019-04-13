@@ -1,16 +1,12 @@
 package xyz.imxqd.clickclick.ui;
 
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.ArrayMap;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.util.HashSet;
@@ -39,14 +35,10 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
     private Set<OnRefreshUI> mOnRefreshUICallbacks = new HashSet<>();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switchPageTo(item.getItemId());
-            return true;
-        }
-    };
+            = item -> {
+                switchPageTo(item.getItemId());
+                return true;
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
