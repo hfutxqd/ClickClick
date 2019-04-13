@@ -1,47 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <SwitchPreference
         android:key="@string/pref_key_app_switch"
         android:defaultValue="false"
         android:title="@string/settings_app_switch_title"
         android:summaryOn="@string/settings_app_switch_on_summary"
-        android:summaryOff="@string/settings_app_switch_off_summary" />
+        android:summaryOff="@string/settings_app_switch_off_summary"
+        app:iconSpaceReserved="false"/>
 
     <SwitchPreference
         android:key="@string/pref_key_notification_switch"
         android:defaultValue="false"
         android:title="@string/settings_notification_title"
         android:summaryOn="@string/settings_notification_on_summary"
-        android:summaryOff="@string/settings_notification_off_summary" />
+        android:summaryOff="@string/settings_notification_off_summary"
+        app:iconSpaceReserved="false"/>
 
     <SwitchPreference
         android:key="@string/pref_key_shock_after_run"
         android:defaultValue="true"
-        android:title="@string/settings_shock_after_run_title"/>
+        android:title="@string/settings_shock_after_run_title"
+        app:iconSpaceReserved="false"/>
 
     <SwitchPreference
         android:key="@string/pref_key_work_screen_off"
         android:defaultValue="false"
         android:title="@string/settings_work_screen_off"
         android:summaryOn="@string/settings_work_screen_off_on_summary"
-        android:summaryOff="@string/settings_work_screen_off_off_summary"/>
+        android:summaryOff="@string/settings_work_screen_off_off_summary"
+        app:iconSpaceReserved="false"/>
 
     <ListPreference
         android:key="@string/pref_key_quick_click_time"
         android:entries="@array/click_speed"
         android:entryValues="@array/quick_click_speed_time"
         android:defaultValue="1000"
-        android:title="@string/settings_quick_click_time_title" />
+        android:title="@string/settings_quick_click_time_title"
+        app:iconSpaceReserved="false"/>
 
     <ListPreference
         android:key="@string/pref_key_long_click_time"
         android:entries="@array/click_speed"
         android:entryValues="@array/long_click_speed_time"
         android:defaultValue="1000"
-        android:title="@string/settings_long_click_time_title" />
+        android:title="@string/settings_long_click_time_title"
+        app:iconSpaceReserved="false"/>
 
     <Preference
-        android:title="@string/settings_about_title">
+        android:title="@string/settings_about_title"
+        app:iconSpaceReserved="false">
         <intent android:action="xyz.imxqd.clickclick.xposed.copyright" />
     </Preference>
 </PreferenceScreen>

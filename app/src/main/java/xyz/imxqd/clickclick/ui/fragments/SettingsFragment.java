@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.takisoft.fix.support.v7.preference.PreferenceFragmentCompat;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
@@ -25,7 +25,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public SettingsFragment() {
         LogUtils.d("SettingsFragment new instance");
     }
-
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -43,7 +42,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
 
     @Override
-    public void onCreatePreferencesFix(@Nullable Bundle savedInstanceState, String rootKey) {
+    public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.settgings_screen);
         findPreference(getString(R.string.pref_key_app_switch)).setOnPreferenceChangeListener(this);
         findPreference(getString(R.string.pref_key_quick_click_time)).setOnPreferenceChangeListener(this);

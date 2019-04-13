@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceCategory
-    android:title="@string/settings_key_debug_category_title"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceCategory android:title="@string/settings_key_debug_category_title"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <SwitchPreference
         android:key="@string/pref_key_app_debug"
-        android:title="@string/settings_key_app_debug_title" />
+        android:title="@string/settings_key_app_debug_title"
+        app:iconSpaceReserved="false"/>
 </PreferenceCategory>
