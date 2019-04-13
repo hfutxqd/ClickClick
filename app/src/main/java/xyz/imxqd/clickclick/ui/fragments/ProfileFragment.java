@@ -191,7 +191,9 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mAdapter.destroy();
+        if (mAdapter != null) {
+            mAdapter.destroy();
+        }
     }
 
     @SuppressLint("StringFormatInvalid")

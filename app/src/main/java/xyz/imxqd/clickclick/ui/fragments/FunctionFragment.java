@@ -165,7 +165,9 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mAdapter.destroy();
+        if (mAdapter != null) {
+            mAdapter.destroy();
+        }
     }
 
     @SuppressLint("StringFormatInvalid")
