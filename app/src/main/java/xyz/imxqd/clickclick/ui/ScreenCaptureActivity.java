@@ -262,9 +262,14 @@ public class ScreenCaptureActivity extends Activity {
         } else {
             LogUtils.d("Requesting confirmation");
             // This initiates a prompt dialog for the user to confirm screen projection.
-            startActivityForResult(
-                    mMediaProjectionManager.createScreenCaptureIntent(),
-                    REQUEST_MEDIA_PROJECTION);
+            try {
+                startActivityForResult(
+                        mMediaProjectionManager.createScreenCaptureIntent(),
+                        REQUEST_MEDIA_PROJECTION);
+            } catch (Throwable t) {
+                App.get().toastCenter(getString(R.string.run_failed));
+                LogUtils.e(t.toString());
+            }
         }
     }
 

@@ -9,7 +9,6 @@ import android.media.AudioManager;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
 
@@ -23,11 +22,11 @@ import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent_Table;
 import xyz.imxqd.clickclick.func.FunctionFactory;
 import xyz.imxqd.clickclick.func.IFunction;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.utils.KeyEventHandler;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
-import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK;
@@ -41,7 +40,6 @@ public class AppEventManager implements KeyEventHandler.Callback {
     private KeyEventHandler mKeyEventHandler;
     private KeyEventService mService;
     private NotificationCollectorService mNotification;
-    private Toast mToast;
     private ButtonHandler mButtonHandler = new ButtonHandler();
 
     private Map<String, Long> mKeyEventData = new HashMap<>();
@@ -149,7 +147,11 @@ public class AppEventManager implements KeyEventHandler.Callback {
     public void onEvent(int keyCode, int deviceId, AppKeyEventType type) {
         String eventData = makeAppKeyEventData(keyCode, deviceId, type);
         if (mKeyEventData.containsKey(eventData)) {
-            long funcId = mKeyEventData.get(eventData);
+            Long funcId = mKeyEventData.get(eventData);
+            if (funcId == null) {
+                LogUtils.e("function id not found.");
+                return;
+            }
             IFunction function = FunctionFactory.getFuncById(funcId);
             if (function != null) {
                 function.exec();
@@ -290,13 +292,10 @@ public class AppEventManager implements KeyEventHandler.Callback {
             @Override
             public void onDoubleClick(int button) {
                 LogUtils.d("onDoubleClick " + button);
-                App.get().getHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        IFunction f = getHomeDoubleClickFunction(button);
-                        if (f != null) {
-                            f.exec();
-                        }
+                App.get().getHandler().post(() -> {
+                    IFunction f = getHomeDoubleClickFunction(button);
+                    if (f != null) {
+                        f.exec();
                     }
                 });
             }
@@ -304,13 +303,10 @@ public class AppEventManager implements KeyEventHandler.Callback {
             @Override
             public void onTripleClick(int button) {
                 LogUtils.d("onTripleClick " + button);
-                App.get().getHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        IFunction f = getHomeTripleClickFunction(button);
-                        if (f != null) {
-                            f.exec();
-                        }
+                App.get().getHandler().post(() -> {
+                    IFunction f = getHomeTripleClickFunction(button);
+                    if (f != null) {
+                        f.exec();
                     }
                 });
             }
