@@ -138,8 +138,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             SwitchPreference p = (SwitchPreference) preference;
             if (!NotificationAccessUtil.isEnabled(getContext())) {
                 p.setChecked(false);
-                NotificationAccessUtil.openNotificationAccess(getContext());
-                mPendingNotificationOn = true;
+                if (NotificationAccessUtil.openNotificationAccess(getContext())) {
+                    mPendingNotificationOn = true;
+                } else {
+                    App.get().showToast(getString(R.string.please_open_notification_in_settings), false);
+                }
             } else {
                 mPendingNotificationOn = false;
             }
@@ -159,7 +162,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             if (!NotificationAccessUtil.isEnabled(getContext())) {
                 LogUtils.d( "NotificationService is disabled");
                 ((SwitchPreference)preference).setChecked(false);
-                NotificationAccessUtil.openNotificationAccess(getContext());
+                if (!NotificationAccessUtil.openNotificationAccess(getContext())) {
+                    App.get().showToast(getString(R.string.please_open_notification_in_settings), false);
+                }
             } else {
                 ((SwitchPreference)preference).setChecked(true);
                 getContext().startService(new Intent(getActivity(), NotificationCollectorService.class));

@@ -108,4 +108,6 @@
     <string name="foreground_service_description">前台服務通知</string>
     <string name="notification_aciton_share">分享</string>
     <string name="send_to">發送到…</string>
+    <string name="please_open_notification_in_settings">請手動在設置中開啟通知讀取權限</string>
+    <string name="create_shortcut_failed">創建快捷方式失敗，請檢查是否有權限</string>
 </resources>

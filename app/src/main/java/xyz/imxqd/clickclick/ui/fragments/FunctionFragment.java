@@ -29,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.clickclick.App;
-import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.func.InternalFunction;
 import xyz.imxqd.clickclick.log.LogUtils;
@@ -247,7 +246,12 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                 mAdapter.notifyDataSetChanged();
                 mAdapter.savePosition();
             } else if (requestCode == REQUEST_ADD_SHORTCUT && data != null) {
-                startActivityForResult(data, REQUEST_CHOOSE_SHORTCUT);
+                try {
+                    startActivityForResult(data, REQUEST_CHOOSE_SHORTCUT);
+                } catch (Throwable t) {
+                    App.get().showToast(getString(R.string.create_shortcut_failed), false);
+                    LogUtils.e(t.toString());
+                }
             } else if (requestCode == REQUEST_CHOOSE_SHORTCUT && data != null) {
                 String name = data.getStringExtra(Intent.EXTRA_SHORTCUT_NAME);
                 Intent i = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT);

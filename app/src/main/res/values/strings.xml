@@ -110,11 +110,13 @@
     <string name="screen_shot_channel_description">Notify when screenshot</string>
     <string name="settings_shock_after_run_title">Shock if run successfully</string>
     <string name="change_function">Change function</string>
-    <string name="more_functions">More functions ...</string>
+    <string name="more_functions">More functions …</string>
     <string name="foreground_service_channel_name">Foreground Service</string>
     <string name="foreground_service_description">Foreground service notifications</string>
     <string name="notification_aciton_share">Share</string>
     <string name="send_to">Send to …</string>
+    <string name="please_open_notification_in_settings">Please enable the notification access in Settings</string>
+    <string name="create_shortcut_failed">Create shortcut failed. Please check the permission settings.</string>
 
 
 </resources>

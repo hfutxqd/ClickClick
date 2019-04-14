@@ -50,8 +50,13 @@ public class NotificationAccessUtil {
         return false;
     }
 
-    public static void openNotificationAccess(Context context) {
-        context.startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
+    public static boolean openNotificationAccess(Context context) {
+        try {
+            context.startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
+            return true;
+        } catch (Throwable t) {
+            return false;
+        }
     }
 
     @SuppressLint("PrivateApi")
