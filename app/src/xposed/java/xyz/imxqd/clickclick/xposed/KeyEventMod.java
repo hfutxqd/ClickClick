@@ -144,7 +144,7 @@ public class KeyEventMod {
             if (sKeyEventWakeLock != null && sKeyEventWakeLock.isHeld()) {
                 sKeyEventWakeLock.release();
             }
-            sKeyEventWakeLock = pm.newWakeLock(1, "handleKeyEvent");
+            sKeyEventWakeLock = pm.newWakeLock(1, "ClickClick:handleKeyEvent");
             Intent intent = new Intent("xyz.imxqd.clickclick.xposed.ipc");
             intent.setPackage("xyz.imxqd.clickclick.xposed");
             app.bindService(intent, new ServiceConnection() {
