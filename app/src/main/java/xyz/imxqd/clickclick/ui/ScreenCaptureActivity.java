@@ -211,16 +211,9 @@ public class ScreenCaptureActivity extends Activity {
             return;
         }
         mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
-        String url = MediaStore.Images.Media.insertImage(getContentResolver(), mScreenShotBitmap, "Screenshot by ClickClick", "Screenshot file by ClickClick");
-        if (url != null) {
-            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES))));
-            } else {
-                MediaScannerConnection.scanFile(getApplicationContext(), new String[]{Environment.DIRECTORY_PICTURES}, null, (path, uri) -> {
-
-                });
-            }
-            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, Uri.parse(url), 0);
+        Uri uri = CapturePhotoUtils.insertImage(mScreenShotBitmap);
+        if (uri != null) {
+            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, uri, 0);
         } else {
             LogUtils.e("can not save image to gallery!");
         }

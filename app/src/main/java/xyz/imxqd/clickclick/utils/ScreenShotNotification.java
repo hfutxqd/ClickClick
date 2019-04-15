@@ -38,11 +38,13 @@ public class ScreenShotNotification {
                 R.string.screen_shot_notification_title);
         Intent openIntent = new Intent(Intent.ACTION_VIEW);
         openIntent.setDataAndType(uri, "image/*");
+        openIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
         shareIntent.setType("image/*");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         shareIntent = Intent.createChooser(shareIntent, context.getText(R.string.send_to));
 
         Intent deleteIntent = new Intent(context, EventReceiver.class);

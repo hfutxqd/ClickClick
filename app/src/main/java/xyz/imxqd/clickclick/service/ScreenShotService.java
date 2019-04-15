@@ -146,7 +146,7 @@ public class ScreenShotService extends IntentService {
             return;
         }
         mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
-        Uri url = CapturePhotoUtils.insertImage(getContentResolver(), mScreenShotBitmap, "Screenshot by ClickClick", "Screenshot file by ClickClick");
+        Uri url = CapturePhotoUtils.insertImage(mScreenShotBitmap);
         if (url != null) {
             ScreenShotNotification.notify(App.get(), mScreenShotBitmap, url, 0);
         }
