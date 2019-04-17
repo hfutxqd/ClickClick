@@ -6,4 +6,13 @@
         android:key="@string/pref_key_app_debug"
         android:title="@string/settings_key_app_debug_title"
         app:iconSpaceReserved="false"/>
+
+    <Preference
+        android:title="@string/settings_get_logcat"
+        app:iconSpaceReserved="false" >
+        <intent
+            android:action="xyz.imxqd.clickclick.get_logcat"
+            android:targetPackage="@string/package_name"
+            android:targetClass="xyz.imxqd.clickclick.ui.NoDisplayActivity" />
+    </Preference>
 </PreferenceCategory>

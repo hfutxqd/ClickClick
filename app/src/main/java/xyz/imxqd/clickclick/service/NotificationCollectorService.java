@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Looper;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.widget.Toast;
@@ -156,6 +157,9 @@ public class NotificationCollectorService extends NotificationListenerService {
     }
 
     private void showToast(String str) {
+        if (Looper.myLooper() == null) {
+            return;
+        }
         if (mToast != null) {
             mToast.cancel();
         }

@@ -1,11 +1,13 @@
 package xyz.imxqd.clickclick.utils;
 
+import android.support.annotation.NonNull;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class LogcatUtil {
-    public static String getLogs() {
+    public static @NonNull String getLogs() {
         Process process = null;
         try {
             process = new ProcessBuilder()
@@ -32,6 +34,6 @@ public class LogcatUtil {
                 process.destroy();
             }
         }
-        return null;
+        return "";
     }
 }

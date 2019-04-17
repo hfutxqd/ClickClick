@@ -110,4 +110,6 @@
     <string name="send_to">發送到…</string>
     <string name="please_open_notification_in_settings">請手動在設置中開啟通知讀取權限</string>
     <string name="create_shortcut_failed">創建快捷方式失敗，請檢查是否有權限</string>
+    <string name="settings_get_logcat">生成日誌文件</string>
+    <string name="dump_logs_success">日誌文件生成成功！</string>
 </resources>

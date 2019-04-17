@@ -117,6 +117,8 @@
     <string name="send_to">Send to …</string>
     <string name="please_open_notification_in_settings">Please enable the notification access in Settings</string>
     <string name="create_shortcut_failed">Create shortcut failed. Please check the permission settings.</string>
+    <string name="settings_get_logcat">Generate log file</string>
+    <string name="dump_logs_success">The log file was generated！</string>
 
 
 </resources>
