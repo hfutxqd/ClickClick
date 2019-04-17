@@ -113,7 +113,7 @@ public class ScreenCaptureActivity extends Activity {
                     .observeOn(Schedulers.io())
                     .flatMap((Function<ImageReader, ObservableSource<Bitmap>>) reader2 -> {
                         LogUtils.d(reader2.toString());
-                        image = reader2.acquireNextImage();
+                        image = reader2.acquireLatestImage();
                         if (image == null) {
                             if (mScreenShotBitmap != null && !mScreenShotBitmap.isRecycled()) {
                                 mScreenShotBitmap.recycle();
