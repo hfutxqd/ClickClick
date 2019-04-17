@@ -119,6 +119,7 @@
     <string name="create_shortcut_failed">Create shortcut failed. Please check the permission settings.</string>
     <string name="settings_get_logcat">Generate log file</string>
     <string name="dump_logs_success">The log file was generated！</string>
+    <string name="settings_get_logcat_summary">Log files store at /sdcard/ClickClick/</string>
 
 
 </resources>

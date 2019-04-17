@@ -9,6 +9,7 @@
 
     <Preference
         android:title="@string/settings_get_logcat"
+        android:summary="@string/settings_get_logcat_summary"
         app:iconSpaceReserved="false" >
         <intent
             android:action="xyz.imxqd.clickclick.get_logcat"

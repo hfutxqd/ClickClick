@@ -112,4 +112,5 @@
     <string name="create_shortcut_failed">创建快捷方式失败，请检查是否有权限</string>
     <string name="settings_get_logcat">生成日志文件</string>
     <string name="dump_logs_success">日志文件生成成功！</string>
+    <string name="settings_get_logcat_summary">日志文件保存在/sdcard/ClickClick/</string>
 </resources>
