@@ -69,7 +69,7 @@
     <string name="title_activity_functions">功能列表</string>
     <string name="add_key_event_normal">添加常規按鍵映射</string>
     <string name="add_key_event_home">HOME鍵功能附加</string>
-    <string name="device_id_error">設備ID不能為負數</string>
+    <string name="device_id_error">該按鍵可能為虛擬按鍵，請使用音量鍵，媒體按鍵或者外接按鍵等</string>
     <string name="add_to_home">添加到主屏幕</string>
     <string name="added_to_home">已添加到主屏幕</string>
     <string name="func_not_found">功能不存在</string>
