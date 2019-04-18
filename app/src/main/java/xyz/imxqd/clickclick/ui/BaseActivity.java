@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 
+import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.service.KeyEventService;
 import xyz.imxqd.clickclick.log.LogUtils;
 
@@ -49,7 +51,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void startAccessibilitySettings() {
-        startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+        try {
+            startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
+        } catch (Throwable t) {
+            App.get().showToast(R.string.open_accessibility_error);
+            LogUtils.e(t.getMessage());
+        }
     }
 
     protected void showToast(String str) {
