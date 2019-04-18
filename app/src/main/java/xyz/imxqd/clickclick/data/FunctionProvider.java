@@ -30,7 +30,10 @@ public class FunctionProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        FlowManager.init(getContext());
+        if (getContext() != null) {
+            FlowManager.init(getContext());
+        }
+
         return true;
     }
 
