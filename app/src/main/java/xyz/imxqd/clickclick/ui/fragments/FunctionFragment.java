@@ -171,6 +171,9 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
 
     @SuppressLint("StringFormatInvalid")
     private void initStateText() {
+        if (mAdapter == null || vState == null) {
+            return;
+        }
         int count = mAdapter.getItemCount();
         String state = getString(R.string.function_current_state, count);
         CharSequence text = getBigNumberText(state);
@@ -283,19 +286,25 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
 
     @Override
     public void onStartDrag(FunctionAdapter.FunctionHolder holder) {
-        mItemTouchHelper.startDrag(holder);
+        if (mItemTouchHelper != null) {
+            mItemTouchHelper.startDrag(holder);
+        }
     }
 
     @Override
     public void onDataChanged() {
         initStateText();
-        mAdapter.savePosition();
+        if (mAdapter != null) {
+            mAdapter.savePosition();
+        }
     }
 
     @Override
     public void onRefreshUI() {
-        mAdapter.refreshData();
-        mAdapter.notifyDataSetChanged();
-        mAdapter.savePosition();
+        if (mAdapter != null) {
+            mAdapter.refreshData();
+            mAdapter.notifyDataSetChanged();
+            mAdapter.savePosition();
+        }
     }
 }
