@@ -121,7 +121,7 @@ public class ScreenShotService extends IntentService {
                     if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
                         saveScreenShot();
                     } else {
-                        // TODO: 2018/6/15 no permission
+                        LogUtils.e("No permission to screenshot.");
                     }
 
                 });
