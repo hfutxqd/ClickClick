@@ -6,7 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.ArrayMap;
+import android.support.v4.util.ArrayMap;
 import android.widget.TextView;
 
 import java.util.HashSet;

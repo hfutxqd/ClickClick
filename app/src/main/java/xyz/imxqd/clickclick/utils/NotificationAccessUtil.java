@@ -52,7 +52,12 @@ public class NotificationAccessUtil {
 
     public static boolean openNotificationAccess(Context context) {
         try {
-            context.startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                context.startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+            } else {
+                context.startActivity(new Intent(ACTION_NOTIFICATION_LISTENER_SETTINGS));
+            }
+
             return true;
         } catch (Throwable t) {
             return false;

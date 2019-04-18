@@ -50,7 +50,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     }
 
     private void initPrefs() {
-        assert getContext() != null;
+        if (!isAdded() || isDetached() || getActivity() == null) {
+            return;
+        }
         SwitchPreference appSwitch = (SwitchPreference) findPreference(getString(R.string.pref_key_app_switch));
         BaseActivity activity = (BaseActivity)getActivity();
         if (appSwitch.isChecked()) {
