@@ -15,7 +15,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,6 +61,13 @@ public class AddKeyEventActivity extends BaseActivity {
 
     FunctionSpinnerAdapter mFuncAdapter;
     int mLastSelectedPosition = 0;
+
+    private static final Set<Integer> mKeycodeBlacklist = new HashSet<>();
+
+    static {
+        mKeycodeBlacklist.add(KeyEvent.KEYCODE_BACK);
+        mKeycodeBlacklist.add(KeyEvent.KEYCODE_APP_SWITCH);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +122,7 @@ public class AddKeyEventActivity extends BaseActivity {
 
     @OnClick(R.id.key_btn_add)
     public void onAddBtnClick() {
-        if (mKeyEvent.deviceId < 0) {
+        if (mKeyEvent.deviceId < 0 && mKeycodeBlacklist.contains(mKeyEvent.keyCode)) {
             Toast.makeText(this, R.string.device_id_error, Toast.LENGTH_LONG).show();
             return;
         }
