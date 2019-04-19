@@ -57,6 +57,7 @@
         <activity
             android:name=".ui.AddKeyEventActivity"
             android:launchMode="singleTask"
+            android:parentActivityName=".ui.NaviActivity"
             android:theme="@style/AppTheme.Dialog" />
         <activity
             android:name=".ui.AddFunctionActivity"
@@ -111,6 +112,7 @@
         <activity
             android:name=".ui.FunctionsActivity"
             android:label="@string/title_activity_functions"
+            android:parentActivityName=".ui.NaviActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
@@ -132,7 +134,8 @@
             android:name=".ui.CopyRightActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.Dialog">
+            android:theme="@style/AppTheme.Dialog"
+            android:parentActivityName=".ui.NaviActivity">
             <intent-filter>
                 <action android:name="${appId}.copyright" />
 
@@ -141,7 +144,8 @@
         </activity>
         <activity
             android:name=".ui.AddHomeEventActivity"
-            android:theme="@style/AppTheme.Dialog" />
+            android:theme="@style/AppTheme.Dialog"
+            android:parentActivityName=".ui.NaviActivity"/>
         <activity
             android:name=".ui.NoDisplayActivity"
             android:excludeFromRecents="true"
@@ -162,10 +166,12 @@
         <activity
             android:name=".ui.AppChooseActivity"
             android:label="@string/title_activity_app_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.NaviActivity" />
         <activity
             android:name=".ui.CreateGestureActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.NaviActivity" />
         <activity
             android:name=".ui.ScreenCaptureActivity"
             android:excludeFromRecents="true"

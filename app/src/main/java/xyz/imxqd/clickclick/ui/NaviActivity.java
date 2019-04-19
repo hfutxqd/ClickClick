@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
@@ -62,6 +63,16 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("currentTabId", currentTabId);
+    }
+
+    @Override
+    public void finish() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            super.finishAndRemoveTask();
+        }
+        else {
+            super.finish();
+        }
     }
 
     @Override
