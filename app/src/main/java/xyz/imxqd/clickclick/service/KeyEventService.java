@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
@@ -52,11 +53,15 @@ public class KeyEventService extends AccessibilityService {
         info.flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS |
                 AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS |
                 AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
+
         info.notificationTimeout = 0;
         setServiceInfo(info);
     }
 
     private boolean isNotificationWidget(AccessibilityNodeInfo source) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            return false;
+        }
         source.refresh();
         if (source != source.getParent() && source.getParent() != null) {
             AccessibilityNodeInfo p = source;
@@ -76,6 +81,9 @@ public class KeyEventService extends AccessibilityService {
     }
 
     private boolean isNotificationAction(AccessibilityNodeInfo source) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            return false;
+        }
         if (mClickCallbacks.size() > 0) {
             performGlobalAction(GLOBAL_ACTION_NOTIFICATIONS);
         }
@@ -102,6 +110,9 @@ public class KeyEventService extends AccessibilityService {
     }
 
     private int getNotificationActionIndex(AccessibilityNodeInfo source) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            return -1;
+        }
         AccessibilityNodeInfo parent = source.getParent();
         if (TextUtils.equals(parent.getViewIdResourceName(), "android:id/actions") ||
                 TextUtils.equals(parent.getViewIdResourceName(), "android:id/media_actions") ||

@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 import xyz.imxqd.clickclick.App;
 
@@ -18,7 +18,7 @@ public class RawUtil {
         Writer writer = new StringWriter();
         try (InputStream is = App.get().getResources().openRawResource(id)) {
             char[] buffer = new char[1024];
-            Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            Reader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             int n;
             while ((n = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, n);

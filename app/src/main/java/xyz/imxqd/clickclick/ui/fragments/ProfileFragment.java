@@ -3,6 +3,7 @@ package xyz.imxqd.clickclick.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -199,19 +200,25 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
     @SuppressLint("StringFormatInvalid")
     private void initStateText() {
         AppEventManager.getInstance().updateKeyEventData();
-        int count = mAdapter.getEnableCount();
-        String state = getString(R.string.profile_current_state, count);
-        vState.setText(getBigNumberText(state));
-        if (mAdapter.getItemCount() == 0) {
-            mEmpty.setVisibility(View.VISIBLE);
-        } else {
-            mEmpty.setVisibility(View.GONE);
+        if (isAdded() && !isDetached() && getActivity() != null) {
+            int count = mAdapter.getEnableCount();
+            String state = getString(R.string.profile_current_state, count);
+            vState.setText(getBigNumberText(state));
+            if (mAdapter.getItemCount() == 0) {
+                mEmpty.setVisibility(View.VISIBLE);
+            } else {
+                mEmpty.setVisibility(View.GONE);
+            }
         }
     }
 
     @OnClick(R.id.action_add)
     public void onAddClick() {
-        new AlertDialog.Builder(Objects.requireNonNull(getContext()))
+        Context context = getContext();
+        if (context == null) {
+            return;
+        }
+        new AlertDialog.Builder(context)
                 .setAdapter(mMenuAdapter, (dialog, which) -> {
                     switch (which) {
                         case 0:
@@ -264,9 +271,11 @@ public class ProfileFragment extends BaseFragment implements ProfileAdapter.Prof
 
     @Override
     public void onRefreshUI() {
-        mAdapter.refreshData();
-        mAdapter.notifyDataSetChanged();
-        initStateText();
-        mAdapter.savePosition();
+        if (isAdded() && !isDetached() && getActivity() != null) {
+            mAdapter.refreshData();
+            mAdapter.notifyDataSetChanged();
+            initStateText();
+            mAdapter.savePosition();
+        }
     }
 }
