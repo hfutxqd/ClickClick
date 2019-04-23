@@ -17,6 +17,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.log.LogUtils;
 
 public class GroupFunction extends AbstractFunction {
 
@@ -32,20 +33,26 @@ public class GroupFunction extends AbstractFunction {
         Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
             public void subscribe(ObservableEmitter<Boolean> emitter) throws Exception {
-                Gson gson = new Gson();
-                String[] groupItemsStr = gson.fromJson(args, String[].class);
-                List<GroupItem> groupItems = parseGroupItems(Arrays.asList(groupItemsStr));
-                for (GroupItem item : groupItems) {
-                    Thread.sleep(item.timeBefore);
-                    boolean success = FunctionFactory.getFunc(item.funcData).exec();
-                    Thread.sleep(item.timeAfter);
-                    if (!success) {
-                        emitter.onNext(false);
-                        break;
+                try {
+                    Gson gson = new Gson();
+                    String[] groupItemsStr = gson.fromJson(args, String[].class);
+                    List<GroupItem> groupItems = parseGroupItems(Arrays.asList(groupItemsStr));
+                    for (GroupItem item : groupItems) {
+                        Thread.sleep(item.timeBefore);
+                        boolean success = FunctionFactory.getFunc(item.funcData).exec();
+                        Thread.sleep(item.timeAfter);
+                        if (!success) {
+                            emitter.onNext(false);
+                            break;
+                        }
                     }
+                    emitter.onNext(true);
+                    emitter.onComplete();
+                } catch (Throwable t) {
+                    LogUtils.e(t.getMessage());
+                    emitter.onNext(false);
+                    emitter.onComplete();
                 }
-                emitter.onNext(true);
-                emitter.onComplete();
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Boolean>() {
             @Override
