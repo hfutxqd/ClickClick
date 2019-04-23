@@ -45,7 +45,9 @@ public class App extends Application implements Application.ActivityLifecycleCal
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        CrashReport.initCrashReport(this, "11f099c63f", BuildConfig.DEBUG);
+        if (!BuildConfig.DEBUG) {
+            CrashReport.initCrashReport(this, "11f099c63f", false);
+        }
         FlowManager.init(this);
         AppEventManager.getInstance().init(this);
         initLogger();
