@@ -1,10 +1,13 @@
 package xyz.imxqd.clickclick.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -13,7 +16,7 @@ import butterknife.OnClick;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
-import xyz.imxqd.clickclick.utils.SettingsUtil;
+import xyz.imxqd.clickclick.log.LogUtils;
 
 public class CopyRightActivity extends AppCompatActivity {
 
@@ -28,6 +31,32 @@ public class CopyRightActivity extends AppCompatActivity {
         setContentView(R.layout.activity_copy_right);
         ButterKnife.bind(this);
         mTitle.setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
+        mWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith("mailto:")) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.parse(url));
+                        startActivity(intent);
+                    } catch (Throwable t) {
+                        App.get().showToast(R.string.no_email_app);
+                    }
+                } else {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(intent);
+                    } catch (Throwable t) {
+                        App.get().showToast(R.string.no_browser_app);
+                        LogUtils.e(t.getMessage());
+                    }
+                }
+                view.reload();
+
+
+                return true;
+            }
+        });
         mWebView.loadUrl("file:///android_asset/copyright.html");
     }
 
@@ -40,12 +69,9 @@ public class CopyRightActivity extends AppCompatActivity {
     @OnClick(R.id.copy_title)
     public void onClickTitle() {
         if (mClickCount == 0) {
-            App.get().getHandler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    App.get().getHandler().removeCallbacksAndMessages(null);
-                    mClickCount = 0;
-                }
+            App.get().getHandler().postDelayed(() -> {
+                App.get().getHandler().removeCallbacksAndMessages(null);
+                mClickCount = 0;
             }, 1500);
         }
         mClickCount++;
