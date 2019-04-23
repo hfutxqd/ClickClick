@@ -14,9 +14,11 @@
     </string-array>
 
     <string-array name="click_speed">
+        <item>最慢</item>
         <item>慢速</item>
         <item>普通</item>
         <item>快速</item>
+        <item>最快</item>
     </string-array>
 
 </resources>

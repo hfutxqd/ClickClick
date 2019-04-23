@@ -13,6 +13,8 @@
         <item>1500</item>
         <item>1000</item>
         <item>600</item>
+        <item>400</item>
+        <item>300</item>
     </string-array>
     <string name="long_click_speed_time_default" translatable="false">1000</string>
 
@@ -20,6 +22,8 @@
         <item>1500</item>
         <item>1000</item>
         <item>600</item>
+        <item>400</item>
+        <item>300</item>
     </string-array>
     <string name="quick_click_speed_time_default" translatable="false">1000</string>
 
