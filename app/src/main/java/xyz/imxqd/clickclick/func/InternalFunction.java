@@ -26,6 +26,8 @@ import java.util.regex.Pattern;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.execution.APILevelException;
+import xyz.imxqd.clickclick.execution.InvalidInputException;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.model.FlymeSmartTouchHelper;
@@ -189,9 +191,10 @@ public class InternalFunction extends AbstractFunction {
                 service.performGlobalAction(n);
             } catch (Exception e) {
                 if (e instanceof  NumberFormatException) {
-                    throw new RuntimeException("global_action value is must a number between 1 to 7");
+
+                    throw new InvalidInputException("global_action value is must a number between 1 to 7");
                 } else {
-                    throw new RuntimeException("Android version too low");
+                    throw new APILevelException("Android version too low");
                 }
             }
         } else {

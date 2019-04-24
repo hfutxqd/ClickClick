@@ -1,36 +1,61 @@
 package xyz.imxqd.clickclick.utils;
 
 import android.app.Service;
+import android.media.AudioAttributes;
+import android.os.Build;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 
+import java.util.Arrays;
+
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.execution.DeviceNotSupportException;
+import xyz.imxqd.clickclick.execution.IgnoreException;
+import xyz.imxqd.clickclick.log.LogUtils;
 
 /**
  * Created by imxqd on 17-4-2.
  */
 
 public class Shocker {
+
+    private volatile static boolean isShocking = false;
+
     public static void shock(long[] ms) throws Exception {
         Vibrator vibrator = (Vibrator) App.get().getSystemService(Service.VIBRATOR_SERVICE);
-        if (vibrator == null) {
-            throw new Exception("no vibrator found");
+        if (vibrator == null || !vibrator.hasVibrator()) {
+            throw new DeviceNotSupportException("no vibrator found");
         }
-        vibrator.vibrate(ms, -1);
-    }
+        if (isShocking) {
+            LogUtils.i("ignore shock: it is shocking");
+            throw new IgnoreException("ignore shock: it is shocking");
+        }
 
-    public static void shock()  throws Exception {
-        Vibrator vibrator = (Vibrator) App.get().getSystemService(Service.VIBRATOR_SERVICE);
-        if (vibrator == null) {
-            throw new Exception("no vibrator found");
+        LogUtils.i(Arrays.toString(ms));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createWaveform(ms, -1));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            AudioAttributes AUDIO_ATTRIBUTES = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MOVIE)
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .build();
+            vibrator.vibrate(ms, -1, AUDIO_ATTRIBUTES);
+        } else {
+            vibrator.vibrate(ms, -1);
         }
-        vibrator.vibrate(60000);
-    }
-
-    public static void cancal() throws Exception {
-        Vibrator vibrator = (Vibrator) App.get().getSystemService(Service.VIBRATOR_SERVICE);
-        if (vibrator == null) {
-            throw new Exception("no vibrator found");
+        isShocking = true;
+        long duration = 0;
+        for (long d : ms) {
+            duration += d;
         }
-        vibrator.cancel();
+        final long dur = duration;
+        new Thread(() -> {
+            try {
+                Thread.sleep(dur);
+            } catch (Throwable t) {
+            } finally {
+                isShocking = false;
+            }
+        }).start();
     }
 }
