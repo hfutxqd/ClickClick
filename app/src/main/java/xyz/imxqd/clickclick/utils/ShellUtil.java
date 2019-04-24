@@ -14,8 +14,8 @@ import java.util.regex.Pattern;
  * Created by imxqd on 2017/11/28.
  */
 
-public class Shell {
-    private static final String TAG = "Shell";
+public class ShellUtil {
+    private static final String TAG = "ShellUtil";
 
     private static String shellSU;
 
@@ -51,7 +51,7 @@ public class Shell {
     }
 
     public static synchronized void setShellSU(String shellSU) {
-        Shell.shellSU = shellSU;
+        ShellUtil.shellSU = shellSU;
     }
 
     private static boolean checkSu() {

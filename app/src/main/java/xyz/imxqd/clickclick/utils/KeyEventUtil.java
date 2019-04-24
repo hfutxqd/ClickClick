@@ -1,6 +1,7 @@
 package xyz.imxqd.clickclick.utils;
 
 import android.annotation.SuppressLint;
+import android.os.Process;
 import android.os.SystemClock;
 import android.view.KeyEvent;
 
@@ -56,8 +57,12 @@ public class KeyEventUtil {
     public static boolean sendKeyEventByShell(int keyCode) {
         boolean success  = true;
         try {
-            Runtime.getRuntime()
-                    .exec("input keyevent " + keyCode);
+            if (ShellUtil.isSuAvailable()) {
+                ShellUtil.runCommand("input keyevent " + keyCode);
+            } else {
+                Runtime.getRuntime()
+                        .exec("input keyevent " + keyCode);
+            }
         } catch (IOException e) {
             success = false;
             LogUtils.e(e.getMessage());

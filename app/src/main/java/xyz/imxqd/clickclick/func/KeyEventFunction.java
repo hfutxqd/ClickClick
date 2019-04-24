@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
@@ -26,6 +27,7 @@ public class KeyEventFunction extends AbstractFunction {
         int keyCode = getKeyCode(args);
         AccessibilityService service = AppEventManager.getInstance().getService();
         AudioManager audioManager = AppEventManager.getInstance().getAudioManager();
+        LogUtils.i("keyevent:" + keyCode);
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if (service != null) {
