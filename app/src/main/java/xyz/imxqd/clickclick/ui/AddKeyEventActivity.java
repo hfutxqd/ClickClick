@@ -152,7 +152,12 @@ public class AddKeyEventActivity extends BaseActivity {
         mKeyEvent.deviceId = event.getDeviceId();
         mKeyEvent.keyCode = event.getKeyCode();
         mKeyEvent.keyName = KeyEventUtil.getKeyName(mKeyEvent.keyCode);
-        mKeyEvent.deviceName = event.getDevice().getName();
+        if (event.getDevice() != null) {
+            mKeyEvent.deviceName = event.getDevice().getName();
+        } else {
+            mKeyEvent.deviceName = "UNKNOW";
+        }
+
         mKeyEvent.ignoreDevice = mCkIgnoreDevice.isChecked();
 
         mTvKeyCode.setText(getString(R.string.key_code, event.getKeyCode()));
