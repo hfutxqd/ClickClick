@@ -20,6 +20,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 import java.util.HashSet;
 import java.util.Set;
 
+import me.weishu.reflection.Reflection;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
@@ -57,6 +58,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        Reflection.unseal(base);
     }
 
     public void initLogger() {
