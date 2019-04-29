@@ -116,4 +116,7 @@
     <string name="open_accessibility_error">請手動進入設置->無障礙->易按鍵 開啟服務</string>
     <string name="no_email_app">沒有安裝電子郵件程式</string>
     <string name="no_browser_app">沒有安裝瀏覽器</string>
+    <string name="input_mode">輸入模式</string>
+    <string name="input_mode_turn_on">開啟輸入模式</string>
+    <string name="input_mode_turn_off">關閉輸入模式</string>
 </resources>

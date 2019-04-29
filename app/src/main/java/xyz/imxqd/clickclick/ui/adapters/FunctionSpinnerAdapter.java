@@ -18,6 +18,12 @@ public class FunctionSpinnerAdapter extends BaseAdapter {
 
     public FunctionSpinnerAdapter() {
         mFuncList = DefinedFunction.getOrderedAll();
+
+        DefinedFunction inputMode = new DefinedFunction();
+        inputMode.name = App.get().getString(R.string.input_mode);
+        inputMode.id = -2;
+        mFuncList.add(inputMode);
+
         DefinedFunction f = new DefinedFunction();
         f.name = App.get().getString(R.string.more_functions);
         f.id = -1;

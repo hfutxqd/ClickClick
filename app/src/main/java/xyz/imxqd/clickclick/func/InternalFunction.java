@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioTrack;
 import android.os.Build;
-import android.os.RemoteException;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.PermissionChecker;
 import android.text.TextUtils;
@@ -27,8 +26,11 @@ import java.util.regex.Pattern;
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.execution.APILevelException;
+import xyz.imxqd.clickclick.execution.AccessibilityServiceException;
+import xyz.imxqd.clickclick.execution.DeviceNotSupportException;
 import xyz.imxqd.clickclick.execution.InvalidInputException;
 import xyz.imxqd.clickclick.execution.NoPermissionsException;
+import xyz.imxqd.clickclick.execution.NotificationServiceException;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.model.FlymeSmartTouchHelper;
@@ -65,7 +67,7 @@ public class InternalFunction extends AbstractFunction {
     public void doFunction(String args) throws Throwable {
         Matcher matcher = FUNC_PATTERN.matcher(args);
         if (!matcher.matches()) {
-            throw new IllegalArgumentException("Syntax Error");
+            throw new InvalidInputException("Syntax Error");
         }
         matcher.reset();
         if (matcher.find()) {
@@ -80,7 +82,7 @@ public class InternalFunction extends AbstractFunction {
                 }
             } catch (IllegalAccessException | NoSuchMethodException e) {
                 LogUtils.e(e.getMessage());
-                throw new IllegalArgumentException("Syntax Error");
+                throw new InvalidInputException("Syntax Error");
             } catch (InvocationTargetException e) {
                 LogUtils.e(e.getMessage());
                 throw e.getCause();
@@ -116,7 +118,7 @@ public class InternalFunction extends AbstractFunction {
             }, 15000);
         } else {
             AlertUtil.show(App.get().getString(R.string.accessibility_error));
-            throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+            throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
         }
     }
 
@@ -125,11 +127,11 @@ public class InternalFunction extends AbstractFunction {
         String idName = "playNotificationStar";
         if (service == null) {
             AlertUtil.show(App.get().getString(R.string.notification_service_error));
-            throw new RuntimeException(App.get().getString(R.string.notification_service_error));
+            throw new NotificationServiceException(App.get().getString(R.string.notification_service_error));
         }
         Matcher matcher = RESOURCE_ID_PATTERN.matcher(args);
         if (!matcher.matches()) {
-            throw new RuntimeException("Syntax Error");
+            throw new InvalidInputException("Syntax Error");
         }
         matcher.reset();
         if (matcher.find()) {
@@ -296,7 +298,7 @@ public class InternalFunction extends AbstractFunction {
         }
     }
 
-    public void flash_light(String str) throws Exception {
+    public void flash_light(String str) throws Throwable {
         if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
             try {
                 if (TextUtils.isEmpty(str)) {
@@ -314,24 +316,28 @@ public class InternalFunction extends AbstractFunction {
                         Flash.get().off();
                         Flash.get().close();
                     } else {
-                        throw new RuntimeException("flash_light: value is from 0 to 1");
+                        throw new InvalidInputException("flash_light: value is from 0 to 1");
                     }
                 }
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 LogUtils.e(e.getMessage());
                 throw new RuntimeException("Open camera failed.");
             }
         } else {
             App.get().showToast(App.get().getString(R.string.request_camera), true, true);
             PackageUtil.showInstalledAppDetails(App.get().getPackageName());
-            throw new RuntimeException("no permission");
+            throw new NoPermissionsException("no permission");
         }
 
     }
 
-    public void smart_touch(String str) throws RemoteException {
+    public void toggle_input_mode(String str) {
+        AppEventManager.getInstance().toggleInputMode();
+    }
+
+    public void smart_touch(String str) throws Throwable {
         if (!RomUtil.isMeizuFlyme()) {
-            throw new RuntimeException("This is not a flyme os");
+            throw new DeviceNotSupportException("This is not a flyme os");
         }
         if (TextUtils.isEmpty(str)) {
             if (FlymeSmartTouchHelper.get().isShowing()) {
@@ -346,7 +352,7 @@ public class InternalFunction extends AbstractFunction {
             } else if (show == 1) {
                 FlymeSmartTouchHelper.get().show();
             } else {
-                throw new RuntimeException("smart_touch: value is from 0 to 1");
+                throw new InvalidInputException("smart_touch: value is from 0 to 1");
             }
         }
     }
@@ -355,12 +361,12 @@ public class InternalFunction extends AbstractFunction {
         KeyEventService service = AppEventManager.getInstance().getService();
         if (service == null) {
             AlertUtil.show(App.get().getString(R.string.accessibility_error));
-            throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+            throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
         }
         if (TextUtils.isEmpty(str)) {
             service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
         } else {
-            throw new RuntimeException("show_notification: value is no need");
+            throw new InvalidInputException("show_notification: value is no need");
         }
     }
 
@@ -382,10 +388,10 @@ public class InternalFunction extends AbstractFunction {
                 service.dispatchGesture(description, null, null);
             } else {
                 AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+                throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new InvalidInputException();
         }
     }
 
@@ -410,10 +416,10 @@ public class InternalFunction extends AbstractFunction {
                 service.dispatchGesture(description, null, null);
             } else {
                 AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+                throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new InvalidInputException();
         }
     }
 
@@ -439,10 +445,10 @@ public class InternalFunction extends AbstractFunction {
                 service.dispatchGesture(description, null, null);
             } else {
                 AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+                throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
             }
         } else {
-            throw new IllegalArgumentException();
+            throw new InvalidInputException();
         }
     }
 

@@ -116,4 +116,7 @@
     <string name="open_accessibility_error">请手动进入设置->辅助功能->易按键 开启服务</string>
     <string name="no_email_app">没有安装邮件应用</string>
     <string name="no_browser_app">没有安装浏览器</string>
+    <string name="input_mode">输入模式</string>
+    <string name="input_mode_turn_on">开启输入模式</string>
+    <string name="input_mode_turn_off">关闭输入模式</string>
 </resources>

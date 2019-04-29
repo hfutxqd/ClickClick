@@ -18,6 +18,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent_Table;
 import xyz.imxqd.clickclick.func.FunctionFactory;
@@ -43,6 +44,8 @@ public class AppEventManager implements KeyEventHandler.Callback {
     private ButtonHandler mButtonHandler = new ButtonHandler();
 
     private Map<String, Long> mKeyEventData = new HashMap<>();
+
+    private boolean isInputMode = false;
 
     private AppEventManager() {
     }
@@ -109,6 +112,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         mKeyEventHandler.mSingleClickKeyCodes.clear();
         mKeyEventHandler.mDoubleClickKeyCodes.clear();
         mKeyEventHandler.mTripleClickKeyCodes.clear();
+        mKeyEventHandler.mInputModeKeyCodes.clear();
         mKeyEventData.clear();
 
         List<KeyMappingEvent> keyMappingEvents = KeyMappingEvent.getEnabledNormalItems();
@@ -125,6 +129,11 @@ public class AppEventManager implements KeyEventHandler.Callback {
             String key = makeAppKeyEventData(event.keyCode, event.deviceId, event.eventType);
             mKeyEventData.put(key, event.funcId);
         }
+        List<KeyMappingEvent> inputModeEvents = KeyMappingEvent.getEnabledInputModeItems();
+        for (KeyMappingEvent event : inputModeEvents) {
+            mKeyEventHandler.mInputModeKeyCodes.add(event.keyCode);
+        }
+
     }
 
     public boolean shouldInterrupt(KeyEvent event) {
@@ -139,6 +148,19 @@ public class AppEventManager implements KeyEventHandler.Callback {
         }
     }
 
+    public void toggleInputMode() {
+        this.isInputMode = !this.isInputMode;
+        if (this.isInputMode) {
+            App.get().showToast(R.string.input_mode_turn_on);
+        } else {
+            App.get().showToast(R.string.input_mode_turn_off);
+        }
+
+    }
+
+    public boolean isInputMode() {
+        return isInputMode;
+    }
 
     public static String makeAppKeyEventData(int keyCode, int deviceId, AppKeyEventType type) {
         return String.format(Locale.getDefault(), "%d:%d:%s", keyCode, deviceId, type.getName());
@@ -150,6 +172,10 @@ public class AppEventManager implements KeyEventHandler.Callback {
             Long funcId = mKeyEventData.get(eventData);
             if (funcId == null) {
                 LogUtils.e("function id not found.");
+                return;
+            }
+            if (funcId == -2) {
+                toggleInputMode();
                 return;
             }
             IFunction function = FunctionFactory.getFuncById(funcId);

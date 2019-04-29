@@ -123,6 +123,9 @@
     <string name="open_accessibility_error">Please enable at Settings->Accessibility->ClickClick</string>
     <string name="no_email_app">No email apps installed</string>
     <string name="no_browser_app">No browser apps installed</string>
+    <string name="input_mode">Input Mode</string>
+    <string name="input_mode_turn_on">Input Mode</string>
+    <string name="input_mode_turn_off">Exit Input Mode</string>
 
 
 </resources>

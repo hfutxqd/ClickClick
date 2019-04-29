@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import xyz.imxqd.clickclick.model.AppEventManager;
+
 /**
  * Created by imxqd on 2017/11/24.
  */
@@ -22,6 +24,8 @@ public class KeyEventHandler {
     public List<Integer> mSingleClickKeyCodes = new ArrayList<>();
     public List<Integer> mDoubleClickKeyCodes = new ArrayList<>();
     public List<Integer> mTripleClickKeyCodes = new ArrayList<>();
+
+    public List<Integer> mInputModeKeyCodes = new ArrayList<>();
 
     private Handler mHandler;
 
@@ -149,6 +153,9 @@ public class KeyEventHandler {
     }
 
     private boolean shouldOverride(int keyCode) {
+        if (AppEventManager.getInstance().isInputMode()) {
+            return mInputModeKeyCodes.contains(keyCode);
+        }
         boolean should = false;
         if (mSingleClickKeyCodes != null && mSingleClickKeyCodes.contains(keyCode)) {
             should = true;
