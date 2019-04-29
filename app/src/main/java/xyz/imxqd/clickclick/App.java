@@ -58,7 +58,9 @@ public class App extends Application implements Application.ActivityLifecycleCal
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        Reflection.unseal(base);
+        try {
+            Reflection.unseal(base);
+        } catch (Throwable ignore) {}
     }
 
     public void initLogger() {

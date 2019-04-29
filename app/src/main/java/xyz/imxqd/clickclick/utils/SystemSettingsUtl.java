@@ -102,6 +102,43 @@ public class SystemSettingsUtl {
     }
 
 
+    public static int getRotationByAngle(int r) {
+        if (r < 0) {
+            r += 360 * (r / 360);
+        } else {
+            r -= 360 * (r / 360);
+        }
+        int rota = 0;
+        switch (r) {
+            case 0:
+                break;
+            case 90:
+                rota = 1;
+                break;
+            case 180:
+                rota = 2;
+                break;
+            case 270:
+                rota = 3;
+                break;
+            default:
+                throw new RuntimeException("rotation wrong");
+        }
+        return rota;
+    }
+
+
+    public static boolean rotate(@Rotation int rotation) {
+        if (canWrite()) {
+            int userRotation = 90 * Settings.System.getInt(App.get().getContentResolver(), Settings.System.USER_ROTATION, 0);
+            userRotation += rotation;
+            switchRotation(getRotationByAngle(userRotation));
+            return true;
+        }
+        return false;
+    }
+
+
     public static boolean switchSmartTouch() {
         if (canWrite()) {
             int enable = Settings.System.getInt(App.get().getContentResolver(), "mz_smart_touch_switch", 0);

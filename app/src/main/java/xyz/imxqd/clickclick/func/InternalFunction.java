@@ -28,6 +28,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.execution.APILevelException;
 import xyz.imxqd.clickclick.execution.InvalidInputException;
+import xyz.imxqd.clickclick.execution.NoPermissionsException;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.model.FlymeSmartTouchHelper;
@@ -227,34 +228,29 @@ public class InternalFunction extends AbstractFunction {
         }
     }
 
-    public void rotation(String rotation) {
+    public void rotate(String rotation) {
         try {
-            int r = Integer.valueOf(rotation);
-            int rota = 0;
-            switch (r) {
-                case 0:
-                    rota = 0;
-                    break;
-                case 90:
-                    rota = 1;
-                    break;
-                case 180:
-                    rota = 2;
-                    break;
-                case 270:
-                    rota = 3;
-                    break;
-                default:
-                    throw new RuntimeException("rotation wrong");
-            }
-            if (SystemSettingsUtl.switchRotation(rota)) {
+            if (SystemSettingsUtl.rotate(Integer.valueOf(rotation))) {
             } else {
                 App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
                 SystemSettingsUtl.startPackageSettings();
-                throw new RuntimeException("no permission");
+                throw new NoPermissionsException("no permission");
             }
         } catch (Exception e) {
-            throw new RuntimeException("rotation wrong");
+            throw new InvalidInputException("rotation wrong");
+        }
+    }
+
+    public void rotation(String rotation) {
+        try {
+            if (SystemSettingsUtl.switchRotation(SystemSettingsUtl.getRotationByAngle(Integer.valueOf(rotation)))) {
+            } else {
+                App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
+                SystemSettingsUtl.startPackageSettings();
+                throw new NoPermissionsException("no permission");
+            }
+        } catch (Exception e) {
+            throw new InvalidInputException("rotation wrong");
         }
     }
 

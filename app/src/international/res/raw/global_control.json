@@ -27,6 +27,146 @@
       "version_name": "1.0",
       "author": "imxqd",
       "update_time": 1527414422000
+    },
+    {
+      "name": "Power Menu",
+      "description": "Power Menu",
+      "body": "internal:global_action(6)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000,
+      "dependencies": [
+        {
+          "type": "api_level",
+          "value": "21",
+          "message": "Must be Android 5.0 or higher"
+        }
+      ]
+    },
+    {
+      "name": "Quick Settings",
+      "description": "Quick Settings",
+      "body": "internal:global_action(5)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Split Screen",
+      "description": "Split Screen",
+      "body": "internal:global_action(7)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000,
+      "dependencies": [
+        {
+          "type": "api_level",
+          "value": "24",
+          "message": "Must be Android 7.0 or higher"
+        }
+      ]
+    },
+    {
+      "name": "Do Not Disturb Mode",
+      "description": "Do Not Disturb Mode",
+      "body": "internal:do_not_disturb()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Toggle automatic rotation",
+      "description": "Toggle automatic rotation",
+      "body": "internal:auto_rotation()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Turn automatic rotation on",
+      "description": "Turn automatic rotation on",
+      "body": "internal:auto_rotation(1)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Turn automatic rotation off",
+      "description": "Turn automatic rotation off",
+      "body": "internal:auto_rotation(0)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate to 270",
+      "description": "Rotate to 270 degrees",
+      "body": "internal:rotation(270)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate to 0",
+      "description": "Rotate to 0 degrees",
+      "body": "internal:rotation(0)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate to 90",
+      "description": "Rotate to 90 degrees",
+      "body": "internal:rotation(90)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate 90 clockwise",
+      "description": "Rotate 90 degrees clockwise",
+      "body": "internal:rotate(90)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate 180 clockwise",
+      "description": "Rotate 180 degrees clockwise",
+      "body": "internal:rotate(180)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Toggle flashlight",
+      "description": "Toggle flashlight",
+      "body": "internal:flash_light()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Show notifications",
+      "description": "Show notifications",
+      "body": "internal:show_notifications()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
     }
   ]
 }
