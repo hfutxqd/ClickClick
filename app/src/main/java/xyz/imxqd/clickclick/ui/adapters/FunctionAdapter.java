@@ -137,7 +137,11 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            DefinedFunction f = mFuncList.get(getAdapterPosition());
+            int pos = getAdapterPosition();
+            if (pos < 0 || pos >= mFuncList.size()) {
+                return;
+            }
+            DefinedFunction f = mFuncList.get(pos);
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
                     IFunction function = FunctionFactory.getFuncById(f.id);
