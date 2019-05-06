@@ -177,6 +177,7 @@
             android:excludeFromRecents="true"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.Translucent" />
+        <activity android:name=".payment.AndroidPayActivity" />
 
         <service
             android:name=".service.ScreenShotService"

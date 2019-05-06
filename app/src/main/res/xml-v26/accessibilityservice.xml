@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault|flagRequestFilterKeyEvents|flagReportViewIds|flagIncludeNotImportantViews|flagRequestTouchExplorationMode|flagRequestFingerprintGestures"
+    android:canRetrieveWindowContent="true"
+    android:canRequestFilterKeyEvents="true"
+    android:canRequestFingerprintGestures="true"
+    android:canRequestTouchExplorationMode="true"
+    android:canPerformGestures="true"
+    android:description="@string/accessibility_description"
+    android:notificationTimeout="0">
+</accessibility-service>

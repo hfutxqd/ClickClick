@@ -1,3 +1,4 @@
 <resources>
     <string name="package_name" translatable="false">xyz.imxqd.clickclick</string>
+    <string name="paypal_link" translatable="false">https://paypal.me/imxqd</string>
 </resources>

@@ -90,5 +90,6 @@ dependencies {
     implementation 'me.weishu:free_reflection:2.0.0'
     xposedCompileOnly 'de.robv.android.xposed:api:82'
     xposedCompileOnly 'de.robv.android.xposed:api:82:sources'
+    internationalImplementation 'com.android.billingclient:billing:1.2.2'
     implementation project(':AndroidWrapper')
 }

@@ -30,11 +30,15 @@ public class KeyEventService extends AccessibilityService {
         if (SettingsUtil.displayDebug()) {
             App.get().showToast(getString(R.string.open_service_success), true);
         }
-        exitTouchExplorationMode();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LogUtils.d("isGestureDetectionAvailable:" + getFingerprintGestureController().isGestureDetectionAvailable());
+        }
+        normalMode();
         AppEventManager.getInstance().attachToAccessibilityService(this);
     }
 
-    private void enterTouchExplorationMode() {
+    private void touchExplorationMode() {
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
         info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
@@ -46,7 +50,7 @@ public class KeyEventService extends AccessibilityService {
         setServiceInfo(info);
     }
 
-    private void exitTouchExplorationMode() {
+    private void normalMode() {
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
         info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
@@ -191,7 +195,7 @@ public class KeyEventService extends AccessibilityService {
 
     public void addOnNotificationWidgetClickCallback(OnNotificationWidgetClick callback) {
         if (callback != null) {
-//            enterTouchExplorationMode();
+//            touchExplorationMode();
             mClickCallbacks.add(callback);
         }
     }
