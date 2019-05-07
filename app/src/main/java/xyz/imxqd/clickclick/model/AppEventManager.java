@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -84,6 +85,18 @@ public class AppEventManager implements KeyEventHandler.Callback {
         } else {
             return null;
         }
+    }
+
+    public void stopSelf() {
+        if (mService != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mService.disableSelf();
+            } else {
+                mService.stopSelf();
+            }
+            mService = null;
+        }
+
     }
 
     public AudioManager getAudioManager() {

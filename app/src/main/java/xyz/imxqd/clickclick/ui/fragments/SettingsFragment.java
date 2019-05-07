@@ -3,13 +3,10 @@ package xyz.imxqd.clickclick.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
@@ -134,6 +131,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 }
             } else {
                 mPendingSwitchOn = false;
+                AppEventManager.getInstance().stopSelf();
             }
             return true;
         } else if (getString(R.string.pref_key_notification_switch).equals(preference.getKey())) {
@@ -147,6 +145,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 }
             } else {
                 mPendingNotificationOn = false;
+                if (AppEventManager.getInstance().getNotificationService() != null) {
+                    AppEventManager.getInstance().getNotificationService().stopSelf();
+                }
             }
             return true;
         }

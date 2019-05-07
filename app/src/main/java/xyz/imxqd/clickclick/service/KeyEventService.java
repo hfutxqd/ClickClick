@@ -30,8 +30,20 @@ public class KeyEventService extends AccessibilityService {
         if (SettingsUtil.displayDebug()) {
             App.get().showToast(getString(R.string.open_service_success), true);
         }
-        exitTouchExplorationMode();
+        initService();
         AppEventManager.getInstance().attachToAccessibilityService(this);
+    }
+
+    private void initService() {
+        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
+        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
+        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
+        info.flags = AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS |
+                AccessibilityServiceInfo.FLAG_REQUEST_FILTER_KEY_EVENTS |
+                AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
+
+        info.notificationTimeout = 0;
+        setServiceInfo(info);
     }
 
     private void enterTouchExplorationMode() {
