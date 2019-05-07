@@ -15,6 +15,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.clickclick.utils.AppUsageUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class KeyEventService extends AccessibilityService {

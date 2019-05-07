@@ -5,6 +5,7 @@
     <string name="pref_key_version" translatable="false">settings_app_version</string>
     <string name="pref_key_root_mode_switch" translatable="false">settings_root_mode</string>
     <string name="pref_key_notification_switch" translatable="false">settings_notification_service</string>
+    <string name="pref_key_app_detect_service" translatable="false">settings_app_detect_service</string>
     <string name="pref_key_quick_click_time" translatable="false">settings_quick_click_time</string>
     <string name="pref_key_long_click_time" translatable="false">settings_long_click_time</string>
     <string name="pref_key_shock_after_run" translatable="false">settings_shock_after_run</string>

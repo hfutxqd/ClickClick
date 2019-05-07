@@ -126,6 +126,7 @@
     <string name="input_mode">Input Mode</string>
     <string name="input_mode_turn_on">Input Mode</string>
     <string name="input_mode_turn_off">Exit Input Mode</string>
+    <string name="settings_app_detect_service_title">App detect service</string>
 
 
 </resources>

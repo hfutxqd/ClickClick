@@ -2,6 +2,7 @@ package xyz.imxqd.clickclick.ui.fragments;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v14.preference.SwitchPreference;
 import android.support.v7.preference.ListPreference;
@@ -14,6 +15,7 @@ import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.service.NotificationCollectorService;
 import xyz.imxqd.clickclick.ui.BaseActivity;
+import xyz.imxqd.clickclick.utils.AppUsageUtil;
 import xyz.imxqd.clickclick.utils.NotificationAccessUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
@@ -64,12 +66,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             }
             mPendingSwitchOn = false;
             SwitchPreference notificationSwitch = (SwitchPreference) findPreference(getString(R.string.pref_key_notification_switch));
-            if (mPendingNotificationOn && NotificationAccessUtil.isEnabled(getContext())) {
+            if (mPendingNotificationOn && NotificationAccessUtil.isEnabled(getActivity())) {
                 notificationSwitch.setChecked(true);
             }
             mPendingSwitchOn = false;
         }
-        if (!NotificationAccessUtil.isEnabled(getContext())) {
+        if (mPendingAppUsageOn && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            SwitchPreference appUsage = (SwitchPreference) findPreference(getString(R.string.pref_key_app_detect_service));
+            appUsage.setChecked(AppUsageUtil.checkAppUsagePermission(getActivity()));
+        }
+        if (!NotificationAccessUtil.isEnabled(getActivity())) {
             ((SwitchPreference)findPreference(getString(R.string.pref_key_notification_switch))).setChecked(false);
         }
         initClickTimes();
@@ -115,6 +121,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
 
     private boolean mPendingSwitchOn = false;
     private boolean mPendingNotificationOn = false;
+    private boolean mPendingAppUsageOn = false;
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
@@ -150,6 +157,20 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 }
             }
             return true;
+        } else if (getString(R.string.pref_key_app_detect_service).equals(preference.getKey())) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                SwitchPreference p = (SwitchPreference) preference;
+                if (p.isChecked()) {
+                    if (!AppUsageUtil.checkAppUsagePermission(getContext())) {
+                        mPendingAppUsageOn = true;
+                        AppUsageUtil.checkUsageStateAccessPermission(getActivity());
+                        p.setChecked(false);
+                    }
+                } else {
+                    mPendingAppUsageOn = false;
+                }
+
+            }
         }
         return super.onPreferenceTreeClick(preference);
     }
