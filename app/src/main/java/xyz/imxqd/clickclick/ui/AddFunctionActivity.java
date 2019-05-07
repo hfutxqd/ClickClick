@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -18,7 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import xyz.imxqd.clickclick.App;
-import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.func.FunctionFactory;
@@ -37,11 +36,11 @@ public class AddFunctionActivity extends BaseActivity {
     private static final String ARGS_REMOTE_FUNCATION = "key_add_func_remote";
 
     @BindView(R.id.add_func_name)
-    TextInputEditText etName;
+    AppCompatEditText etName;
     @BindView(R.id.add_func_description)
-    TextInputEditText etDescription;
+    AppCompatEditText etDescription;
     @BindView(R.id.add_func_code)
-    TextInputEditText etCode;
+    AppCompatEditText etCode;
 
     private boolean isResumed = false;
 
