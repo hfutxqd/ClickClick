@@ -20,9 +20,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
-
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
@@ -40,7 +40,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
+        <activity android:name=".ui.CodeEditorActivity"
+            android:label="@string/title_activity_code_editor"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.NaviActivity">
 
+        </activity>
         <activity
             android:name=".ui.NaviActivity"
             android:label="@string/title_activity_navi"
@@ -137,8 +142,8 @@
             android:name=".ui.CopyRightActivity"
             android:exported="false"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.Dialog"
-            android:parentActivityName=".ui.NaviActivity">
+            android:parentActivityName=".ui.NaviActivity"
+            android:theme="@style/AppTheme.Dialog">
             <intent-filter>
                 <action android:name="${appId}.copyright" />
 
@@ -147,8 +152,8 @@
         </activity>
         <activity
             android:name=".ui.AddHomeEventActivity"
-            android:theme="@style/AppTheme.Dialog"
-            android:parentActivityName=".ui.NaviActivity"/>
+            android:parentActivityName=".ui.NaviActivity"
+            android:theme="@style/AppTheme.Dialog" />
         <activity
             android:name=".ui.NoDisplayActivity"
             android:excludeFromRecents="true"
@@ -157,6 +162,7 @@
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="${appId}.run" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -169,12 +175,12 @@
         <activity
             android:name=".ui.AppChooseActivity"
             android:label="@string/title_activity_app_list"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ui.NaviActivity" />
+            android:parentActivityName=".ui.NaviActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.CreateGestureActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ui.NaviActivity" />
+            android:parentActivityName=".ui.NaviActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.ScreenCaptureActivity"
             android:excludeFromRecents="true"

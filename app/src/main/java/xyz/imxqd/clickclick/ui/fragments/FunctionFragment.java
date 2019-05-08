@@ -35,6 +35,7 @@ import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.ui.AddFunctionActivity;
 import xyz.imxqd.clickclick.ui.AppChooseActivity;
+import xyz.imxqd.clickclick.ui.CodeEditorActivity;
 import xyz.imxqd.clickclick.ui.CreateGestureActivity;
 import xyz.imxqd.clickclick.ui.FunctionsActivity;
 import xyz.imxqd.clickclick.ui.adapters.FunctionAdapter;
@@ -141,6 +142,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
             list.add(getString(R.string.add_tap_or_swipe));
         }
         list.add(getString(R.string.add_func_by_self));
+        list.add(getString(R.string.add_lua_script));
         mMenuAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, list);
         mAdapter.setOnStartDragCallback(this);
         vList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -188,37 +190,45 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
     @OnClick(R.id.action_add)
     public void onAddClick() {
         new AlertDialog.Builder(getContext())
-                .setAdapter(mMenuAdapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case 0:
-                                startFunctionsActivity();
-                                break;
-                            case 1:
-                                startAddShortcut();
-                                break;
-                            case 2:
-                                startAddApplication();
-                                break;
-                            case 3:
-                                addNotificationFunc();
-                                break;
-                            case 4:
-                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    createGesture();
-                                } else {
-                                    startAddFuncActivity();
-                                }
-                                break;
-                            case 5:
+                .setAdapter(mMenuAdapter, (dialog, which) -> {
+                    switch (which) {
+                        case 0:
+                            startFunctionsActivity();
+                            break;
+                        case 1:
+                            startAddShortcut();
+                            break;
+                        case 2:
+                            startAddApplication();
+                            break;
+                        case 3:
+                            addNotificationFunc();
+                            break;
+                        case 4:
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                createGesture();
+                            } else {
                                 startAddFuncActivity();
-                                break;
-                             default:
-                        }
+                            }
+                            break;
+                        case 5:
+                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                startAddFuncActivity();
+                            } else {
+                                startCodeEditor();
+                            }
+                            break;
+                        case 6:
+                            startCodeEditor();
+                            break;
+                         default:
                     }
                 })
                 .show();
+    }
+
+    public void startCodeEditor() {
+        startActivity(new Intent(getActivity(), CodeEditorActivity.class));
     }
 
     public void createGesture() {
