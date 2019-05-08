@@ -11,17 +11,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         manifestPlaceholders = [appId: "xyz.imxqd.clickclick"]
-//        externalNativeBuild {
-//            cmake {
-//                // Passes optional arguments to CMake.
-//                arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_TOOLCHAIN=clang"
-//                // Sets optional flags for the C compiler.
-//                cFlags "-D_EXAMPLE_C_FLAG1", "-D_EXAMPLE_C_FLAG2"
-//                // Sets a flag to enable format macro constants for the C++ compiler.
-//                cppFlags "-D__STDC_FORMAT_MACROS"
-//                abiFilters 'armeabi-v7a', 'arm64-v8a'
-//            }
-//        }
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
     }
 
     flavorDimensions("free")
@@ -57,6 +50,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/'] } }
 }
 
 def dbflow_version = "4.2.4"
