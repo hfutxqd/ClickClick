@@ -9,6 +9,10 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
+    <style name="AppTheme.CodeEditor" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

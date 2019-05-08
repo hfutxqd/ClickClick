@@ -122,4 +122,5 @@
     <string name="settings_app_detect_service_title">場景識別服務</string>
     <string name="add_lua_script">添加Lua腳本</string>
     <string name="title_activity_code_editor">編輯代碼</string>
+    <string name="action_save">存儲</string>
 </resources>

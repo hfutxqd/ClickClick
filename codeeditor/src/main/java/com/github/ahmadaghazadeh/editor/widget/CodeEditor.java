@@ -13,7 +13,6 @@ import android.text.Editable;
 import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -48,7 +47,7 @@ public class CodeEditor extends FrameLayout {
     private ITextProcessorSetting setting;
     private ExtendedKeyboard recyclerView;
     private ICodeEditorTextChange codeEditorTextChange;
-    private boolean isDirty; //На данный момент не используется
+    private boolean isDirty;
 
     public CodeEditor(Context context) {
         super(context);
@@ -304,7 +303,6 @@ public class CodeEditor extends FrameLayout {
 
     private void setDirty(boolean dirty) {
         isDirty = dirty;
-        //тут будет добавление "*" после названия файла если документ был изменен
     }
 
     public String getText() {
@@ -312,6 +310,14 @@ public class CodeEditor extends FrameLayout {
             return text.toString();
         else
             return "";
+    }
+
+    public String getCode() {
+        if (editor != null) {
+            return editor.getText().toString();
+        } else {
+            return "";
+        }
     }
 
     @WorkerThread

@@ -24,6 +24,7 @@ import me.weishu.reflection.Reflection;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
+import xyz.imxqd.luaframework.LuaEngine;
 
 /**
  * Created by imxqd on 2017/11/24.
@@ -50,6 +51,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
             CrashReport.initCrashReport(this, "11f099c63f", false);
         }
         FlowManager.init(this);
+        LuaEngine.init(this);
         AppEventManager.getInstance().init(this);
         initLogger();
         registerActivityLifecycleCallbacks(this);

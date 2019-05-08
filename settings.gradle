@@ -1,1 +1,1 @@
-include ':app', ':AndroidWrapper', ':codeeditor'
+include ':app', ':AndroidWrapper', ':codeeditor', ':luaframework'

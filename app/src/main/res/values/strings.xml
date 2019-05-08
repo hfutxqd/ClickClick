@@ -129,6 +129,7 @@
     <string name="settings_app_detect_service_title">App detect service</string>
     <string name="add_lua_script">Add lua script</string>
     <string name="title_activity_code_editor">Code</string>
+    <string name="action_save">Save</string>
 
 
 </resources>

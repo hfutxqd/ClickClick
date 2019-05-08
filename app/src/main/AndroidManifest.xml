@@ -42,7 +42,7 @@
         tools:ignore="UnusedAttribute">
         <activity android:name=".ui.CodeEditorActivity"
             android:label="@string/title_activity_code_editor"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.CodeEditor"
             android:parentActivityName=".ui.NaviActivity">
 
         </activity>

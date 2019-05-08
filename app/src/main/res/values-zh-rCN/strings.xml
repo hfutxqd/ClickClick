@@ -122,4 +122,5 @@
     <string name="settings_app_detect_service_title">场景识别服务</string>
     <string name="add_lua_script">添加Lua脚本</string>
     <string name="title_activity_code_editor">编辑代码</string>
+    <string name="action_save">保存</string>
 </resources>
