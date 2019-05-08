@@ -1,4 +1,4 @@
-package xyz.imxqd.luaframework;
+package xyz.imxqd.luaframework.core.method;
 
 import cn.vimfung.luascriptcore.LuaMethodHandler;
 

@@ -1400,8 +1400,7 @@ public class TextProcessor extends AppCompatMultiAutoCompleteTextView implements
             field = editor.getClass().getDeclaredField("mCursorDrawable");
             field.setAccessible(true);
             field.set(editor, drawables);
-        } catch (Exception e) {
-            Logger.error(TAG, e);
+        } catch (Throwable ignore) {
         }
     }
 

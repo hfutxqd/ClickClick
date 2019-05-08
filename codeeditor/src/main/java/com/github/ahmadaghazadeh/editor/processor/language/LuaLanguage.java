@@ -59,95 +59,31 @@ public class LuaLanguage extends Language {
         return LANGUAGE_BRACKETS;
     }
 
-    /**
-     * Слова для автопродолжения кода.
-     */
 
-    private static final String[] BLOCK_KEYWORDS = new String[] {
-            "defineBlock", "defineLiquidBlock", "getAllBlockIds", "getDestroyTime",
-            "getFriction", "setShape", "getRenderType", "getTextureCoords", "setColor",
-            "setDestroyTime", "setExplosionResistance", "setFriction", "setRedstoneConsumer",
-            "setLightLevel", "setLightOpacity", "setRenderLayer", "setRenderType"
-    };
-    private static final String[] ENTITY_KEYWORDS = new String[] {
-            "getAll", "getAnimalAge", "getArmor", "getArmorCustomName", "getArmorDamage",
-            "getEntityTypeId", "getExtraData", "getHealth", "getItemEntityCount",
-            "getItemEntityData", "getItemEntityId", "getMaxHealth", "getMobSkin", "getNameTag",
-            "getPitch()", "getRenderType", "getRider", "getRiding", "getTarget", "getUniqueId",
-            "getVelX()", "getVelY()", "getVelZ()", "getYaw()", "isSneaking()", "remove",
-            "removeAllEffects", "removeEffect", "rideAnimal", "setArmor", "setArmorCustomName",
-            "setCape", "setCollisionSize", "setExtraData", "setFireTicks", "setHealth",
-            "setImmobile", "setMaxHealth", "setMobSkin", "setNameTag", "setPosition",
-            "setPositionRelative", "setCarriedItem", "setRenderType", "setRot", "setSneaking",
-            "setTarget", "setVelX", "setVelY", "setVelZ", "spawnMob", "addEffect"
-    };
-    private static final String[] ITEM_KEYWORDS = new String[] {
-            "getMaxDamage", "getMaxStackSize", "defineArmor", "defineThrowable",
-            "getCustomThrowableRenderType", "addCraftRecipe", "setMaxDamage", "addFurnaceRecipe",
-            "getName", "getTextureCoords", "getUseAnimation", "internalNameToId", "isValidItem",
-            "setCategory", "setEnchantType", "addShapedRecipe", "setHandEquipped", "setProperties",
-            "setStackedByData", "setUseAnimation", "translatedNameToId"
-    };
-    private static final String[] LEVEL_KEYWORDS = new String[] {
-            "biomeIdToName", "canSeeSky", "setSpawnerTypeId", "destroyBlock", "explode",
-            "getAddress", "getBiome", "getBiomeName", "getBrightness", "getGameMode",
-            "getGrassColor", "getDifficulty", "setDifficulty", "getTile", "getData", "getTime",
-            "getWorldDir()", "getWorldName", "setGameMode", "setGrassColor", "getLightningLevel()",
-            "getRainLevel()", "setNightMode", "setSpawn", "setTile", "setTime", "spawnMob",
-            "getSignText", "setSignText", "addParticle", "playSound", "playSoundEnt",
-            "setBlockExtraData", "dropItem", "getChestSlot", "getChestSlotCount",
-            "getChestSlotData", "setChestSlot", "setChestSlotCustomName", "setSpawnerEntityType",
-            "setLightningLevel", "setRainLevel", "getFurnaceSlot", "getFurnaceSlotCount",
-            "getFurnaceSlotData", "setFurnaceSlot"
-    };
-    private static final String[] MODPE_KEYWORDS = new String[] {
-            "getOS()", "dumpVtable", "getI18n", "getBytesFromTexturePack", "getLanguage",
-            "getMinecraftVersion", "langEdit", /*"leaveGame"*/"openInputStreamFromTexturePack",
-            "overrideTexture", "readData", "removeData", "saveData", "resetFov", "resetImages",
-            "setFoodItem", "setFov", "setGameSpeed", "setItem", "showTipMessage",
-            "setUiRenderDebug", "takeScreenshot", "setGuiBlocks", "setItems", "setTerrain",
-            "selectLevel"
-    };
-    private static final String[] PLAYER_KEYWORDS = new String[] {
-            "addExp", "addItemInventory", "addItemCreativeInv", "canFly()", "clearInventorySlot",
-            "enchant", "getEnchantments", "getArmorSlot", "getArmorSlotDamage", /*"getCarriedItem"*/
-            "getCarriedItemCount", "getCarriedItemData", "getDimension", "getEntity",
-            "getExhaustion", "getExp", "getHunger", "getInventorySlot", "getInventorySlotCount",
-            "getInventorySlotData", "getItemCustomName", "setInventorySlot", "getLevel", "setLevel",
-            "setSaturation", "setSelectedSlotId", "setItemCustomName", "getName",
-            "getPointedBlockId()", "getPointedBlockData()", "getPointedBlockSide()",
-            "getPointedBlockX()", "getPointedBlockY()", "getPointedBlockZ()", "getPointedEntity()",
-            "getPointedVecX()", "getPointedVecY()", "getPointedVecZ()", "getSaturation", "getScore",
-            "getSelectedSlotId()", /*"getX", "getY", "getZ",*/ "isFlying()", "setCanFly",
-            "setFlying", /*"setHealth"*/"setArmorSlot", "setExhaustion", "setExp",
-            /*"addItemCreativeInv",*/ "setHunger", "isPlayer()"
-    };
-    private static final String[] SERVER_KEYWORDS = new String[] {
-            /*"getAddress",*/ "getAllPlayerNames()", "getAllPlayers()", "getPort()", "joinServer",
-            "sendChat"
-    };
-    private static final String[] HOOKS_KEYWORDS = new String[] {
-            "useItem", /*"destroyBlock",*/ "newLevel", "procCmd", "selectLevelHook",
-            /*"leaveGame",*/ "attackHook", "modTick", "eatHook", "explodeHook", "deathHook",
-            "entityAddedHook", "entityRemovedHook", "entityHurtHook", "projectileHitEntityHook",
-            "playerAddExpHook", "playerExpLevelChangeHook", "redstoneUpdateHook",
-            "startDestroyBlock", "continueDestroyBlock", "blockEventHook", "levelEventHook",
-            "serverMessageReceiveHook", "screenChangeHook", "chatReceiveHook", "chatHook"
-    };
-    private static final String[] JS_KEYWORDS = new String[] {
-            "function"
-    };
-    private static final String[] GLOBAL_KEYWORDS = new String[] {
-            "clientMessage", "getPlayerX()", "getPlayerY()", "getPlayerZ()", "getPlayerEnt()"
+    private static final String[] GLOBAL_VALUES = new String[] {
+            "app", "runtime", "device", "media"
     };
 
-    /**
-     * Соединение всех массивов в один. Этот массив и будет использоваться для
-     * получения слов в редакторе.
-     */
-    private static final String[] ALL_KEYWORDS = ArrayUtils.join(String.class,
-            BLOCK_KEYWORDS, ENTITY_KEYWORDS, ITEM_KEYWORDS, LEVEL_KEYWORDS, GLOBAL_KEYWORDS,
-            MODPE_KEYWORDS, PLAYER_KEYWORDS, SERVER_KEYWORDS, HOOKS_KEYWORDS, JS_KEYWORDS);
+    private static final String[] APP_FUNCTIONS = new String[] {
+            "app.launch()", "app.getAppName()", "app.openAppSetting()", "app.viewFile()", "app.editFile()",
+            "app.uninstall()", "app.openUrl()", "app.sendEmail()", "app.startActivity()", "app.sendBroadcast()",
+            "app.startService()", "app.parseUri()", "app.getUriForFile()"
+    };
+
+    private static final String[] DEVICE_FUNCTIONS = new String[] {
+            "device.width", "device.height", "device.buildId", "device.broad", "device.brand",
+            "device.device", "deivce.model", "device.product", "device.bootloader", "device.hardware",
+            "device.fingerprint", "device.sdkInt", "device.incremental", "device.release",
+            "device.isScreenOn()", "device.vibrate()", "device.cancelVibration()"
+    };
+
+    private static final String[] GLOBAL_FUNCTIONS = new String[] {
+            "currentPackage()", "currentActivity()", "waitForPackage()", "waitForActivity()",
+            "random()", "toast()", "print()", "requiresApi()", "exit()", "sleep()", "requiresLuaCoreVersion()"
+    };
+
+    private static final String[] ALL_KEYWORDS = ArrayUtils.join(String.class, GLOBAL_VALUES,
+            APP_FUNCTIONS, DEVICE_FUNCTIONS, GLOBAL_FUNCTIONS);
 
     public final String[] getAllCompletions() {
         return ALL_KEYWORDS;

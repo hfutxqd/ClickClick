@@ -116,7 +116,7 @@ public class CodeEditor extends FrameLayout {
             this.context = context;
             initEditor();
             String code = "";
-            String lang = "html";
+            String lang = "lua";
             isReadOnly = false;
             isShowExtendedKeyboard = false;
             if (attrs != null) {

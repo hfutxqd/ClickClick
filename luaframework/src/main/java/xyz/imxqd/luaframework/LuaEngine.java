@@ -1,12 +1,16 @@
 package xyz.imxqd.luaframework;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
 import cn.vimfung.luascriptcore.LuaContext;
+import xyz.imxqd.luaframework.core.method.LuaMethodProvider;
+import xyz.imxqd.luaframework.exception.NotInitError;
 
 public class LuaEngine {
 
+    @SuppressLint("StaticFieldLeak")
     private static Context sContext;
 
     public static void init(Context context) {
@@ -17,7 +21,7 @@ public class LuaEngine {
         }
     }
 
-    protected static Context getGlobalContext() {
+    public static Context getGlobalContext() {
         return sContext;
     }
 
@@ -26,17 +30,7 @@ public class LuaEngine {
             throw new NotInitError();
         }
         LuaContext luaContext = LuaContext.create(sContext);
-        luaContext.registerMethod("print", luaValues -> {
-            if (luaValues.length == 1) {
-                Log.i("lua:print", luaValues[0].toString());
-            } else {
-                Log.i("lua:print", "");
-            }
-            return null;
-        });
-        luaContext.onException(s -> {
-            Log.e("lua:error", s);
-        });
+        LuaMethodProvider.registerAll(luaContext);
         return luaContext;
     }
 }

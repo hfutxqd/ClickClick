@@ -2,7 +2,6 @@ package xyz.imxqd.clickclick.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -37,10 +36,17 @@ public class CodeEditorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_run) {
             String code = codeEditor.getCode();
-            LuaEngine.createContext().evalScript(code);
-        } else if (item.getItemId() == R.id.action_save) {
+            LuaContext luaContext = LuaEngine.createContext();
+            luaContext.onException(s -> App.get().toastCenter(s));
+            luaContext.evalScript(code);
+            return true;
 
+        } else if (item.getItemId() == R.id.action_save) {
+            finish();
+            return true;
+        } else if (item.getItemId() == android.R.id.home) {
+            return false;
         }
-        return true;
+        return false;
     }
 }
