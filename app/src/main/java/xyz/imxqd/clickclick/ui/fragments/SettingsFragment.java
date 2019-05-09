@@ -33,7 +33,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public void onResume() {
         super.onResume();
         if (mPendingSwitchOn || mPendingNotificationOn || mPendingAppUsageOn) {
-            App.get().getHandler().postDelayed(this::initPrefs, 250);
+            App.get().getHandler().postDelayed(this::initPrefs, 350);
         } else {
             initPrefs();
         }
