@@ -221,16 +221,10 @@ public class AppEventManager implements KeyEventHandler.Callback {
         if (SettingsUtil.displayDebug()) {
             showToast("normal :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if (mService != null) {
-                mService.performGlobalAction(GLOBAL_ACTION_BACK);
-            }
-        } else if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN) {
-            mAudioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
-        } else if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
-            mAudioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
-        } else {
-            KeyEventUtil.sendKeyEventByShell(event.getKeyCode());
+        try {
+            KeyEventUtil.sendKeyEvent(event.getKeyCode());
+        } catch (Throwable t) {
+            LogUtils.e(t.getMessage());
         }
     }
 
