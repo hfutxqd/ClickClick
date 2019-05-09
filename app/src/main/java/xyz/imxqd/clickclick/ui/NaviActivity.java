@@ -25,7 +25,7 @@ import xyz.imxqd.clickclick.ui.fragments.ProfileFragment;
 import xyz.imxqd.clickclick.ui.fragments.SettingsFragment;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
-public class NaviActivity extends BaseActivity implements App.AppEventCallback{
+public class NaviActivity extends BaseActivity {
 
     @BindView(R.id.message)
     TextView vTitle;
@@ -92,9 +92,9 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
     private Snackbar mSnackbar;
     private void showSnackBarInNeed() {
         if (AppEventManager.getInstance().getService() == null) {
-            if (isAccessibilitySettingsOn() && SettingsUtil.isServiceOn()) {
+            if (SettingsUtil.isAccessibilitySettingsOn(this) && SettingsUtil.isServiceOn()) {
                 mSnackbar = Snackbar.make(findViewById(R.id.nav_container), R.string.snack_bar_accessibility_error, Snackbar.LENGTH_INDEFINITE);
-                mSnackbar.setAction(R.string.re_turn_on, v -> startAccessibilitySettings());
+                mSnackbar.setAction(R.string.re_turn_on, v -> SettingsUtil.startAccessibilitySettings(NaviActivity.this));
                 mSnackbar.getView().setBackgroundResource(R.color.snackbar_error_bg);
                 mSnackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_error_accent));
                 mSnackbar.show();
@@ -173,7 +173,7 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
         Fragment current = mFragments.get(currentTabId);
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
-        if (fragments.contains(current)){
+        if (current != null && fragments.contains(current)){
             transaction.hide(current);
         }
         if (fragments.contains(fragmentTo)) {

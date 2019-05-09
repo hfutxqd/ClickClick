@@ -16,7 +16,7 @@ import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.utils.PackageUtil;
 
-public class AlertDialogActivity extends AppCompatActivity {
+public class AlertDialogActivity extends BaseActivity {
 
     public static final String ARG_TYPE = "alert_type";
 

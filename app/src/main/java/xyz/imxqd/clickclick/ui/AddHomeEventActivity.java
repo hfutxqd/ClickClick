@@ -24,7 +24,7 @@ import xyz.imxqd.clickclick.model.AppKeyEventType;
 import xyz.imxqd.clickclick.ui.adapters.FunctionSpinnerAdapter;
 import xyz.imxqd.clickclick.log.LogUtils;
 
-public class AddHomeEventActivity extends AppCompatActivity {
+public class AddHomeEventActivity extends BaseActivity {
 
     public static final String ARG_KEY_EVENT = "key_event";
 

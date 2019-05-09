@@ -21,6 +21,7 @@
         android:key="@string/pref_key_app_detect_service"
         android:defaultValue="false"
         android:title="@string/settings_app_detect_service_title"
+        android:summary="@string/settings_app_detect_service_summary"
         app:iconSpaceReserved="false"/>
 
     <SwitchPreference

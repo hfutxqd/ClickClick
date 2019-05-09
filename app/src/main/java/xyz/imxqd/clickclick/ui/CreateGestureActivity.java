@@ -19,7 +19,7 @@ import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.utils.NavigationBarUtils;
 import xyz.imxqd.clickclick.widget.GestureView;
 
-public class CreateGestureActivity extends AppCompatActivity implements GestureView.GestureCreatedCallback {
+public class CreateGestureActivity extends BaseActivity implements GestureView.GestureCreatedCallback {
 
     private static final int REQUEST_CODE = 2333;
 

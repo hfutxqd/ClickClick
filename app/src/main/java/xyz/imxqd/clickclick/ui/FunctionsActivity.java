@@ -56,7 +56,7 @@ import xyz.imxqd.clickclick.model.web.ServerApi;
 import xyz.imxqd.clickclick.utils.AlertUtil;
 import xyz.imxqd.clickclick.utils.RawUtil;
 
-public class FunctionsActivity extends AppCompatActivity {
+public class FunctionsActivity extends BaseActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     @BindView(R.id.functions_container)

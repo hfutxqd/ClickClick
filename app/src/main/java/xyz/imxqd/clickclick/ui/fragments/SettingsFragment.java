@@ -32,8 +32,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     @Override
     public void onResume() {
         super.onResume();
-        if (mPendingSwitchOn || mPendingNotificationOn) {
-            App.get().getHandler().postDelayed(this::initPrefs, 150);
+        if (mPendingSwitchOn || mPendingNotificationOn || mPendingAppUsageOn) {
+            App.get().getHandler().postDelayed(this::initPrefs, 250);
         } else {
             initPrefs();
         }
@@ -56,12 +56,12 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         BaseActivity activity = (BaseActivity)getActivity();
         if (appSwitch.isChecked()) {
             assert activity != null;
-            if (!activity.isAccessibilitySettingsOn()) {
+            if (!SettingsUtil.isAccessibilitySettingsOn(activity)) {
                 appSwitch.setChecked(false);
             }
         } else {
             assert activity != null;
-            if (mPendingSwitchOn && activity.isAccessibilitySettingsOn()) {
+            if (mPendingSwitchOn && SettingsUtil.isAccessibilitySettingsOn(activity)) {
                 appSwitch.setChecked(true);
             }
             mPendingSwitchOn = false;
@@ -131,9 +131,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             if (p.isChecked()) {
                 BaseActivity activity = (BaseActivity)getActivity();
                 assert activity != null;
-                if (!activity.isAccessibilitySettingsOn()) {
+                if (!SettingsUtil.isAccessibilitySettingsOn(activity)) {
                     mPendingSwitchOn = true;
-                    activity.startAccessibilitySettings();
+                    SettingsUtil.startAccessibilitySettings(activity);
                     p.setChecked(false);
                 }
             } else {

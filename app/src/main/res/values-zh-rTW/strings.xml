@@ -120,4 +120,5 @@
     <string name="input_mode_turn_on">開啟輸入模式</string>
     <string name="input_mode_turn_off">關閉輸入模式</string>
     <string name="settings_app_detect_service_title">場景識別服務</string>
+    <string name="settings_app_detect_service_summary">非必選,打開後可提升當前使用應用的識別效果</string>
 </resources>

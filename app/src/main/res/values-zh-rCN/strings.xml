@@ -120,4 +120,5 @@
     <string name="input_mode_turn_on">开启输入模式</string>
     <string name="input_mode_turn_off">关闭输入模式</string>
     <string name="settings_app_detect_service_title">场景识别服务</string>
+    <string name="settings_app_detect_service_summary">非必选,打开后可提升当前使用应用的识别效果</string>
 </resources>

@@ -32,7 +32,7 @@ import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.ui.adapters.AppListAdapter;
 
-public class AppChooseActivity extends AppCompatActivity implements AppListAdapter.OnAppSelectedCallback {
+public class AppChooseActivity extends BaseActivity implements AppListAdapter.OnAppSelectedCallback {
 
     @BindView(R.id.app_list)
     RecyclerView mList;

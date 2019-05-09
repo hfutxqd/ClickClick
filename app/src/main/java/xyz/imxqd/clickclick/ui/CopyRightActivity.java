@@ -18,7 +18,7 @@ import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 
-public class CopyRightActivity extends AppCompatActivity {
+public class CopyRightActivity extends BaseActivity {
 
     @BindView(R.id.copy_webview)
     WebView mWebView;

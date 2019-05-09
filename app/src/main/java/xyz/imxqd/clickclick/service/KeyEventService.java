@@ -231,7 +231,6 @@ public class KeyEventService extends AccessibilityService {
     }
 
     private volatile ActivityInfo currentActivity = null;
-    private volatile ComponentName currentComponent = null;
 
     private void detectCurrentActivity(AccessibilityEvent event) {
         ComponentName componentName = new ComponentName(
@@ -243,8 +242,8 @@ public class KeyEventService extends AccessibilityService {
         boolean isActivity = activityInfo != null;
         if (isActivity) {
             currentActivity = activityInfo;
-            currentComponent = componentName;
-            LogUtils.i("currentActivity->" + currentActivity.toString());
+
+            LogUtils.i(currentActivity.packageName + "/" + currentActivity.name);
         }
 
     }
