@@ -2,6 +2,9 @@ package xyz.imxqd.clickclick.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.content.ComponentName;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -15,7 +18,6 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
-import xyz.imxqd.clickclick.utils.AppUsageUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
 public class KeyEventService extends AccessibilityService {
@@ -143,7 +145,8 @@ public class KeyEventService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         try {
-            if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED || event.getEventType() == AccessibilityEvent.TYPE_VIEW_CONTEXT_CLICKED) {
+            if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_CLICKED ||
+                    event.getEventType() == AccessibilityEvent.TYPE_VIEW_CONTEXT_CLICKED) {
                 AccessibilityNodeInfo source = event.getSource();
                 if (source == null) {
                     LogUtils.d( "source was null for: " + event);
@@ -168,6 +171,9 @@ public class KeyEventService extends AccessibilityService {
                     }
                 }
 
+            } else if (event.getEventType() == AccessibilityEvent.TYPE_WINDOWS_CHANGED ||
+                    event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+                detectCurrentActivity(event);
             }
 //            else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_HOVER_ENTER) {
 //                AccessibilityNodeInfo source = event.getSource();
@@ -215,6 +221,34 @@ public class KeyEventService extends AccessibilityService {
             mClickCallbacks.remove(callback);
         }
     }
+
+    private ActivityInfo tryGetActivity(ComponentName componentName) {
+        try {
+            return getPackageManager().getActivityInfo(componentName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            return null;
+        }
+    }
+
+    private volatile ActivityInfo currentActivity = null;
+    private volatile ComponentName currentComponent = null;
+
+    private void detectCurrentActivity(AccessibilityEvent event) {
+        ComponentName componentName = new ComponentName(
+                event.getPackageName().toString(),
+                event.getClassName().toString()
+        );
+
+        ActivityInfo activityInfo = tryGetActivity(componentName);
+        boolean isActivity = activityInfo != null;
+        if (isActivity) {
+            currentActivity = activityInfo;
+            currentComponent = componentName;
+            LogUtils.i("currentActivity->" + currentActivity.toString());
+        }
+
+    }
+
 
     public interface OnNotificationWidgetClick {
         void onNotificationWidgetClick(String packageName, String viewId);
