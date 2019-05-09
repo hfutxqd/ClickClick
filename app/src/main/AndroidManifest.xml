@@ -173,6 +173,7 @@
             android:parentActivityName=".ui.NaviActivity" />
         <activity
             android:name=".ui.CreateGestureActivity"
+            android:label="@string/open_application"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ui.NaviActivity" />
         <activity

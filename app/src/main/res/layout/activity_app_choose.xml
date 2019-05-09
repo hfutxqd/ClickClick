@@ -6,12 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.AppChooseActivity">
-    <include layout="@layout/title_layout" />
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        style="@style/AppWidget.ActionBar"
+        app:titleTextAppearance="@style/AppTextAppearance.Title"
+        android:id="@+id/toolbar" >
+    </android.support.v7.widget.Toolbar>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/app_list"
-        android:layout_below="@id/title_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         app:fastScrollEnabled="true"
         app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
         app:fastScrollVerticalTrackDrawable="@drawable/line_drawable"
@@ -24,7 +30,7 @@
         android:layout_height="wrap_content" />
     <View
         android:id="@+id/toolbar_shadow"
-        android:layout_below="@id/title_layout"
+        android:layout_below="@id/toolbar"
         android:background="@drawable/toolbar_shadow"
         android:layout_width="match_parent"
         android:layout_height="5dp" />

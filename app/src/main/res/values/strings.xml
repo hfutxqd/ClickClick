@@ -128,6 +128,7 @@
     <string name="input_mode_turn_off">Exit Input Mode</string>
     <string name="settings_app_detect_service_title">App detect service</string>
     <string name="settings_app_detect_service_summary">Optional. This option can help to detect the current in-use application.</string>
+    <string name="action_search">Search</string>
 
 
 </resources>
