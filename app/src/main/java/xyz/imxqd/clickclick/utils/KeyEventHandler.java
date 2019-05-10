@@ -170,22 +170,28 @@ public class KeyEventHandler {
         return isSameKey(a, b) && b.getEventTime() - a.getEventTime() <= QUICK_CLICK_TIME;
     }
 
+    private boolean findIt(KeyEvent keyEvent, List<Integer> igdKeyCodes, List<Integer> keyCodes, List<String> devices) {
+        if (igdKeyCodes.contains(keyEvent.getKeyCode())) {
+            return true;
+        }
+        int index = keyCodes.indexOf(keyEvent.getKeyCode());
+        if (index == -1) {
+            return false;
+        } else if (keyEvent.getDevice() != null){
+            return index == devices.indexOf(keyEvent.getDevice().getName());
+        } else {
+            return false;
+        }
+    }
+
     private boolean shouldOverride(KeyEvent keyEvent) {
         if (AppEventManager.getInstance().isInputMode()) {
             return mInputModeIgdKeyCodes.contains(keyEvent.getKeyCode());
         }
-        boolean should = false;
-        if (mSingleClickIgdKeyCodes.contains(keyEvent.getKeyCode())) {
-            should = true;
-        } else if (mDoubleClickIgdKeyCodes.contains(keyEvent.getKeyCode())) {
-            should = true;
-        } else if (mTripleClickIgdKeyCodes.contains(keyEvent.getKeyCode())) {
-            should = true;
-        } else if (mLongClickIgdKeyCodes.contains(keyEvent.getKeyCode())) {
-            should = true;
-        }
-        // TODO: 2019-05-10 处理不忽略设备信息的事件
-        return should;
+        return findIt(keyEvent, mSingleClickIgdKeyCodes, mSingleClickKeyCodes, mSingleClickDevices)
+                || findIt(keyEvent, mDoubleClickIgdKeyCodes, mDoubleClickKeyCodes, mDoubleClickDevices)
+                || findIt(keyEvent, mTripleClickIgdKeyCodes, mTripleClickKeyCodes, mTripleClickDevices)
+                || findIt(keyEvent, mLongClickIgdKeyCodes, mLongClickKeyCodes, mLongClickDevices);
     }
 
     private boolean supportSingleClickOnly(KeyEvent keyEvent) {
@@ -194,19 +200,19 @@ public class KeyEventHandler {
     }
 
     private boolean supportSingleClick(KeyEvent keyEvent) {
-        return mSingleClickIgdKeyCodes.contains(keyEvent.getKeyCode());
+        return findIt(keyEvent, mSingleClickIgdKeyCodes, mSingleClickKeyCodes, mSingleClickDevices);
     }
 
     private boolean supportLongPress(KeyEvent keyEvent) {
-        return mLongClickIgdKeyCodes.contains(keyEvent.getKeyCode());
+        return findIt(keyEvent, mLongClickIgdKeyCodes, mLongClickKeyCodes, mLongClickDevices);
     }
 
     private boolean supportDoubleClick(KeyEvent keyEvent) {
-        return mDoubleClickIgdKeyCodes.contains(keyEvent.getKeyCode());
+        return findIt(keyEvent, mDoubleClickIgdKeyCodes, mDoubleClickKeyCodes, mDoubleClickDevices);
     }
 
     private boolean supportTripleClick(KeyEvent keyEvent) {
-        return mTripleClickIgdKeyCodes.contains(keyEvent.getKeyCode());
+        return findIt(keyEvent, mTripleClickIgdKeyCodes, mTripleClickKeyCodes, mTripleClickDevices);
     }
 
     private boolean isLongClick(KeyEvent event) {
