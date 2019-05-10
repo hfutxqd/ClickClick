@@ -31,7 +31,6 @@ import xyz.imxqd.clickclick.utils.KeyEventHandler;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
-import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK;
 import static android.content.Context.AUDIO_SERVICE;
 
 public class AppEventManager implements KeyEventHandler.Callback {
@@ -122,29 +121,75 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     public void updateKeyEventData() {
         mKeyEventHandler.mLongClickKeyCodes.clear();
+        mKeyEventHandler.mLongClickIgdKeyCodes.clear();
+        mKeyEventHandler.mLongClickDevices.clear();
+
         mKeyEventHandler.mSingleClickKeyCodes.clear();
+        mKeyEventHandler.mSingleClickIgdKeyCodes.clear();
+        mKeyEventHandler.mSingleClickDevices.clear();
+
         mKeyEventHandler.mDoubleClickKeyCodes.clear();
+        mKeyEventHandler.mDoubleClickIgdKeyCodes.clear();
+        mKeyEventHandler.mDoubleClickDevices.clear();
+
         mKeyEventHandler.mTripleClickKeyCodes.clear();
+        mKeyEventHandler.mTripleClickIgdKeyCodes.clear();
+        mKeyEventHandler.mTripleClickDevices.clear();
+
         mKeyEventHandler.mInputModeKeyCodes.clear();
+        mKeyEventHandler.mInputModeIgdKeyCodes.clear();
+        mKeyEventHandler.mInputModeDevices.clear();
+
+
         mKeyEventData.clear();
 
         List<KeyMappingEvent> keyMappingEvents = KeyMappingEvent.getEnabledNormalItems();
         for (KeyMappingEvent event : keyMappingEvents) {
             if (event.eventType == AppKeyEventType.SingleClick) {
-                mKeyEventHandler.mSingleClickKeyCodes.add(event.keyCode);
+                if (event.ignoreDevice) {
+                    mKeyEventHandler.mSingleClickIgdKeyCodes.add(event.keyCode);
+                } else {
+                    mKeyEventHandler.mSingleClickKeyCodes.add(event.keyCode);
+                    mKeyEventHandler.mSingleClickDevices.add(event.deviceName);
+                }
+
             } else if (event.eventType == AppKeyEventType.LongClick) {
-                mKeyEventHandler.mLongClickKeyCodes.add(event.keyCode);
+                if (event.ignoreDevice) {
+                    mKeyEventHandler.mLongClickIgdKeyCodes.add(event.keyCode);
+                } else {
+                    mKeyEventHandler.mLongClickKeyCodes.add(event.keyCode);
+                    mKeyEventHandler.mLongClickDevices.add(event.deviceName);
+                }
+
             } else if (event.eventType == AppKeyEventType.DoubleClick) {
-                mKeyEventHandler.mDoubleClickKeyCodes.add(event.keyCode);
+                if (event.ignoreDevice) {
+                    mKeyEventHandler.mDoubleClickIgdKeyCodes.add(event.keyCode);
+                } else {
+                    mKeyEventHandler.mDoubleClickKeyCodes.add(event.keyCode);
+                    mKeyEventHandler.mDoubleClickDevices.add(event.deviceName);
+                }
+
             } else if (event.eventType == AppKeyEventType.TripleClick) {
-                mKeyEventHandler.mTripleClickKeyCodes.add(event.keyCode);
+                if (event.ignoreDevice) {
+                    mKeyEventHandler.mTripleClickIgdKeyCodes.add(event.keyCode);
+                } else {
+                    mKeyEventHandler.mTripleClickKeyCodes.add(event.keyCode);
+                    mKeyEventHandler.mTripleClickDevices.add(event.deviceName);
+                }
+
             }
             String key = makeAppKeyEventData(event.keyCode, event.deviceId, event.eventType);
             mKeyEventData.put(key, event.funcId);
         }
         List<KeyMappingEvent> inputModeEvents = KeyMappingEvent.getEnabledInputModeItems();
         for (KeyMappingEvent event : inputModeEvents) {
-            mKeyEventHandler.mInputModeKeyCodes.add(event.keyCode);
+            if (event.ignoreDevice) {
+                mKeyEventHandler.mInputModeIgdKeyCodes.add(event.keyCode);
+            } else {
+                mKeyEventHandler.mInputModeKeyCodes.add(event.keyCode);
+                mKeyEventHandler.mInputModeDevices.add(event.deviceName);
+            }
+
         }
 
     }
