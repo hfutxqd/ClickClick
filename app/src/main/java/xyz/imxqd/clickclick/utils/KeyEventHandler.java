@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 
 /**
@@ -185,13 +186,17 @@ public class KeyEventHandler {
     }
 
     private boolean shouldOverride(KeyEvent keyEvent) {
+        boolean shouldOverride = false;
         if (AppEventManager.getInstance().isInputMode()) {
-            return mInputModeIgdKeyCodes.contains(keyEvent.getKeyCode());
+            shouldOverride = mInputModeIgdKeyCodes.contains(keyEvent.getKeyCode());
+        } else {
+            shouldOverride = findIt(keyEvent, mSingleClickIgdKeyCodes, mSingleClickKeyCodes, mSingleClickDevices)
+                    || findIt(keyEvent, mDoubleClickIgdKeyCodes, mDoubleClickKeyCodes, mDoubleClickDevices)
+                    || findIt(keyEvent, mTripleClickIgdKeyCodes, mTripleClickKeyCodes, mTripleClickDevices)
+                    || findIt(keyEvent, mLongClickIgdKeyCodes, mLongClickKeyCodes, mLongClickDevices);
         }
-        return findIt(keyEvent, mSingleClickIgdKeyCodes, mSingleClickKeyCodes, mSingleClickDevices)
-                || findIt(keyEvent, mDoubleClickIgdKeyCodes, mDoubleClickKeyCodes, mDoubleClickDevices)
-                || findIt(keyEvent, mTripleClickIgdKeyCodes, mTripleClickKeyCodes, mTripleClickDevices)
-                || findIt(keyEvent, mLongClickIgdKeyCodes, mLongClickKeyCodes, mLongClickDevices);
+        LogUtils.d("shouldOverride=" + shouldOverride);
+        return shouldOverride;
     }
 
     private boolean supportSingleClickOnly(KeyEvent keyEvent) {

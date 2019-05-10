@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -44,8 +43,6 @@ public class AddKeyEventActivity extends BaseActivity {
     TextView mTvKeyCode;
     @BindView(R.id.key_device_name)
     TextView mTvDeviceName;
-    @BindView(R.id.key_device_id)
-    TextView mTvDeviceId;
     @BindView(R.id.key_btn_add)
     View mBtnAdd;
     @BindView(R.id.key_info_layout)
@@ -131,6 +128,7 @@ public class AddKeyEventActivity extends BaseActivity {
             DefinedFunction function = (DefinedFunction) mFuncAdapter.getItem(mLastSelectedPosition);
             mKeyEvent.funcName = function.name;
             mKeyEvent.funcId = function.id;
+            mKeyEvent.ignoreDevice = mCkIgnoreDevice.isChecked();
             mKeyEvent.eventType = AppKeyEventType.valueOf(mEventTypeValues.get(mSpEventType.getSelectedItemPosition()));
             mKeyEvent.save();
 
@@ -163,7 +161,6 @@ public class AddKeyEventActivity extends BaseActivity {
         mTvKeyCode.setText(getString(R.string.key_code, event.getKeyCode()));
         mTvKeyName.setText(getString(R.string.key_name, KeyEventUtil.getKeyName(event.getKeyCode())));
         mTvDeviceName.setText(getString(R.string.key_device_name, event.getDevice().getName()));
-        mTvDeviceId.setText(getString(R.string.key_device_id, event.getDeviceId()));
         return true;
     }
 }

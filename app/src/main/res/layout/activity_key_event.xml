@@ -47,12 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/key_device_id"
-            android:paddingBottom="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <CheckBox
             android:id="@+id/key_ignore_device"
             android:paddingBottom="10dp"
