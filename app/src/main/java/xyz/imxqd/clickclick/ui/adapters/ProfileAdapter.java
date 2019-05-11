@@ -175,7 +175,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         }
 
 
-        public void showFunctions() {
+        private void showFunctions() {
             final FunctionSpinnerAdapter adapter = new FunctionSpinnerAdapter();
             new AlertDialog.Builder(itemView.getContext())
                     .setAdapter(adapter, (dialog, which) -> {

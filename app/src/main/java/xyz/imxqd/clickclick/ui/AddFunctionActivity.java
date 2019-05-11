@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -32,8 +33,17 @@ public class AddFunctionActivity extends BaseActivity {
     private static final String PATH_SAVE = "save";
     private static final String PATH_RUN = "run";
 
+    private static final String ARGS_MODE = "key_mode"; // add/edit
+    private static final int MODE_ADD = 1;
+    private static final int MODE_EDIT = 2;
+
     private static final String ARGS_EDITABLE = "key_add_func_editable";
+
+    // only for add mode
     private static final String ARGS_REMOTE_FUNCATION = "key_add_func_remote";
+
+    // only for edit mode
+    private static final String ARGS_FUNC_ID = "key_func_id";
 
     @BindView(R.id.add_func_name)
     AppCompatEditText etName;
@@ -42,9 +52,36 @@ public class AddFunctionActivity extends BaseActivity {
     @BindView(R.id.add_func_code)
     AppCompatEditText etCode;
 
+    @BindView(R.id.add_func_add)
+    TextView tvAdd;
+
     private boolean isResumed = false;
+    private int currentMode = MODE_ADD;
+    private DefinedFunction mDefinedFunction = null;
 
     public void handleIntent(Intent intent) {
+        currentMode = intent.getIntExtra(ARGS_MODE, MODE_ADD);
+        if (currentMode == MODE_EDIT) {
+            long funcId = intent.getLongExtra(ARGS_FUNC_ID, -1);
+            DefinedFunction function = DefinedFunction.get(funcId);
+            if (function == null) {
+                finish();
+                return;
+            }
+            tvAdd.setText(R.string.save);
+            mDefinedFunction = function;
+            etName.setText(function.name);
+            etDescription.setText(function.description);
+            etCode.setText(function.body);
+
+            boolean editable = intent.getBooleanExtra(ARGS_EDITABLE, true);
+            etName.setEnabled(editable);
+            etCode.setEnabled(editable);
+            etDescription.setEnabled(editable);
+            return;
+        } else {
+            tvAdd.setText(R.string.btn_add);
+        }
         if (intent.getData() != null) {
             Uri data = intent.getData();
             try {
@@ -128,14 +165,25 @@ public class AddFunctionActivity extends BaseActivity {
 
     public static void start(RemoteFunction function, boolean editable, Context context) {
         Intent intent = new Intent(context, AddFunctionActivity.class);
+        intent.putExtra(ARGS_MODE, MODE_ADD);
         intent.putExtra(ARGS_EDITABLE, editable);
         intent.putExtra(ARGS_REMOTE_FUNCATION, function);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
+    public static void start(long funcId, boolean editable, Context context) {
+        Intent intent = new Intent(context, AddFunctionActivity.class);
+        intent.putExtra(ARGS_MODE, MODE_EDIT);
+        intent.putExtra(ARGS_FUNC_ID, funcId);
+        intent.putExtra(ARGS_EDITABLE, editable);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
     public static void startForResult(RemoteFunction function, boolean editable, Activity context, int requestCode) {
         Intent intent = new Intent(context, AddFunctionActivity.class);
+        intent.putExtra(ARGS_MODE, MODE_ADD);
         intent.putExtra(ARGS_EDITABLE, editable);
         intent.putExtra(ARGS_REMOTE_FUNCATION, function);
         context.startActivityForResult(intent, requestCode);
@@ -178,21 +226,38 @@ public class AddFunctionActivity extends BaseActivity {
     @OnClick(R.id.add_func_add)
     public void onAddClick() {
         if (checkEmpty()) {
-            String name = etName.getText().toString();
-            String des = etDescription.getText().toString();
-            String code = etCode.getText().toString();
-            DefinedFunction function = new DefinedFunction();
-            function.name = name;
-            function.description = des;
-            function.body = code;
-            function.order = 0;
-            try {
-                function.save();
-                App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
-                setResult(RESULT_OK);
-                finish();
-            } catch (Exception e) {
-                showToast(getString(R.string.save_failed));
+            if (currentMode == MODE_ADD) {
+                String name = etName.getText().toString();
+                String des = etDescription.getText().toString();
+                String code = etCode.getText().toString();
+                DefinedFunction function = new DefinedFunction();
+                function.name = name;
+                function.description = des;
+                function.body = code;
+                function.order = 0;
+                try {
+                    function.save();
+                    App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
+                    setResult(RESULT_OK);
+                    finish();
+                } catch (Exception e) {
+                    showToast(getString(R.string.save_failed));
+                }
+            } else {
+                String name = etName.getText().toString();
+                String des = etDescription.getText().toString();
+                String code = etCode.getText().toString();
+                mDefinedFunction.name = name;
+                mDefinedFunction.description = des;
+                mDefinedFunction.body = code;
+                try {
+                    mDefinedFunction.save();
+                    App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
+                    setResult(RESULT_OK);
+                    finish();
+                } catch (Exception e) {
+                    showToast(getString(R.string.save_failed));
+                }
             }
         }
     }

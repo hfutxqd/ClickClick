@@ -129,6 +129,9 @@
     <string name="settings_app_detect_service_title">App detect service</string>
     <string name="settings_app_detect_service_summary">Optional. This option can help to detect the current in-use application.</string>
     <string name="action_search">Search</string>
+    <string name="change_keyevent">Change KeyEvent</string>
+    <string name="edit_or_view_it">Edit/View</string>
+    <string name="save">Save</string>
 
 
 </resources>

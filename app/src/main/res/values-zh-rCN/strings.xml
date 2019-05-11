@@ -122,4 +122,7 @@
     <string name="settings_app_detect_service_title">场景识别服务</string>
     <string name="settings_app_detect_service_summary">非必选,打开后可提升当前使用应用的识别效果</string>
     <string name="action_search">搜索</string>
+    <string name="change_keyevent">更改按键事件</string>
+    <string name="edit_or_view_it">编辑/查看</string>
+    <string name="save">保存</string>
 </resources>

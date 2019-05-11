@@ -35,6 +35,13 @@ public class DefinedFunction extends BaseModel {
     @Column(name = "order", defaultValue = "0")
     public int order = 0;
 
+    public static DefinedFunction get(long funcId) {
+        return new Select()
+                .from(DefinedFunction.class)
+                .where(DefinedFunction_Table.id.eq(funcId))
+                .querySingle();
+    }
+
     public static List<DefinedFunction> getOrderedAll() {
         return new Select()
                 .from(DefinedFunction.class)
