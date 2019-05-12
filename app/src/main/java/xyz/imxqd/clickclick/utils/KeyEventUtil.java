@@ -3,10 +3,9 @@ package xyz.imxqd.clickclick.utils;
 import android.accessibilityservice.AccessibilityService;
 import android.annotation.SuppressLint;
 import android.media.AudioManager;
-import android.os.Process;
+import android.os.Build;
 import android.os.SystemClock;
 import android.view.KeyEvent;
-
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -15,6 +14,7 @@ import java.util.Map;
 
 import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
+import xyz.imxqd.clickclick.execution.APILevelException;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 
@@ -88,9 +88,33 @@ public class KeyEventUtil {
                     throw new RuntimeException(App.get().getString(R.string.accessibility_error));
                 }
                 break;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (audioManager != null) {
+                    audioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+                } else {
+                    throw new RuntimeException("AudioManager Error");
+                }
+                break;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (audioManager != null) {
+                    audioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+                } else {
+                    throw new RuntimeException("AudioManager Error");
+                }
+                break;
+            case KeyEvent.KEYCODE_MUTE:
+                if (audioManager != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        audioManager.adjustVolume(AudioManager.ADJUST_TOGGLE_MUTE, AudioManager.FLAG_SHOW_UI);
+                    } else {
+                        throw new APILevelException("requires api level >= 23");
+                    }
+                } else {
+                    throw new RuntimeException("AudioManager Error");
+                }
+                break;
             case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
             case KeyEvent.KEYCODE_MEDIA_NEXT:
-            case KeyEvent.KEYCODE_MUTE:
             case KeyEvent.KEYCODE_HEADSETHOOK:
             case KeyEvent.KEYCODE_MEDIA_PLAY:
             case KeyEvent.KEYCODE_MEDIA_PAUSE:
@@ -103,7 +127,6 @@ public class KeyEventUtil {
             case KeyEvent.KEYCODE_MEDIA_EJECT:
             case KeyEvent.KEYCODE_MEDIA_AUDIO_TRACK:
                 if (audioManager != null) {
-                    audioManager.setMode(AudioManager.MODE_NORMAL);
                     KeyEvent[] events = KeyEventUtil.makeKeyEventGroup(keyCode);
                     audioManager.dispatchMediaKeyEvent(events[0]);
                     audioManager.dispatchMediaKeyEvent(events[1]);
