@@ -106,7 +106,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
     public void onBindViewHolder(ProfileAdapter.KeyMapHolder holder, int position) {
         KeyMappingEvent event = mEvents.get(position);
         holder.title.setText(event.funcName);
-        holder.subTitle.setText(event.keyName + "  " + event.eventType.getName());
+        if (event.ignoreDevice) {
+            holder.subTitle.setText(event.keyName + "  " + event.eventType.getName());
+        } else {
+            holder.subTitle.setText(App.get().getResources().getString(R.string.key_device_name, event.deviceName) + "\n" + event.keyName + "  " + event.eventType.getName());
+        }
         holder.enable.setChecked(event.enable);
         holder.deleteAlpha(0f);
     }
