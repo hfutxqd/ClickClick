@@ -212,6 +212,7 @@ public class FunctionsActivity extends BaseActivity {
                         function.order = 0;
                         try {
                             function.save();
+                            App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
                             App.get().showToast(R.string.save_successed);
                         } catch (Exception e) {
                             App.get().showToast(R.string.save_failed);

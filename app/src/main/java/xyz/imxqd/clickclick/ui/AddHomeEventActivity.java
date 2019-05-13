@@ -17,6 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
@@ -105,6 +106,14 @@ public class AddHomeEventActivity extends BaseActivity {
         } catch (Exception e) {
             LogUtils.e(e.getMessage());
             Toast.makeText(this, R.string.add_key_event_failed, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onEvent(int what, Object data) {
+        if (what == App.EVENT_WHAT_REFRESH_UI) {
+            LogUtils.d("EVENT_WHAT_REFRESH_UI");
+            mFuncAdapter.refreshData();
         }
     }
 }

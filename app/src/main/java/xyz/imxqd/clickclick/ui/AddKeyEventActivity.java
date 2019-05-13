@@ -25,6 +25,7 @@ import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppKeyEventType;
 import xyz.imxqd.clickclick.ui.adapters.FunctionSpinnerAdapter;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
@@ -162,5 +163,13 @@ public class AddKeyEventActivity extends BaseActivity {
         mTvKeyName.setText(getString(R.string.key_name, KeyEventUtil.getKeyName(event.getKeyCode())));
         mTvDeviceName.setText(getString(R.string.key_device_name, event.getDevice().getName()));
         return true;
+    }
+
+    @Override
+    public void onEvent(int what, Object data) {
+        if (what == App.EVENT_WHAT_REFRESH_UI) {
+            LogUtils.d("EVENT_WHAT_REFRESH_UI");
+            mFuncAdapter.refreshData();
+        }
     }
 }
