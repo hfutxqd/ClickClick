@@ -68,12 +68,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
             SwitchPreference notificationSwitch = (SwitchPreference) findPreference(getString(R.string.pref_key_notification_switch));
             if (mPendingNotificationOn && NotificationAccessUtil.isEnabled(getActivity())) {
                 notificationSwitch.setChecked(true);
+            } else if (mPendingNotificationOn || AppEventManager.getInstance().getNotificationService() != null) {
+                notificationSwitch.setChecked(true);
             }
             mPendingSwitchOn = false;
         }
         if (mPendingAppUsageOn && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             SwitchPreference appUsage = (SwitchPreference) findPreference(getString(R.string.pref_key_app_detect_service));
-            appUsage.setChecked(AppUsageUtil.checkAppUsagePermission(getActivity()) || AppEventManager.getInstance().getNotificationService() != null);
+            appUsage.setChecked(AppUsageUtil.checkAppUsagePermission(getActivity()));
         }
         if (!NotificationAccessUtil.isEnabled(getActivity())) {
             ((SwitchPreference)findPreference(getString(R.string.pref_key_notification_switch))).setChecked(false);
