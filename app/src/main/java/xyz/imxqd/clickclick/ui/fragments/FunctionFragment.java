@@ -229,7 +229,11 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         Intent intent = new Intent(Intent.ACTION_PICK_ACTIVITY);
         intent.putExtra(Intent.EXTRA_INTENT, new Intent(Intent.ACTION_CREATE_SHORTCUT));
         intent.putExtra(Intent.EXTRA_TITLE, getString(R.string.add_shortcut));
-        startActivityForResult(intent, REQUEST_ADD_SHORTCUT);
+        try {
+            startActivityForResult(intent, REQUEST_ADD_SHORTCUT);
+        } catch (Throwable e) {
+            App.get().showToast(R.string.no_app_shortcut_available);
+        }
     }
 
     public void startAddApplication() {

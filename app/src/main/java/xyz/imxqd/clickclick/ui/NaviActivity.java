@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
@@ -169,9 +170,10 @@ public class NaviActivity extends BaseActivity {
                 break;
         }
 
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
         Fragment current = mFragments.get(currentTabId);
-        FragmentTransaction transaction = getSupportFragmentManager()
+        FragmentTransaction transaction = fragmentManager
                 .beginTransaction();
         if (current != null && fragments.contains(current)){
             transaction.hide(current);

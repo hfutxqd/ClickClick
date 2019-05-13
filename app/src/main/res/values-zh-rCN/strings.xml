@@ -125,4 +125,5 @@
     <string name="change_keyevent">更改按键事件</string>
     <string name="edit_or_view_it">编辑/查看</string>
     <string name="save">保存</string>
+    <string name="no_app_shortcut_available">没有可用的快捷方式</string>
 </resources>

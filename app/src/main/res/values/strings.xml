@@ -132,6 +132,7 @@
     <string name="change_keyevent">Change KeyEvent</string>
     <string name="edit_or_view_it">Edit/View</string>
     <string name="save">Save</string>
+    <string name="no_app_shortcut_available">No app shortcut available</string>
 
 
 </resources>
