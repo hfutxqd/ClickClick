@@ -9,6 +9,7 @@ import cn.vimfung.luascriptcore.LuaValue;
 import xyz.imxqd.luaframework.LuaEngine;
 import xyz.imxqd.luaframework.core.model.App;
 import xyz.imxqd.luaframework.core.model.Device;
+import xyz.imxqd.luaframework.core.model.Logger;
 
 public class GlobalLuaValueProvider {
     public static void registerAll(LuaContext luaContext) {
@@ -24,5 +25,6 @@ public class GlobalLuaValueProvider {
         }
 
         luaContext.setGlobal("app", new LuaValue(App.getInstance()));
+        luaContext.setGlobal("log", new LuaValue(Logger.get()));
     }
 }

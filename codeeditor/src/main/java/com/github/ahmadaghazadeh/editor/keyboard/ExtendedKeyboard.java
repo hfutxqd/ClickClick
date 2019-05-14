@@ -69,10 +69,11 @@ public class ExtendedKeyboard extends RecyclerView {
         List<Symbol> symbolList=new LinkedList<>();
         symbolList.add(new Symbol("Tab","    ",-1));
         symbolList.add(new Symbol("End","End",-1));
-        symbolList.add(new Symbol("{","{",-1));
-        symbolList.add(new Symbol("}","}",0));
+        symbolList.add(new Symbol(":",":",0));
         symbolList.add(new Symbol("(","(",-1));
         symbolList.add(new Symbol(")",")",0));
+        symbolList.add(new Symbol("{","{",-1));
+        symbolList.add(new Symbol("}","}",0));
         symbolList.add(new Symbol(";",";",0));
         symbolList.add(new Symbol(",",",",0));
         symbolList.add(new Symbol(".",".",0));
@@ -90,7 +91,6 @@ public class ExtendedKeyboard extends RecyclerView {
         symbolList.add(new Symbol("/","/",0));
         symbolList.add(new Symbol("*","*",0));
         symbolList.add(new Symbol("?","?",0));
-        symbolList.add(new Symbol(":",":",0));
         symbolList.add(new Symbol("_","_",0));
         mAdapter.setListKey(symbolList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);

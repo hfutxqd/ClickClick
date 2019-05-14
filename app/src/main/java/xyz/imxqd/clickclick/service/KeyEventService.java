@@ -2,9 +2,6 @@ package xyz.imxqd.clickclick.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
-import android.content.ComponentName;
-import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -171,9 +168,6 @@ public class KeyEventService extends AccessibilityService {
                     }
                 }
 
-            } else if (event.getEventType() == AccessibilityEvent.TYPE_WINDOWS_CHANGED ||
-                    event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-                detectCurrentActivity(event);
             }
 //            else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_HOVER_ENTER) {
 //                AccessibilityNodeInfo source = event.getSource();
@@ -193,7 +187,7 @@ public class KeyEventService extends AccessibilityService {
 //            } else if (event.getEventType() == AccessibilityEvent.TYPE_VIEW_HOVER_ENTER) {
 //                event.getSource().performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS);
 //            }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LogUtils.e(e.getMessage());
         }
     }
@@ -221,33 +215,6 @@ public class KeyEventService extends AccessibilityService {
             mClickCallbacks.remove(callback);
         }
     }
-
-    private ActivityInfo tryGetActivity(ComponentName componentName) {
-        try {
-            return getPackageManager().getActivityInfo(componentName, 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            return null;
-        }
-    }
-
-    private volatile ActivityInfo currentActivity = null;
-
-    private void detectCurrentActivity(AccessibilityEvent event) {
-        ComponentName componentName = new ComponentName(
-                event.getPackageName().toString(),
-                event.getClassName().toString()
-        );
-
-        ActivityInfo activityInfo = tryGetActivity(componentName);
-        boolean isActivity = activityInfo != null;
-        if (isActivity) {
-            currentActivity = activityInfo;
-
-            LogUtils.i(currentActivity.packageName + "/" + currentActivity.name);
-        }
-
-    }
-
 
     public interface OnNotificationWidgetClick {
         void onNotificationWidgetClick(String packageName, String viewId);

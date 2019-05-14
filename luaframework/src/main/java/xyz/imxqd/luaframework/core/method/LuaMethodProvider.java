@@ -116,9 +116,7 @@ public class LuaMethodProvider {
         DEFINED_METHODS.put("exit", new LuaMethod("exit") {
             @Override
             public LuaValue onExecute(LuaValue[] luaValues) {
-                if (luaValues.length == 1) {
-                    Toast.makeText(LuaEngine.getGlobalContext(), luaValues[0].toString(), Toast.LENGTH_SHORT).show();
-                }
+                this.luaContext.raiseException("exit");
                 return null;
             }
         });
@@ -127,7 +125,12 @@ public class LuaMethodProvider {
     public static void registerAll(LuaContext luaContext) {
         Set<String> names = DEFINED_METHODS.keySet();
         for (String name : names) {
-            luaContext.registerMethod(name, DEFINED_METHODS.get(name));
+            LuaMethod luaMethod = DEFINED_METHODS.get(name);
+            if (luaMethod != null) {
+                luaMethod.setLuaContext(luaContext);
+                luaContext.registerMethod(name, luaMethod);
+            }
+
         }
     }
 }

@@ -61,13 +61,17 @@ public class LuaLanguage extends Language {
 
 
     private static final String[] GLOBAL_VALUES = new String[] {
-            "app", "runtime", "device", "media"
+            "app", "log", "device"
     };
 
     private static final String[] APP_FUNCTIONS = new String[] {
-            "app.launch()", "app.getAppName()", "app.openAppSetting()", "app.openFile()", "app.editFile()",
-            "app.uninstall()", "app.openUrl()", "app.sendEmail()", "app.startActivity()", "app.sendBroadcast()",
-            "app.startService()"
+            "app:launch()", "app:getAppName()", "app:openAppSetting()", "app:openFile()", "app:editFile()",
+            "app:uninstall()", "app:openUrl()", "app:sendEmail()", "app:startActivity()", "app:sendBroadcast()",
+            "app:startService()"
+    };
+
+    private static final String[] LOGS_FUNCTIONS = new String[] {
+            "log:v()", "log:i()", "log:d()", "log:w()", "log:e()", "log:w()"
     };
 
     private static final String[] DEVICE_FUNCTIONS = new String[] {
@@ -80,10 +84,10 @@ public class LuaLanguage extends Language {
             "currentPackage()", "currentActivity()", "waitForPackage()", "waitForActivity()",
             "random()", "toast()", "exit()", "sleep()", "vibrate()", "cancelVibration()", "print()",
             "getPkgInfo()", "requiresApi()", "requiresLuaCoreVersion()", "requiresPkg()",
-            "keepScreenOn()", "fail()", "alert()"
+            "keepScreenOn()", "fail()", "alert()", "type()"
     };
 
-    private static final String[] ALL_KEYWORDS = ArrayUtils.join(String.class, GLOBAL_VALUES,
+    private static final String[] ALL_KEYWORDS = ArrayUtils.join(String.class, GLOBAL_VALUES, LOGS_FUNCTIONS,
             APP_FUNCTIONS, DEVICE_FUNCTIONS, GLOBAL_FUNCTIONS);
 
     public final String[] getAllCompletions() {

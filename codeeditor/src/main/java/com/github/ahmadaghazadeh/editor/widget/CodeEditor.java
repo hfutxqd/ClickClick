@@ -180,15 +180,15 @@ public class CodeEditor extends FrameLayout {
 
             mFastScrollerView.setLayoutParams(fastParam);
             rootView.addView(mFastScrollerView);
-            mFastScrollerView.link(editor); //подключаем FastScroller к редактору
+            mFastScrollerView.link(editor); //将FastScroller连接到编辑器
 
-            gutterView.link(editor, lineNumbers); //подключаем Gutter к редактору
+            gutterView.link(editor, lineNumbers); //将gutter连接到编辑器
             LinesCollection lines = new LinesCollection();
             lines.add(0, 0);
-            setLanguage(LanguageProvider.getLanguage(lang)); //ставим язык
-            setText(code, 1); //заполняем поле текстом
-            setLineStartsList(lines); //подгружаем линии
-            refreshEditor(); //подключаем все настройки
+            setLanguage(LanguageProvider.getLanguage(lang));
+            setText(code, 1); //用文字填充该字段
+            setLineStartsList(lines); //加载线条
+            refreshEditor(); //连接所有设置
             editor.enableUndoRedoStack();
 
             recyclerView = new ExtendedKeyboard(context);
