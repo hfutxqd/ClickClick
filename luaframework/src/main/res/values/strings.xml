@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LuaFramework</string>
+    <string name="pkg_not_found">Package not found</string>
 </resources>

@@ -65,21 +65,22 @@ public class LuaLanguage extends Language {
     };
 
     private static final String[] APP_FUNCTIONS = new String[] {
-            "app.launch()", "app.getAppName()", "app.openAppSetting()", "app.viewFile()", "app.editFile()",
+            "app.launch()", "app.getAppName()", "app.openAppSetting()", "app.openFile()", "app.editFile()",
             "app.uninstall()", "app.openUrl()", "app.sendEmail()", "app.startActivity()", "app.sendBroadcast()",
-            "app.startService()", "app.parseUri()", "app.getUriForFile()"
+            "app.startService()"
     };
 
     private static final String[] DEVICE_FUNCTIONS = new String[] {
             "device.width", "device.height", "device.buildId", "device.broad", "device.brand",
             "device.device", "deivce.model", "device.product", "device.bootloader", "device.hardware",
-            "device.fingerprint", "device.sdkInt", "device.incremental", "device.release",
-            "device.isScreenOn()", "device.vibrate()", "device.cancelVibration()"
+            "device.fingerprint", "device.sdkInt", "device.incremental", "device.release"
     };
 
     private static final String[] GLOBAL_FUNCTIONS = new String[] {
             "currentPackage()", "currentActivity()", "waitForPackage()", "waitForActivity()",
-            "random()", "toast()", "print()", "requiresApi()", "exit()", "sleep()", "requiresLuaCoreVersion()"
+            "random()", "toast()", "exit()", "sleep()", "vibrate()", "cancelVibration()", "print()",
+            "getPkgInfo()", "requiresApi()", "requiresLuaCoreVersion()", "requiresPkg()",
+            "keepScreenOn()", "fail()", "alert()"
     };
 
     private static final String[] ALL_KEYWORDS = ArrayUtils.join(String.class, GLOBAL_VALUES,

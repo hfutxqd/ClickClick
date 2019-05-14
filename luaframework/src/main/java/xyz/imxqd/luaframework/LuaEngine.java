@@ -2,10 +2,10 @@ package xyz.imxqd.luaframework;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import cn.vimfung.luascriptcore.LuaContext;
 import xyz.imxqd.luaframework.core.method.LuaMethodProvider;
+import xyz.imxqd.luaframework.core.value.GlobalLuaValueProvider;
 import xyz.imxqd.luaframework.exception.NotInitError;
 
 public class LuaEngine {
@@ -30,6 +30,7 @@ public class LuaEngine {
             throw new NotInitError();
         }
         LuaContext luaContext = LuaContext.create(sContext);
+        GlobalLuaValueProvider.registerAll(luaContext);
         LuaMethodProvider.registerAll(luaContext);
         return luaContext;
     }
