@@ -56,9 +56,10 @@ android {
 def dbflow_version = "4.2.4"
 
 dependencies {
+    compileOnly project(':AndroidWrapper')
     implementation project(':codeeditor')
     implementation project(':luaframework')
-    compileOnly project(':AndroidWrapper')
+    implementation project(path: ':eventinject')
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -85,5 +86,4 @@ dependencies {
     implementation 'me.weishu:free_reflection:2.0.0'
     xposedCompileOnly 'de.robv.android.xposed:api:82'
     xposedCompileOnly 'de.robv.android.xposed:api:82:sources'
-
 }

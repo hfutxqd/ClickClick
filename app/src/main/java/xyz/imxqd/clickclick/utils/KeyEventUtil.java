@@ -17,6 +17,7 @@ import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.execution.APILevelException;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
+import xyz.imxqd.injector.Injector;
 
 /**
  * Created by imxqd on 2017/11/25.
@@ -135,8 +136,13 @@ public class KeyEventUtil {
                 }
                 break;
             default:
-                if (!KeyEventUtil.sendKeyEventByShell(keyCode)) {
-                    throw new RuntimeException("KeyEvent commend exec error");
+                keyCode = 4;
+                try {
+                    Injector.sendKeyEvent(keyCode);
+                } catch (Throwable t) {
+                    if (!KeyEventUtil.sendKeyEventByShell(keyCode)) {
+                        throw new RuntimeException("KeyEvent commend exec error");
+                    }
                 }
         }
     }

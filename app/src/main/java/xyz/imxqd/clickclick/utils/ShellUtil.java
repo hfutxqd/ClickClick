@@ -112,7 +112,7 @@ public class ShellUtil {
             } else {
                 return null;
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             final String msg = e.getMessage();
             Log.e(TAG, "runCommand error: " + msg);
             throw new IOException(msg);
@@ -124,7 +124,7 @@ public class ShellUtil {
                 if (process != null) {
                     process.destroy();
                 }
-            } catch (Exception ignored) {}
+            } catch (Throwable ignored) {}
         }
     }
 
