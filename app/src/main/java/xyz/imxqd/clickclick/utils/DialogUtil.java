@@ -19,6 +19,18 @@ public class DialogUtil {
                 .show();
     }
 
+    public static <T> void showListWithTitle(Context context, CharSequence title, List<T> list, OnItemClickListener<T> listener) {
+        ArrayAdapter<T>  adapter =  new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, list);
+        new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setAdapter(adapter, (dialog, which) -> {
+                    if (listener != null) {
+                        listener.onItemClick(which, list.get(which));
+                    }
+                })
+                .show();
+    }
+
     public interface OnItemClickListener<T> {
         void onItemClick(int pos, T item);
     }

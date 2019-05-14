@@ -36,6 +36,7 @@ public class KeyMappingEvent extends BaseModel implements Parcelable {
     @Column(name = "device_id")
     public int deviceId;
 
+    @Unique(unique = false, uniqueGroups = 1)
     @Column(name = "device_name")
     public String deviceName;
 

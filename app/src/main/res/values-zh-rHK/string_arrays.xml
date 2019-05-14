@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        
+    <string-array name="event_type">
+        <item>單擊</item>
+        <item>長按</item>
+        <item>雙擊</item>
+        <item>三擊</item>
+    </string-array>
+
+    <string-array name="home_event_type">
+        <item>雙擊</item>
+        <item>三擊</item>
+    </string-array>
+
+    <string-array name="click_speed">
+        <item>最慢</item>
+        <item>慢速</item>
+        <item>普通</item>
+        <item>快速</item>
+        <item>最快</item>
+    </string-array>
+
+</resources>

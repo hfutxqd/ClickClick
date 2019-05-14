@@ -49,6 +49,6 @@
     <Preference
         android:title="@string/settings_about_title"
         app:iconSpaceReserved="false">
-        <intent android:action="xyz.imxqd.clickclick.copyright" />
+        <intent android:action="xyz.imxqd.clickclick.xposed.copyright" />
     </Preference>
 </PreferenceScreen>

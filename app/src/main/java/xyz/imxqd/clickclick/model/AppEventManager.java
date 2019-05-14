@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Message;
 import android.text.TextUtils;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 
 import com.raizlabs.android.dbflow.sql.language.Select;
@@ -31,7 +32,6 @@ import xyz.imxqd.clickclick.utils.KeyEventHandler;
 import xyz.imxqd.clickclick.utils.KeyEventUtil;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
-import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK;
 import static android.content.Context.AUDIO_SERVICE;
 
 public class AppEventManager implements KeyEventHandler.Callback {
@@ -122,29 +122,82 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     public void updateKeyEventData() {
         mKeyEventHandler.mLongClickKeyCodes.clear();
+        mKeyEventHandler.mLongClickIgdKeyCodes.clear();
+        mKeyEventHandler.mLongClickDevices.clear();
+
         mKeyEventHandler.mSingleClickKeyCodes.clear();
+        mKeyEventHandler.mSingleClickIgdKeyCodes.clear();
+        mKeyEventHandler.mSingleClickDevices.clear();
+
         mKeyEventHandler.mDoubleClickKeyCodes.clear();
+        mKeyEventHandler.mDoubleClickIgdKeyCodes.clear();
+        mKeyEventHandler.mDoubleClickDevices.clear();
+
         mKeyEventHandler.mTripleClickKeyCodes.clear();
+        mKeyEventHandler.mTripleClickIgdKeyCodes.clear();
+        mKeyEventHandler.mTripleClickDevices.clear();
+
         mKeyEventHandler.mInputModeKeyCodes.clear();
+        mKeyEventHandler.mInputModeIgdKeyCodes.clear();
+        mKeyEventHandler.mInputModeDevices.clear();
+
+
         mKeyEventData.clear();
 
         List<KeyMappingEvent> keyMappingEvents = KeyMappingEvent.getEnabledNormalItems();
         for (KeyMappingEvent event : keyMappingEvents) {
             if (event.eventType == AppKeyEventType.SingleClick) {
-                mKeyEventHandler.mSingleClickKeyCodes.add(event.keyCode);
+                if (event.ignoreDevice) {
+                    mKeyEventHandler.mSingleClickIgdKeyCodes.add(event.keyCode);
+                } else {
+                    mKeyEventHandler.mSingleClickKeyCodes.add(event.keyCode);
+                    mKeyEventHandler.mSingleClickDevices.add(event.deviceName);
+                }
+
             } else if (event.eventType == AppKeyEventType.LongClick) {
-                mKeyEventHandler.mLongClickKeyCodes.add(event.keyCode);
+                if (event.ignoreDevice) {
+                    mKeyEventHandler.mLongClickIgdKeyCodes.add(event.keyCode);
+                } else {
+                    mKeyEventHandler.mLongClickKeyCodes.add(event.keyCode);
+                    mKeyEventHandler.mLongClickDevices.add(event.deviceName);
+                }
+
             } else if (event.eventType == AppKeyEventType.DoubleClick) {
-                mKeyEventHandler.mDoubleClickKeyCodes.add(event.keyCode);
+                if (event.ignoreDevice) {
+                    mKeyEventHandler.mDoubleClickIgdKeyCodes.add(event.keyCode);
+                } else {
+                    mKeyEventHandler.mDoubleClickKeyCodes.add(event.keyCode);
+                    mKeyEventHandler.mDoubleClickDevices.add(event.deviceName);
+                }
+
             } else if (event.eventType == AppKeyEventType.TripleClick) {
-                mKeyEventHandler.mTripleClickKeyCodes.add(event.keyCode);
+                if (event.ignoreDevice) {
+                    mKeyEventHandler.mTripleClickIgdKeyCodes.add(event.keyCode);
+                } else {
+                    mKeyEventHandler.mTripleClickKeyCodes.add(event.keyCode);
+                    mKeyEventHandler.mTripleClickDevices.add(event.deviceName);
+                }
+
             }
-            String key = makeAppKeyEventData(event.keyCode, event.deviceId, event.eventType);
-            mKeyEventData.put(key, event.funcId);
+
+            if (event.ignoreDevice) {
+                String key = makeAppKeyEventData(event.keyCode, "*", event.eventType);
+                mKeyEventData.put(key, event.funcId);
+            } else {
+                String key = makeAppKeyEventData(event.keyCode, event.deviceName, event.eventType);
+                mKeyEventData.put(key, event.funcId);
+            }
+
         }
         List<KeyMappingEvent> inputModeEvents = KeyMappingEvent.getEnabledInputModeItems();
         for (KeyMappingEvent event : inputModeEvents) {
-            mKeyEventHandler.mInputModeKeyCodes.add(event.keyCode);
+            if (event.ignoreDevice) {
+                mKeyEventHandler.mInputModeIgdKeyCodes.add(event.keyCode);
+            } else {
+                mKeyEventHandler.mInputModeKeyCodes.add(event.keyCode);
+                mKeyEventHandler.mInputModeDevices.add(event.deviceName);
+            }
+
         }
 
     }
@@ -175,28 +228,38 @@ public class AppEventManager implements KeyEventHandler.Callback {
         return isInputMode;
     }
 
-    public static String makeAppKeyEventData(int keyCode, int deviceId, AppKeyEventType type) {
-        return String.format(Locale.getDefault(), "%d:%d:%s", keyCode, deviceId, type.getName());
+    public static String makeAppKeyEventData(int keyCode, String deviceName, AppKeyEventType type) {
+        return String.format(Locale.getDefault(), "%d:%s:%s", keyCode, deviceName, type.getName());
     }
 
-    public void onEvent(int keyCode, int deviceId, AppKeyEventType type) {
-        String eventData = makeAppKeyEventData(keyCode, deviceId, type);
-        if (mKeyEventData.containsKey(eventData)) {
-            Long funcId = mKeyEventData.get(eventData);
-            if (funcId == null) {
-                LogUtils.e("function id not found.");
-                return;
-            }
-            if (funcId == -2) {
-                toggleInputMode();
-                return;
-            }
-            IFunction function = FunctionFactory.getFuncById(funcId);
-            if (function != null) {
-                function.exec();
-            }
-        } else {
+    public void onEvent(int keyCode, InputDevice device, AppKeyEventType type) {
+        String eventKey = makeAppKeyEventData(keyCode, device.getName(), type);
+        String eventKey2 = makeAppKeyEventData(keyCode, "*", type);
+        String key = null;
+        if (mKeyEventData.containsKey(eventKey)) {
+            key = eventKey;
+        } else if (mKeyEventData.containsKey(eventKey2)) {
+            key = eventKey2;
+        }
+        if (key == null) {
+            LogUtils.i("ignore " + keyCode);
+            return;
+        }
+        LogUtils.i(key);
+        Long funcId = mKeyEventData.get(key);
+        if (funcId == null) {
             LogUtils.e("function id not found.");
+            return;
+        }
+        if (funcId == -2) {
+            toggleInputMode();
+            return;
+        }
+        IFunction function = FunctionFactory.getFuncById(funcId);
+        if (function != null) {
+            function.exec();
+        } else {
+
         }
     }
 
@@ -221,16 +284,10 @@ public class AppEventManager implements KeyEventHandler.Callback {
         if (SettingsUtil.displayDebug()) {
             showToast("normal :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            if (mService != null) {
-                mService.performGlobalAction(GLOBAL_ACTION_BACK);
-            }
-        } else if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN) {
-            mAudioManager.adjustVolume(AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
-        } else if (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP) {
-            mAudioManager.adjustVolume(AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
-        } else {
-            KeyEventUtil.sendKeyEventByShell(event.getKeyCode());
+        try {
+            KeyEventUtil.sendKeyEvent(event.getKeyCode());
+        } catch (Throwable t) {
+            LogUtils.e(t.getMessage());
         }
     }
 
@@ -240,7 +297,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         if (SettingsUtil.displayDebug()) {
             showToast("onLongClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
-        onEvent(event.getKeyCode(), event.getDeviceId(), AppKeyEventType.LongClick);
+        onEvent(event.getKeyCode(), event.getDevice(), AppKeyEventType.LongClick);
     }
 
     @Override
@@ -249,7 +306,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         if (SettingsUtil.displayDebug()) {
             showToast("onSingleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
-        onEvent(event.getKeyCode(), event.getDeviceId(), AppKeyEventType.SingleClick);
+        onEvent(event.getKeyCode(), event.getDevice(), AppKeyEventType.SingleClick);
     }
 
     @Override
@@ -258,7 +315,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         if (SettingsUtil.displayDebug()) {
             showToast("onDoubleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
-        onEvent(event.getKeyCode(), event.getDeviceId(), AppKeyEventType.DoubleClick);
+        onEvent(event.getKeyCode(), event.getDevice(), AppKeyEventType.DoubleClick);
     }
 
     @Override
@@ -267,7 +324,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
         if (SettingsUtil.displayDebug()) {
             showToast("onTripleClick :" + KeyEventUtil.getKeyName(event.getKeyCode()));
         }
-        onEvent(event.getKeyCode(), event.getDeviceId(), AppKeyEventType.TripleClick);
+        onEvent(event.getKeyCode(), event.getDevice(), AppKeyEventType.TripleClick);
 
     }
 

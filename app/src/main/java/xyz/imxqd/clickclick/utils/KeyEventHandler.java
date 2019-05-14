@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
 
 /**
@@ -20,12 +21,30 @@ public class KeyEventHandler {
 
     private Callback mCallback;
     private Stack<KeyEvent> mLastEvent;
-    public List<Integer> mLongClickKeyCodes = new ArrayList<>();
-    public List<Integer> mSingleClickKeyCodes = new ArrayList<>();
-    public List<Integer> mDoubleClickKeyCodes = new ArrayList<>();
-    public List<Integer> mTripleClickKeyCodes = new ArrayList<>();
+    public final List<Integer> mLongClickKeyCodes = new ArrayList<>();
+    public final List<String> mLongClickDevices = new ArrayList<>();
+
+    public final List<Integer> mSingleClickKeyCodes = new ArrayList<>();
+    public final List<String> mSingleClickDevices = new ArrayList<>();
+
+    public final List<Integer> mDoubleClickKeyCodes = new ArrayList<>();
+    public final List<String> mDoubleClickDevices = new ArrayList<>();
+
+    public final List<Integer> mTripleClickKeyCodes = new ArrayList<>();
+    public final List<String> mTripleClickDevices = new ArrayList<>();
+
+    public final List<Integer> mLongClickIgdKeyCodes = new ArrayList<>();
+
+    public final List<Integer> mSingleClickIgdKeyCodes = new ArrayList<>();
+
+    public final List<Integer> mDoubleClickIgdKeyCodes = new ArrayList<>();
+
+    public final List<Integer> mTripleClickIgdKeyCodes = new ArrayList<>();
+
 
     public List<Integer> mInputModeKeyCodes = new ArrayList<>();
+    public final List<String> mInputModeDevices = new ArrayList<>();
+    public List<Integer> mInputModeIgdKeyCodes = new ArrayList<>();
 
     private Handler mHandler;
 
@@ -48,7 +67,7 @@ public class KeyEventHandler {
     }
 
     public boolean inputKeyEvent(KeyEvent event) {
-        if (shouldOverride(event.getKeyCode())) {
+        if (shouldOverride(event)) {
             if (event.getAction() == KeyEvent.ACTION_UP) {
                 isKeyActionUp = true;
                 doActon(event);
@@ -62,12 +81,12 @@ public class KeyEventHandler {
 
                 computeKeyEventCount(event);
                 mLastEvent.push(event);
-                if (supportDoubleClick(event.getKeyCode())
-                        || supportTripleClick(event.getKeyCode())) {
+                if (supportDoubleClick(event)
+                        || supportTripleClick(event)) {
                     mHandler.postDelayed(() -> doActionInNeed(false), QUICK_CLICK_TIME);
                 }
 
-                if (supportLongPress(event.getKeyCode())) {
+                if (supportLongPress(event)) {
                     mHandler.postDelayed(() -> doActionInNeed(true), LONG_CLICK_TIME);
                 }
             }
@@ -94,7 +113,7 @@ public class KeyEventHandler {
         } else if (isTripleClick(event)) {
             mCallback.onTripleClick(event);
             clearAction();
-        } else if (!supportDoubleClick(event.getKeyCode()) && !supportTripleClick(event.getKeyCode())) {
+        } else if (!supportDoubleClick(event) && !supportTripleClick(event)) {
             if (!mLastEvent.empty() && mLastEvent.peek().getAction() == KeyEvent.ACTION_DOWN) {
                 mCallback.onNormalKeyEvent(event);
             }
@@ -107,15 +126,15 @@ public class KeyEventHandler {
             return;
         }
         KeyEvent event = mLastEvent.peek();
-        if (mKeyClickCount == 1 && supportLongPress(event.getKeyCode()) && !isKeyActionUp) {
+        if (mKeyClickCount == 1 && supportLongPress(event) && !isKeyActionUp) {
             mCallback.onLongClick(event);
             clearAction();
             return;
         }
-        if (mKeyClickCount == 1 && supportSingleClick(event.getKeyCode())) {
+        if (mKeyClickCount == 1 && supportSingleClick(event)) {
             mCallback.onSingleClick(event);
             clearAction();
-        } else if (mKeyClickCount == 2 && supportDoubleClick(event.getKeyCode())) {
+        } else if (mKeyClickCount == 2 && supportDoubleClick(event)) {
             mCallback.onDoubleClick(event);
             clearAction();
         } else {
@@ -152,58 +171,57 @@ public class KeyEventHandler {
         return isSameKey(a, b) && b.getEventTime() - a.getEventTime() <= QUICK_CLICK_TIME;
     }
 
-    private boolean shouldOverride(int keyCode) {
+    private boolean findIt(KeyEvent keyEvent, List<Integer> igdKeyCodes, List<Integer> keyCodes, List<String> devices) {
+        if (igdKeyCodes.contains(keyEvent.getKeyCode())) {
+            return true;
+        }
+        int index = keyCodes.indexOf(keyEvent.getKeyCode());
+        if (index == -1) {
+            return false;
+        } else if (keyEvent.getDevice() != null){
+            return index == devices.indexOf(keyEvent.getDevice().getName());
+        } else {
+            return false;
+        }
+    }
+
+    private boolean shouldOverride(KeyEvent keyEvent) {
+        boolean shouldOverride = false;
         if (AppEventManager.getInstance().isInputMode()) {
-            return mInputModeKeyCodes.contains(keyCode);
+            shouldOverride = mInputModeIgdKeyCodes.contains(keyEvent.getKeyCode());
+        } else {
+            shouldOverride = findIt(keyEvent, mSingleClickIgdKeyCodes, mSingleClickKeyCodes, mSingleClickDevices)
+                    || findIt(keyEvent, mDoubleClickIgdKeyCodes, mDoubleClickKeyCodes, mDoubleClickDevices)
+                    || findIt(keyEvent, mTripleClickIgdKeyCodes, mTripleClickKeyCodes, mTripleClickDevices)
+                    || findIt(keyEvent, mLongClickIgdKeyCodes, mLongClickKeyCodes, mLongClickDevices);
         }
-        boolean should = false;
-        if (mSingleClickKeyCodes != null && mSingleClickKeyCodes.contains(keyCode)) {
-            should = true;
-        } else if (mDoubleClickKeyCodes != null && mDoubleClickKeyCodes.contains(keyCode)) {
-            should = true;
-        } else if (mTripleClickKeyCodes != null && mTripleClickKeyCodes.contains(keyCode)) {
-            should = true;
-        } else if (mLongClickKeyCodes != null && mLongClickKeyCodes.contains(keyCode)) {
-            should = true;
-        }
-        return should;
+        LogUtils.d("shouldOverride=" + shouldOverride);
+        return shouldOverride;
     }
 
-    private boolean supportSingleClickOnly(int keyCode) {
-        return shouldOverride(keyCode) && !supportLongPress(keyCode)
-                && !supportDoubleClick(keyCode) && !supportTripleClick(keyCode);
+    private boolean supportSingleClickOnly(KeyEvent keyEvent) {
+        return shouldOverride(keyEvent) && !supportLongPress(keyEvent)
+                && !supportDoubleClick(keyEvent) && !supportTripleClick(keyEvent);
     }
 
-    private boolean supportSingleClick(int keyCode) {
-        if (mSingleClickKeyCodes == null) {
-            return false;
-        }
-        return mSingleClickKeyCodes.contains(keyCode);
+    private boolean supportSingleClick(KeyEvent keyEvent) {
+        return findIt(keyEvent, mSingleClickIgdKeyCodes, mSingleClickKeyCodes, mSingleClickDevices);
     }
 
-    private boolean supportLongPress(int keyCode) {
-        if (mLongClickKeyCodes == null) {
-            return false;
-        }
-        return mLongClickKeyCodes.contains(keyCode);
+    private boolean supportLongPress(KeyEvent keyEvent) {
+        return findIt(keyEvent, mLongClickIgdKeyCodes, mLongClickKeyCodes, mLongClickDevices);
     }
 
-    private boolean supportDoubleClick(int keyCode) {
-        if (mDoubleClickKeyCodes == null) {
-            return false;
-        }
-        return mDoubleClickKeyCodes.contains(keyCode);
+    private boolean supportDoubleClick(KeyEvent keyEvent) {
+        return findIt(keyEvent, mDoubleClickIgdKeyCodes, mDoubleClickKeyCodes, mDoubleClickDevices);
     }
 
-    private boolean supportTripleClick(int keyCode) {
-        if (mTripleClickKeyCodes == null) {
-            return false;
-        }
-        return mTripleClickKeyCodes.contains(keyCode);
+    private boolean supportTripleClick(KeyEvent keyEvent) {
+        return findIt(keyEvent, mTripleClickIgdKeyCodes, mTripleClickKeyCodes, mTripleClickDevices);
     }
 
     private boolean isLongClick(KeyEvent event) {
-        if (!supportLongPress(event.getKeyCode())) {
+        if (!supportLongPress(event)) {
             return false;
         }
         if (event.getEventTime() - event.getDownTime() >= LONG_CLICK_TIME) {
@@ -216,22 +234,22 @@ public class KeyEventHandler {
         if (mLastEvent.empty() || mLastEvent.peek().getAction() != KeyEvent.ACTION_DOWN) {
             return false;
         }
-        if (!supportSingleClick(event.getKeyCode())) {
+        if (!supportSingleClick(event)) {
             return false;
         }
-        if (supportSingleClickOnly(event.getKeyCode())) {
+        if (supportSingleClickOnly(event)) {
             return true;
         }
-        if (!supportDoubleClick(event.getKeyCode())
-                && !supportTripleClick(event.getKeyCode())) {
+        if (!supportDoubleClick(event)
+                && !supportTripleClick(event)) {
             return true;
         }
         return false;
     }
 
     private boolean isDoubleClick(KeyEvent event) {
-        if (supportDoubleClick(event.getKeyCode())
-                && !supportTripleClick(event.getKeyCode())
+        if (supportDoubleClick(event)
+                && !supportTripleClick(event)
                 && mKeyClickCount == 2) {
             return true;
         }
@@ -239,7 +257,7 @@ public class KeyEventHandler {
     }
 
     private boolean isTripleClick(KeyEvent event) {
-        if (!supportTripleClick(event.getKeyCode())) {
+        if (!supportTripleClick(event)) {
             return false;
         }
         if (mKeyClickCount == 3) {

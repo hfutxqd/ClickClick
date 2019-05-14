@@ -3,22 +3,27 @@ package xyz.imxqd.clickclick.ui.adapters;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewHolder>{
 
     private List<AppInfo> packages = new ArrayList<>();
+    private List<AppInfo> displayedPackages = new ArrayList<>();
 
     private OnAppSelectedCallback mCallback;
 
@@ -31,6 +36,22 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewH
     public void setData(List<AppInfo> data) {
         packages.clear();
         packages.addAll(data);
+        displayedPackages.clear();
+        displayedPackages.addAll(packages);
+    }
+
+    public void filter(String str) {
+        displayedPackages.clear();
+        if (TextUtils.isEmpty(str)) {
+            displayedPackages.addAll(packages);
+            return;
+        }
+        for (AppInfo appInfo : packages) {
+            if (appInfo.name.contains(str)) {
+                displayedPackages.add(appInfo);
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -43,7 +64,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewH
 
     @Override
     public void onBindViewHolder(@NonNull AppListAdapter.AppViewHolder holder, int position) {
-        AppInfo info = packages.get(position);
+        AppInfo info = displayedPackages.get(position);
         holder.name.setText(info.name);
         holder.packageName.setText(info.packageName);
         holder.icon.setImageDrawable(info.icon);
@@ -51,7 +72,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewH
 
     @Override
     public int getItemCount() {
-        return packages.size();
+        return displayedPackages.size();
     }
 
     public class AppViewHolder extends RecyclerView.ViewHolder {
@@ -68,7 +89,7 @@ public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewH
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
                 if (mCallback != null) {
-                    AppInfo appInfo = packages.get(getAdapterPosition());
+                    AppInfo appInfo = displayedPackages.get(getAdapterPosition());
                     mCallback.onAppSelect(appInfo);
                 }
             });

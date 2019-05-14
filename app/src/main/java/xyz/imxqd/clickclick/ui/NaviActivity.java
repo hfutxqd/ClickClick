@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
@@ -25,7 +26,7 @@ import xyz.imxqd.clickclick.ui.fragments.ProfileFragment;
 import xyz.imxqd.clickclick.ui.fragments.SettingsFragment;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 
-public class NaviActivity extends BaseActivity implements App.AppEventCallback{
+public class NaviActivity extends BaseActivity {
 
     @BindView(R.id.message)
     TextView vTitle;
@@ -92,9 +93,9 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
     private Snackbar mSnackbar;
     private void showSnackBarInNeed() {
         if (AppEventManager.getInstance().getService() == null) {
-            if (isAccessibilitySettingsOn() && SettingsUtil.isServiceOn()) {
+            if (SettingsUtil.isAccessibilitySettingsOn(this) && SettingsUtil.isServiceOn()) {
                 mSnackbar = Snackbar.make(findViewById(R.id.nav_container), R.string.snack_bar_accessibility_error, Snackbar.LENGTH_INDEFINITE);
-                mSnackbar.setAction(R.string.re_turn_on, v -> startAccessibilitySettings());
+                mSnackbar.setAction(R.string.re_turn_on, v -> SettingsUtil.startAccessibilitySettings(NaviActivity.this));
                 mSnackbar.getView().setBackgroundResource(R.color.snackbar_error_bg);
                 mSnackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_error_accent));
                 mSnackbar.show();
@@ -169,11 +170,12 @@ public class NaviActivity extends BaseActivity implements App.AppEventCallback{
                 break;
         }
 
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
         Fragment current = mFragments.get(currentTabId);
-        FragmentTransaction transaction = getSupportFragmentManager()
+        FragmentTransaction transaction = fragmentManager
                 .beginTransaction();
-        if (fragments.contains(current)){
+        if (current != null && fragments.contains(current)){
             transaction.hide(current);
         }
         if (fragments.contains(fragmentTo)) {

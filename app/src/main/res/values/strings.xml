@@ -96,7 +96,7 @@
     <string name="notification_filter_none">Total silence</string>
     <string name="notification_filter_alarms">Alarms only</string>
     <string name="add_notification_func">Simulate clicking a notification widget</string>
-    <string name="snack_bar_app_off">Key mapping service is off. Please turn it on.</string>
+    <string name="snack_bar_app_off">Key mapping service disabled.</string>
     <string name="request_camera">Please grant the camera permission</string>
     <string name="create_gesture_hint"><![CDATA[Please click or swipe to create a gesture <br> Press back key to cancel ]]></string>
     <string name="add_tap_or_swipe">Simulate clicks or gestures</string>
@@ -127,9 +127,14 @@
     <string name="input_mode_turn_on">Input Mode</string>
     <string name="input_mode_turn_off">Exit Input Mode</string>
     <string name="settings_app_detect_service_title">App detect service</string>
+    <string name="settings_app_detect_service_summary">Optional. This option can help to detect the current in-use application.</string>
+    <string name="action_search">Search</string>
+    <string name="change_keyevent">Change KeyEvent</string>
+    <string name="edit_or_view_it">Edit/View</string>
+    <string name="save">Save</string>
+    <string name="no_app_shortcut_available">No app shortcut available</string>
     <string name="add_lua_script">Add lua script</string>
     <string name="title_activity_code_editor">Code</string>
     <string name="action_save">Save</string>
-
 
 </resources>
