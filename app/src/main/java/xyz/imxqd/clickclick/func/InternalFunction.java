@@ -43,6 +43,8 @@ import xyz.imxqd.clickclick.utils.GestureUtil;
 import xyz.imxqd.clickclick.utils.PackageUtil;
 import xyz.imxqd.clickclick.utils.ResourceUtl;
 import xyz.imxqd.clickclick.utils.RomUtil;
+import xyz.imxqd.clickclick.utils.SettingsUtil;
+import xyz.imxqd.clickclick.utils.ShellUtil;
 import xyz.imxqd.clickclick.utils.Shocker;
 import xyz.imxqd.clickclick.utils.SystemSettingsUtl;
 import xyz.imxqd.clickclick.utils.ToneUtil;
@@ -461,6 +463,18 @@ public class InternalFunction extends AbstractFunction {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setClass(App.get(), ScreenCaptureActivity.class);
         PendingIntent.getActivity(App.get(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT).send();
+    }
+
+    public void force_stop(String str) {
+        if (TextUtils.isEmpty(str)) {
+            throw new InvalidInputException("must input a package name");
+        }
+        String packageName = str.trim();
+        if (ShellUtil.isSuAvailable()) {
+            ShellUtil.runCommand("am force-stop " + packageName);
+        } else {
+            SettingsUtil.startInstalledAppDetailsActivity(packageName);
+        }
     }
 
     private ToneUtil.Tone getTone(String tone) {

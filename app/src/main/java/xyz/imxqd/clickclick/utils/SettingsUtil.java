@@ -3,6 +3,7 @@ package xyz.imxqd.clickclick.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -48,6 +49,18 @@ public class SettingsUtil {
             }
         }
         return accessibilityFound;
+    }
+
+
+    public static void startInstalledAppDetailsActivity(String pkg) {
+        final Intent i = new Intent();
+        i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        i.addCategory(Intent.CATEGORY_DEFAULT);
+        i.setData(Uri.parse("package:" + pkg));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        App.get().startActivity(i);
     }
 
     public static void startAccessibilitySettings(Context context) {
