@@ -1,26 +1,26 @@
 [
   {
-    "title": "常用功能",
+    "title": "Common",
     "url": "common"
   },
   {
-    "title": "全局控制",
+    "title": "Global",
     "url": "global_control"
   },
   {
-    "title": "应用功能",
+    "title": "Applications",
     "url": "applications"
   },
   {
-    "title": "媒体功能",
+    "title": "Media",
     "url": "media"
   },
   {
-    "title": "按键事件",
+    "title": "KeyEvent",
     "url": "keyevent"
   },
   {
-    "title": "趣味功能",
+    "title": "Fun",
     "url": "fun"
   }
 ]
