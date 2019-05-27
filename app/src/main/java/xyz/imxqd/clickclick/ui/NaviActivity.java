@@ -178,7 +178,7 @@ public class NaviActivity extends BaseActivity {
         if (current != null && fragments.contains(current)){
             transaction.hide(current);
         }
-        if (fragments.contains(fragmentTo)) {
+        if (fragmentTo.isAdded()) {
             transaction.show(fragmentTo);
         } else {
             transaction.add(R.id.nav_container, fragmentTo);
