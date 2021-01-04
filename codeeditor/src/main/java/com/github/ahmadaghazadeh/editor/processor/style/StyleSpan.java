@@ -19,7 +19,7 @@
 
 package com.github.ahmadaghazadeh.editor.processor.style;
 
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 
 /**
  * @author Henry Thompson

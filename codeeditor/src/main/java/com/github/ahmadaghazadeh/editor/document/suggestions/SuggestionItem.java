@@ -19,7 +19,7 @@
 
 package com.github.ahmadaghazadeh.editor.document.suggestions;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * @author Trần Lê Duy

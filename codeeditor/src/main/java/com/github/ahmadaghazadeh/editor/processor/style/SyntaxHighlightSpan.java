@@ -19,7 +19,7 @@
 
 package com.github.ahmadaghazadeh.editor.processor.style;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.text.TextPaint;
 import android.text.style.CharacterStyle;
 

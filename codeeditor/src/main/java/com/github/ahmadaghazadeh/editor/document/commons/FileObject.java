@@ -19,9 +19,8 @@
 
 package com.github.ahmadaghazadeh.editor.document.commons;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
-import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.net.URI;
@@ -90,12 +89,6 @@ public class FileObject extends File {
         return dateFormat.format(this.lastModified());
     }
 
-    /**
-     * @return - возвращает разрешение файла, например "js", "html", без точки.
-     */
-    public String getExtension() {
-        return FilenameUtils.getExtension(getName());
-    }
 
     /**
      * Проверка файл на скрытность.
