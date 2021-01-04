@@ -10,8 +10,8 @@ import android.widget.Toast;
 import java.io.File;
 
 import cn.vimfung.luascriptcore.LuaExportType;
+import xyz.imxqd.clickclick.R;
 import xyz.imxqd.luaframework.LuaEngine;
-import xyz.imxqd.luaframework.R;
 
 public class App implements LuaExportType {
 
@@ -68,10 +68,6 @@ public class App implements LuaExportType {
         } catch (Throwable t) {
             return false;
         }
-    }
-
-    public boolean editFile(String path) {
-        return false;
     }
 
     public boolean uninstall(String pkg) {

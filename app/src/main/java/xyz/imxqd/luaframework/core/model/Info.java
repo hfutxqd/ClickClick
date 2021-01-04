@@ -4,15 +4,14 @@ import android.os.Build;
 
 import cn.vimfung.luascriptcore.LuaExportType;
 
-public class Device implements LuaExportType {
-    public Device(int width, int height) {
+public class Info implements LuaExportType {
+    public Info(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
     public final int width;
     public final int height;
-    public final String buildId = Build.ID;
     public final String broad = Build.BOARD;
     public final String brand = Build.BRAND;
     public final String device = Build.DEVICE;

@@ -8,7 +8,7 @@ import cn.vimfung.luascriptcore.LuaContext;
 import cn.vimfung.luascriptcore.LuaValue;
 import xyz.imxqd.luaframework.LuaEngine;
 import xyz.imxqd.luaframework.core.model.App;
-import xyz.imxqd.luaframework.core.model.Device;
+import xyz.imxqd.luaframework.core.model.Info;
 import xyz.imxqd.luaframework.core.model.Logger;
 
 public class GlobalLuaValueProvider {
@@ -17,10 +17,10 @@ public class GlobalLuaValueProvider {
         if (wm != null) {
             DisplayMetrics dm = new DisplayMetrics();
             wm.getDefaultDisplay().getMetrics(dm);
-            luaContext.setGlobal("device", new LuaValue(new Device(dm.widthPixels, dm.heightPixels)));
+            luaContext.setGlobal("device", new LuaValue(new Info(dm.widthPixels, dm.heightPixels)));
 
         } else {
-            luaContext.setGlobal("device", new LuaValue(new Device(-1, -1)));
+            luaContext.setGlobal("info", new LuaValue(new Info(-1, -1)));
 
         }
 

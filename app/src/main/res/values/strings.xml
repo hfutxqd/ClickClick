@@ -136,5 +136,5 @@
     <string name="add_lua_script">Add lua script</string>
     <string name="title_activity_code_editor">Code</string>
     <string name="action_save">Save</string>
-
+    <string name="pkg_not_found">Package not found</string>
 </resources>

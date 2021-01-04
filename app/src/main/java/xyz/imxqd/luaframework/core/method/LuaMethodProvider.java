@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
+import cn.vimfung.luascriptcore.BuildConfig;
 import cn.vimfung.luascriptcore.LuaContext;
 import cn.vimfung.luascriptcore.LuaValue;
-import xyz.imxqd.luaframework.BuildConfig;
 import xyz.imxqd.luaframework.LuaEngine;
 import xyz.imxqd.luaframework.exception.ApiLevelTooLowError;
 import xyz.imxqd.luaframework.exception.LuaCoreVersionError;
