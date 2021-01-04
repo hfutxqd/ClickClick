@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.provider.Settings;
-import android.support.v7.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import xyz.imxqd.clickclick.App;

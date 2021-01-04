@@ -5,8 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.PermissionChecker;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.PermissionChecker;
 import android.widget.Toast;
 
 import java.io.File;

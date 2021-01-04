@@ -1,6 +1,6 @@
 package xyz.imxqd.clickclick.ui.fragments;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;

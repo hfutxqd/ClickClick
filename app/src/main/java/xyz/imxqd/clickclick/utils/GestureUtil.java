@@ -3,7 +3,7 @@ package xyz.imxqd.clickclick.utils;
 import android.accessibilityservice.GestureDescription;
 import android.graphics.Path;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+import androidx.annotation.RequiresApi;
 
 public class GestureUtil {
 

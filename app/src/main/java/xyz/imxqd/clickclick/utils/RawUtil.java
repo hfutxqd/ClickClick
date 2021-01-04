@@ -1,6 +1,6 @@
 package xyz.imxqd.clickclick.utils;
 
-import android.support.annotation.RawRes;
+import androidx.annotation.RawRes;
 
 import java.io.BufferedReader;
 import java.io.IOException;

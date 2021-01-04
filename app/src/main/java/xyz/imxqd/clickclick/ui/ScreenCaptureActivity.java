@@ -20,10 +20,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.PermissionChecker;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.PermissionChecker;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
 

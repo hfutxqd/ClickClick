@@ -10,8 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioTrack;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.PermissionChecker;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.PermissionChecker;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;

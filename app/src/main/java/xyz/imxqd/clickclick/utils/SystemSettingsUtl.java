@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
-import android.support.annotation.IntDef;
-import android.support.annotation.IntRange;
+import androidx.annotation.IntDef;
+import androidx.annotation.IntRange;
 import android.view.Display;
-import android.view.Surface;
 import android.view.WindowManager;
 
 import java.lang.annotation.Retention;

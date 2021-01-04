@@ -6,10 +6,10 @@ import android.content.pm.LauncherApps;
 import android.content.pm.ShortcutInfo;
 import android.os.Build;
 import android.os.Process;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.pm.ShortcutInfoCompat;
-import android.support.v4.content.pm.ShortcutManagerCompat;
-import android.support.v4.graphics.drawable.IconCompat;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.pm.ShortcutInfoCompat;
+import androidx.core.content.pm.ShortcutManagerCompat;
+import androidx.core.graphics.drawable.IconCompat;
 
 import java.util.ArrayList;
 import java.util.List;
