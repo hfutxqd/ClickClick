@@ -1,6 +1,6 @@
 package xyz.imxqd.clickclick.utils;
 
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 
 import xyz.imxqd.clickclick.App;
 

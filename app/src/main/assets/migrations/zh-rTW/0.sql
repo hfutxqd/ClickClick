@@ -1,0 +1,12 @@
+INSERT INTO defined_function (name, body, description, `order`) values ('支付寶付款', 'url:alipays://platformapi/startapp?appId=20000056', '打開支付寶付款界面', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('打開相機', 'action:action://android.media.action.STILL_IMAGE_CAMERA', '打開相機', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('微信掃一掃', 'action:intent://#Intent;component=com.tencent.mm/.ui.LauncherUI;B.LauncherUI. From.Scaner.Shortcut=true;end', '打開微信掃一掃', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('下一曲', 'keyevent:87', '下一曲', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('上一曲', 'keyevent:88', '上一曲', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('QQ音樂喜愛', 'action:broadcast://#Intent;action=com.tencent.qqmusic.ACTION_SERVICE_FAVORATE_SONG.QQMusicPhone;end', 'QQ音樂通知欄喜愛功能', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('網易云音樂喜愛', 'internal:cloud_music_like(@id/playNotificationStar)', '網易云音樂喜愛（內置），有愛心圖標反饋', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('蝦米音樂喜愛', 'action:service://#Intent;action=fm.xiami.main.business.notification.ACTION_NOTIFICATION_FAV_TOGGLE;component=fm. xiami.main/.service.PlayService;end', '蝦米音樂喜愛', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('打開螞蟻莊園', 'url:alipays://platformapi/startapp?appId=66666674', '打開螞蟻莊園', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('支付寶乘車碼', 'url:alipays://platformapi/startapp?appId=200011235&transparentTitle=auto&url=/www/offline_qrcode.html?cardType=ANT00001&source =shortCut&snapshot=no&canPullDown=NO&showOptionMenu=NO', '支付寶乘車碼', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('發新微博', 'url:sinaweibo://compose', '發新微博', 0);
+INSERT INTO defined_function (name, body, description, `order`) values ('開啟/關閉自動旋轉', 'internal:auto_rotation()', '開啟/關閉自動旋轉', 0);

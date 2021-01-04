@@ -16,9 +16,9 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.PermissionChecker;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.PermissionChecker;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 

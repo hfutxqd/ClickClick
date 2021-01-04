@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.FunctionsActivity">
     <include layout="@layout/title_layout" />
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/functions_tab"
         android:layout_below="@id/title_layout"
         app:tabMode="scrollable"
@@ -19,7 +19,7 @@
         android:background="@drawable/toolbar_shadow"
         android:layout_width="match_parent"
         android:layout_height="5dp" />
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:layout_below="@id/functions_tab"
         android:id="@+id/functions_container"
         android:layout_width="match_parent"

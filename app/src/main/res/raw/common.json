@@ -1,0 +1,113 @@
+{
+  "total": 20,
+  "data": [
+    {
+      "name": "Next music",
+      "description": "Next music",
+      "body": "keyevent:87",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Previous music",
+      "description": "Previous music",
+      "body": "keyevent:88",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Open camera",
+      "description": "Open camera by one click",
+      "body": "action:action://android.media.action.STILL_IMAGE_CAMERA",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Do not disturb mode",
+      "description": "Do not disturb mode switcher",
+      "body": "internal:do_not_disturb()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Turn on/off auto-rotation",
+      "description": "Turn on/off automatic rotation",
+      "body": "internal:auto_rotation()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Turn on auto-rotation",
+      "description": "Turn on auto-rotation",
+      "body": "internal:auto_rotation(1)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Turn off auto-rotation",
+      "description": "Turn off auto-rotation",
+      "body": "internal:auto_rotation(0)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate to 270 degrees",
+      "description": "Rotate to 270 degrees",
+      "body": "internal:rotation(270)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate to 0 degrees",
+      "description": "Rotate to 0 degrees",
+      "body": "internal:rotation(0)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate to 90 degrees",
+      "description": "Rotate to 90 degrees",
+      "body": "internal:rotation(90)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Rotate to 180 degrees",
+      "description": "Rotate to 180 degrees",
+      "body": "internal:rotation(180)",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    },
+    {
+      "name": "Switch flashlight",
+      "description": "Switch flashlight",
+      "body": "internal:flash_light()",
+      "version_code": "1",
+      "version_name": "1.0",
+      "author": "imxqd",
+      "update_time": 1527414422000
+    }
+  ]
+}

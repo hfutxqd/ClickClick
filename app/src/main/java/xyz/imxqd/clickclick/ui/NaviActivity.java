@@ -2,13 +2,13 @@ package xyz.imxqd.clickclick.ui;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.ArrayMap;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.core.content.ContextCompat;
+import androidx.collection.ArrayMap;
 import android.widget.TextView;
 
 import java.util.HashSet;
@@ -178,7 +178,7 @@ public class NaviActivity extends BaseActivity {
         if (current != null && fragments.contains(current)){
             transaction.hide(current);
         }
-        if (fragments.contains(fragmentTo)) {
+        if (fragmentTo.isAdded()) {
             transaction.show(fragmentTo);
         } else {
             transaction.add(R.id.nav_container, fragmentTo);

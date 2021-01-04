@@ -1,5 +1,6 @@
 package xyz.imxqd.clickclick.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -7,7 +8,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -38,9 +38,7 @@ public class ShellUtil {
     };
 
     private static final String[] TEST_COMMANDS = new String[]{
-            "id",
-            "/system/xbin/id",
-            "/system/bin/id"
+            "whoami"
     };
 
     public static synchronized boolean isSuAvailable() {
@@ -70,11 +68,11 @@ public class ShellUtil {
             if (out != null && out.length() > 0) break;
         }
         if (out == null || out.length() == 0) return false;
-        Matcher matcher = UID_PATTERN.matcher(out);
-        if (matcher.matches()) {
-            if ("0".equals(matcher.group(1))) {
-                return true;
-            }
+        if (TextUtils.isEmpty(out)) {
+            return false;
+        }
+        if (TextUtils.equals("root", out.trim())) {
+            return true;
         }
         return false;
     }

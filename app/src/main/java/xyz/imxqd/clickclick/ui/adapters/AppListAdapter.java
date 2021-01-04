@@ -1,8 +1,8 @@
 package xyz.imxqd.clickclick.ui.adapters;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import xyz.imxqd.clickclick.App;
 import xyz.imxqd.clickclick.R;
 
 public class AppListAdapter extends RecyclerView.Adapter<AppListAdapter.AppViewHolder>{

@@ -8,13 +8,13 @@
     android:orientation="vertical"
     tools:context=".ui.FunctionsActivity$FunctionListFragment">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/functions_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <include
         layout="@layout/empty_view"/>
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/functions_fab"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"

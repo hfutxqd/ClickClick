@@ -2,8 +2,8 @@
   "total": 20,
   "data": [
     {
-      "name": "返回键",
-      "description": "返回",
+      "name": "Back",
+      "description": "Back",
       "body": "keyevent:4",
       "version_code": "1",
       "version_name": "1.0",
@@ -11,8 +11,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "HOME键",
-      "description": "返回到桌面",
+      "name": "Home",
+      "description": "Home",
       "body": "keyevent:3",
       "version_code": "1",
       "version_name": "1.0",
@@ -20,8 +20,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "多任务键",
-      "description": "多任务切换程序",
+      "name": "Recent",
+      "description": "Recent",
       "body": "keyevent:187",
       "version_code": "1",
       "version_name": "1.0",
@@ -29,8 +29,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "电源菜单",
-      "description": "电源菜单",
+      "name": "Power Menu",
+      "description": "Power Menu",
       "body": "internal:global_action(6)",
       "version_code": "1",
       "version_name": "1.0",
@@ -40,13 +40,13 @@
         {
           "type": "api_level",
           "value": "21",
-          "message": "必须Android 5.0以上才可以使用"
+          "message": "Must be Android 5.0 or higher"
         }
       ]
     },
     {
-      "name": "快速设置",
-      "description": "快速设置",
+      "name": "Quick Settings",
+      "description": "Quick Settings",
       "body": "internal:global_action(5)",
       "version_code": "1",
       "version_name": "1.0",
@@ -54,8 +54,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "分屏模式",
-      "description": "分屏模式",
+      "name": "Split Screen",
+      "description": "Split Screen",
       "body": "internal:global_action(7)",
       "version_code": "1",
       "version_name": "1.0",
@@ -65,13 +65,13 @@
         {
           "type": "api_level",
           "value": "24",
-          "message": "必须Android 7.0以上才可以使用"
+          "message": "Must be Android 7.0 or higher"
         }
       ]
     },
     {
-      "name": "切换勿扰模式",
-      "description": "切换多种勿扰模式",
+      "name": "Do Not Disturb Mode",
+      "description": "Do Not Disturb Mode",
       "body": "internal:do_not_disturb()",
       "version_code": "1",
       "version_name": "1.0",
@@ -79,8 +79,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "开启/关闭自动旋转",
-      "description": "开启/关闭自动旋转",
+      "name": "Toggle automatic rotation",
+      "description": "Toggle automatic rotation",
       "body": "internal:auto_rotation()",
       "version_code": "1",
       "version_name": "1.0",
@@ -88,8 +88,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "开启自动旋转",
-      "description": "开启自动旋转",
+      "name": "Turn automatic rotation on",
+      "description": "Turn automatic rotation on",
       "body": "internal:auto_rotation(1)",
       "version_code": "1",
       "version_name": "1.0",
@@ -97,8 +97,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "关闭自动旋转",
-      "description": "关闭自动旋转",
+      "name": "Turn automatic rotation off",
+      "description": "Turn automatic rotation off",
       "body": "internal:auto_rotation(0)",
       "version_code": "1",
       "version_name": "1.0",
@@ -106,8 +106,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "旋转至270度",
-      "description": "旋转至270度",
+      "name": "Rotate to 270",
+      "description": "Rotate to 270 degrees",
       "body": "internal:rotation(270)",
       "version_code": "1",
       "version_name": "1.0",
@@ -115,8 +115,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "旋转至0度",
-      "description": "旋转至0度",
+      "name": "Rotate to 0",
+      "description": "Rotate to 0 degrees",
       "body": "internal:rotation(0)",
       "version_code": "1",
       "version_name": "1.0",
@@ -124,8 +124,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "旋转至90度",
-      "description": "旋转至90度",
+      "name": "Rotate to 90",
+      "description": "Rotate to 90 degrees",
       "body": "internal:rotation(90)",
       "version_code": "1",
       "version_name": "1.0",
@@ -133,8 +133,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "旋转90度",
-      "description": "旋转90度",
+      "name": "Rotate 90 clockwise",
+      "description": "Rotate 90 degrees clockwise",
       "body": "internal:rotate(90)",
       "version_code": "1",
       "version_name": "1.0",
@@ -142,8 +142,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "旋转180度",
-      "description": "旋转180度",
+      "name": "Rotate 180 clockwise",
+      "description": "Rotate 180 degrees clockwise",
       "body": "internal:rotate(180)",
       "version_code": "1",
       "version_name": "1.0",
@@ -151,8 +151,8 @@
       "update_time": 1527414422000
     },
     {
-      "name": "开关手电筒",
-      "description": "开关手电筒",
+      "name": "Toggle flashlight",
+      "description": "Toggle flashlight",
       "body": "internal:flash_light()",
       "version_code": "1",
       "version_name": "1.0",
@@ -160,18 +160,9 @@
       "update_time": 1527414422000
     },
     {
-      "name": "展开通知栏",
-      "description": "展开通知栏",
+      "name": "Show notifications",
+      "description": "Show notifications",
       "body": "internal:show_notifications()",
-      "version_code": "1",
-      "version_name": "1.0",
-      "author": "imxqd",
-      "update_time": 1527414422000
-    },
-    {
-      "name": "隐藏/显示Flyme悬浮球",
-      "description": "隐藏/显示Flyme悬浮球, 仅在系统开启悬浮球时有效",
-      "body": "internal:smart_touch()",
       "version_code": "1",
       "version_name": "1.0",
       "author": "imxqd",
