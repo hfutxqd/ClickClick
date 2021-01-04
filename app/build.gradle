@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "xyz.imxqd.clickclick"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 27
         versionName "1.84"
