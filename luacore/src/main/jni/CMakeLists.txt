@@ -10,86 +10,85 @@ cmake_minimum_required(VERSION 3.4.0)
 # Gradle automatically packages shared libraries with your APK.
 
 
-include_directories(lua-core/src lua-common)
+include_directories(lua-5.4.2 lua-common)
 
 add_library( # Sets the name of the library.
-             LuaScriptCore
+            LuaScriptCore
 
-             # Sets the library as a shared library.
-             SHARED
+            # Sets the library as a shared library.
+            SHARED
 
-             # Provides a relative path to your source file(s).
-             # Associated headers in the same location as their source
-             # file are automatically included.对应的C文件的目录位置
-             cn_vimfung_luascriptcore_LuaNativeUtil.cpp
-             LuaJavaConverter.cpp
-             LuaJavaEnv.cpp
-             LuaJavaExceptionHandler.cpp
-             LuaJavaObjectDescriptor.cpp
-             LuaJavaType.cpp
-             LuaJavaExportTypeDescriptor.cpp
-             LuaJavaExportMethodDescriptor.cpp
-             LuaJavaExportPropertyDescriptor.cpp
-             lua-core/src/lapi.c
-             lua-core/src/lauxlib.c
-             lua-core/src/lbaselib.c
-             lua-core/src/lbitlib.c
-             lua-core/src/lcode.c
-             lua-core/src/lcorolib.c
-             lua-core/src/lctype.c
-             lua-core/src/ldblib.c
-             lua-core/src/ldebug.c
-             lua-core/src/ldo.c
-             lua-core/src/ldump.c
-             lua-core/src/lfunc.c
-             lua-core/src/lgc.c
-             lua-core/src/linit.c
-             lua-core/src/liolib.c
-             lua-core/src/llex.c
-             lua-core/src/lmathlib.c
-             lua-core/src/lmem.c
-             lua-core/src/loadlib.c
-             lua-core/src/lobject.c
-             lua-core/src/lopcodes.c
-             lua-core/src/loslib.c
-             lua-core/src/lparser.c
-             lua-core/src/lstate.c
-             lua-core/src/lstring.c
-             lua-core/src/lstrlib.c
-             lua-core/src/ltable.c
-             lua-core/src/ltablib.c
-             lua-core/src/ltm.c
-             lua-core/src/lundump.c
-             lua-core/src/lunity.c
-             lua-core/src/lutf8lib.c
-             lua-core/src/lvm.c
-             lua-core/src/lzio.c
-             lua-common/LuaCoroutine.cpp
-             lua-common/LuaOperationQueue.cpp
-             lua-common/LuaContext.cpp
-             lua-common/LuaFunction.cpp
-             lua-common/LuaNativeClass.cpp
-             lua-common/LuaNativeClassFactory.cpp
-             lua-common/LuaObject.cpp
-             lua-common/LuaObjectDecoder.cpp
-             lua-common/LuaObjectDescriptor.cpp
-             lua-common/LuaObjectEncoder.cpp
-             lua-common/LuaObjectManager.cpp
-             lua-common/LuaPointer.cpp
-             lua-common/LuaValue.cpp
-             lua-common/LuaTmpValue.cpp
-             lua-common/LuaTuple.cpp
-             lua-common/StringUtils.cpp
-             lua-common/LuaDataExchanger.cpp
-             lua-common/LuaManagedObject.cpp
-             lua-common/LuaSession.cpp
-             lua-common/LuaEngineAdapter.cpp
-             lua-common/LuaExportMethodDescriptor.cpp
-             lua-common/LuaExportsTypeManager.cpp
-             lua-common/LuaExportTypeDescriptor.cpp
-             lua-common/LuaExportPropertyDescriptor.cpp
-             lua-common/LuaError.cpp
-             lua-common/LuaScriptController.cpp)
+            # Provides a relative path to your source file(s).
+            # Associated headers in the same location as their source
+            # file are automatically included.对应的C文件的目录位置
+            cn_vimfung_luascriptcore_LuaNativeUtil.cpp
+            LuaJavaConverter.cpp
+            LuaJavaEnv.cpp
+            LuaJavaExceptionHandler.cpp
+            LuaJavaObjectDescriptor.cpp
+            LuaJavaType.cpp
+            LuaJavaExportTypeDescriptor.cpp
+            LuaJavaExportMethodDescriptor.cpp
+            LuaJavaExportPropertyDescriptor.cpp
+            lua-5.4.2/lapi.c
+            lua-5.4.2/lauxlib.c
+            lua-5.4.2/lbaselib.c
+            lua-5.4.2/lcode.c
+            lua-5.4.2/lcorolib.c
+            lua-5.4.2/lctype.c
+            lua-5.4.2/ldblib.c
+            lua-5.4.2/ldebug.c
+            lua-5.4.2/ldo.c
+            lua-5.4.2/ldump.c
+            lua-5.4.2/lfunc.c
+            lua-5.4.2/lgc.c
+            lua-5.4.2/linit.c
+            lua-5.4.2/liolib.c
+            lua-5.4.2/llex.c
+            lua-5.4.2/lmathlib.c
+            lua-5.4.2/lmem.c
+            lua-5.4.2/loadlib.c
+            lua-5.4.2/lobject.c
+            lua-5.4.2/lopcodes.c
+            lua-5.4.2/loslib.c
+            lua-5.4.2/lparser.c
+            lua-5.4.2/lstate.c
+            lua-5.4.2/lstring.c
+            lua-5.4.2/lstrlib.c
+            lua-5.4.2/ltable.c
+            lua-5.4.2/ltablib.c
+            lua-5.4.2/ltm.c
+            lua-5.4.2/lua.c
+            lua-5.4.2/lundump.c
+            lua-5.4.2/lutf8lib.c
+            lua-5.4.2/lvm.c
+            lua-5.4.2/lzio.c
+            lua-common/LuaCoroutine.cpp
+            lua-common/LuaOperationQueue.cpp
+            lua-common/LuaContext.cpp
+            lua-common/LuaFunction.cpp
+            lua-common/LuaNativeClass.cpp
+            lua-common/LuaNativeClassFactory.cpp
+            lua-common/LuaObject.cpp
+            lua-common/LuaObjectDecoder.cpp
+            lua-common/LuaObjectDescriptor.cpp
+            lua-common/LuaObjectEncoder.cpp
+            lua-common/LuaObjectManager.cpp
+            lua-common/LuaPointer.cpp
+            lua-common/LuaValue.cpp
+            lua-common/LuaTmpValue.cpp
+            lua-common/LuaTuple.cpp
+            lua-common/StringUtils.cpp
+            lua-common/LuaDataExchanger.cpp
+            lua-common/LuaManagedObject.cpp
+            lua-common/LuaSession.cpp
+            lua-common/LuaEngineAdapter.cpp
+            lua-common/LuaExportMethodDescriptor.cpp
+            lua-common/LuaExportsTypeManager.cpp
+            lua-common/LuaExportTypeDescriptor.cpp
+            lua-common/LuaExportPropertyDescriptor.cpp
+            lua-common/LuaError.cpp
+            lua-common/LuaScriptController.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because system libraries are included in the search path by

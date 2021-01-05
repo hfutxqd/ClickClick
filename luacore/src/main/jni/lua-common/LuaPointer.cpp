@@ -14,7 +14,7 @@
 #include "LuaContext.h"
 #include "LuaSession.h"
 #include "LuaOperationQueue.h"
-#include "lua.hpp"
+#include "../lua.hpp"
 
 using namespace cn::vimfung::luascriptcore;
 

@@ -13,7 +13,7 @@
 #include <map>
 #include <string>
 #include "LuaObject.h"
-#include "lua.hpp"
+#include "../lua.hpp"
 #include "LuaObjectDescriptor.h"
 #include "LuaExportPropertyDescriptor.hpp"
 #include "LuaSession.h"

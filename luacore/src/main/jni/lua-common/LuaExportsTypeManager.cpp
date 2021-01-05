@@ -9,7 +9,7 @@
 #include "LuaExportsTypeManager.hpp"
 #include "LuaExportTypeDescriptor.hpp"
 #include "LuaExportPropertyDescriptor.hpp"
-#include "lua.hpp"
+#include "../lua.hpp"
 #include "LuaContext.h"
 #include "LuaSession.h"
 #include "LuaValue.h"

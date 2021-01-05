@@ -10,7 +10,7 @@
 #define LuaEngineAdapter_hpp
 
 #include <stdio.h>
-#include "lua.hpp"
+#include "../lua.hpp"
 
 extern "C"
 {
@@ -485,7 +485,7 @@ namespace cn
                  * @param argumentCount 参数数量
                  * @return 执行状态
                  */
-                static int resumeThread(lua_State *state, lua_State *fromThreadState, int argumentCount);
+                static int resumeThread(lua_State *state, lua_State *fromThreadState, int argumentCount, int *nres);
 
                 /**
                  * 挂起线程

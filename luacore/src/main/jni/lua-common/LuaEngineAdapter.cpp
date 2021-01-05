@@ -276,9 +276,9 @@ lua_State* LuaEngineAdapter::newThread(lua_State *state)
     return lua_newthread(state);
 }
 
-int LuaEngineAdapter::resumeThread(lua_State *state, lua_State *fromThreadState, int argumentCount)
+int LuaEngineAdapter::resumeThread(lua_State *state, lua_State *fromThreadState, int argumentCount, int *nres)
 {
-    return lua_resume(state, fromThreadState, argumentCount);
+    return lua_resume(state, fromThreadState, argumentCount, nres);
 }
 
 int LuaEngineAdapter::yieldThread(lua_State *state, int resultCount)

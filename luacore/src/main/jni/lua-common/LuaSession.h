@@ -5,7 +5,7 @@
 #ifndef ANDROID_LUASESSION_H
 #define ANDROID_LUASESSION_H
 
-#include "lua.hpp"
+#include "../lua.hpp"
 #include "LuaObject.h"
 #include "LuaDefined.h"
 

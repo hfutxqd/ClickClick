@@ -5,7 +5,7 @@
 #ifndef SAMPLE_LUACONTEXT_H
 #define SAMPLE_LUACONTEXT_H
 
-#include "lua.hpp"
+#include "../lua.hpp"
 #include "LuaObject.h"
 #include "LuaDefined.h"
 

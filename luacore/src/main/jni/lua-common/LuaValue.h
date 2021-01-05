@@ -8,7 +8,7 @@
 #include <string>
 #include <list>
 #include <map>
-#include "lua.hpp"
+#include "../lua.hpp"
 #include "LuaObject.h"
 #include "LuaDefined.h"
 #include "LuaContext.h"
