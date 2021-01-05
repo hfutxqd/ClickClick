@@ -1,8 +1,8 @@
 //
 // Created by vimfung on 16/8/29.
 //
-#include <stddef.h>
-#include <ctype.h>
+#include <cstddef>
+#include <cctype>
 #include "cn_vimfung_luascriptcore_LuaNativeUtil.h"
 
 #include "LuaContext.h"
@@ -23,8 +23,8 @@
 
 using namespace cn::vimfung::luascriptcore;
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved)
-{
+extern "C" {
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
     LuaJavaEnv::init(vm);
     return JNI_VERSION_1_4;
 }
@@ -35,11 +35,10 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved)
  * Signature: ()Lcn/vimfung/luascriptcore/LuaContext;
  */
 JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_createContext
-        (JNIEnv *env, jclass obj)
-{
+        (JNIEnv *env, jclass obj) {
     LuaContext *context = new LuaContext("android");
     jobject jcontext = LuaJavaEnv::createJavaLuaContext(env, context);
-    context -> release();
+    context->release();
 
     //绑定导出原生类型方法
     context->onExportsNativeType(LuaJavaEnv::getExportsNativeTypeHandler());
@@ -48,64 +47,56 @@ JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_createCont
 }
 
 JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_addSearchPath
-        (JNIEnv *env, jclass thiz, jint nativeContextId, jstring path)
-{
-    LuaContext *context = (LuaContext *)LuaObjectManager::SharedInstance() -> getObject(nativeContextId);
-    if (context != NULL)
-    {
-        const char *pathStr = env -> GetStringUTFChars(path, NULL);
-        context -> addSearchPath(pathStr);
-        env -> ReleaseStringUTFChars(path, pathStr);
+        (JNIEnv *env, jclass thiz, jint nativeContextId, jstring path) {
+    LuaContext *context = (LuaContext *) LuaObjectManager::SharedInstance()->getObject(
+            nativeContextId);
+    if (context != NULL) {
+        const char *pathStr = env->GetStringUTFChars(path, NULL);
+        context->addSearchPath(pathStr);
+        env->ReleaseStringUTFChars(path, pathStr);
     }
 }
 
 JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_setGlobal
-        (JNIEnv *env, jclass type, jint contextNativeId, jstring name_, jobject value)
-{
-    LuaContext *context = (LuaContext *)LuaObjectManager::SharedInstance() -> getObject(contextNativeId);
-    if (context != NULL)
-    {
-        const char *nameStr = env -> GetStringUTFChars(name_, NULL);
+        (JNIEnv *env, jclass type, jint contextNativeId, jstring name_, jobject value) {
+    LuaContext *context = (LuaContext *) LuaObjectManager::SharedInstance()->getObject(
+            contextNativeId);
+    if (context != NULL) {
+        const char *nameStr = env->GetStringUTFChars(name_, NULL);
         LuaValue *valueObj = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context, value);
-        context -> setGlobal(nameStr, valueObj);
-        valueObj -> release();
-        env -> ReleaseStringUTFChars(name_, nameStr);
+        context->setGlobal(nameStr, valueObj);
+        valueObj->release();
+        env->ReleaseStringUTFChars(name_, nameStr);
     }
 }
 
 JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_getGlobal
-        (JNIEnv *env, jclass type, jint contextNativeId, jstring name_)
-{
+        (JNIEnv *env, jclass type, jint contextNativeId, jstring name_) {
     jobject retObj = NULL;
 
-    LuaContext *context = (LuaContext *)LuaObjectManager::SharedInstance() -> getObject(contextNativeId);
-    if (context != NULL)
-    {
-        const char *nameStr = env -> GetStringUTFChars(name_, NULL);
-        LuaValue *value = context -> getGlobal(nameStr);
+    LuaContext *context = (LuaContext *) LuaObjectManager::SharedInstance()->getObject(
+            contextNativeId);
+    if (context != NULL) {
+        const char *nameStr = env->GetStringUTFChars(name_, NULL);
+        LuaValue *value = context->getGlobal(nameStr);
         retObj = LuaJavaConverter::convertToJavaLuaValueByLuaValue(env, context, value);
-        value -> release();
-        env -> ReleaseStringUTFChars(name_, nameStr);
+        value->release();
+        env->ReleaseStringUTFChars(name_, nameStr);
     }
 
     return retObj;
 }
 
 JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_catchException
-        (JNIEnv *env, jclass type, jobject jcontext, jboolean enabled)
-{
+        (JNIEnv *env, jclass type, jobject jcontext, jboolean enabled) {
     LuaContext *context = LuaJavaConverter::convertToContextByJLuaContext(env, jcontext);
-    if (context != NULL)
-    {
-        if (enabled)
-        {
+    if (context != NULL) {
+        if (enabled) {
             //设置异常捕获
-            context -> onException(LuaJavaEnv::getExceptionHandler());
-        }
-        else
-        {
+            context->onException(LuaJavaEnv::getExceptionHandler());
+        } else {
             //取消异常捕获
-            context -> onException(NULL);
+            context->onException(NULL);
         }
 
     }
@@ -117,20 +108,20 @@ JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_catchExceptio
  * Signature: (ILjava/lang/String;)Lcn/vimfung/luascriptcore/LuaValue;
  */
 JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_evalScript
-        (JNIEnv *env, jclass obj, jint nativeContextId, jstring script, jobject jscriptController)
-{
+        (JNIEnv *env, jclass obj, jint nativeContextId, jstring script, jobject jscriptController) {
     jobject retObj = NULL;
 
-    LuaContext *context = (LuaContext *)LuaObjectManager::SharedInstance() -> getObject(nativeContextId);
-    if (context != NULL)
-    {
-        LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(env, jscriptController);
+    LuaContext *context = (LuaContext *) LuaObjectManager::SharedInstance()->getObject(
+            nativeContextId);
+    if (context != NULL) {
+        LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(
+                env, jscriptController);
 
-        const char* scriptText = env ->GetStringUTFChars(script, NULL);
+        const char *scriptText = env->GetStringUTFChars(script, NULL);
         LuaValue *value = context->evalScript(scriptText, scriptController);
         retObj = LuaJavaConverter::convertToJavaLuaValueByLuaValue(env, context, value);
-        value -> release();
-        env -> ReleaseStringUTFChars(script, scriptText);
+        value->release();
+        env->ReleaseStringUTFChars(script, scriptText);
     }
 
     return retObj;
@@ -138,21 +129,21 @@ JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_evalScript
 }
 
 JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_evalScriptFromFile
-        (JNIEnv *env, jclass obj, jint nativeContextId, jstring path, jobject jscriptController)
-{
+        (JNIEnv *env, jclass obj, jint nativeContextId, jstring path, jobject jscriptController) {
     jobject retObj = NULL;
 
-    LuaContext *context = (LuaContext *)LuaObjectManager::SharedInstance() -> getObject(nativeContextId);
-    if (context != NULL)
-    {
-        LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(env, jscriptController);
+    LuaContext *context = (LuaContext *) LuaObjectManager::SharedInstance()->getObject(
+            nativeContextId);
+    if (context != NULL) {
+        LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(
+                env, jscriptController);
 
-        const char* scriptPath = env ->GetStringUTFChars(path, NULL);
+        const char *scriptPath = env->GetStringUTFChars(path, NULL);
 
         LuaValue *value = context->evalScriptFromFile(scriptPath, scriptController);
         retObj = LuaJavaConverter::convertToJavaLuaValueByLuaValue(env, context, value);
-        value -> release();
-        env -> ReleaseStringUTFChars(path, scriptPath);
+        value->release();
+        env->ReleaseStringUTFChars(path, scriptPath);
 
     }
 
@@ -160,42 +151,41 @@ JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_evalScript
 }
 
 JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_callMethod
-        (JNIEnv *env, jclass obj, jint nativeContextId, jstring methodName, jobjectArray arguments, jobject jscriptController)
-{
+        (JNIEnv *env, jclass obj, jint nativeContextId, jstring methodName, jobjectArray arguments,
+         jobject jscriptController) {
     jobject retObj = NULL;
 
-    LuaContext *context = (LuaContext *)LuaObjectManager::SharedInstance() -> getObject(nativeContextId);
-    if (context != NULL)
-    {
+    LuaContext *context = (LuaContext *) LuaObjectManager::SharedInstance()->getObject(
+            nativeContextId);
+    if (context != NULL) {
         LuaArgumentList argumentList;
 
-        if (arguments != NULL)
-        {
+        if (arguments != NULL) {
             jsize length = env->GetArrayLength(arguments);
-            for (int i = 0; i < length; ++i)
-            {
+            for (int i = 0; i < length; ++i) {
                 jobject item = env->GetObjectArrayElement(arguments, i);
-                LuaValue *value = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context, item);
+                LuaValue *value = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context,
+                                                                                 item);
                 if (value != NULL) {
                     argumentList.push_back(value);
                 }
-                env -> DeleteLocalRef(item);
+                env->DeleteLocalRef(item);
             }
         }
 
-        LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(env, jscriptController);
+        LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(
+                env, jscriptController);
 
-        const char *methodNameStr = env -> GetStringUTFChars(methodName, NULL);
+        const char *methodNameStr = env->GetStringUTFChars(methodName, NULL);
         LuaValue *retValue = context->callMethod(methodNameStr, &argumentList, scriptController);
         retObj = LuaJavaConverter::convertToJavaLuaValueByLuaValue(env, context, retValue);
-        retValue -> release();
-        env -> ReleaseStringUTFChars(methodName, methodNameStr);
+        retValue->release();
+        env->ReleaseStringUTFChars(methodName, methodNameStr);
 
         //释放参数内存
-        for (LuaArgumentList::iterator it = argumentList.begin(); it != argumentList.end() ; ++it)
-        {
+        for (LuaArgumentList::iterator it = argumentList.begin(); it != argumentList.end(); ++it) {
             LuaValue *item = *it;
-            item -> release();
+            item->release();
         }
         argumentList.clear();
     }
@@ -204,90 +194,86 @@ JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_callMethod
 }
 
 JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_registerMethod
-        (JNIEnv *env, jclass thiz, jint nativeContextId, jstring methodName)
-{
-    LuaContext *context = (LuaContext *)LuaObjectManager::SharedInstance() -> getObject(nativeContextId);
-    if (context != NULL)
-    {
-        const char *methodNameStr = env -> GetStringUTFChars(methodName, NULL);
-        context -> registerMethod(methodNameStr, LuaJavaEnv::luaMethodHandler());
-        env -> ReleaseStringUTFChars(methodName, methodNameStr);
+        (JNIEnv *env, jclass thiz, jint nativeContextId, jstring methodName) {
+    LuaContext *context = (LuaContext *) LuaObjectManager::SharedInstance()->getObject(
+            nativeContextId);
+    if (context != NULL) {
+        const char *methodNameStr = env->GetStringUTFChars(methodName, NULL);
+        context->registerMethod(methodNameStr, LuaJavaEnv::luaMethodHandler());
+        env->ReleaseStringUTFChars(methodName, methodNameStr);
     }
 }
 
 JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_releaseNativeObject
-(JNIEnv *env, jclass obj, jint nativeObjectId)
-{
+        (JNIEnv *env, jclass obj, jint nativeObjectId) {
     LuaJavaEnv::releaseObject(env, nativeObjectId);
 }
 
 JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_invokeFunction
-        (JNIEnv *env, jclass thiz, jobject jcontext, jobject func, jobjectArray arguments, jobject jscriptController)
-{
+        (JNIEnv *env, jclass thiz, jobject jcontext, jobject func, jobjectArray arguments,
+         jobject jscriptController) {
     jobject retObj = NULL;
     LuaContext *context = LuaJavaConverter::convertToContextByJLuaContext(env, jcontext);
-    if (context != NULL)
-    {
+    if (context != NULL) {
         //获取LuaFunction
         LuaValue *value = LuaJavaConverter::convertToLuaValueByJObject(env, context, func);
-        if (value != NULL)
-        {
+        if (value != NULL) {
             LuaArgumentList argumentList;
 
-            if (arguments != NULL)
-            {
+            if (arguments != NULL) {
                 jsize length = env->GetArrayLength(arguments);
-                for (int i = 0; i < length; ++i)
-                {
+                for (int i = 0; i < length; ++i) {
                     jobject item = env->GetObjectArrayElement(arguments, i);
-                    LuaValue *argValue = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context, item);
-                    if (argValue != NULL)
-                    {
+                    LuaValue *argValue = LuaJavaConverter::convertToLuaValueByJLuaValue(env,
+                                                                                        context,
+                                                                                        item);
+                    if (argValue != NULL) {
                         argumentList.push_back(argValue);
                     }
-                    env -> DeleteLocalRef(item);
+                    env->DeleteLocalRef(item);
                 }
             }
 
-            LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(env, jscriptController);
+            LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(
+                    env, jscriptController);
 
-            LuaValue *retValue = value -> toFunction() -> invoke(&argumentList, scriptController);
+            LuaValue *retValue = value->toFunction()->invoke(&argumentList, scriptController);
             retObj = LuaJavaConverter::convertToJavaLuaValueByLuaValue(env, context, retValue);
-            retValue -> release();
+            retValue->release();
 
             //释放参数内存
-            for (LuaArgumentList::iterator it = argumentList.begin(); it != argumentList.end() ; ++it)
-            {
+            for (LuaArgumentList::iterator it = argumentList.begin();
+                 it != argumentList.end(); ++it) {
                 LuaValue *item = *it;
-                item -> release();
+                item->release();
             }
 
-            value -> release();
+            value->release();
         }
     }
 
     return retObj;
 }
 
-JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_retainValue(JNIEnv *env, jclass type, jobject jcontext, jobject jvalue)
-{
+JNIEXPORT void JNICALL
+Java_cn_vimfung_luascriptcore_LuaNativeUtil_retainValue(JNIEnv *env, jclass type, jobject jcontext,
+                                                        jobject jvalue) {
     LuaContext *context = LuaJavaConverter::convertToContextByJLuaContext(env, jcontext);
-    if (context != NULL)
-    {
+    if (context != NULL) {
         LuaValue *value = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context, jvalue);
-        context -> retainValue(value);
-        value -> release();
+        context->retainValue(value);
+        value->release();
     }
 }
 
-JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_releaseValue(JNIEnv *env, jclass type, jobject jcontext, jobject jvalue)
-{
+JNIEXPORT void JNICALL
+Java_cn_vimfung_luascriptcore_LuaNativeUtil_releaseValue(JNIEnv *env, jclass type, jobject jcontext,
+                                                         jobject jvalue) {
     LuaContext *context = LuaJavaConverter::convertToContextByJLuaContext(env, jcontext);
-    if (context != NULL)
-    {
+    if (context != NULL) {
         LuaValue *value = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context, jvalue);
-        context -> releaseValue(value);
-        value -> release();
+        context->releaseValue(value);
+        value->release();
     }
 }
 
@@ -301,137 +287,127 @@ JNIEXPORT jboolean JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_registerT
         jclass type,
         jobjectArray fields,
         jobjectArray instanceMethods,
-        jobjectArray classMethods)
-{
+        jobjectArray classMethods) {
     LuaContext *context = LuaJavaConverter::convertToContextByJLuaContext(env, jcontext);
-    if (context != NULL)
-    {
+    if (context != NULL) {
         const char *typeNameCStr = env->GetStringUTFChars(typeName, 0);
 
         const char *aliasCStr = NULL;
-        if (alias != NULL)
-        {
-            aliasCStr = env -> GetStringUTFChars(alias, 0);
+        if (alias != NULL) {
+            aliasCStr = env->GetStringUTFChars(alias, 0);
         }
 
         const char *parentTypeNameCStr = NULL;
-        if (parentTypeName != NULL)
-        {
+        if (parentTypeName != NULL) {
             parentTypeNameCStr = env->GetStringUTFChars(parentTypeName, 0);
         }
 
         LuaExportTypeDescriptor *parentTypeDescriptor = NULL;
-        if (parentTypeNameCStr != NULL)
-        {
-            parentTypeDescriptor = context -> getExportsTypeManager() -> getExportTypeDescriptor(parentTypeNameCStr);
+        if (parentTypeNameCStr != NULL) {
+            parentTypeDescriptor = context->getExportsTypeManager()->getExportTypeDescriptor(
+                    parentTypeNameCStr);
         }
 
-        if (parentTypeDescriptor == NULL)
-        {
-            parentTypeDescriptor = context -> getExportsTypeManager() -> getExportTypeDescriptor("Object");
+        if (parentTypeDescriptor == NULL) {
+            parentTypeDescriptor = context->getExportsTypeManager()->getExportTypeDescriptor(
+                    "Object");
         }
 
         std::string typeNameStr = typeNameCStr;
-        LuaJavaExportTypeDescriptor *typeDescriptor = new LuaJavaExportTypeDescriptor(typeNameStr, env, type, parentTypeDescriptor);
+        LuaJavaExportTypeDescriptor *typeDescriptor = new LuaJavaExportTypeDescriptor(typeNameStr,
+                                                                                      env, type,
+                                                                                      parentTypeDescriptor);
 
         //设置类型名称映射
-        if (typeDescriptor -> typeName() != typeNameCStr)
-        {
-            context -> getExportsTypeManager() -> _mappingType("android", typeNameCStr, typeDescriptor -> typeName());
+        if (typeDescriptor->typeName() != typeNameCStr) {
+            context->getExportsTypeManager()->_mappingType("android", typeNameCStr,
+                                                           typeDescriptor->typeName());
         }
 
-        if (aliasCStr != NULL && typeDescriptor -> typeName() != aliasCStr)
-        {
+        if (aliasCStr != NULL && typeDescriptor->typeName() != aliasCStr) {
             //如果传入格式不等于导出类型名称，则进行映射操作
-            context -> getExportsTypeManager() -> _mappingType("android", typeNameCStr, aliasCStr);
+            context->getExportsTypeManager()->_mappingType("android", typeNameCStr, aliasCStr);
         }
 
         //注册字段
-        int fieldsLen = env -> GetArrayLength(fields);
-        for (int i = 0; i < fieldsLen; ++i)
-        {
-            jstring fieldName = (jstring)env -> GetObjectArrayElement(fields, i);
-            const char *fieldNameCStr = env -> GetStringUTFChars(fieldName, 0);
+        int fieldsLen = env->GetArrayLength(fields);
+        for (int i = 0; i < fieldsLen; ++i) {
+            jstring fieldName = (jstring) env->GetObjectArrayElement(fields, i);
+            const char *fieldNameCStr = env->GetStringUTFChars(fieldName, 0);
 
-            std::deque<std::string> fieldComps =  StringUtils::split(fieldNameCStr, "_", false);
+            std::deque<std::string> fieldComps = StringUtils::split(fieldNameCStr, "_", false);
 
             bool canRead = false;
             bool canWrite = false;
 
-            if (fieldComps[1] == "r")
-            {
+            if (fieldComps[1] == "r") {
                 canRead = true;
-            }
-            else if (fieldComps[1] == "w")
-            {
+            } else if (fieldComps[1] == "w") {
                 canWrite = true;
-            }
-            else
-            {
+            } else {
                 canRead = true;
                 canWrite = true;
             }
 
-            LuaJavaExportPropertyDescriptor *propertyDescriptor = new LuaJavaExportPropertyDescriptor(fieldComps[0], canRead, canWrite);
-            typeDescriptor -> addProperty(propertyDescriptor -> name(), propertyDescriptor);
-            propertyDescriptor -> release();
+            LuaJavaExportPropertyDescriptor *propertyDescriptor = new LuaJavaExportPropertyDescriptor(
+                    fieldComps[0], canRead, canWrite);
+            typeDescriptor->addProperty(propertyDescriptor->name(), propertyDescriptor);
+            propertyDescriptor->release();
 
             fieldComps.clear();
 
-            env -> ReleaseStringUTFChars(fieldName, fieldNameCStr);
-            env -> DeleteLocalRef(fieldName);
+            env->ReleaseStringUTFChars(fieldName, fieldNameCStr);
+            env->DeleteLocalRef(fieldName);
         }
 
         //注册实例方法
-        int instanceMethodsLen = env -> GetArrayLength(instanceMethods);
-        for (int i = 0; i < instanceMethodsLen; ++i)
-        {
-            jstring methodName = (jstring)env -> GetObjectArrayElement(instanceMethods, i);
-            const char *methodNameCStr = env -> GetStringUTFChars(methodName, 0);
+        int instanceMethodsLen = env->GetArrayLength(instanceMethods);
+        for (int i = 0; i < instanceMethodsLen; ++i) {
+            jstring methodName = (jstring) env->GetObjectArrayElement(instanceMethods, i);
+            const char *methodNameCStr = env->GetStringUTFChars(methodName, 0);
 
-            std::deque<std::string> methodComps =  StringUtils::split(methodNameCStr, "_", false);
+            std::deque<std::string> methodComps = StringUtils::split(methodNameCStr, "_", false);
 
-            LuaJavaExportMethodDescriptor *methodDescriptor = new LuaJavaExportMethodDescriptor(methodComps[0], methodComps[1], LuaJavaMethodTypeInstance);
-            typeDescriptor -> addInstanceMethod(methodComps[0], methodDescriptor);
-            methodDescriptor -> release();
+            LuaJavaExportMethodDescriptor *methodDescriptor = new LuaJavaExportMethodDescriptor(
+                    methodComps[0], methodComps[1], LuaJavaMethodTypeInstance);
+            typeDescriptor->addInstanceMethod(methodComps[0], methodDescriptor);
+            methodDescriptor->release();
 
             methodComps.clear();
 
-            env -> ReleaseStringUTFChars(methodName, methodNameCStr);
-            env -> DeleteLocalRef(methodName);
+            env->ReleaseStringUTFChars(methodName, methodNameCStr);
+            env->DeleteLocalRef(methodName);
         }
 
         //注册类方法
-        int classMethodsLen = env -> GetArrayLength(classMethods);
-        for (int i = 0; i < classMethodsLen; ++i)
-        {
-            jstring methodName = (jstring)env -> GetObjectArrayElement(classMethods, i);
-            const char *methodNameCStr = env -> GetStringUTFChars(methodName, 0);
+        int classMethodsLen = env->GetArrayLength(classMethods);
+        for (int i = 0; i < classMethodsLen; ++i) {
+            jstring methodName = (jstring) env->GetObjectArrayElement(classMethods, i);
+            const char *methodNameCStr = env->GetStringUTFChars(methodName, 0);
 
-            std::deque<std::string> methodComps =  StringUtils::split(methodNameCStr, "_", false);
+            std::deque<std::string> methodComps = StringUtils::split(methodNameCStr, "_", false);
 
-            LuaJavaExportMethodDescriptor *methodDescriptor = new LuaJavaExportMethodDescriptor(methodComps[0], methodComps[1], LuaJavaMethodTypeStatic);
-            typeDescriptor -> addClassMethod(methodComps[0], methodDescriptor);
-            methodDescriptor -> release();
+            LuaJavaExportMethodDescriptor *methodDescriptor = new LuaJavaExportMethodDescriptor(
+                    methodComps[0], methodComps[1], LuaJavaMethodTypeStatic);
+            typeDescriptor->addClassMethod(methodComps[0], methodDescriptor);
+            methodDescriptor->release();
 
             methodComps.clear();
 
-            env -> ReleaseStringUTFChars(methodName, methodNameCStr);
-            env -> DeleteLocalRef(methodName);
+            env->ReleaseStringUTFChars(methodName, methodNameCStr);
+            env->DeleteLocalRef(methodName);
         }
 
         // 导出类型
-        context -> getExportsTypeManager() -> exportsType(typeDescriptor);
+        context->getExportsTypeManager()->exportsType(typeDescriptor);
 
-        typeDescriptor -> release();
+        typeDescriptor->release();
 
-        if (aliasCStr != NULL)
-        {
-            env -> ReleaseStringUTFChars(alias, aliasCStr);
+        if (aliasCStr != NULL) {
+            env->ReleaseStringUTFChars(alias, aliasCStr);
         }
 
-        if (parentTypeNameCStr != NULL)
-        {
+        if (parentTypeNameCStr != NULL) {
             env->ReleaseStringUTFChars(parentTypeName, parentTypeNameCStr);
         }
 
@@ -443,64 +419,64 @@ JNIEXPORT jboolean JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_registerT
     return JNI_FALSE;
 }
 
-JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_raiseException(JNIEnv *env, jclass type, jobject jcontext, jstring message)
-{
+JNIEXPORT void JNICALL
+Java_cn_vimfung_luascriptcore_LuaNativeUtil_raiseException(JNIEnv *env, jclass type,
+                                                           jobject jcontext, jstring message) {
     LuaContext *context = LuaJavaConverter::convertToContextByJLuaContext(env, jcontext);
-    if (context != NULL)
-    {
+    if (context != NULL) {
         const char *messageCStr = env->GetStringUTFChars(message, 0);
-        context -> raiseException(messageCStr);
-        env -> ReleaseStringUTFChars(message, messageCStr);
+        context->raiseException(messageCStr);
+        env->ReleaseStringUTFChars(message, messageCStr);
     }
 }
 
-JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_runThread(JNIEnv *env, jclass type, jobject jcontext, jobject jhandler, jobjectArray arguments, jobject jscriptController)
-{
+JNIEXPORT void JNICALL
+Java_cn_vimfung_luascriptcore_LuaNativeUtil_runThread(JNIEnv *env, jclass type, jobject jcontext,
+                                                      jobject jhandler, jobjectArray arguments,
+                                                      jobject jscriptController) {
     LuaContext *context = LuaJavaConverter::convertToContextByJLuaContext(env, jcontext);
-    if (context != NULL)
-    {
+    if (context != NULL) {
         //获取LuaFunction
         LuaValue *value = LuaJavaConverter::convertToLuaValueByJObject(env, context, jhandler);
-        if (value != NULL)
-        {
+        if (value != NULL) {
             LuaArgumentList argumentList;
 
-            if (arguments != NULL)
-            {
+            if (arguments != NULL) {
                 jsize length = env->GetArrayLength(arguments);
-                for (int i = 0; i < length; ++i)
-                {
+                for (int i = 0; i < length; ++i) {
                     jobject item = env->GetObjectArrayElement(arguments, i);
-                    LuaValue *argValue = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context, item);
-                    if (argValue != NULL)
-                    {
+                    LuaValue *argValue = LuaJavaConverter::convertToLuaValueByJLuaValue(env,
+                                                                                        context,
+                                                                                        item);
+                    if (argValue != NULL) {
                         argumentList.push_back(argValue);
                     }
-                    env -> DeleteLocalRef(item);
+                    env->DeleteLocalRef(item);
                 }
             }
 
-            LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(env, jscriptController);
+            LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(
+                    env, jscriptController);
 
-            context -> runThread(value -> toFunction(), argumentList, scriptController);
+            context->runThread(value->toFunction(), argumentList, scriptController);
 
             //释放参数内存
-            for (LuaArgumentList::iterator it = argumentList.begin(); it != argumentList.end() ; ++it)
-            {
+            for (LuaArgumentList::iterator it = argumentList.begin();
+                 it != argumentList.end(); ++it) {
                 LuaValue *item = *it;
-                item -> release();
+                item->release();
             }
 
-            value -> release();
+            value->release();
         }
     }
 }
 
-JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_createScriptController(JNIEnv *env, jclass type)
-{
+JNIEXPORT jobject JNICALL
+Java_cn_vimfung_luascriptcore_LuaNativeUtil_createScriptController(JNIEnv *env, jclass type) {
     LuaScriptController *scriptController = new LuaScriptController();
     jobject jScriptController = LuaJavaEnv::createJavaLuaScriptController(env, scriptController);
-    scriptController -> release();
+    scriptController->release();
 
     return jScriptController;
 }
@@ -509,24 +485,22 @@ JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_scriptControl
         JNIEnv *env,
         jclass type,
         jobject controller,
-        jint timeout)
-{
-    LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(env, controller);
-    if (scriptController != NULL)
-    {
-        scriptController -> setTimeout(timeout);
+        jint timeout) {
+    LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(
+            env, controller);
+    if (scriptController != NULL) {
+        scriptController->setTimeout(timeout);
     }
 }
 
 JNIEXPORT void JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_scriptControllerForceExit(
         JNIEnv *env,
         jclass type,
-        jobject controller)
-{
-    LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(env, controller);
-    if (scriptController != NULL)
-    {
-        scriptController -> forceExit();
+        jobject controller) {
+    LuaScriptController *scriptController = LuaJavaConverter::convertToScriptControllerByJScriptController(
+            env, controller);
+    if (scriptController != NULL) {
+        scriptController->forceExit();
     }
 }
 
@@ -536,39 +510,40 @@ JNIEXPORT jobject JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_luaValueSe
         jobject jcontext,
         jobject jvalue,
         jstring keyPath,
-        jobject jObject)
-{
+        jobject jObject) {
 
     jobject retObject = NULL;
-    const char *keyPathCStr = env -> GetStringUTFChars(keyPath, 0);
+    const char *keyPathCStr = env->GetStringUTFChars(keyPath, 0);
 
     LuaContext *context = LuaJavaConverter::convertToContextByJLuaContext(env, jcontext);
-    if (context != NULL)
-    {
+    if (context != NULL) {
         LuaValue *value = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context, jvalue);
         LuaValue *object = NULL;
-        if (jObject != NULL)
-        {
+        if (jObject != NULL) {
             object = LuaJavaConverter::convertToLuaValueByJLuaValue(env, context, jObject);
         }
 
-        if (value != NULL)
-        {
-            value -> setObject(keyPathCStr, object, context);
+        if (value != NULL) {
+            value->setObject(keyPathCStr, object, context);
             retObject = LuaJavaConverter::convertToJavaObjectByLuaValue(env, context, value);
 
-            value -> release();
+            value->release();
         }
 
-        if (object != NULL)
-        {
-            object -> release();
+        if (object != NULL) {
+            object->release();
         }
     }
 
 
-    env -> ReleaseStringUTFChars(keyPath, keyPathCStr);
-    env -> DeleteLocalRef(keyPath);
+    env->ReleaseStringUTFChars(keyPath, keyPathCStr);
+    env->DeleteLocalRef(keyPath);
 
     return retObject;
+}
+
+JNIEXPORT jstring JNICALL Java_cn_vimfung_luascriptcore_LuaNativeUtil_luaVersion(JNIEnv *env, jclass clazz) {
+    return env->NewStringUTF(LUA_RELEASE);
+}
+
 }

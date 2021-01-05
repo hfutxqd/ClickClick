@@ -28,7 +28,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.web.RemoteFunction;
 import xyz.imxqd.clickclick.ui.adapters.AppListAdapter;
@@ -134,7 +134,7 @@ public class AppChooseActivity extends BaseActivity implements AppListAdapter.On
             f.updateTime = System.currentTimeMillis() / 1000;
             AddFunctionActivity.start(f, true, this);
         } else {
-            App.get().showToast(R.string.app_can_not_open);
+            MyApp.get().showToast(R.string.app_can_not_open);
         }
         finish();
     }

@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.disposables.Disposable;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.func.FunctionFactory;
@@ -120,10 +120,10 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
                 @Override
                 public void onClick(View v) {
                     List<String> list = new ArrayList<>();
-                    list.add(App.get().getString(R.string.run_it));
-                    list.add(App.get().getString(R.string.add_to_home));
-                    list.add(App.get().getString(R.string.edit_or_view_it));
-                    list.add(App.get().getString(R.string.delete));
+                    list.add(MyApp.get().getString(R.string.run_it));
+                    list.add(MyApp.get().getString(R.string.add_to_home));
+                    list.add(MyApp.get().getString(R.string.edit_or_view_it));
+                    list.add(MyApp.get().getString(R.string.delete));
 
 
                     DialogUtil.showList(v.getContext(), list, new DialogUtil.OnItemClickListener<String>() {
@@ -138,17 +138,17 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
                                 case 0:
                                     IFunction function = FunctionFactory.getFuncById(f.id);
                                     if (function != null && function.exec()) {
-                                        App.get().showToast(R.string.run_successed);
+                                        MyApp.get().showToast(R.string.run_successed);
                                     } else if (function != null){
-                                        App.get().showToast(R.string.run_failed);
-                                        App.get().showToast(function.getErrorInfo().getMessage(), true, true);
+                                        MyApp.get().showToast(R.string.run_failed);
+                                        MyApp.get().showToast(function.getErrorInfo().getMessage(), true, true);
                                     } else {
-                                        App.get().showToast(R.string.run_failed);
+                                        MyApp.get().showToast(R.string.run_failed);
                                     }
                                     break;
                                 case 1:
                                     ShortcutUtil.createRunFunc(f.id, f.name);
-                                    App.get().showToast(R.string.added_to_home);
+                                    MyApp.get().showToast(R.string.added_to_home);
                                     break;
                                 case 2:
                                     AddFunctionActivity.start(f.id, true, v.getContext());
@@ -160,7 +160,7 @@ public class FunctionAdapter extends RecyclerView.Adapter<FunctionAdapter.Functi
                                         callback.onDataChanged();
                                     }
                                     notifyItemRemoved(getAdapterPosition());
-                                    App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
+                                    MyApp.get().post(MyApp.EVENT_WHAT_REFRESH_UI, null);
                                     break;
                                 default:
                             }

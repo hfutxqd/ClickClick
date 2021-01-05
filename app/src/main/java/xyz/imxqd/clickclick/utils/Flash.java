@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.log.LogUtils;
 
 public class Flash implements Closeable {
@@ -74,7 +74,7 @@ public class Flash implements Closeable {
 
     public synchronized void off() throws CameraAccessException {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            CameraManager manager = (CameraManager) App.get().getSystemService(Context.CAMERA_SERVICE);
+            CameraManager manager = (CameraManager) MyApp.get().getSystemService(Context.CAMERA_SERVICE);
             String[] list = manager.getCameraIdList();
             manager.setTorchMode(list[0], false);
             isFlashOn = false;
@@ -97,7 +97,7 @@ public class Flash implements Closeable {
         LogUtils.i("Got button press");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            CameraManager manager = (CameraManager) App.get().getSystemService(Context.CAMERA_SERVICE);
+            CameraManager manager = (CameraManager) MyApp.get().getSystemService(Context.CAMERA_SERVICE);
             String[] list = manager.getCameraIdList();
             manager.setTorchMode(list[0], true);
             isFlashOn = true;

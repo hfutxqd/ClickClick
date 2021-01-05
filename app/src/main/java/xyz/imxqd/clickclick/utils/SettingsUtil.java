@@ -8,7 +8,7 @@ import android.provider.Settings;
 import androidx.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
@@ -60,14 +60,14 @@ public class SettingsUtil {
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-        App.get().startActivity(i);
+        MyApp.get().startActivity(i);
     }
 
     public static void startAccessibilitySettings(Context context) {
         try {
             context.startActivity(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS));
         } catch (Throwable t) {
-            App.get().showToast(R.string.open_accessibility_error);
+            MyApp.get().showToast(R.string.open_accessibility_error);
             LogUtils.e(t.getMessage());
         }
     }
@@ -76,17 +76,17 @@ public class SettingsUtil {
         if(BuildConfig.DEBUG) {
             return true;
         }
-        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(MyApp.get());
         return shp.getBoolean(ResUtil.getString(R.string.pref_key_app_debug), false);
     }
 
     public static boolean isServiceOn() {
-        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(MyApp.get());
         return shp.getBoolean(ResUtil.getString(R.string.pref_key_app_switch), false);
     }
 
     public static boolean isNotificationOn() {
-        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(MyApp.get());
         return shp.getBoolean(ResUtil.getString(R.string.pref_key_notification_switch), false);
     }
 
@@ -95,30 +95,30 @@ public class SettingsUtil {
     }
 
     public static boolean isShockOn() {
-        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(MyApp.get());
         return shp.getBoolean(ResUtil.getString(R.string.pref_key_shock_after_run), true);
     }
 
 
     public static int getQuickClickTime() {
-        String quickTime = SettingsUtil.getStringVal(App.get().getString(R.string.pref_key_quick_click_time),
-                App.get().getString(R.string.quick_click_speed_time_default));
+        String quickTime = SettingsUtil.getStringVal(MyApp.get().getString(R.string.pref_key_quick_click_time),
+                MyApp.get().getString(R.string.quick_click_speed_time_default));
         return Integer.valueOf(quickTime);
     }
 
     public static int getLongClickTime() {
-        String longTime = SettingsUtil.getStringVal(App.get().getString(R.string.pref_key_long_click_time),
-                App.get().getString(R.string.long_click_speed_time_default));
+        String longTime = SettingsUtil.getStringVal(MyApp.get().getString(R.string.pref_key_long_click_time),
+                MyApp.get().getString(R.string.long_click_speed_time_default));
         return Integer.valueOf(longTime);
     }
 
     public static String getStringVal(String key, String def) {
-        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(MyApp.get());
         return shp.getString(key, def);
     }
 
     public static int getIntVal(String key, int def) {
-        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(App.get());
+        SharedPreferences shp = PreferenceManager.getDefaultSharedPreferences(MyApp.get());
         return shp.getInt(key, def);
     }
 }

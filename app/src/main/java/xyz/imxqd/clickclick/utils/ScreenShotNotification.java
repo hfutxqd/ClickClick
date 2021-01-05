@@ -12,7 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.receiver.EventReceiver;
 
@@ -92,8 +92,8 @@ public class ScreenShotNotification {
             return;
         }
         if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            CharSequence name = App.get().getString(R.string.screen_shot_channel_name);
-            String description = App.get().getString(R.string.screen_shot_channel_description);
+            CharSequence name = MyApp.get().getString(R.string.screen_shot_channel_name);
+            String description = MyApp.get().getString(R.string.screen_shot_channel_description);
 
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);

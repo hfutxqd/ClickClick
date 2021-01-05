@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 
@@ -20,12 +20,12 @@ public class FunctionSpinnerAdapter extends BaseAdapter {
         mFuncList = DefinedFunction.getOrderedAll();
 
         DefinedFunction inputMode = new DefinedFunction();
-        inputMode.name = App.get().getString(R.string.input_mode);
+        inputMode.name = MyApp.get().getString(R.string.input_mode);
         inputMode.id = -2;
         mFuncList.add(inputMode);
 
         DefinedFunction f = new DefinedFunction();
-        f.name = App.get().getString(R.string.more_functions);
+        f.name = MyApp.get().getString(R.string.more_functions);
         f.id = -1;
         mFuncList.add(f);
     }
@@ -35,12 +35,12 @@ public class FunctionSpinnerAdapter extends BaseAdapter {
         mFuncList.addAll(DefinedFunction.getOrderedAll());
 
         DefinedFunction inputMode = new DefinedFunction();
-        inputMode.name = App.get().getString(R.string.input_mode);
+        inputMode.name = MyApp.get().getString(R.string.input_mode);
         inputMode.id = -2;
         mFuncList.add(inputMode);
 
         DefinedFunction f = new DefinedFunction();
-        f.name = App.get().getString(R.string.more_functions);
+        f.name = MyApp.get().getString(R.string.more_functions);
         f.id = -1;
         mFuncList.add(f);
         notifyDataSetChanged();

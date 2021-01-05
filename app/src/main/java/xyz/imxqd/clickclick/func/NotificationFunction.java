@@ -9,7 +9,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
@@ -185,8 +185,8 @@ public class NotificationFunction extends AbstractFunction {
             }
 
         } else if (AppEventManager.getInstance().getNotificationService() == null){
-            AlertUtil.show(App.get().getString(R.string.notification_service_error));
-            throw new RuntimeException(App.get().getString(R.string.notification_service_error));
+            AlertUtil.show(MyApp.get().getString(R.string.notification_service_error));
+            throw new RuntimeException(MyApp.get().getString(R.string.notification_service_error));
         } else {
             throw new RuntimeException("There are no notification actions for " + getPackageName(args));
         }

@@ -12,7 +12,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.func.FunctionFactory;
@@ -41,7 +41,7 @@ public class NoDisplayActivity extends Activity {
                 if (function != null) {
                     function.exec();
                 } else {
-                    App.get().showToast(R.string.func_not_found);
+                    MyApp.get().showToast(R.string.func_not_found);
                 }
             }
             finish();
@@ -77,7 +77,7 @@ public class NoDisplayActivity extends Activity {
     }
 
     private boolean checkWritePermission() {
-        return PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED;
+        return PermissionChecker.checkCallingOrSelfPermission(MyApp.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED;
     }
 
 }

@@ -8,7 +8,7 @@ import android.os.Vibrator;
 
 import java.util.Arrays;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.execution.DeviceNotSupportException;
 import xyz.imxqd.clickclick.execution.IgnoreException;
 import xyz.imxqd.clickclick.log.LogUtils;
@@ -22,7 +22,7 @@ public class Shocker {
     private volatile static boolean isShocking = false;
 
     public static void shock(long[] ms) throws Exception {
-        Vibrator vibrator = (Vibrator) App.get().getSystemService(Service.VIBRATOR_SERVICE);
+        Vibrator vibrator = (Vibrator) MyApp.get().getSystemService(Service.VIBRATOR_SERVICE);
         if (vibrator == null || !vibrator.hasVibrator()) {
             throw new DeviceNotSupportException("no vibrator found");
         }

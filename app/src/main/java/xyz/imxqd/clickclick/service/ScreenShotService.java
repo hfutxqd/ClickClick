@@ -33,7 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.ui.ScreenCaptureActivity;
 import xyz.imxqd.clickclick.utils.CapturePhotoUtils;
@@ -118,7 +118,7 @@ public class ScreenShotService extends IntentService {
                         return;
                     }
                     mImageReader.close();
-                    if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
+                    if (PermissionChecker.checkCallingOrSelfPermission(MyApp.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
                         saveScreenShot();
                     } else {
                         LogUtils.e("No permission to screenshot.");
@@ -132,7 +132,7 @@ public class ScreenShotService extends IntentService {
                 mEmitter.onNext(reader);
             }
 
-        }, App.get().getHandler());
+        }, MyApp.get().getHandler());
     }
 
     @Override
@@ -148,7 +148,7 @@ public class ScreenShotService extends IntentService {
         mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
         Uri url = CapturePhotoUtils.insertImage(mScreenShotBitmap);
         if (url != null) {
-            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, url, 0);
+            ScreenShotNotification.notify(MyApp.get(), mScreenShotBitmap, url, 0);
         }
     }
 

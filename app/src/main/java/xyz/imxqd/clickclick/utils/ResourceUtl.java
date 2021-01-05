@@ -4,12 +4,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 
 public class ResourceUtl {
     public static int getIdByName(String packageName, String idName) {
         try {
-            PackageManager manager = App.get().getPackageManager();
+            PackageManager manager = MyApp.get().getPackageManager();
             Resources mApk1Resources = manager.getResourcesForApplication(packageName);
 
             int id = mApk1Resources.getIdentifier(idName, "id",packageName);
@@ -24,7 +24,7 @@ public class ResourceUtl {
 
     public static Drawable getDrawableById(String packageName, int resId) {
         try {
-            PackageManager manager = App.get().getPackageManager();
+            PackageManager manager = MyApp.get().getPackageManager();
             Resources mApk1Resources = manager.getResourcesForApplication(packageName);
             return mApk1Resources.getDrawable(resId);
         }

@@ -2,7 +2,7 @@ package xyz.imxqd.clickclick.utils;
 
 import android.util.DisplayMetrics;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 
 /**
  * Created by imxqd on 2017/11/26.
@@ -13,7 +13,7 @@ public class ScreenUtl {
 
     public static int dp2px(float dp) {
         if (sDensity == -1) {
-            DisplayMetrics metrics = App.get().getResources().getDisplayMetrics();
+            DisplayMetrics metrics = MyApp.get().getResources().getDisplayMetrics();
             sDensity = metrics.density;
         }
         return (int) (dp * sDensity);

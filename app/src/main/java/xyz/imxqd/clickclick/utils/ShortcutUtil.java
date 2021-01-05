@@ -14,7 +14,7 @@ import androidx.core.graphics.drawable.IconCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.BuildConfig;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.ui.NoDisplayActivity;
@@ -27,26 +27,26 @@ public class ShortcutUtil {
 
     public static void createRunFunc(long funcId, String name) {
         Intent shortcutIntent = new Intent(ACTION_RUN);
-        shortcutIntent.setClass(App.get(), NoDisplayActivity.class);
+        shortcutIntent.setClass(MyApp.get(), NoDisplayActivity.class);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         shortcutIntent.putExtra(NoDisplayActivity.ARG_FUNC_ID, funcId);
 
-        ShortcutInfoCompat infoCompat = new ShortcutInfoCompat.Builder(App.get(), String.valueOf(funcId))
-                .setIcon(IconCompat.createWithResource(App.get(), R.mipmap.ic_launcher))
+        ShortcutInfoCompat infoCompat = new ShortcutInfoCompat.Builder(MyApp.get(), String.valueOf(funcId))
+                .setIcon(IconCompat.createWithResource(MyApp.get(), R.mipmap.ic_launcher))
                 .setIntent(shortcutIntent)
                 .setShortLabel(name)
                 .setLongLabel(name)
                 .build();
 
-        ShortcutManagerCompat.requestPinShortcut(App.get(), infoCompat, null);
+        ShortcutManagerCompat.requestPinShortcut(MyApp.get(), infoCompat, null);
     }
 
 
 
     @RequiresApi(api = Build.VERSION_CODES.N_MR1)
     public static List<ShortcutInfo> getShortcuts(String packageName) {
-        LauncherApps launcherApps = (LauncherApps) App.get().getSystemService(Context.LAUNCHER_APPS_SERVICE);
+        LauncherApps launcherApps = (LauncherApps) MyApp.get().getSystemService(Context.LAUNCHER_APPS_SERVICE);
         LauncherApps.ShortcutQuery query = new LauncherApps.ShortcutQuery();
         query.setQueryFlags(FLAG_MATCH_DYNAMIC | FLAG_MATCH_MANIFEST | FLAG_MATCH_PINNED);
         query.setPackage(packageName);

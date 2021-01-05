@@ -37,7 +37,7 @@ import io.reactivex.ObservableSource;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.service.ScreenShotService;
@@ -151,7 +151,7 @@ public class ScreenCaptureActivity extends Activity {
                             return;
                         }
                         mImageReader.close();
-                        if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
+                        if (PermissionChecker.checkCallingOrSelfPermission(MyApp.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
                             saveScreenShot();
                             finish();
                         } else {
@@ -166,7 +166,7 @@ public class ScreenCaptureActivity extends Activity {
                     mEmitter.onNext(reader);
                 }
 
-            }, App.get().getHandler());
+            }, MyApp.get().getHandler());
             startScreenCapture();
         } else if (mode == MODE_SERVICE) {
             Intent intent = new Intent(this, ScreenShotService.class);
@@ -214,7 +214,7 @@ public class ScreenCaptureActivity extends Activity {
         mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
         Uri uri = CapturePhotoUtils.insertImage(mScreenShotBitmap);
         if (uri != null) {
-            ScreenShotNotification.notify(App.get(), mScreenShotBitmap, uri, 0);
+            ScreenShotNotification.notify(MyApp.get(), mScreenShotBitmap, uri, 0);
         } else {
             LogUtils.e("can not save image to gallery!");
         }
@@ -222,7 +222,7 @@ public class ScreenCaptureActivity extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
+        if (PermissionChecker.checkCallingOrSelfPermission(MyApp.get(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PermissionChecker.PERMISSION_GRANTED) {
             saveScreenShot();
             finish();
         } else {
@@ -263,7 +263,7 @@ public class ScreenCaptureActivity extends Activity {
                         mMediaProjectionManager.createScreenCaptureIntent(),
                         REQUEST_MEDIA_PROJECTION);
             } catch (Throwable t) {
-                App.get().toastCenter(getString(R.string.run_failed));
+                MyApp.get().toastCenter(getString(R.string.run_failed));
                 LogUtils.e(t.toString());
             }
         }

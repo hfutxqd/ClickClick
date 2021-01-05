@@ -251,7 +251,7 @@ public class NotificationAccessUtil {
             sFieldSetOnClickPendingIntentPendingIntent = SetOnClickPendingIntent.getDeclaredField("pendingIntent");
 
             RemoteViews.class.getDeclaredClasses();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }

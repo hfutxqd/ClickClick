@@ -9,7 +9,7 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
@@ -33,7 +33,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public void onResume() {
         super.onResume();
         if (mPendingSwitchOn || mPendingNotificationOn || mPendingAppUsageOn) {
-            App.get().getHandler().postDelayed(this::initPrefs, 350);
+            MyApp.get().getHandler().postDelayed(this::initPrefs, 350);
         } else {
             initPrefs();
         }
@@ -88,7 +88,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
         if (debug) {
             addDebugSettings();
         }
-        App.get().post(App.EVENT_WHAT_APP_SWITCH_CHANGED, null);
+        MyApp.get().post(MyApp.EVENT_WHAT_APP_SWITCH_CHANGED, null);
     }
 
     private void initClickTimes() {
@@ -150,7 +150,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                 if (NotificationAccessUtil.openNotificationAccess(getContext())) {
                     mPendingNotificationOn = true;
                 } else {
-                    App.get().showToast(getString(R.string.please_open_notification_in_settings), false);
+                    MyApp.get().showToast(getString(R.string.please_open_notification_in_settings), false);
                 }
             } else {
                 mPendingNotificationOn = false;
@@ -182,14 +182,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         assert getContext() != null;
         if (getString(R.string.pref_key_app_switch).equals(preference.getKey())) {
-            App.get().post(App.EVENT_WHAT_APP_SWITCH_CHANGED, null);
+            MyApp.get().post(MyApp.EVENT_WHAT_APP_SWITCH_CHANGED, null);
             LogUtils.d( "KeyEventService is " + newValue);
         } else if (getString(R.string.pref_key_notification_switch).equals(preference.getKey())) {
             if (!NotificationAccessUtil.isEnabled(getContext())) {
                 LogUtils.d( "NotificationService is disabled");
                 ((SwitchPreference)preference).setChecked(false);
                 if (!NotificationAccessUtil.openNotificationAccess(getContext())) {
-                    App.get().showToast(getString(R.string.please_open_notification_in_settings), false);
+                    MyApp.get().showToast(getString(R.string.please_open_notification_in_settings), false);
                 }
             } else {
                 ((SwitchPreference)preference).setChecked(true);
@@ -207,7 +207,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Prefer
                     .edit()
                     .putBoolean(getString(R.string.pref_key_app_debug), (Boolean) newValue)
                     .apply();
-            App.get().initLogger();
+            MyApp.get().initLogger();
         }
         initPrefs();
         return true;

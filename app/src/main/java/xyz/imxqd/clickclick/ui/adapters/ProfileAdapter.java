@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.disposables.Disposable;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
@@ -109,7 +109,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
         if (event.ignoreDevice) {
             holder.subTitle.setText(event.keyName + "  " + event.eventType.getName());
         } else {
-            holder.subTitle.setText(App.get().getResources().getString(R.string.key_device_name, event.deviceName) + "\n" + event.keyName + "  " + event.eventType.getName());
+            holder.subTitle.setText(MyApp.get().getResources().getString(R.string.key_device_name, event.deviceName) + "\n" + event.keyName + "  " + event.eventType.getName());
         }
         holder.enable.setChecked(event.enable);
         holder.deleteAlpha(0f);
@@ -156,8 +156,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.KeyMapHo
             });
             itemView.setOnClickListener(v -> {
                 List<String> list = new ArrayList<>();
-                list.add(App.get().getString(R.string.change_function));
-                list.add(App.get().getString(R.string.delete));
+                list.add(MyApp.get().getString(R.string.change_function));
+                list.add(MyApp.get().getString(R.string.delete));
 
                 DialogUtil.showList(itemView.getContext(), list, (pos, item) -> {
                     switch (pos) {

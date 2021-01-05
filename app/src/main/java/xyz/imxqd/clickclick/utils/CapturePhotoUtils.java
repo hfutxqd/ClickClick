@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Random;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.log.LogUtils;
 
 public class CapturePhotoUtils {
@@ -24,10 +24,10 @@ public class CapturePhotoUtils {
             try (OutputStream imageOut = new FileOutputStream(imageFile)) {
                 source.compress(Bitmap.CompressFormat.JPEG, 80, imageOut);
             }
-            Uri photoURI = FileProvider.getUriForFile(App.get(), App.get().getPackageName() + ".fileprovider", imageFile);
+            Uri photoURI = FileProvider.getUriForFile(MyApp.get(), MyApp.get().getPackageName() + ".fileprovider", imageFile);
             Intent intentScanner = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             intentScanner.setData(Uri.fromFile(imageFile));
-            App.get().sendBroadcast(intentScanner);
+            MyApp.get().sendBroadcast(intentScanner);
             return photoURI;
         } catch (Throwable e) {
             LogUtils.e(e.toString());

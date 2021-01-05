@@ -4,8 +4,8 @@ import android.os.Build;
 
 import cn.vimfung.luascriptcore.LuaExportType;
 
-public class Info implements LuaExportType {
-    public Info(int width, int height) {
+public class Device implements LuaExportType {
+    public Device(int width, int height) {
         this.width = width;
         this.height = height;
     }

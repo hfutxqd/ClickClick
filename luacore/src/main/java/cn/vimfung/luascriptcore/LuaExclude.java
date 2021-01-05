@@ -6,7 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LuaExclude
-{
+public @interface LuaExclude {
 
 }

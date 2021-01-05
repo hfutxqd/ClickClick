@@ -8,7 +8,7 @@ import android.os.RemoteException;
 
 import com.flyme.systemui.smarttouch.ISmartTouchService;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.log.LogUtils;
 
 import static android.content.Context.BIND_AUTO_CREATE;
@@ -54,7 +54,7 @@ public class FlymeSmartTouchHelper {
                 mSmartTouchService = null;
             }
         };
-        App.get().bindService(intent, mSmartTouchServiceConnection, BIND_AUTO_CREATE);
+        MyApp.get().bindService(intent, mSmartTouchServiceConnection, BIND_AUTO_CREATE);
     }
 
 

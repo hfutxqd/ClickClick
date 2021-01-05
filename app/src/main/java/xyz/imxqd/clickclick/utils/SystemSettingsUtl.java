@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.provider.Settings;
 import androidx.annotation.IntDef;
-import androidx.annotation.IntRange;
+
 import android.view.Display;
 import android.view.WindowManager;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 
@@ -20,7 +20,7 @@ public class SystemSettingsUtl {
 
     public static boolean canWrite() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            return Settings.System.canWrite(App.get());
+            return Settings.System.canWrite(MyApp.get());
         } else {
             return true;
         }
@@ -29,20 +29,20 @@ public class SystemSettingsUtl {
     public static void startPackageSettings() {
         Intent intent = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + App.get().getPackageName()));
+            intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + MyApp.get().getPackageName()));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            App.get().startActivity(intent);
+            MyApp.get().startActivity(intent);
         }
     }
 
     public static boolean switchAutoRotation(int enable) {
         if (canWrite()) {
             if (enable == 0) {
-                App.get().showToast(App.get().getString(R.string.auto_rotation_turn_off), false, true);
+                MyApp.get().showToast(MyApp.get().getString(R.string.auto_rotation_turn_off), false, true);
             } else if (enable == 1) {
-                App.get().showToast(App.get().getString(R.string.auto_rotation_turn_on), false, true);
+                MyApp.get().showToast(MyApp.get().getString(R.string.auto_rotation_turn_on), false, true);
             }
-            Settings.System.putInt(App.get().getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, enable);
+            Settings.System.putInt(MyApp.get().getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, enable);
             return true;
         }
         return false;
@@ -51,9 +51,9 @@ public class SystemSettingsUtl {
     public static boolean switchAutoRotation() {
         if (canWrite()) {
             try {
-                if (Settings.System.getInt(App.get().getContentResolver(), Settings.System.ACCELEROMETER_ROTATION) == 1) {
-                    Display defaultDisplay = ((WindowManager) App.get().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-                    Settings.System.putInt(App.get().getContentResolver(), Settings.System.USER_ROTATION, defaultDisplay.getRotation());
+                if (Settings.System.getInt(MyApp.get().getContentResolver(), Settings.System.ACCELEROMETER_ROTATION) == 1) {
+                    Display defaultDisplay = ((WindowManager) MyApp.get().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+                    Settings.System.putInt(MyApp.get().getContentResolver(), Settings.System.USER_ROTATION, defaultDisplay.getRotation());
                     switchAutoRotation(0);
                 } else {
                     switchAutoRotation(1);
@@ -93,8 +93,8 @@ public class SystemSettingsUtl {
 
     public static boolean switchRotation(@Rotation int rotation) {
         if (canWrite()) {
-            Settings.System.putInt(App.get().getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
-            Settings.System.putInt(App.get().getContentResolver(), Settings.System.USER_ROTATION, rotation);
+            Settings.System.putInt(MyApp.get().getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
+            Settings.System.putInt(MyApp.get().getContentResolver(), Settings.System.USER_ROTATION, rotation);
             return true;
         }
         return false;
@@ -129,7 +129,7 @@ public class SystemSettingsUtl {
 
     public static boolean rotate(@Rotation int rotation) {
         if (canWrite()) {
-            int userRotation = 90 * Settings.System.getInt(App.get().getContentResolver(), Settings.System.USER_ROTATION, 0);
+            int userRotation = 90 * Settings.System.getInt(MyApp.get().getContentResolver(), Settings.System.USER_ROTATION, 0);
             userRotation += rotation;
             switchRotation(getRotationByAngle(userRotation));
             return true;
@@ -140,9 +140,9 @@ public class SystemSettingsUtl {
 
     public static boolean switchSmartTouch() {
         if (canWrite()) {
-            int enable = Settings.System.getInt(App.get().getContentResolver(), "mz_smart_touch_switch", 0);
+            int enable = Settings.System.getInt(MyApp.get().getContentResolver(), "mz_smart_touch_switch", 0);
             enable = enable == 0 ? 1 : 0;
-            Settings.System.putInt(App.get().getContentResolver(), "mz_smart_touch_switch", enable);
+            Settings.System.putInt(MyApp.get().getContentResolver(), "mz_smart_touch_switch", enable);
             return true;
         }
         return false;

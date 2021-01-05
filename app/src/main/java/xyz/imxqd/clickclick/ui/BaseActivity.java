@@ -7,14 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.widget.Toast;
 
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 
 /**
  * Created by imxqd on 2017/11/25.
  */
 
 @SuppressLint("Registered")
-public class BaseActivity extends AppCompatActivity implements App.AppEventCallback {
+public class BaseActivity extends AppCompatActivity implements MyApp.AppEventCallback {
 
     private Toast mToast;
 

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent_Table;
@@ -204,7 +204,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
 
     public boolean shouldInterrupt(KeyEvent event) {
         try {
-            if (App.get().isServiceOn && SettingsUtil.isServiceOn()) {
+            if (MyApp.get().isServiceOn && SettingsUtil.isServiceOn()) {
                 return mKeyEventHandler.inputKeyEvent(event);
             } else {
                 return false;
@@ -217,9 +217,9 @@ public class AppEventManager implements KeyEventHandler.Callback {
     public void toggleInputMode() {
         this.isInputMode = !this.isInputMode;
         if (this.isInputMode) {
-            App.get().showToast(R.string.input_mode_turn_on);
+            MyApp.get().showToast(R.string.input_mode_turn_on);
         } else {
-            App.get().showToast(R.string.input_mode_turn_off);
+            MyApp.get().showToast(R.string.input_mode_turn_off);
         }
 
     }
@@ -329,7 +329,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
     }
 
     private void showToast(String str) {
-        App.get().showToast(str, false);
+        MyApp.get().showToast(str, false);
     }
 
     public static IFunction getHomeDoubleClickFunction(int button) {
@@ -364,7 +364,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
     private void initHomeButtonListener() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        App.get().registerReceiver(new BroadcastReceiver() {
+        MyApp.get().registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
@@ -388,7 +388,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
             @Override
             public void onDoubleClick(int button) {
                 LogUtils.d("onDoubleClick " + button);
-                App.get().getHandler().post(() -> {
+                MyApp.get().getHandler().post(() -> {
                     IFunction f = getHomeDoubleClickFunction(button);
                     if (f != null) {
                         f.exec();
@@ -399,7 +399,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
             @Override
             public void onTripleClick(int button) {
                 LogUtils.d("onTripleClick " + button);
-                App.get().getHandler().post(() -> {
+                MyApp.get().getHandler().post(() -> {
                     IFunction f = getHomeTripleClickFunction(button);
                     if (f != null) {
                         f.exec();
@@ -419,13 +419,13 @@ public class AppEventManager implements KeyEventHandler.Callback {
             if (lastButton == button) {
                 count++;
                 if (hasOnlyDoubleClick(button) && count == 2) {
-                    App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
+                    MyApp.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
                     if (callback != null) {
                         callback.onDoubleClick(lastButton);
                     }
                     reset();
                 } else if (count == 3) {
-                    App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
+                    MyApp.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
                     if (callback != null) {
                         callback.onTripleClick(lastButton);
                     }
@@ -434,9 +434,9 @@ public class AppEventManager implements KeyEventHandler.Callback {
             } else {
                 count = 1;
                 lastButton = button;
-                App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
-                Message msg = Message.obtain(App.get().getHandler(), () -> {
-                    App.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
+                MyApp.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
+                Message msg = Message.obtain(MyApp.get().getHandler(), () -> {
+                    MyApp.get().getHandler().removeMessages(WHAT_BUTTON_HANDLER);
                     if (callback != null) {
                         if (count == 2) {
                             callback.onDoubleClick(lastButton);
@@ -447,7 +447,7 @@ public class AppEventManager implements KeyEventHandler.Callback {
                     reset();
                 });
                 msg.what = WHAT_BUTTON_HANDLER;
-                App.get().getHandler().sendMessageDelayed(msg, SettingsUtil.getQuickClickTime());
+                MyApp.get().getHandler().sendMessageDelayed(msg, SettingsUtil.getQuickClickTime());
             }
         }
 

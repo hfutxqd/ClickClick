@@ -4,7 +4,6 @@ package xyz.imxqd.clickclick.ui.fragments;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
@@ -28,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.func.InternalFunction;
 import xyz.imxqd.clickclick.log.LogUtils;
@@ -242,7 +241,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
         try {
             startActivityForResult(intent, REQUEST_ADD_SHORTCUT);
         } catch (Throwable e) {
-            App.get().showToast(R.string.no_app_shortcut_available);
+            MyApp.get().showToast(R.string.no_app_shortcut_available);
         }
     }
 
@@ -266,7 +265,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                 try {
                     startActivityForResult(data, REQUEST_CHOOSE_SHORTCUT);
                 } catch (Throwable t) {
-                    App.get().showToast(getString(R.string.create_shortcut_failed), false);
+                    MyApp.get().showToast(getString(R.string.create_shortcut_failed), false);
                     LogUtils.e(t.toString());
                 }
             } else if (requestCode == REQUEST_CHOOSE_SHORTCUT && data != null) {
@@ -281,7 +280,7 @@ public class FunctionFragment extends BaseFragment implements FunctionAdapter.Ev
                     AddFunctionActivity.start(f, true, getContext());
                 } catch (Exception e) {
                     LogUtils.e(e.getMessage());
-                    App.get().showToast(R.string.save_failed);
+                    MyApp.get().showToast(R.string.save_failed);
                 }
             }
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,8 +30,15 @@ public class App implements LuaExportType {
         return sApp;
     }
 
+    public void crash() {
+        throw new RuntimeException("crash!");
+    }
+
     public boolean launch(String pkg) {
         Log.i("lua:app", "launch:" + pkg);
+        if (TextUtils.isEmpty(pkg)) {
+            throw new RuntimeException("Package name can not be empty!");
+        }
         PackageManager pm = LuaEngine.getGlobalContext().getPackageManager();
         Intent intent = pm.getLaunchIntentForPackage(pkg);
         if (intent != null) {
@@ -44,6 +52,9 @@ public class App implements LuaExportType {
 
     public boolean openAppSetting(String pkg) {
         Log.i("lua:app", "openAppSetting:" + pkg);
+        if (TextUtils.isEmpty(pkg)) {
+            throw new RuntimeException("Package name can not be empty!");
+        }
         Intent i = new Intent();
         i.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         i.addCategory(Intent.CATEGORY_DEFAULT);

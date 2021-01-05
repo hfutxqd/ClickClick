@@ -17,7 +17,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.ui.fragments.FunctionFragment;
@@ -87,7 +87,7 @@ public class NaviActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        App.get().getHandler().postDelayed(this::showSnackBarInNeed, 100);
+        MyApp.get().getHandler().postDelayed(this::showSnackBarInNeed, 100);
     }
 
     private Snackbar mSnackbar;
@@ -189,10 +189,10 @@ public class NaviActivity extends BaseActivity {
 
     @Override
     public void onEvent(int what, Object data) {
-        if (what == App.EVENT_WHAT_REFRESH_UI) {
+        if (what == MyApp.EVENT_WHAT_REFRESH_UI) {
             requestRefreshUI();
-        } else if (what == App.EVENT_WHAT_APP_SWITCH_CHANGED) {
-            App.get().getHandler().postDelayed(this::showSnackBarInNeed, 100);
+        } else if (what == MyApp.EVENT_WHAT_APP_SWITCH_CHANGED) {
+            MyApp.get().getHandler().postDelayed(this::showSnackBarInNeed, 100);
         }
     }
 }

@@ -1,7 +1,6 @@
 package xyz.imxqd.clickclick.ui;
 
 import android.content.Intent;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
@@ -111,7 +110,7 @@ public class AddHomeEventActivity extends BaseActivity {
 
     @Override
     public void onEvent(int what, Object data) {
-        if (what == App.EVENT_WHAT_REFRESH_UI) {
+        if (what == MyApp.EVENT_WHAT_REFRESH_UI) {
             LogUtils.d("EVENT_WHAT_REFRESH_UI");
             mFuncAdapter.refreshData();
         }

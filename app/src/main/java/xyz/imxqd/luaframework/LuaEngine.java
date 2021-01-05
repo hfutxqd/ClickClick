@@ -77,9 +77,6 @@ public class LuaEngine {
             throw new NotInitError();
         }
         LuaContext luaContext = LuaContext.create(sContext);
-        luaContext.onException(s -> {
-            Log.e("lua:error", s);
-        });
         GlobalLuaValueProvider.registerAll(luaContext);
         LuaMethodProvider.registerAll(luaContext);
         return luaContext;

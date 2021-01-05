@@ -29,7 +29,7 @@ import xyz.imxqd.luaframework.LuaEngine;
 /**
  * Created by imxqd on 2017/11/24.
  */
-public class App extends Application implements Application.ActivityLifecycleCallbacks {
+public class MyApp extends Application implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = "ClickClick";
 
@@ -38,7 +38,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
 
     public boolean isServiceOn = true;
 
-    private static App mApp;
+    private static MyApp mApp;
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private Set<AppEventCallback> mAppEventCallbacks = new HashSet<>();
@@ -72,7 +72,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
         LogUtils.allowV = SettingsUtil.displayDebug();
     }
 
-    public static App get() {
+    public static MyApp get() {
         return mApp;
     }
 
@@ -91,7 +91,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
             if (mToast != null) {
                 mToast.cancel();
             }
-            mToast = Toast.makeText(App.get(), str, Toast.LENGTH_LONG);
+            mToast = Toast.makeText(MyApp.get(), str, Toast.LENGTH_LONG);
             if (center) {
                 mToast.setGravity(Gravity.CENTER, 0, 0);
             }
@@ -103,7 +103,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
     public void showToast(final String str, final boolean show, final boolean center) {
         mHandler.post(() -> {
             if (show) {
-                Toast t = Toast.makeText(App.get(), str, Toast.LENGTH_LONG);
+                Toast t = Toast.makeText(MyApp.get(), str, Toast.LENGTH_LONG);
                 if (center) {
                     t.setGravity(Gravity.CENTER, 0, 0);
                 }
@@ -117,13 +117,13 @@ public class App extends Application implements Application.ActivityLifecycleCal
     }
 
     public void toastCenter(final String str) {
-
+        showToast(str, true);
     }
 
     public void toastImage(final Drawable drawable) {
         mHandler.post(() -> {
-            Toast toast = new Toast(App.get());
-            ImageView imageView = new ImageView(App.get());
+            Toast toast = new Toast(MyApp.get());
+            ImageView imageView = new ImageView(MyApp.get());
             imageView.setImageDrawable(drawable);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             int width = getResources().getDimensionPixelSize(R.dimen.dimen_24_dp);
@@ -176,7 +176,7 @@ public class App extends Application implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        if (activity instanceof AppEventCallback && mAppEventCallbacks.contains(activity)) {
+        if (activity instanceof AppEventCallback) {
             mAppEventCallbacks.remove(activity);
         }
     }

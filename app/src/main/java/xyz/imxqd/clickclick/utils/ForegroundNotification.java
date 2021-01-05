@@ -7,7 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 
 public class ForegroundNotification {
@@ -20,8 +20,8 @@ public class ForegroundNotification {
         final NotificationManager nm = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && nm != null) {
-            CharSequence name = App.get().getString(R.string.foreground_service_channel_name);
-            String description = App.get().getString(R.string.foreground_service_description);
+            CharSequence name = MyApp.get().getString(R.string.foreground_service_channel_name);
+            String description = MyApp.get().getString(R.string.foreground_service_description);
 
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel mChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);

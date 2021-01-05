@@ -21,7 +21,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.dao.KeyMappingEvent;
@@ -73,7 +73,7 @@ public class AddKeyEventActivity extends BaseActivity {
         setContentView(R.layout.activity_key_event);
         setFinishOnTouchOutside(false);
         ButterKnife.bind(this);
-        App.get().isServiceOn = false;
+        MyApp.get().isServiceOn = false;
         mBtnAdd.setEnabled(false);
         mBtnAdd.setAlpha(0.5f);
         List<String> spinnerArray =  new ArrayList<>();
@@ -107,7 +107,7 @@ public class AddKeyEventActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        App.get().isServiceOn = true;
+        MyApp.get().isServiceOn = true;
         super.onDestroy();
     }
 
@@ -167,7 +167,7 @@ public class AddKeyEventActivity extends BaseActivity {
 
     @Override
     public void onEvent(int what, Object data) {
-        if (what == App.EVENT_WHAT_REFRESH_UI) {
+        if (what == MyApp.EVENT_WHAT_REFRESH_UI) {
             LogUtils.d("EVENT_WHAT_REFRESH_UI");
             mFuncAdapter.refreshData();
         }

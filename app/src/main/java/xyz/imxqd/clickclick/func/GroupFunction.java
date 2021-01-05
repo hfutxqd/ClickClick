@@ -1,7 +1,6 @@
 package xyz.imxqd.clickclick.func;
 
 import android.annotation.SuppressLint;
-import android.os.Looper;
 
 import com.google.gson.Gson;
 
@@ -15,7 +14,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 
@@ -58,7 +57,7 @@ public class GroupFunction extends AbstractFunction {
             @Override
             public void accept(Boolean success) throws Exception {
                 if (!success) {
-                    toast(App.get().getString(R.string.run_failed));
+                    toast(MyApp.get().getString(R.string.run_failed));
                 }
             }
         });

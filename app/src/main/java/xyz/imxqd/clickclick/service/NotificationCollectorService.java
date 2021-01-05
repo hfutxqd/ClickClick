@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.model.AppEventManager;
 import xyz.imxqd.clickclick.log.LogUtils;
@@ -119,7 +119,7 @@ public class NotificationCollectorService extends NotificationListenerService {
         if (service != null) {
             return service.findNotificationsByPackage(packageName);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            NotificationManager notificationManager = (NotificationManager) App.get().getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager = (NotificationManager) MyApp.get().getSystemService(Context.NOTIFICATION_SERVICE);
             if (notificationManager == null) {
                 return new ArrayList<>();
             }

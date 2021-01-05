@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.execution.APILevelException;
 import xyz.imxqd.clickclick.log.LogUtils;
@@ -68,24 +68,24 @@ public class KeyEventUtil {
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK);
                 } else {
-                    AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                    throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+                    AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+                    throw new RuntimeException(MyApp.get().getString(R.string.accessibility_error));
                 }
                 break;
             case KeyEvent.KEYCODE_HOME:
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME);
                 } else {
-                    AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                    throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+                    AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+                    throw new RuntimeException(MyApp.get().getString(R.string.accessibility_error));
                 }
                 break;
             case KeyEvent.KEYCODE_APP_SWITCH:
                 if (service != null) {
                     service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS);
                 } else {
-                    AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                    throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+                    AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+                    throw new RuntimeException(MyApp.get().getString(R.string.accessibility_error));
                 }
                 break;
             case KeyEvent.KEYCODE_VOLUME_DOWN:

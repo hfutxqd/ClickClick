@@ -11,7 +11,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import java.util.HashSet;
 import java.util.Set;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.model.AppEventManager;
@@ -28,7 +28,7 @@ public class KeyEventService extends AccessibilityService {
 
         LogUtils.d("time = " + System.currentTimeMillis());
         if (SettingsUtil.displayDebug()) {
-            App.get().showToast(getString(R.string.open_service_success), true);
+            MyApp.get().showToast(getString(R.string.open_service_success), true);
         }
         initService();
         AppEventManager.getInstance().attachToAccessibilityService(this);
@@ -196,7 +196,7 @@ public class KeyEventService extends AccessibilityService {
     public void onInterrupt() {
         LogUtils.d("time = " + System.currentTimeMillis());
         if (SettingsUtil.displayDebug()) {
-            App.get().showToast(getString(R.string.open_service_interrupt), true);
+            MyApp.get().showToast(getString(R.string.open_service_interrupt), true);
         }
         AppEventManager.getInstance().detachFromAccessibilityService();
         stopSelf();

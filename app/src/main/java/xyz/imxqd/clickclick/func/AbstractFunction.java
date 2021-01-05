@@ -1,6 +1,6 @@
 package xyz.imxqd.clickclick.func;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.SettingsUtil;
 import xyz.imxqd.clickclick.utils.Shocker;
@@ -24,7 +24,7 @@ public abstract class AbstractFunction implements IFunction {
     }
 
     public void toast(final String str) {
-        App.get().showToast(str, true, false);
+        MyApp.get().showToast(str, true, false);
     }
 
     @Override
@@ -43,7 +43,7 @@ public abstract class AbstractFunction implements IFunction {
             error = e;
             LogUtils.e("exec error " + e.getMessage());
             if (SettingsUtil.displayDebug()) {
-                App.get().showToast(e.getMessage(), true, true);
+                MyApp.get().showToast(e.getMessage(), true, true);
             }
             return false;
         }

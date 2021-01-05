@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.func.FunctionFactory;
@@ -101,7 +101,7 @@ public class AddFunctionActivity extends BaseActivity {
                     try {
                         function.save();
                         showToast(getString(R.string.save_successed));
-                        App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
+                        MyApp.get().post(MyApp.EVENT_WHAT_REFRESH_UI, null);
                     } catch (SQLiteConstraintException e) {
                         showToast(getString(R.string.save_failed));
                     }
@@ -119,7 +119,7 @@ public class AddFunctionActivity extends BaseActivity {
                             showToast(getString(R.string.run_successed));
                         } else if (func != null){
                             showToast(getString(R.string.run_failed));
-                            App.get().showToast(func.getErrorInfo().getMessage(), true, true);
+                            MyApp.get().showToast(func.getErrorInfo().getMessage(), true, true);
                         } else {
                             showToast(getString(R.string.run_failed));
                         }
@@ -237,7 +237,7 @@ public class AddFunctionActivity extends BaseActivity {
                 function.order = 0;
                 try {
                     function.save();
-                    App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
+                    MyApp.get().post(MyApp.EVENT_WHAT_REFRESH_UI, null);
                     setResult(RESULT_OK);
                     finish();
                 } catch (Exception e) {
@@ -252,7 +252,7 @@ public class AddFunctionActivity extends BaseActivity {
                 mDefinedFunction.body = code;
                 try {
                     mDefinedFunction.save();
-                    App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
+                    MyApp.get().post(MyApp.EVENT_WHAT_REFRESH_UI, null);
                     setResult(RESULT_OK);
                     finish();
                 } catch (Exception e) {

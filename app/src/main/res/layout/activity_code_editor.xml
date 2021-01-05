@@ -8,7 +8,6 @@
     tools:context=".ui.CodeEditorActivity">
     <com.github.ahmadaghazadeh.editor.widget.CodeEditor
         android:id="@+id/code_editor"
-        app:code="--lua/1.80"
         app:lang="lua"
         app:isReadOnly="false"
         app:isShowExtendedKeyboard="true"

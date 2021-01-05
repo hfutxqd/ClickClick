@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.execution.APILevelException;
 import xyz.imxqd.clickclick.execution.AccessibilityServiceException;
@@ -96,7 +96,7 @@ public class InternalFunction extends AbstractFunction {
 
         final KeyEventService service = AppEventManager.getInstance().getService();
         if (service != null) {
-            App.get().showToast(App.get().getString(R.string.please_click_the_notification_item), true, true);
+            MyApp.get().showToast(MyApp.get().getString(R.string.please_click_the_notification_item), true, true);
             final KeyEventService.OnNotificationWidgetClick callback = new KeyEventService.OnNotificationWidgetClick() {
                 @Override
                 public void onNotificationWidgetClick(String packageName, String viewId) {
@@ -112,15 +112,15 @@ public class InternalFunction extends AbstractFunction {
             };
             service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
             service.addOnNotificationWidgetClickCallback(callback);
-            App.get().getHandler().postDelayed(new Runnable() {
+            MyApp.get().getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     service.removeOnNotificationWidgetClickCallback(callback);
                 }
             }, 15000);
         } else {
-            AlertUtil.show(App.get().getString(R.string.accessibility_error));
-            throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
+            AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+            throw new AccessibilityServiceException(MyApp.get().getString(R.string.accessibility_error));
         }
     }
 
@@ -128,8 +128,8 @@ public class InternalFunction extends AbstractFunction {
         final NotificationCollectorService service = AppEventManager.getInstance().getNotificationService();
         String idName = "playNotificationStar";
         if (service == null) {
-            AlertUtil.show(App.get().getString(R.string.notification_service_error));
-            throw new NotificationServiceException(App.get().getString(R.string.notification_service_error));
+            AlertUtil.show(MyApp.get().getString(R.string.notification_service_error));
+            throw new NotificationServiceException(MyApp.get().getString(R.string.notification_service_error));
         }
         Matcher matcher = RESOURCE_ID_PATTERN.matcher(args);
         if (!matcher.matches()) {
@@ -155,13 +155,13 @@ public class InternalFunction extends AbstractFunction {
             @Override
             public void onNotificationPosted(Object val) {
                 if (val instanceof  Integer) {
-                    App.get().toastImage(ResourceUtl.getDrawableById(feedback.packageName, (Integer) val));
+                    MyApp.get().toastImage(ResourceUtl.getDrawableById(feedback.packageName, (Integer) val));
                 }
                 service.removeFeedback(feedback);
             }
         };
         service.addFeedback(feedback);
-        App.get().getHandler().postDelayed(new Runnable() {
+        MyApp.get().getHandler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 service.removeFeedback(feedback);
@@ -171,7 +171,7 @@ public class InternalFunction extends AbstractFunction {
 
     public void qq_music_like(String str) {
         Intent intent = new Intent("com.tencent.qqmusic.ACTION_SERVICE_FAVORATE_SONG.QQMusicPhone");
-        App.get().sendBroadcast(intent);
+        MyApp.get().sendBroadcast(intent);
     }
 
     @Override
@@ -203,8 +203,8 @@ public class InternalFunction extends AbstractFunction {
                 }
             }
         } else {
-            AlertUtil.show(App.get().getString(R.string.accessibility_error));
-            throw new RuntimeException(App.get().getString(R.string.accessibility_error));
+            AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+            throw new RuntimeException(MyApp.get().getString(R.string.accessibility_error));
         }
     }
 
@@ -226,7 +226,7 @@ public class InternalFunction extends AbstractFunction {
         }
 
         if(!res) {
-            App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
+            MyApp.get().showToast(MyApp.get().getString(R.string.request_write_settings), true, true);
             SystemSettingsUtl.startPackageSettings();
             throw new RuntimeException("no permission");
         }
@@ -236,7 +236,7 @@ public class InternalFunction extends AbstractFunction {
         try {
             if (SystemSettingsUtl.rotate(Integer.valueOf(rotation))) {
             } else {
-                App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
+                MyApp.get().showToast(MyApp.get().getString(R.string.request_write_settings), true, true);
                 SystemSettingsUtl.startPackageSettings();
                 throw new NoPermissionsException("no permission");
             }
@@ -249,7 +249,7 @@ public class InternalFunction extends AbstractFunction {
         try {
             if (SystemSettingsUtl.switchRotation(SystemSettingsUtl.getRotationByAngle(Integer.valueOf(rotation)))) {
             } else {
-                App.get().showToast(App.get().getString(R.string.request_write_settings), true, true);
+                MyApp.get().showToast(MyApp.get().getString(R.string.request_write_settings), true, true);
                 SystemSettingsUtl.startPackageSettings();
                 throw new NoPermissionsException("no permission");
             }
@@ -260,7 +260,7 @@ public class InternalFunction extends AbstractFunction {
 
     @SuppressLint("WrongConstant")
     public void do_not_disturb(String str) {
-        NotificationManager notificationManager = (NotificationManager) App.get().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) MyApp.get().getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager == null) {
             throw new RuntimeException("NotificationManager is null");
         }
@@ -268,7 +268,7 @@ public class InternalFunction extends AbstractFunction {
             if (!notificationManager.isNotificationPolicyAccessGranted()) {
                 Intent intent = new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                App.get().startActivity(intent);
+                MyApp.get().startActivity(intent);
             } else {
                 int filter = 1;
                 if (TextUtils.isEmpty(str)) {
@@ -276,16 +276,16 @@ public class InternalFunction extends AbstractFunction {
                     filter = filter + 1 > 4 ? 1 : filter + 1;
                     switch (filter) {
                         case NotificationManager.INTERRUPTION_FILTER_ALL:
-                            App.get().showToast(R.string.notification_filter_all, false, true);
+                            MyApp.get().showToast(R.string.notification_filter_all, false, true);
                             break;
                         case NotificationManager.INTERRUPTION_FILTER_PRIORITY:
-                            App.get().showToast(R.string.notification_filter_priority, false, true);
+                            MyApp.get().showToast(R.string.notification_filter_priority, false, true);
                             break;
                         case NotificationManager.INTERRUPTION_FILTER_NONE:
-                            App.get().showToast(R.string.notification_filter_none, false, true);
+                            MyApp.get().showToast(R.string.notification_filter_none, false, true);
                             break;
                         case NotificationManager.INTERRUPTION_FILTER_ALARMS:
-                            App.get().showToast(R.string.notification_filter_alarms, false, true);
+                            MyApp.get().showToast(R.string.notification_filter_alarms, false, true);
                             break;
                         default:
                     }
@@ -301,7 +301,7 @@ public class InternalFunction extends AbstractFunction {
     }
 
     public void flash_light(String str) throws Throwable {
-        if (PermissionChecker.checkCallingOrSelfPermission(App.get(), Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
+        if (PermissionChecker.checkCallingOrSelfPermission(MyApp.get(), Manifest.permission.CAMERA) == PermissionChecker.PERMISSION_GRANTED) {
             try {
                 if (TextUtils.isEmpty(str)) {
                     if (Flash.isFlashOn()) {
@@ -326,8 +326,8 @@ public class InternalFunction extends AbstractFunction {
                 throw new RuntimeException("Open camera failed.");
             }
         } else {
-            App.get().showToast(App.get().getString(R.string.request_camera), true, true);
-            PackageUtil.showInstalledAppDetails(App.get().getPackageName());
+            MyApp.get().showToast(MyApp.get().getString(R.string.request_camera), true, true);
+            PackageUtil.showInstalledAppDetails(MyApp.get().getPackageName());
             throw new NoPermissionsException("no permission");
         }
 
@@ -362,8 +362,8 @@ public class InternalFunction extends AbstractFunction {
     public void show_notifications(String str) throws Exception {
         KeyEventService service = AppEventManager.getInstance().getService();
         if (service == null) {
-            AlertUtil.show(App.get().getString(R.string.accessibility_error));
-            throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
+            AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+            throw new AccessibilityServiceException(MyApp.get().getString(R.string.accessibility_error));
         }
         if (TextUtils.isEmpty(str)) {
             service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS);
@@ -389,8 +389,8 @@ public class InternalFunction extends AbstractFunction {
             if (service != null) {
                 service.dispatchGesture(description, null, null);
             } else {
-                AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
+                AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+                throw new AccessibilityServiceException(MyApp.get().getString(R.string.accessibility_error));
             }
         } else {
             throw new InvalidInputException();
@@ -417,8 +417,8 @@ public class InternalFunction extends AbstractFunction {
             if (service != null) {
                 service.dispatchGesture(description, null, null);
             } else {
-                AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
+                AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+                throw new AccessibilityServiceException(MyApp.get().getString(R.string.accessibility_error));
             }
         } else {
             throw new InvalidInputException();
@@ -446,8 +446,8 @@ public class InternalFunction extends AbstractFunction {
             if (service != null) {
                 service.dispatchGesture(description, null, null);
             } else {
-                AlertUtil.show(App.get().getString(R.string.accessibility_error));
-                throw new AccessibilityServiceException(App.get().getString(R.string.accessibility_error));
+                AlertUtil.show(MyApp.get().getString(R.string.accessibility_error));
+                throw new AccessibilityServiceException(MyApp.get().getString(R.string.accessibility_error));
             }
         } else {
             throw new InvalidInputException();
@@ -461,8 +461,8 @@ public class InternalFunction extends AbstractFunction {
         }
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClass(App.get(), ScreenCaptureActivity.class);
-        PendingIntent.getActivity(App.get(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT).send();
+        intent.setClass(MyApp.get(), ScreenCaptureActivity.class);
+        PendingIntent.getActivity(MyApp.get(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT).send();
     }
 
     public void force_stop(String str) {

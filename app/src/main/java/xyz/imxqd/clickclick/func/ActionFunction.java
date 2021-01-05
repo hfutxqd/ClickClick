@@ -11,7 +11,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.PackageUtil;
 
@@ -98,7 +98,7 @@ public class ActionFunction extends AbstractFunction {
                 throw new RuntimeException("no activity found");
             }
             PendingIntent pendingIntent =
-                    PendingIntent.getActivity(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.getActivity(MyApp.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
                 pendingIntent.send();
             } catch (PendingIntent.CanceledException e) {
@@ -111,7 +111,7 @@ public class ActionFunction extends AbstractFunction {
                 throw new RuntimeException("no activity found");
             }
             PendingIntent pendingIntent =
-                    PendingIntent.getActivity(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.getActivity(MyApp.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
                 pendingIntent.send();
             } catch (PendingIntent.CanceledException e) {
@@ -123,7 +123,7 @@ public class ActionFunction extends AbstractFunction {
                 LogUtils.e("no static receiver found");
             }
             PendingIntent pendingIntent =
-                    PendingIntent.getBroadcast(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.getBroadcast(MyApp.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
                 pendingIntent.send();
             } catch (Exception e) {
@@ -135,7 +135,7 @@ public class ActionFunction extends AbstractFunction {
                 throw new RuntimeException("no service found");
             }
             PendingIntent pendingIntent =
-                    PendingIntent.getService(App.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent.getService(MyApp.get(), UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
                 pendingIntent.send();
             } catch (Exception e) {

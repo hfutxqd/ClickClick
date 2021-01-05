@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,7 +44,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.R;
 import xyz.imxqd.clickclick.dao.DefinedFunction;
 import xyz.imxqd.clickclick.model.web.HomePage;
@@ -195,7 +194,7 @@ public class FunctionsActivity extends BaseActivity {
                         @Override
                         public void onClick(View v) {
                             RemoteFunction f = mPage.data.get(getAdapterPosition());
-                            AddFunctionActivity.start(f, false, App.get());
+                            AddFunctionActivity.start(f, false, MyApp.get());
                         }
                     });
                 }
@@ -211,10 +210,10 @@ public class FunctionsActivity extends BaseActivity {
                         function.order = 0;
                         try {
                             function.save();
-                            App.get().post(App.EVENT_WHAT_REFRESH_UI, null);
-                            App.get().showToast(R.string.save_successed);
+                            MyApp.get().post(MyApp.EVENT_WHAT_REFRESH_UI, null);
+                            MyApp.get().showToast(R.string.save_successed);
                         } catch (Exception e) {
-                            App.get().showToast(R.string.save_failed);
+                            MyApp.get().showToast(R.string.save_failed);
                         }
                         notifyItemChanged(getAdapterPosition());
                     } else {

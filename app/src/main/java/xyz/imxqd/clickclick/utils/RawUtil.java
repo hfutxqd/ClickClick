@@ -11,12 +11,12 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 
 public class RawUtil {
     public static String getString(@RawRes int id) throws IOException {
         Writer writer = new StringWriter();
-        try (InputStream is = App.get().getResources().openRawResource(id)) {
+        try (InputStream is = MyApp.get().getResources().openRawResource(id)) {
             char[] buffer = new char[1024];
             Reader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
             int n;
@@ -30,7 +30,7 @@ public class RawUtil {
     }
 
     public static String getString(String name) throws IOException {
-        int id = App.get().getResources().getIdentifier(name, "raw", App.get().getPackageName());
+        int id = MyApp.get().getResources().getIdentifier(name, "raw", MyApp.get().getPackageName());
         return getString(id);
     }
 }

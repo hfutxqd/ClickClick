@@ -4,7 +4,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.net.Uri;
 
-import xyz.imxqd.clickclick.App;
+import xyz.imxqd.clickclick.MyApp;
 import xyz.imxqd.clickclick.log.LogUtils;
 import xyz.imxqd.clickclick.utils.PackageUtil;
 
@@ -26,7 +26,7 @@ public class UrlFunction extends AbstractFunction {
                 throw new RuntimeException("no activity found");
             }
             PendingIntent pendingIntent =
-                    PendingIntent.getActivity(App.get(), 0, intent, 0);
+                    PendingIntent.getActivity(MyApp.get(), 0, intent, 0);
             try {
                 pendingIntent.send();
             } catch (PendingIntent.CanceledException e) {
