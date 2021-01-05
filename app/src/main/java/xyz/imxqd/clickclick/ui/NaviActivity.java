@@ -53,7 +53,7 @@ public class NaviActivity extends BaseActivity {
         ButterKnife.bind(this);
         initViews();
         if (currentTabId == 0) {
-            switchPageTo(R.id.navigation_home);
+            switchPageTo(R.id.navigation_functions);
         } else {
             clearFragments();
             switchPageTo(currentTabId);
@@ -104,7 +104,7 @@ public class NaviActivity extends BaseActivity {
             if (mSnackbar != null && mSnackbar.isShown()) {
                 return;
             }
-            mSnackbar = Snackbar.make(findViewById(R.id.nav_container), R.string.snack_bar_app_off, Snackbar.LENGTH_INDEFINITE);
+            mSnackbar = Snackbar.make(findViewById(R.id.nav_container), R.string.snack_bar_bindings_off, Snackbar.LENGTH_INDEFINITE);
             mSnackbar.setAction(R.string.to_turn_on, v -> vNavigation.setSelectedItemId(R.id.navigation_settings));
             mSnackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_error_accent));
             mSnackbar.show();
@@ -115,8 +115,8 @@ public class NaviActivity extends BaseActivity {
 
     private void initViews() {
         vNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        mFragments.put(R.id.navigation_home, ProfileFragment.newInstance());
-        mFragments.put(R.id.navigation_dashboard, FunctionFragment.newInstance());
+        mFragments.put(R.id.navigation_bindings, ProfileFragment.newInstance());
+        mFragments.put(R.id.navigation_functions, FunctionFragment.newInstance());
         mFragments.put(R.id.navigation_settings, SettingsFragment.newInstance());
     }
 
@@ -129,9 +129,9 @@ public class NaviActivity extends BaseActivity {
     @Override
     public void onAttachFragment(Fragment fragment) {
         if(fragment instanceof ProfileFragment) {
-            mFragments.put(R.id.navigation_home, fragment);
+            mFragments.put(R.id.navigation_bindings, fragment);
         } else if (fragment instanceof  FunctionFragment) {
-            mFragments.put(R.id.navigation_dashboard, fragment);
+            mFragments.put(R.id.navigation_functions, fragment);
         } else if (fragment instanceof  SettingsFragment) {
             mFragments.put(R.id.navigation_settings, fragment);
         }
@@ -158,16 +158,12 @@ public class NaviActivity extends BaseActivity {
         if (fragmentTo == null) {
             return;
         }
-        switch (id) {
-            case R.id.navigation_home:
-                vTitle.setText(R.string.title_home);
-                break;
-            case R.id.navigation_dashboard:
-                vTitle.setText(R.string.title_dashboard);
-                break;
-            case R.id.navigation_settings:
-                vTitle.setText(R.string.title_settings);
-                break;
+        if (id == R.id.navigation_bindings) {
+            vTitle.setText(R.string.title_bindings);
+        } else if (id == R.id.navigation_functions) {
+            vTitle.setText(R.string.title_functions);
+        } else if (id == R.id.navigation_settings) {
+            vTitle.setText(R.string.title_settings);
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();

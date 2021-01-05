@@ -11,14 +11,14 @@
     <string name="btn_add">添加</string>
     <string name="title_settings">设置</string>
     <string name="title_activity_navi">易按键</string>
-    <string name="title_home">场景</string>
-    <string name="title_dashboard">功能</string>
+    <string name="title_bindings">绑定</string>
+    <string name="title_functions">功能</string>
     <string name="action_add_description">点击可以添加场景</string>
     <string name="settings_about_title">关于</string>
     <string name="settings_version_title">版本</string>
     <string name="settings_author_title">作者</string>
     <string name="settings_author_summary">IMXQD</string>
-    <string name="settings_app_switch_title">功能开关</string>
+    <string name="settings_app_switch_bindings">按键绑定</string>
     <string name="settings_app_switch_on_summary">已开启按键映射服务</string>
     <string name="settings_app_switch_off_summary">已关闭按键映射服务</string>
     <string name="settings_key_app_debug_title">显示调试信息</string>
@@ -35,7 +35,7 @@
     <string name="settings_notification_on_summary">已开启，可以支持通知类功能</string>
     <string name="settings_notification_off_summary">已关闭，喜爱功能不可用</string>
     <string name="accessibility_description">易按键需要此权限用来拦截按键事件。易按键承诺不会收集任何用户隐私相关的数据。</string>
-    <string name="profile_current_state" formatted="true">当前开启 %1$d 个场景</string>
+    <string name="profile_current_state" formatted="true">当前开启 %1$d 个绑定</string>
     <string name="function_current_state" formatted="true">当前共有 %1$d 项定义功能</string>
     <string name="add_key_event_failed">添加失败，与现有条目冲突</string>
     <string name="settings_quick_click_time_title">双击/三击速度</string>
@@ -90,7 +90,7 @@
     <string name="notification_filter_none">完全阻止</string>
     <string name="notification_filter_alarms">仅限闹铃</string>
     <string name="add_notification_func">模拟通知控件点击</string>
-    <string name="snack_bar_app_off">功能已关闭，请打开功能开关</string>
+    <string name="snack_bar_bindings_off">按键绑定已关闭，请打开绑定开关</string>
     <string name="request_camera">请赋予相机权限</string>
     <string name="create_gesture_hint"><![CDATA[请点击或者滑动创建手势<br>返回键取消创建]]></string>
     <string name="add_tap_or_swipe">模拟点击或手势</string>

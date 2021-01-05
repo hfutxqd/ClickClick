@@ -4,7 +4,7 @@
     <SwitchPreference
         android:key="@string/pref_key_app_switch"
         android:defaultValue="false"
-        android:title="@string/settings_app_switch_title"
+        android:title="@string/settings_app_switch_bindings"
         android:summaryOn="@string/settings_app_switch_on_summary"
         android:summaryOff="@string/settings_app_switch_off_summary"
         app:iconSpaceReserved="false"/>

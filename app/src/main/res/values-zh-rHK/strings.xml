@@ -11,8 +11,8 @@
     <string name="btn_add">添加</string>
     <string name="title_settings">設置</string>
     <string name="title_activity_navi">易按鍵</string>
-    <string name="title_home">場景</string>
-    <string name="title_dashboard">功能</string>
+    <string name="title_bindings">綁定</string>
+    <string name="title_functions">功能</string>
     <string name="action_add_description">點擊可以添加場景</string>
     <string name="settings_author_title">作者</string>
     <string name="settings_author_summary">IMXQD</string>
@@ -49,7 +49,7 @@
     <string name="come_soon">敬請期待</string>
     <string name="settings_about_title">關於</string>
     <string name="settings_version_title">版本</string>
-    <string name="settings_app_switch_title">功能開關</string>
+    <string name="settings_app_switch_bindings">按鍵綁定</string>
     <string name="settings_app_switch_on_summary">已開啟按鍵映射服務</string>
     <string name="settings_app_switch_off_summary">已關閉按鍵映射服務</string>
     <string name="settings_key_app_debug_title">顯示調試信息</string>
@@ -64,7 +64,7 @@
     <string name="settings_notification_title">通知服務</string>
     <string name="settings_notification_on_summary">已開啟，可以支持通知類功能</string>
     <string name="settings_notification_off_summary">已關閉，喜愛功能不可用</string>
-    <string name="profile_current_state" formatted="true">當前開啟 ％1$d 個場景</string>
+    <string name="profile_current_state" formatted="true">當前開啟 ％1$d 個綁定</string>
     <string name="function_current_state" formatted="true">當前共有 ％1$d 項定義功能</string>
     <string name="title_activity_functions">功能列表</string>
     <string name="add_key_event_normal">添加常規按鍵映射</string>
@@ -90,7 +90,7 @@
     <string name="notification_filter_none">完全阻止</string>
     <string name="notification_filter_alarms">僅限鬧鈴</string>
     <string name="add_notification_func">模擬通知控件點擊</string>
-    <string name="snack_bar_app_off">功能已關閉，請打開功能開關</string>
+    <string name="snack_bar_bindings_off">按鍵綁定已關閉，請打開綁定開關</string>
     <string name="request_camera">請授予相機權限</string>
     <string name="create_gesture_hint"><![CDATA[請點擊或者滑動創建手勢<br>返回鍵取消創建]]></string>
     <string name="add_tap_or_swipe">模擬點擊或手勢</string>
