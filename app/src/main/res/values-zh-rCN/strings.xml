@@ -129,4 +129,5 @@
     <string name="add_lua_script">添加Lua脚本</string>
     <string name="title_activity_code_editor">编辑代码</string>
     <string name="action_save">保存</string>
+    <string name="title_activity_shortcut">创建功能快捷方式</string>
 </resources>

@@ -51,6 +51,18 @@
             android:parentActivityName=".ui.NaviActivity">
 
         </activity>
+
+        <activity
+            android:name=".ui.ShortcutActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_shortcut"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ui.NaviActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.NaviActivity"
             android:label="@string/title_activity_navi"

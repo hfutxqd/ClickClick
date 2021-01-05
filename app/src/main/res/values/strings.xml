@@ -137,4 +137,5 @@
     <string name="title_activity_code_editor">Code</string>
     <string name="action_save">Save</string>
     <string name="pkg_not_found">Package not found</string>
+    <string name="title_activity_shortcut">Create shortcut of functions</string>
 </resources>

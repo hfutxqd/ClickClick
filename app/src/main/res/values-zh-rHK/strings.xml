@@ -126,4 +126,5 @@
     <string name="edit_or_view_it">編輯/查看</string>
     <string name="save">保存</string>
     <string name="no_app_shortcut_available">沒有可用的快捷方式</string>
+    <string name="title_activity_shortcut">創建功能快捷方式</string>
 </resources>
