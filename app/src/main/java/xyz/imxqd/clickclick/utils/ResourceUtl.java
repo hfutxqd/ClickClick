@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import xyz.imxqd.clickclick.MyApp;
+import xyz.imxqd.clickclick.log.LogUtils;
 
 public class ResourceUtl {
     public static int getIdByName(String packageName, String idName) {
@@ -13,7 +14,7 @@ public class ResourceUtl {
             Resources mApk1Resources = manager.getResourcesForApplication(packageName);
 
             int id = mApk1Resources.getIdentifier(idName, "id",packageName);
-
+            LogUtils.d(packageName + "@" + idName + "=" + id);
             return id;
         }
         catch (PackageManager.NameNotFoundException e) {

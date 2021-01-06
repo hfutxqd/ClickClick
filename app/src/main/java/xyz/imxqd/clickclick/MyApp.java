@@ -60,9 +60,7 @@ public class MyApp extends Application implements Application.ActivityLifecycleC
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        try {
-            Reflection.unseal(base);
-        } catch (Throwable ignore) {}
+        Reflection.unseal(base);
     }
 
     public void initLogger() {

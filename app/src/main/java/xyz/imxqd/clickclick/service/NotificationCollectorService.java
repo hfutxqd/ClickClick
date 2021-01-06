@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Looper;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import java.util.ArrayList;

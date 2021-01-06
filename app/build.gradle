@@ -12,6 +12,10 @@ android {
         vectorDrawables.useSupportLibrary = true
         manifestPlaceholders = [appId: "xyz.imxqd.clickclick"]
 
+        viewBinding {
+            enabled = true
+        }
+
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
@@ -41,16 +45,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-//    externalNativeBuild {
-//        cmake {
-//            path './CMakeLists.txt'
-//        }
-//    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/'] } }
 }
 
 def dbflow_version = "4.2.4"

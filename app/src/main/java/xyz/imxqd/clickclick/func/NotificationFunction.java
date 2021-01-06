@@ -104,22 +104,21 @@ public class NotificationFunction extends AbstractFunction {
                 if (notifications.size() == 0) {
                     throw new RuntimeException("There are no notifications of " + getPackageName(args));
                 }
-                PendingIntent intent;
-                intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).bigContentView, viewId);
-                if (intent == null) {
-                    intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).contentView, viewId);
+                PendingIntent intent = null;
+                for (Notification n : notifications) {
+                    intent =  NotificationAccessUtil.getPendingIntentByViewId(n, viewId);
+                    if (intent != null) {
+                        break;
+                    }
                 }
                 if (intent != null) {
                     mCacheIntents.put(args, intent);
                 } else  {
                     intent = mCacheIntents.get(args);
                 }
-                if (intent == null) {
-                    intent = notifications.get(0).contentIntent;
-                }
                 intent.send();
             } else if (matcher2.matches()) {
-                LogUtils.d("notification : id mode2");
+                LogUtils.d("notification : id name mode");
                 matcher2.reset();
                 String packageArgs = getPackageArgs(args);
                 String idName = getIdName(packageArgs);
@@ -130,19 +129,16 @@ public class NotificationFunction extends AbstractFunction {
                     throw new RuntimeException("There are no notifications of " + getPackageName(args));
                 }
                 PendingIntent intent = null;
-                if (notifications.get(0).bigContentView != null) {
-                    intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).bigContentView, viewId);
-                }
-                if (intent == null && notifications.get(0).contentView != null) {
-                    intent = NotificationAccessUtil.getPendingIntentByViewId(notifications.get(0).contentView, viewId);
+                for (Notification n : notifications) {
+                    intent =  NotificationAccessUtil.getPendingIntentByViewId(n, viewId);
+                    if (intent != null) {
+                        break;
+                    }
                 }
                 if (intent != null) {
                     mCacheIntents.put(args, intent);
                 } else  {
                     intent = mCacheIntents.get(args);
-                }
-                if (intent == null) {
-                    intent = notifications.get(0).contentIntent;
                 }
                 intent.send();
 
